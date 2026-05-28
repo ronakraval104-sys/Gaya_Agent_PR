@@ -1,0 +1,45 @@
+# Gaya Agent — .gitignore
+
+# OS files
+Thumbs.db
+.DS_Store
+*.swp
+*.swo
+
+# Session / temp
+*.log
+*.tmp
+temp/
+logs/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.venv/
+*.egg-info/
+
+# Node
+node_modules/
+dist/
+build/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+
+# User profiles (personal data stays local)
+knowledge/user_profiles/*
+!knowledge/user_profiles/_template/
+!knowledge/user_profiles/README.md
+
+# Git
+*.orig
+*.backup

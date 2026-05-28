@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "skills": {
+    "3d-visualizer": {
+      "source": "daffy0208/ai-dev-standards",
+      "sourceType": "github",
+      "skillPath": "skills/3d-visualizer/SKILL.md",
+      "computedHash": "537377453af25180f60838621fd5edb3773794193469b64988196e19b524ea9d"
+    },
+    "building-ui-bundle-frontend": {
+      "source": "forcedotcom/afv-library",
+      "sourceType": "github",
+      "skillPath": "skills/building-ui-bundle-frontend/SKILL.md",
+      "computedHash": "5831fa4e72277687386f7f7f76163ae993b8816a29c94c0776e6a6b1e9e5aecb"
+    },
+    "comfyui-workflow-builder": {
+      "source": "mckruz/comfyui-expert",
+      "sourceType": "github",
+      "skillPath": "skills/comfyui-workflow-builder/SKILL.md",
+      "computedHash": "4599f6517d43eb24ccfb799989fb0e2e41166811cf8049e5e263851d9f8b7721"
+    },
+    "consulting-analysis": {
+      "source": "bytedance/deer-flow",
+      "sourceType": "github",
+      "skillPath": "skills/public/consulting-analysis/SKILL.md",
+      "computedHash": "3242c2149e8ca3290ade56ce380d1751c75473bc5420c092f7ee70718dd34597"
+    },
+    "data-storytelling": {
+      "source": "wshobson/agents",
+      "sourceType": "github",
+      "skillPath": "plugins/business-analytics/skills/data-storytelling/SKILL.md",
+      "computedHash": "100085a4212149ea6b1a1691e5e845a7ae184ecb2d4cee561b435e7ba5f5a6a2"
+    },
+    "digital-twin-generation": {
+      "source": "eachlabs/skills",
+      "sourceType": "github",
+      "skillPath": "skills/digital-twin-generation/SKILL.md",
+      "computedHash": "50efe13032224291d2cbddf9eb60c0f9a42a010af96647fc680ccc006111bb0c"
+    },
+    "frontend-design": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/frontend-design/SKILL.md",
+      "computedHash": "516bd2154eb843a8240e43d5b285229129853114ad7075a5e141e1c08e408c84"
+    },
+    "game-design-theory": {
+      "source": "pluginagentmarketplace/custom-plugin-game-developer",
+      "sourceType": "github",
+      "skillPath": "skills/game-design-theory/SKILL.md",
+      "computedHash": "60a7ad8dd95255ed22840e03d44fdee8be919a19471f723d509da7c43b7bf21b"
+    },
+    "grill-me": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "skillPath": "skills/productivity/grill-me/SKILL.md",
+      "computedHash": "daf64ca15f4fa081a6747766db538e2dbd1131725ed4fcdd3d538dc62c7035ba"
+    },
+    "image-generation": {
+      "source": "claude-office-skills/skills",
+      "sourceType": "github",
+      "skillPath": "image-generation/SKILL.md",
+      "computedHash": "7ce27fdef5104104da68395a222a2237062095288c21cfea26245706e1c8e906"
+    },
+    "image-to-video": {
+      "source": "agentspace-so/runcomfy-agent-skills",
+      "sourceType": "github",
+      "skillPath": "image-to-video/SKILL.md",
+      "computedHash": "ff4a666a6db5af1c3aefe40c6379dd445177cfaa2bd51a1834c4ccf476ffd882"
+    },
+    "improve-codebase-architecture": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "skillPath": "skills/engineering/improve-codebase-architecture/SKILL.md",
+      "computedHash": "5d9444ffe5c240f2d20081c42c547112e1b8c372375a14e4c98df4d94bde11e1"
+    },
+    "pptx": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/pptx/SKILL.md",
+      "computedHash": "2275e4d8dba1790d52f6619b3e2fed04edc948beef545a2ad18e4a1be644426d"
+    },
+    "ui-ux-pro-max": {
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/ui-ux-pro-max/SKILL.md",
+      "computedHash": "6337038fe1fe6bbe1b9f252ab678ee575859190bab6f0f246f4061824eb40875"
+    },
+    "unreal-engine-cpp-pro": {
+      "source": "sickn33/antigravity-awesome-skills",
+      "sourceType": "github",
+      "skillPath": "skills/unreal-engine-cpp-pro/SKILL.md",
+      "computedHash": "b90ad2e1108fd9ef468c08c3037e0eb4e0c4ba10c70bf56770c6d3b9be6351a7"
+    }
+  }
+}
