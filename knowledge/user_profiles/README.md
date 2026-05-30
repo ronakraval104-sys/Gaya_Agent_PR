@@ -20,4 +20,7 @@ If you want to share a lesson with the community:
 
 ## Profiles on This Machine
 
-_(List your profiles here)_
+| Profile | User | Since | Status |
+|---|---|---|---|
+| **Ronak/** | Ronak Raval (R0n/Ron) | 30-May-2026 | ✅ Active — M&E Consultant, Game Dev, Ahmedabad India |
+
