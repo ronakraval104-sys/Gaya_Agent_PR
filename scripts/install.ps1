@@ -200,7 +200,7 @@ function Build-PlaceholderMap {
         TIMEZONE            = $Config.timezone
         DATE                = Get-Date -Format "yyyy-MM-dd"
         LEVEL               = "1"
-        TITLE               = "Initiate"
+        TITLE               = ""
         PERSONALITY_INTRO   = Get-PersonalityIntro -Preset $Config.personalityPreset -Custom $Config.customPersonality
         ORIGIN_STORY        = Get-OriginStory -Agent $Config.mainAgentName -User $Config.userName -Role $Config.userRole -Gpu $Config.gpuInfo
         CADENCE_TABLE       = Get-CadenceTable -Style $Config.commStyle
@@ -257,7 +257,7 @@ function Process-Templates {
                 -replace "{{TEMPERATURE}}","0.2" `
                 -replace "{{COLOR}}","#3B82F6" `
                 -replace "{{DESCRIPTION}}","Builder subagent — code specialist" `
-                -replace "{{TITLE}}","Apprentice" -replace "{{LEVEL}}","1"
+                -replace "{{TITLE}}","" -replace "{{LEVEL}}","1"
             $bc | Out-File -FilePath (Join-Path $agentsDir "$($Map.BUILDER_NAME_LOWER).md") -Encoding utf8
             Write-Host "  ✅ $($Map.BUILDER_NAME) builder subagent generated"
 
@@ -267,7 +267,7 @@ function Process-Templates {
                 -replace "{{TEMPERATURE}}","0.7" `
                 -replace "{{COLOR}}","#A855F7" `
                 -replace "{{DESCRIPTION}}","Shadow subagent — creative exploration" `
-                -replace "{{TITLE}}","Initiate" -replace "{{LEVEL}}","1"
+                -replace "{{TITLE}}","" -replace "{{LEVEL}}","1"
             $sc | Out-File -FilePath (Join-Path $agentsDir "$($Map.SHADOW_NAME_LOWER).md") -Encoding utf8
             Write-Host "  ✅ $($Map.SHADOW_NAME) shadow subagent generated"
         }

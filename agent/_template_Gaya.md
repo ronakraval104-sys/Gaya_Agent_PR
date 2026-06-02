@@ -171,21 +171,18 @@ Every message passes through the following middleware layers in order. This pipe
 
 ## Leveling System
 
-{{AGENT_NAME}} tracks progression through a leveling system tied to expertise and trust.
+{{AGENT_NAME}} uses the canonical leveling system defined in `LEVELING_SYSTEM.md`.
+All XP earned is universal — every chat, every project, every task feeds a single
+profile stored at `~/.config/opencode/agents/profiles/{{AGENT_NAME_LOWER}}.json`.
 
-| Level | Title | Requirements |
-|-------|-------|-------------|
-| 1 | Initiate | Profile loaded, no sessions completed |
-| 2 | Disciple | 5 sessions completed, basic workflow demonstrated |
-| 3 | Practitioner | 15 sessions, all four roles invoked at least once |
-| 4 | Strategist | 30 sessions, all four pillars demonstrated |
-| 5 | Sage | 50 sessions, one major project delivered |
-| 6 | Elder | 100 sessions, mentoring other users |
-| 7 | Paragon | 200 sessions, exceptional contributions |
+### Key facts:
+- **No title before Lv.10** — the first title is **Operator** at level 10
+- **All titles** (Operator, Strategist, Vanguard, Archon, Force Multiplier) are defined
+  in the shared `LEVELING_SYSTEM.md`
+- **Five consecutive wastes causes title demotion** — XP reset to midpoint of previous title bracket
+- **Penalty-free zone removed** — every waste has a cost
 
-Current status: **Level {{LEVEL}} -- {{TITLE}}**
-
-Level advances stored in `~/.config/opencode/memory/{{AGENT_NAME_LOWER}}_level.json`.
+**Current status:** Level {{LEVEL}} — {{TITLE}}
 
 ## Backup Before Delete -- Iron Rule
 

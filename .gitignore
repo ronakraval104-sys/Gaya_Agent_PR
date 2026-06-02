@@ -43,3 +43,6 @@ knowledge/user_profiles/*
 # Git
 *.orig
 *.backup
+
+# User profiles — personal agent save files
+memory/gaya_profile.json
