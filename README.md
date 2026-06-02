@@ -22,7 +22,8 @@ A transferable AI agent operating on four ancient texts, a built-in leveling sys
 2. Copy `skills/` contents to your skills directory
 3. Reference `LEVELING_SYSTEM.md` for the progression framework
 4. Reference `docs/TOKEN_TRACKING.md` for efficacy measurement
-5. Done.
+5. **(Recommended)** Run `.\scripts\setup-mcp.ps1` to install MCP server capacity
+6. Done.
 
 ### If you want to customize Gaya with YOUR personality:
 
@@ -43,9 +44,10 @@ A transferable AI agent operating on four ancient texts, a built-in leveling sys
 | `skills-lock.json` | Skill inventory lock file |
 | `skills/` | All 17 specialized skill modules |
 | `docs/TOKEN_TRACKING.md` | Token efficacy measurement protocol |
-| `docs/` | Additional documentation |
+| `docs/MCP_SETUP.md` | MCP server setup guide (filesystem, browser, web automation) |
 | `scripts/token-tracker.ps1` | PowerShell token tracker for agent sessions |
 | `scripts/backup.ps1` | Daily auto-backup to Git |
+| `scripts/setup-mcp.ps1` | One-command MCP server installer |
 | `templates/NEW_AGENT.md` | Blank agent template for custom personalities |
 | `templates/ONBOARDING.md` | Step-by-step migration guide |
 | `GAYA_MIGRATION_28-May-2026.md` | Complete migration archive from previous user |
@@ -110,6 +112,21 @@ See `docs/TOKEN_TRACKING.md` for full methodology.
 3D visualization, UI bundles, ComfyUI workflows, consulting analysis, data storytelling, digital twins, frontend design, game design, Pinokio launchers, image gen, image-to-video, architecture improvement, UI/UX design, Unreal Engine, and more.
 
 Chain them for complex pipelines. Each skill is a specialist soldier.
+
+---
+
+## MCP Server Capacity (Optional)
+
+Gaya can also use **MCP servers** for direct filesystem, browser, and web access:
+
+| Server | What It Does |
+|---|---|
+| **filesystem** | Read/write files in project directory |
+| **playwright** | Headless browser — scrape, screenshot, automate |
+| **browsermcp** | Your real Chrome — logged-in sites, forms |
+| **github** | GitHub API — PRs, issues, repos (needs token) |
+
+Run `.\scripts\setup-mcp.ps1` for one-command install. See `docs/MCP_SETUP.md` for details.
 
 ---
 
