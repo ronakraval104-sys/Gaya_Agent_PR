@@ -413,16 +413,40 @@ layout();
 // PARTICLES
 // ═══════════════════════════════════════════════════
 const PTS=[];
-for(let i=0;i=Math.random()*W:p.x=0;
+for(let i=0;i<60;i++)PTS.push({
+  x:Math.random()*W,y:Math.random()*H,
+  r:Math.random()*1.5+0.5,
+  a:Math.random()*0.5+0.2,
+  vx:(Math.random()-.5)*0.3,
+  vy:(Math.random()-.5)*0.3
+});
+
+let time=0;
+
+// ═══════════════════════════════════════════════════
+// RENDER LOOP
+// ═══════════════════════════════════════════════════
+function draw(){
+  time++;
+
+  // ── Clear with background gradient ──
+  ctx.clearRect(0,0,W,H);
+  const bg=ctx.createRadialGradient(W/2,H/2,0,W/2,H/2,Math.max(W,H)*0.7);
+  bg.addColorStop(0,'#0f172a');bg.addColorStop(1,'#020617');
+  ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+
+  // ── Particles ──
+  PTS.forEach(p=>{
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x>W)p.x=0;if(p.x<0)p.x=W;
     if(p.y>H)p.y=0;if(p.y<0)p.y=H;
     ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fillStyle=`rgba(192,132,252,${p.a})`;
-    ctx.fill();
-  }
+    ctx.fillStyle=`rgba(192,132,252,${p.a})`;ctx.fill();
+  });
 
   // ── Determine visible nodes ──
   const vis={};
-  let visC=0,has=0;
+  let visC=0;
   NODES_A.forEach(n=>{
     let v=true;
     if(activeFilter!=='all'){
@@ -436,7 +460,6 @@ for(let i=0;i=Math.random()*W:p.x=0;
     }
     vis[n.id]=v;
     if(v)visC++;
-    has++;
   });
   document.getElementById('vcount').textContent=visC;
   document.getElementById('empty').classList.toggle('sh',visC===0);
