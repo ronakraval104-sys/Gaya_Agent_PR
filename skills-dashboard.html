@@ -246,7 +246,7 @@
 <!-- Header -->
 <header>
   <h1>✦ Gaya Skills</h1>
-  <span class="subtitle">34 Modules · 20 Custom + 14 Superpowers</span>
+  <span class="subtitle">36 Modules · 20 Custom + 14 Superpowers + 2 Bonus</span>
   <div class="header-right">
     <input class="search-box" id="search" placeholder="Search skills..." autocomplete="off">
     <div class="stats-bar">
@@ -494,6 +494,20 @@ const SKILLS = {
     description: "TDD for process documentation. IRON LAW: No skill without a failing test first. Watch agents fail without the skill, then write to fix specific failures.",
     type: "Superpowers", path: "skills/writing-skills/",
     tags: ["skill-creation", "tdd", "documentation", "testing"]
+  },
+
+  // ── BONUS SKILLS (2 — from extended library) ──
+  "bonus-architecture-diagram": {
+    name: "Architecture Diagram", icon: "📐", category: "dev",
+    description: "Build interactive, click-through architecture diagrams for software systems — single HTML file with animated step-by-step flows, mode toggles, and dark/light theme.",
+    type: "Bonus", path: "skills/architecture-diagram/",
+    tags: ["diagram", "architecture", "flow", "visualization"]
+  },
+  "bonus-3ds-max-bridge": {
+    name: "3ds Max Bridge", icon: "🏗", category: "special",
+    description: "HTTP bridge for 3ds Max automation. Script scene operations, render control, and asset management from a remote API.",
+    type: "Bonus", path: "skills/3ds-max-bridge/",
+    tags: ["3ds-max", "automation", "bridge", "http"]
   }
 };
 
@@ -552,6 +566,15 @@ const EDGES = [
   ["super-systematic-debugging", "custom-improve-codebase-architecture"],
   ["super-verification-before-completion", "custom-unreal-engine-cpp-pro"],
   ["super-verification-before-completion", "custom-pptx"],
+
+  // Bonus skill connections
+  ["bonus-architecture-diagram", "custom-3d-visualizer"],
+  ["bonus-architecture-diagram", "custom-improve-codebase-architecture"],
+  ["bonus-architecture-diagram", "custom-consulting-analysis"],
+  ["bonus-3ds-max-bridge", "custom-archviz-optimizer"],
+  ["bonus-3ds-max-bridge", "custom-unreal-engine-cpp-pro"],
+  ["super-brainstorming", "bonus-architecture-diagram"],
+  ["super-writing-plans", "bonus-3ds-max-bridge"],
 ];
 
 // ── Category Colors ──
