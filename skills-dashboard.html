@@ -3,1102 +3,673 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gaya Skills Dashboard — 34 Skill Modules</title>
+<title>Gaya Skill Constellation</title>
 <style>
-  :root {
-    --bg: #0a0e17;
-    --bg2: #111827;
-    --bg3: #1a2035;
-    --text: #e2e8f0;
-    --text2: #94a3b8;
-    --accent: #c084fc;
-    --accent2: #818cf8;
-    --green: #34d399;
-    --yellow: #fbbf24;
-    --orange: #fb923c;
-    --red: #f87171;
-    --cyan: #22d3ee;
-    --pink: #f472b6;
-    --domain: #6366f1;
-    --process: #34d399;
-    --quality: #fbbf24;
-    --dev: #22d3ee;
-    --special: #f472b6;
-    --node-glow: rgba(192, 132, 252, 0.15);
-  }
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:#080c18;color:#e2e8f0;overflow:hidden;height:100vh;width:100vw;
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;
+  user-select:none;
+}
+canvas{display:block;position:fixed;inset:0}
 
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    overflow: hidden;
-    height: 100vh;
-    width: 100vw;
-  }
+/* ── Minimal top bar ── */
+#topbar{
+  position:fixed;top:0;left:0;right:0;z-index:20;
+  padding:18px 28px;display:flex;align-items:center;gap:18px;
+  background:linear-gradient(180deg,rgba(8,12,24,.88) 50%,transparent);
+  pointer-events:none;
+}
+#topbar>*{pointer-events:auto}
+#topbar h1{
+  font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  background:linear-gradient(135deg,#c084fc,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+#topbar .count{font-size:11px;color:#64748b;letter-spacing:.5px}
+#topbar .count strong{color:#94a3b8}
+.spacer{flex:1}
 
-  /* ── Background particle layer ── */
-  #particles { position:fixed; inset:0; z-index:0; pointer-events:none; }
+/* ── Search ── */
+#search{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);
+  border-radius:20px;padding:5px 14px 5px 30px;font-size:11px;color:#e2e8f0;
+  outline:none;width:140px;transition:.3s;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:10px center;
+}
+#search:focus{border-color:#c084fc;width:180px;background-color:rgba(255,255,255,.07);}
+#search::placeholder{color:#64748b}
 
-  /* ── Header ── */
-  header {
-    position:fixed; top:0; left:0; right:0; z-index:10;
-    background: linear-gradient(180deg, rgba(10,14,23,0.95) 60%, transparent);
-    padding: 16px 32px 20px;
-    display: flex; align-items: center; gap: 24px;
-    backdrop-filter: blur(12px);
-  }
-  header h1 {
-    font-family: 'Cascadia Code', 'Fira Code', Consolas, 'Courier New', monospace;
-    font-size: 13px; font-weight: 700;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    letter-spacing: 2px; text-transform: uppercase;
-  }
-  header .subtitle {
-    font-size: 11px; color: var(--text2);
-    font-weight: 400; letter-spacing: 0.5px;
-  }
-  .header-right { margin-left:auto; display:flex; align-items:center; gap:12px; }
+/* ── Filter pills ── */
+#filters{
+  position:fixed;z-index:20;
+  bottom:28px;left:50%;transform:translateX(-50%);
+  display:flex;gap:6px;flex-wrap:wrap;justify-content:center;
+  background:rgba(8,12,24,.7);backdrop-filter:blur(16px);
+  padding:8px 16px;border-radius:24px;
+  border:1px solid rgba(255,255,255,.04);
+  max-width:92vw;
+}
+.fbtn{
+  font-size:10px;padding:4px 13px;border-radius:16px;letter-spacing:.3px;
+  border:1px solid transparent;background:transparent;color:#64748b;
+  cursor:pointer;transition:.25s;font-family:inherit;white-space:nowrap;
+}
+.fbtn:hover{background:rgba(255,255,255,.06);color:#94a3b8}
+.fbtn.on{
+  background:rgba(192,132,252,.12);border-color:rgba(192,132,252,.25);
+  color:#c084fc;
+}
 
-  /* ── Stats bar ── */
-  .stats-bar {
-    display:flex; gap:8px; align-items:center;
-  }
-  .stat-pill {
-    font-size: 10px; padding: 3px 10px;
-    border-radius: 20px; background: var(--bg3);
-    border: 1px solid rgba(255,255,255,0.06);
-    color: var(--text2); font-family: 'Cascadia Code', 'Fira Code', Consolas, 'Courier New', monospace;
-  }
-  .stat-pill strong { color: var(--text); }
+/* ── Info Panel (bottom sheet) ── */
+#infopanel{
+  position:fixed;z-index:15;
+  bottom:0;left:0;right:0;
+  background:linear-gradient(0deg,rgba(8,12,24,.96) 60%,transparent);
+  padding:60px 32px 90px;
+  transform:translateY(100%);transition:transform .5s cubic-bezier(.22,1,.36,1);
+  pointer-events:none;
+  backdrop-filter:blur(8px);
+}
+#infopanel.open{transform:translateY(0);pointer-events:auto}
+#infopanel .inner{max-width:560px;margin:0 auto}
+#infopanel .head{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+#infopanel .name{font-size:18px;font-weight:700;color:#e2e8f0}
+#infopanel .badge{
+  font-size:9px;padding:2px 10px;border-radius:10px;font-weight:600;letter-spacing:.5px;
+}
+#infopanel .cat{font-size:10px;color:#64748b;margin-bottom:4px}
+#infopanel .desc{font-size:13px;line-height:1.6;color:#94a3b8;margin-bottom:6px}
+#infopanel .meta{font-size:10px;color:#475569;font-family:monospace}
+#infopanel .cls{
+  position:absolute;top:32px;right:28px;background:none;border:none;
+  color:#64748b;cursor:pointer;font-size:20px;transition:.2s;
+}
+#infopanel .cls:hover{color:#e2e8f0}
 
-  /* ── Filter Tabs ── */
-  .filters {
-    position:fixed; top:68px; left:50%; transform:translateX(-50%);
-    z-index:10; display:flex; gap:6px; flex-wrap:wrap; justify-content:center;
-    padding: 0 16px;
-  }
-  .filter-btn {
-    font-size: 10px; padding: 4px 14px; border-radius: 14px;
-    border: 1px solid rgba(255,255,255,0.08);
-    background: rgba(255,255,255,0.03);
-    color: var(--text2); cursor:pointer;
-    font-family: 'Cascadia Code', 'Fira Code', Consolas, 'Courier New', monospace;
-    transition: all 0.2s; letter-spacing: 0.5px;
-  }
-  .filter-btn:hover { background: rgba(255,255,255,0.08); color: var(--text); }
-  .filter-btn.active {
-    background: var(--bg3);
-    border-color: var(--accent);
-    color: var(--accent);
-    box-shadow: 0 0 16px rgba(192,132,252,0.15);
-  }
+/* ── Legend ── */
+#legend{
+  position:fixed;z-index:18;
+  right:20px;top:50%;transform:translateY(-50%);
+  display:flex;flex-direction:column;gap:6px;
+}
+.litem{
+  display:flex;align-items:center;gap:8px;
+  font-size:9px;color:#475569;cursor:pointer;
+  padding:3px 8px;border-radius:6px;transition:.2s;
+  writing-mode:vertical-lr;text-orientation:mixed;
+  letter-spacing:1px;
+}
+.litem:hover{color:#94a3b8;background:rgba(255,255,255,.03)}
+.litem .dot{width:4px;height:12px;border-radius:2px;flex-shrink:0;transition:.3s}
 
-  /* ── Graph Container ── */
-  #graph-container {
-    position:fixed; inset:0; z-index:1;
-    top: 100px; bottom: 0;
-  }
-  #graph-container svg {
-    width: 100%; height: 100%;
-  }
+/* ── Empty state ── */
+#empty{
+  position:fixed;z-index:5;top:50%;left:50%;transform:translate(-50%,-50%);
+  text-align:center;pointer-events:none;
+  opacity:0;transition:.4s;
+}
+#empty.show{opacity:1}
+#empty .eicon{font-size:32px;margin-bottom:8px;opacity:.5}
+#empty p{font-size:13px;color:#64748b}
 
-  /* ── Node Styles ── */
-  .node-group { cursor:pointer; }
-  .node-ring {
-    fill: none; stroke-width: 1.5;
-    opacity: 0.3; transition: all 0.3s;
-  }
-  .node-ring.active { opacity: 0.8; stroke-width: 2.5; }
-  .node-bg { transition: all 0.3s; }
-  .node-group:hover .node-bg { filter: brightness(1.4); }
-  .node-icon { font-size: 18px; text-anchor:middle; dominant-baseline:central; pointer-events:none; }
-  .node-label {
-    font-family: 'Cascadia Code', 'Fira Code', Consolas, 'Courier New', monospace;
-    font-size: 9px; text-anchor:middle; fill: var(--text2);
-    pointer-events:none; transition: fill 0.3s;
-  }
-  .node-group:hover .node-label { fill: var(--text); }
-
-  /* ── Edge Styles ── */
-  .edge-line {
-    stroke: rgba(255,255,255,0.06);
-    stroke-width: 1;
-    transition: all 0.3s;
-  }
-  .edge-line.active {
-    stroke: var(--accent);
-    stroke-width: 1.5;
-    opacity: 0.4;
-  }
-  .edge-arrow { fill: rgba(255,255,255,0.08); }
-
-  /* ── Info Panel ── */
-  #info-panel {
-    position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
-    z-index:20;
-    background: rgba(17,24,39,0.92);
-    backdrop-filter: blur(24px);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 16px;
-    padding: 16px 24px;
-    max-width: 640px; width: 90%;
-    transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
-    opacity: 0; transform: translateX(-50%) translateY(20px);
-    pointer-events: none;
-  }
-  #info-panel.visible {
-    opacity: 1; transform: translateX(-50%) translateY(0);
-    pointer-events: auto;
-  }
-  #info-panel .panel-header {
-    display:flex; align-items:center; gap:12px; margin-bottom:8px;
-  }
-  #info-panel .panel-name {
-    font-family: 'Cascadia Code', 'Fira Code', Consolas, 'Courier New', monospace;
-    font-size: 16px; font-weight: 700;
-    color: var(--text);
-  }
-  #info-panel .panel-badge {
-    font-size: 9px; padding: 2px 10px; border-radius: 10px;
-    font-family: 'Cascadia Code', 'Fira Code', Consolas, 'Courier New', monospace; font-weight:600;
-    letter-spacing: 0.5px;
-  }
-  #info-panel .panel-category {
-    font-size: 10px; color: var(--text2);
-    font-family: 'Cascadia Code', 'Fira Code', Consolas, 'Courier New', monospace;
-  }
-  #info-panel .panel-desc {
-    font-size: 13px; line-height:1.5; color: var(--text2);
-    margin-bottom: 8px;
-  }
-  #info-panel .panel-meta {
-    font-size: 10px; color: var(--text2);
-    font-family: 'Cascadia Code', 'Fira Code', Consolas, 'Courier New', monospace;
-    display: flex; gap: 16px; flex-wrap:wrap;
-  }
-  #info-panel .panel-close {
-    margin-left:auto; background:none; border:none;
-    color: var(--text2); cursor:pointer; font-size:18px; padding:4px;
-    transition: color 0.2s;
-  }
-  #info-panel .panel-close:hover { color: var(--text); }
-
-  /* ── Pulse animation for category dots ── */
-  @keyframes pulse-dot {
-    0%, 100% { opacity: 0.4; transform: scale(1); }
-    50% { opacity: 0.8; transform: scale(1.2); }
-  }
-
-  /* ── Responsive ── */
-  @media (max-width: 768px) {
-    header { padding: 12px 16px 16px; flex-wrap:wrap; }
-    header h1 { font-size: 11px; }
-    .filters { top: 80px; gap:4px; }
-    .filter-btn { font-size: 9px; padding: 3px 10px; }
-    #info-panel { padding: 12px 16px; max-width: 95%; }
-    #info-panel .panel-name { font-size: 14px; }
-  }
-
-  /* ── Search ── */
-  .search-box {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 20px;
-    padding: 4px 14px 4px 32px;
-    font-size: 11px; color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    outline: none; width: 160px;
-    transition: all 0.3s;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: 12px center;
-  }
-  .search-box:focus { border-color: var(--accent); width: 200px; background-color: rgba(255,255,255,0.06); }
-  .search-box::placeholder { color: var(--text2); font-size: 11px; }
-
-  /* ── Legend ── */
-  .legend {
-    position:fixed; left:20px; top:50%; transform:translateY(-50%);
-    z-index:5; display:flex; flex-direction:column; gap:8px;
-  }
-  .legend-item {
-    display:flex; align-items:center; gap:8px;
-    font-size: 9px; font-family: 'Cascadia Code', 'Fira Code', Consolas, 'Courier New', monospace;
-    color: var(--text2); cursor:pointer; padding:3px 8px;
-    border-radius: 6px; transition: all 0.2s;
-  }
-  .legend-item:hover { background: var(--bg3); color: var(--text); }
-  .legend-dot {
-    width: 8px; height: 8px; border-radius: 50%; flex-shrink:0;
-    transition: all 0.3s;
-  }
+/* ── Responsive ── */
+@media(max-width:640px){
+  #topbar{padding:14px 16px;flex-wrap:wrap;gap:10px}
+  #topbar .count{font-size:10px}
+  #search{width:100px;font-size:10px}
+  #filters{padding:6px 10px;gap:4px;bottom:16px}
+  .fbtn{font-size:9px;padding:3px 10px}
+  #infopanel{padding:48px 20px 80px}
+  #legend{right:8px}
+  .litem{font-size:8px;padding:2px 4px}
+}
 </style>
 </head>
 <body>
+<canvas id="c"></canvas>
 
-<!-- Particles Canvas -->
-<canvas id="particles"></canvas>
-
-<!-- Header -->
-<header>
+<!-- Top Bar -->
+<div id="topbar">
   <h1>✦ Gaya Skills</h1>
-  <span class="subtitle">36 Modules · 20 Custom + 14 Superpowers + 2 Bonus</span>
-  <div class="header-right">
-    <input class="search-box" id="search" placeholder="Search skills..." autocomplete="off">
-    <div class="stats-bar">
-      <span class="stat-pill"><strong id="count-visible">34</strong> visible</span>
-    </div>
-  </div>
-</header>
+  <span class="count"><strong id="vcount">36</strong> modules</span>
+  <div class="spacer"></div>
+  <input id="search" placeholder="Search..." autocomplete="off">
+</div>
+
+<!-- Legend -->
+<div id="legend"></div>
 
 <!-- Filters -->
-<div class="filters" id="filters">
-  <button class="filter-btn active" data-filter="all">ALL</button>
-  <button class="filter-btn" data-filter="creation">🎨 Creation</button>
-  <button class="filter-btn" data-filter="dev">⚙️ Dev</button>
-  <button class="filter-btn" data-filter="process">🔁 Process</button>
-  <button class="filter-btn" data-filter="quality">🔍 Quality</button>
-  <button class="filter-btn" data-filter="business">📊 Business</button>
-  <button class="filter-btn" data-filter="special">🛠 Specialist</button>
-  <button class="filter-btn" data-filter="superpowers">⚡ Superpowers</button>
-  <button class="filter-btn" data-filter="custom">🧩 Custom</button>
+<div id="filters">
+  <button class="fbtn on" data-f="all">All</button>
+  <button class="fbtn" data-f="creation">🎨 Creation</button>
+  <button class="fbtn" data-f="dev">⚙️ Dev</button>
+  <button class="fbtn" data-f="process">🔁 Process</button>
+  <button class="fbtn" data-f="quality">🔍 Quality</button>
+  <button class="fbtn" data-f="business">📊 Business</button>
+  <button class="fbtn" data-f="special">🛠 Specialist</button>
+  <button class="fbtn" data-f="superpowers">⚡ Superpowers</button>
+  <button class="fbtn" data-f="custom">🧩 Custom</button>
 </div>
-
-<!-- Graph -->
-<div id="graph-container"><svg id="graph-svg"></svg></div>
 
 <!-- Info Panel -->
-<div id="info-panel">
-  <div class="panel-header">
-    <span class="panel-name" id="p-name"></span>
-    <span class="panel-badge" id="p-badge"></span>
-    <button class="panel-close" id="p-close">✕</button>
+<div id="infopanel">
+  <button class="cls" id="pcl">✕</button>
+  <div class="inner">
+    <div class="head">
+      <span class="name" id="pn"></span>
+      <span class="badge" id="pb"></span>
+    </div>
+    <div class="cat" id="pc"></div>
+    <div class="desc" id="pd"></div>
+    <div class="meta" id="pm"></div>
   </div>
-  <div class="panel-category" id="p-category"></div>
-  <div class="panel-desc" id="p-desc"></div>
-  <div class="panel-meta" id="p-meta"></div>
 </div>
 
+<!-- Empty State -->
+<div id="empty"><div class="eicon">🔭</div><p>No skills match your search</p></div>
+
 <script>
-// ════════════════════════════════════════════════════════════════
-// SKILL DATA — All 34 Skill Modules
-// ════════════════════════════════════════════════════════════════
-const SKILLS = {
-  // ── CUSTOM SKILLS (20) ──
-  "custom-3d-visualizer": {
-    name: "3D Visualizer", icon: "🌐", category: "creation",
-    description: "Expert in Three.js, 3D graphics, and interactive 3D visualizations for web-based 3D experiences.",
-    type: "Custom", path: "skills/3d-visualizer/",
-    tags: ["three.js", "webgl", "3d", "interactive"]
-  },
-  "custom-building-ui-bundle-frontend": {
-    name: "UI Bundle Frontend", icon: "🖥", category: "dev",
-    description: "Modifies existing shadcn/ui + Tailwind apps inside Salesforce uiBundle projects. AppLayout.tsx shell, Salesforce base-path routing.",
-    type: "Custom", path: "skills/building-ui-bundle-frontend/",
-    tags: ["salesforce", "uibundle", "react", "shadcn", "tailwind"]
-  },
-  "custom-comfyui-workflow-builder": {
-    name: "ComfyUI Workflows", icon: "🔧", category: "creation",
-    description: "Generates valid ComfyUI workflow JSON from natural language. Handles txt2img, img2img, ControlNet, LoRA stacking, upscaling.",
-    type: "Custom", path: "skills/comfyui-workflow-builder/",
-    tags: ["comfyui", "stable-diffusion", "workflow", "ai-art"]
-  },
-  "custom-consulting-analysis": {
-    name: "Consulting Analysis", icon: "📈", category: "business",
-    description: "Two-phase professional research reports — market analysis, competitive intelligence, investment due diligence, strategic insights.",
-    type: "Custom", path: "skills/consulting-analysis/",
-    tags: ["consulting", "research", "strategy", "analysis"]
-  },
-  "custom-data-storytelling": {
-    name: "Data Storytelling", icon: "📊", category: "business",
-    description: "Transforms data into compelling narratives with visualization, context, and persuasive structure for stakeholder presentations.",
-    type: "Custom", path: "skills/data-storytelling/",
-    tags: ["data", "visualization", "narrative", "stakeholder"]
-  },
-  "custom-digital-twin-generation": {
-    name: "Digital Twin", icon: "👤", category: "business",
-    description: "Generates photorealistic digital twins using each::sense AI. For video calls, corporate comms, customer service, multilingual content.",
-    type: "Custom", path: "skills/digital-twin-generation/",
-    tags: ["avatar", "ai-video", "digital-twin", "eachlabs"]
-  },
-  "custom-frontend-design": {
-    name: "Frontend Design", icon: "🎨", category: "creation",
-    description: "Creates distinctive, production-grade frontend interfaces with high design quality. Avoids generic AI aesthetics.",
-    type: "Custom", path: "skills/frontend-design/",
-    tags: ["ui", "design", "react", "html", "css"]
-  },
-  "custom-game-design-theory": {
-    name: "Game Design Theory", icon: "🎮", category: "special",
-    description: "Comprehensive game design theory covering MDA framework, player psychology, balance principles, and progression systems.",
-    type: "Custom", path: "skills/game-design-theory/",
-    tags: ["gamedev", "mda", "psychology", "balance"]
-  },
-  "custom-gepeto": {
-    name: "Gepeto / Pinokio", icon: "🚀", category: "special",
-    description: "Guide for building 1-click launchers and apps with launchers built-in using Pinokio. End-to-end launcher creation.",
-    type: "Custom", path: "skills/gepeto/",
-    tags: ["pinokio", "launcher", "1-click", "automation"]
-  },
-  "custom-grill-me": {
-    name: "Grill Me", icon: "🔥", category: "process",
-    description: "Interviews the user relentlessly about a plan or design until reaching shared understanding. Resolves every decision branch.",
-    type: "Custom", path: "skills/grill-me/",
-    tags: ["planning", "questioning", "stress-test"]
-  },
-  "custom-image-generation": {
-    name: "Image Generation", icon: "🖼", category: "creation",
-    description: "Creates effective AI image prompts for DALL-E, Midjourney, and Stable Diffusion. Various styles and use cases.",
-    type: "Custom", path: "skills/image-generation/",
-    tags: ["prompting", "midjourney", "dalle", "sd"]
-  },
-  "custom-image-to-video": {
-    name: "Image to Video", icon: "🎬", category: "creation",
-    description: "Animate still images on RunComfy. Smart router to HappyHorse I2V, Wan 2.7 lip-sync, or Seedance multi-modal.",
-    type: "Custom", path: "skills/image-to-video/",
-    tags: ["i2v", "animation", "runcomfy", "video"]
-  },
-  "custom-improve-codebase-architecture": {
-    name: "Architecture Deepen", icon: "🏗", category: "dev",
-    description: "Finds deepening opportunities in codebases, consolidates tightly-coupled modules, makes codebases testable and AI-navigable.",
-    type: "Custom", path: "skills/improve-codebase-architecture/",
-    tags: ["refactoring", "architecture", "clean-code", "modularity"]
-  },
-  "custom-pinokio": {
-    name: "Pinokio Launcher", icon: "⚡", category: "special",
-    description: "Discovers, launches, and uses apps and tools through Pinokio. One-command access to the full Pinokio ecosystem.",
-    type: "Custom", path: "skills/pinokio/",
-    tags: ["pinokio", "launch", "discovery"]
-  },
-  "custom-pipeline-troubleshooter": {
-    name: "Pipeline Troubleshooter", icon: "🔍", category: "dev",
-    description: "Debugs pipeline failures — CUDA errors, VAE mismatches, Conda fixes, ComfyUI issues. Root cause + fix in one pass.",
-    type: "Custom", path: "skills/pipeline-troubleshooter/",
-    tags: ["debugging", "pipeline", "cuda", "comfyui"]
-  },
-  "custom-pptx": {
-    name: "PowerPoint", icon: "📑", category: "business",
-    description: "Full .pptx lifecycle — create, read, edit, merge slide decks, presentations, pitch decks with templates, notes, and comments.",
-    type: "Custom", path: "skills/pptx/",
-    tags: ["powerpoint", "slides", "presentation", "office"]
-  },
-  "custom-ui-ux-pro-max": {
-    name: "UI/UX Pro Max", icon: "✨", category: "creation",
-    description: "UI/UX design intelligence — 50+ styles, 161 color palettes, 57 font pairings, 99 UX guidelines across 10 stacks.",
-    type: "Custom", path: "skills/ui-ux-pro-max/",
-    tags: ["ui", "ux", "design-system", "color", "typography"]
-  },
-  "custom-unreal-engine-cpp-pro": {
-    name: "Unreal Engine C++", icon: "🎯", category: "dev",
-    description: "Expert UE5 C++ development — UObject hygiene, performance patterns, memory management, and best practices for production.",
-    type: "Custom", path: "skills/unreal-engine-cpp-pro/",
-    tags: ["unreal", "cpp", "ue5", "performance"]
-  },
-  "custom-archviz-optimizer": {
-    name: "ArchViz Optimizer", icon: "🏛", category: "special",
-    description: "UE5 ArchViz optimization — draw calls, LODs, Nanite/Lumen configuration for real estate and architectural visualization.",
-    type: "Custom", path: "skills/archviz-optimizer/",
-    tags: ["archviz", "unreal", "optimization", "nanite", "lumen"]
-  },
-  "custom-creative-proposal-builder": {
-    name: "Creative Proposal Builder", icon: "📋", category: "business",
-    description: "Builds ArchViz/VR/UE5 consulting proposals — scopes, pricing, timelines, and deliverables for creative technology projects.",
-    type: "Custom", path: "skills/creative-proposal-builder/",
-    tags: ["proposal", "consulting", "archviz", "scope"]
-  },
+// ═══════════════════════════════════════════════════
+// SKILL DATA
+// ═══════════════════════════════════════════════════
+const S={
+  "c3d":{n:"3D Visualizer",i:"🌐",c:"creation",t:"Custom",
+    d:"Three.js, WebGL, and interactive 3D visualizations for web-based 3D experiences.",
+    p:"skills/3d-visualizer/",g:["three.js","webgl","3d","interactive"]},
+  "cui":{n:"UI Bundle Frontend",i:"🖥",c:"dev",t:"Custom",
+    d:"Modifies shadcn/ui + Tailwind apps inside Salesforce uiBundle projects with AppLayout.tsx shell.",
+    p:"skills/building-ui-bundle-frontend/",g:["salesforce","react","shadcn","tailwind"]},
+  "ccf":{n:"ComfyUI Workflows",i:"🔧",c:"creation",t:"Custom",
+    d:"Generates ComfyUI workflow JSON from natural language — txt2img, img2img, ControlNet, LoRA stacking.",
+    p:"skills/comfyui-workflow-builder/",g:["comfyui","stable-diffusion","workflow"]},
+  "cca":{n:"Consulting Analysis",i:"📈",c:"business",t:"Custom",
+    d:"Two-phase professional research: market analysis, competitive intelligence, investment due diligence.",
+    p:"skills/consulting-analysis/",g:["consulting","research","strategy"]},
+  "cds":{n:"Data Storytelling",i:"📊",c:"business",t:"Custom",
+    d:"Transforms data into compelling narratives with visualization, context, and persuasive structure.",
+    p:"skills/data-storytelling/",g:["data","visualization","narrative"]},
+  "cdt":{n:"Digital Twin",i:"👤",c:"business",t:"Custom",
+    d:"Photorealistic digital twins via each::sense AI for video calls, corporate comms, and customer service.",
+    p:"skills/digital-twin-generation/",g:["avatar","ai-video","digital-twin"]},
+  "cfd":{n:"Frontend Design",i:"🎨",c:"creation",t:"Custom",
+    d:"Production-grade frontend interfaces with high design quality — no generic AI aesthetics.",
+    p:"skills/frontend-design/",g:["ui","design","react","html","css"]},
+  "cgt":{n:"Game Design Theory",i:"🎮",c:"special",t:"Custom",
+    d:"MDA framework, player psychology, balance principles, and progression systems for game design.",
+    p:"skills/game-design-theory/",g:["gamedev","mda","psychology","balance"]},
+  "cgp":{n:"Gepeto / Pinokio",i:"🚀",c:"special",t:"Custom",
+    d:"Builds 1-click launchers and apps with built-in launchers using the Pinokio ecosystem.",
+    p:"skills/gepeto/",g:["pinokio","launcher","1-click","automation"]},
+  "cgm":{n:"Grill Me",i:"🔥",c:"process",t:"Custom",
+    d:"Interviews relentlessly until a plan is fully understood — resolves every decision branch.",
+    p:"skills/grill-me/",g:["planning","questioning","stress-test"]},
+  "cig":{n:"Image Generation",i:"🖼",c:"creation",t:"Custom",
+    d:"Prompt engineering for DALL-E, Midjourney, and Stable Diffusion across styles and use cases.",
+    p:"skills/image-generation/",g:["prompting","midjourney","dalle","sd"]},
+  "civ":{n:"Image to Video",i:"🎬",c:"creation",t:"Custom",
+    d:"Animates still images on RunComfy — routes to HappyHorse I2V, Wan 2.7, or Seedance.",
+    p:"skills/image-to-video/",g:["i2v","animation","runcomfy","video"]},
+  "cia":{n:"Architecture Deepen",i:"🏗",c:"dev",t:"Custom",
+    d:"Finds deepening opportunities, consolidates tightly-coupled modules, makes codebases AI-navigable.",
+    p:"skills/improve-codebase-architecture/",g:["refactoring","architecture","modularity"]},
+  "cpn":{n:"Pinokio Launcher",i:"⚡",c:"special",t:"Custom",
+    d:"Discovers, launches, and manages apps from the Pinokio ecosystem with one command.",
+    p:"skills/pinokio/",g:["pinokio","launch","discovery"]},
+  "cpt":{n:"Pipeline Troubleshooter",i:"🔍",c:"dev",t:"Custom",
+    d:"Debugs CUDA errors, VAE mismatches, Conda fixes, and ComfyUI issues — root cause + fix.",
+    p:"skills/pipeline-troubleshooter/",g:["debugging","pipeline","cuda","comfyui"]},
+  "cpx":{n:"PowerPoint (pptx)",i:"📑",c:"business",t:"Custom",
+    d:"Full .pptx lifecycle: create, read, edit, merge decks with templates, notes, and comments.",
+    p:"skills/pptx/",g:["powerpoint","slides","presentation","office"]},
+  "cux":{n:"UI/UX Pro Max",i:"✨",c:"creation",t:"Custom",
+    d:"50+ styles, 161 color palettes, 57 font pairings, 99 UX guidelines across 10 tech stacks.",
+    p:"skills/ui-ux-pro-max/",g:["ui","ux","design-system","color","typography"]},
+  "cue":{n:"Unreal Engine C++",i:"🎯",c:"dev",t:"Custom",
+    d:"UE5 C++ expertise — UObject hygiene, performance patterns, memory management, production patterns.",
+    p:"skills/unreal-engine-cpp-pro/",g:["unreal","cpp","ue5","performance"]},
+  "cav":{n:"ArchViz Optimizer",i:"🏛",c:"special",t:"Custom",
+    d:"UE5 ArchViz optimization — draw calls, LODs, Nanite/Lumen for real estate visualization.",
+    p:"skills/archviz-optimizer/",g:["archviz","unreal","nanite","lumen"]},
+  "ccp":{n:"Creative Proposal Builder",i:"📋",c:"business",t:"Custom",
+    d:"Builds ArchViz/VR/UE5 consulting scopes, pricing, timelines, and deliverables.",
+    p:"skills/creative-proposal-builder/",g:["proposal","consulting","archviz","scope"]},
 
-  // ── SUPERPOWERS SKILLS (14) ──
-  "super-using-superpowers": {
-    name: "Using Superpowers", icon: "⚡", category: "process",
-    description: "FOUNDATIONAL SKILL. The rule: invoke relevant skills before ANY response. Even 1% chance = must invoke. Process skills first, then implementation.",
-    type: "Superpowers", path: "skills/using-superpowers/",
-    tags: ["foundation", "gate", "discipline", "skill-router"]
-  },
-  "super-brainstorming": {
-    name: "Brainstorming", icon: "💡", category: "process",
-    description: "Socratic design refinement. Explores user intent through structured dialogue before any implementation. Produces approved spec docs.",
-    type: "Superpowers", path: "skills/brainstorming/",
-    tags: ["planning", "design", "spec", "dialogue"]
-  },
-  "super-writing-plans": {
-    name: "Writing Plans", icon: "📝", category: "process",
-    description: "Creates bite-sized implementation plans from specs. Every step has file paths, code examples, exact commands. No placeholders allowed.",
-    type: "Superpowers", path: "skills/writing-plans/",
-    tags: ["planning", "spec", "implementation", "detail"]
-  },
-  "super-test-driven-development": {
-    name: "TDD", icon: "🔄", category: "process",
-    description: "Red-Green-Refactor cycle. IRON LAW: No production code without a failing test first. If you didn't watch it fail, it proves nothing.",
-    type: "Superpowers", path: "skills/test-driven-development/",
-    tags: ["testing", "tdd", "red-green-refactor", "discipline"]
-  },
-  "super-using-git-worktrees": {
-    name: "Git Worktrees", icon: "🌿", category: "process",
-    description: "Creates isolated workspaces for feature development. Prefers native worktree tools, falls back to git worktree add. Guards against workspace contamination.",
-    type: "Superpowers", path: "skills/using-git-worktrees/",
-    tags: ["git", "worktree", "isolation", "branching"]
-  },
-  "super-executing-plans": {
-    name: "Executing Plans", icon: "▶", category: "process",
-    description: "Executes written implementation plans with review checkpoints. Loads plan, creates todos, runs each step with verification, hands off to finishing branch.",
-    type: "Superpowers", path: "skills/executing-plans/",
-    tags: ["execution", "checkpoints", "verification", "flow"]
-  },
-  "super-subagent-driven-development": {
-    name: "Subagent Dev", icon: "🤖", category: "process",
-    description: "Fresh subagent per task with two-stage review: spec compliance first, then code quality. Continuous execution without human check-ins.",
-    type: "Superpowers", path: "skills/subagent-driven-development/",
-    tags: ["subagent", "parallel", "review", "automation"]
-  },
-  "super-requesting-code-review": {
-    name: "Request Review", icon: "👁", category: "quality",
-    description: "Dispatches code reviewer subagent with crafted context. Catches issues before they compound. Critical → fix now, Important → fix, Minor → note.",
-    type: "Superpowers", path: "skills/requesting-code-review/",
-    tags: ["review", "code-quality", "feedback", "subagent"]
-  },
-  "super-receiving-code-review": {
-    name: "Receive Review", icon: "📬", category: "quality",
-    description: "Handles feedback with technical rigor. READ → UNDERSTAND → VERIFY → EVALUATE → RESPOND → IMPLEMENT. Push back with evidence when reviewer is wrong.",
-    type: "Superpowers", path: "skills/receiving-code-review/",
-    tags: ["review", "feedback", "rigor", "verification"]
-  },
-  "super-systematic-debugging": {
-    name: "Systematic Debug", icon: "🔬", category: "quality",
-    description: "4-phase debugging: Root Cause → Pattern Analysis → Hypothesis → Implementation. NO FIX WITHOUT INVESTIGATION. After 3 failures, question architecture.",
-    type: "Superpowers", path: "skills/systematic-debugging/",
-    tags: ["debugging", "root-cause", "investigation", "rigor"]
-  },
-  "super-verification-before-completion": {
-    name: "Verify Before Done", icon: "✅", category: "quality",
-    description: "IRON LAW: No completion claims without fresh verification evidence. Run tests, lint, build — then report. 'Should work' is not acceptable.",
-    type: "Superpowers", path: "skills/verification-before-completion/",
-    tags: ["verification", "testing", "evidence", "discipline"]
-  },
-  "super-finishing-a-development-branch": {
-    name: "Finish Branch", icon: "🏁", category: "process",
-    description: "Guides completion: merge locally, push + PR, keep branch, or discard. Environment-aware with safety confirmations. Prevents common cleanup mistakes.",
-    type: "Superpowers", path: "skills/finishing-a-development-branch/",
-    tags: ["git", "branch", "merge", "pr", "cleanup"]
-  },
-  "super-dispatching-parallel-agents": {
-    name: "Parallel Agents", icon: "🧩", category: "process",
-    description: "Identifies independent tasks, dispatches concurrent subagents, integrates results. Optimizes for speed by solving multiple problems simultaneously.",
-    type: "Superpowers", path: "skills/dispatching-parallel-agents/",
-    tags: ["parallel", "concurrency", "subagent", "speed"]
-  },
-  "super-writing-skills": {
-    name: "Writing Skills", icon: "✏", category: "quality",
-    description: "TDD for process documentation. IRON LAW: No skill without a failing test first. Watch agents fail without the skill, then write to fix specific failures.",
-    type: "Superpowers", path: "skills/writing-skills/",
-    tags: ["skill-creation", "tdd", "documentation", "testing"]
-  },
+  // Superpowers (14)
+  "sus":{n:"Using Superpowers",i:"⚡",c:"process",t:"Superpowers",
+    d:"FOUNDATIONAL: Invoke relevant skills before ANY response. Even 1% chance = must invoke.",
+    p:"skills/using-superpowers/",g:["foundation","gate","discipline","router"]},
+  "sbr":{n:"Brainstorming",i:"💡",c:"process",t:"Superpowers",
+    d:"Socratic design refinement. Explores intent through dialogue before any implementation.",
+    p:"skills/brainstorming/",g:["planning","design","spec","dialogue"]},
+  "swp":{n:"Writing Plans",i:"📝",c:"process",t:"Superpowers",
+    d:"Bite-sized implementation plans from specs. Every step has file paths, code, commands. No placeholders.",
+    p:"skills/writing-plans/",g:["planning","spec","implementation","detail"]},
+  "std":{n:"TDD",i:"🔄",c:"process",t:"Superpowers",
+    d:"Red-Green-Refactor. IRON LAW: No code without a failing test first. Watch it fail or it proves nothing.",
+    p:"skills/test-driven-development/",g:["testing","tdd","red-green-refactor","discipline"]},
+  "sgw":{n:"Git Worktrees",i:"🌿",c:"process",t:"Superpowers",
+    d:"Isolated workspaces for feature development. Prefers native tools, falls back to git worktree.",
+    p:"skills/using-git-worktrees/",g:["git","worktree","isolation","branching"]},
+  "sep":{n:"Executing Plans",i:"▶",c:"process",t:"Superpowers",
+    d:"Runs implementation plans with review checkpoints. Verification + handoff to finish-branch.",
+    p:"skills/executing-plans/",g:["execution","checkpoints","verification","flow"]},
+  "ssd":{n:"Subagent Dev",i:"🤖",c:"process",t:"Superpowers",
+    d:"Fresh subagent per task + two-stage review — spec compliance then code quality.",
+    p:"skills/subagent-driven-development/",g:["subagent","parallel","review","automation"]},
+  "srq":{n:"Request Review",i:"👁",c:"quality",t:"Superpowers",
+    d:"Code reviewer subagent with crafted context. Critical → fix now. Important → fix. Minor → note.",
+    p:"skills/requesting-code-review/",g:["review","code-quality","feedback","subagent"]},
+  "src":{n:"Receive Review",i:"📬",c:"quality",t:"Superpowers",
+    d:"READ → UNDERSTAND → VERIFY → EVALUATE → RESPOND → IMPLEMENT. Push back with evidence.",
+    p:"skills/receiving-code-review/",g:["review","feedback","rigor","verification"]},
+  "sdb":{n:"Systematic Debug",i:"🔬",c:"quality",t:"Superpowers",
+    d:"4-phase: Root Cause → Pattern Analysis → Hypothesis → Implementation. NO FIX WITHOUT INVESTIGATION.",
+    p:"skills/systematic-debugging/",g:["debugging","root-cause","investigation","rigor"]},
+  "svb":{n:"Verify Before Done",i:"✅",c:"quality",t:"Superpowers",
+    d:"IRON LAW: No completion claims without fresh verification. Run tests, lint, build — then report.",
+    p:"skills/verification-before-completion/",g:["verification","testing","evidence","discipline"]},
+  "sfb":{n:"Finish Branch",i:"🏁",c:"process",t:"Superpowers",
+    d:"Merge locally, push + PR, keep branch, or discard — with safety confirmations and cleanup.",
+    p:"skills/finishing-a-development-branch/",g:["git","branch","merge","pr","cleanup"]},
+  "spa":{n:"Parallel Agents",i:"🧩",c:"process",t:"Superpowers",
+    d:"Identifies independent tasks, dispatches concurrent subagents, integrates results for speed.",
+    p:"skills/dispatching-parallel-agents/",g:["parallel","concurrency","subagent","speed"]},
+  "sws":{n:"Writing Skills",i:"✏",c:"quality",t:"Superpowers",
+    d:"TDD for documentation. IRON LAW: No skill without failing test. Watch agents fail without it first.",
+    p:"skills/writing-skills/",g:["skill-creation","tdd","documentation","testing"]},
 
-  // ── BONUS SKILLS (2 — from extended library) ──
-  "bonus-architecture-diagram": {
-    name: "Architecture Diagram", icon: "📐", category: "dev",
-    description: "Build interactive, click-through architecture diagrams for software systems — single HTML file with animated step-by-step flows, mode toggles, and dark/light theme.",
-    type: "Bonus", path: "skills/architecture-diagram/",
-    tags: ["diagram", "architecture", "flow", "visualization"]
-  },
-  "bonus-3ds-max-bridge": {
-    name: "3ds Max Bridge", icon: "🏗", category: "special",
-    description: "HTTP bridge for 3ds Max automation. Script scene operations, render control, and asset management from a remote API.",
-    type: "Bonus", path: "skills/3ds-max-bridge/",
-    tags: ["3ds-max", "automation", "bridge", "http"]
-  }
+  // Bonus (2)
+  "bad":{n:"Architecture Diagram",i:"📐",c:"dev",t:"Bonus",
+    d:"Interactive system architecture diagrams — single HTML file with animated flows, mode toggles, themes.",
+    p:"skills/architecture-diagram/",g:["diagram","architecture","flow","visualization"]},
+  "b3d":{n:"3ds Max Bridge",i:"🏗",c:"special",t:"Bonus",
+    d:"HTTP bridge for 3ds Max automation — scene ops, render control, asset management via API.",
+    p:"skills/3ds-max-bridge/",g:["3ds-max","automation","bridge","http"]}
 };
+const IDS=Object.keys(S);
 
-// ── Interaction / Flow Edges ──
-// These represent the natural workflow chain between skills
-const EDGES = [
-  // Superpowers flow (process pipeline)
-  ["super-using-superpowers", "super-brainstorming"],
-  ["super-brainstorming", "super-writing-plans"],
-  ["super-writing-plans", "super-test-driven-development"],
-  ["super-test-driven-development", "super-using-git-worktrees"],
-  ["super-using-git-worktrees", "super-executing-plans"],
-  ["super-executing-plans", "super-subagent-driven-development"],
-  ["super-subagent-driven-development", "super-requesting-code-review"],
-  ["super-requesting-code-review", "super-receiving-code-review"],
-  ["super-receiving-code-review", "super-systematic-debugging"],
-  ["super-systematic-debugging", "super-verification-before-completion"],
-  ["super-verification-before-completion", "super-finishing-a-development-branch"],
-  ["super-finishing-a-development-branch", "super-dispatching-parallel-agents"],
-  ["super-dispatching-parallel-agents", "super-brainstorming"],  // cycle back
-
-  // Process skills feed into creative/dev skills
-  ["super-brainstorming", "custom-frontend-design"],
-  ["super-brainstorming", "custom-ui-ux-pro-max"],
-  ["super-writing-plans", "custom-building-ui-bundle-frontend"],
-  ["super-writing-plans", "custom-3d-visualizer"],
-  ["super-test-driven-development", "custom-improve-codebase-architecture"],
-  ["super-test-driven-development", "custom-unreal-engine-cpp-pro"],
-  ["super-executing-plans", "custom-comfyui-workflow-builder"],
-  ["super-executing-plans", "custom-image-to-video"],
-
-  // Custom skill cross-connections
-  ["custom-frontend-design", "custom-ui-ux-pro-max"],
-  ["custom-ui-ux-pro-max", "custom-building-ui-bundle-frontend"],
-  ["custom-3d-visualizer", "custom-archviz-optimizer"],
-  ["custom-3d-visualizer", "custom-unreal-engine-cpp-pro"],
-  ["custom-image-generation", "custom-image-to-video"],
-  ["custom-image-generation", "custom-comfyui-workflow-builder"],
-  ["custom-consulting-analysis", "custom-data-storytelling"],
-  ["custom-consulting-analysis", "custom-creative-proposal-builder"],
-  ["custom-pptx", "custom-data-storytelling"],
-  ["custom-digital-twin-generation", "custom-image-to-video"],
-  ["custom-comfyui-workflow-builder", "custom-image-to-video"],
-  ["custom-game-design-theory", "custom-ui-ux-pro-max"],
-  ["custom-grill-me", "custom-consulting-analysis"],
-  ["custom-pipeline-troubleshooter", "custom-improve-codebase-architecture"],
-
-  // Specialist cross-links
-  ["custom-gepeto", "custom-pinokio"],
-  ["custom-archviz-optimizer", "custom-creative-proposal-builder"],
-
-  // Superpowers quality feeding custom
-  ["super-requesting-code-review", "custom-building-ui-bundle-frontend"],
-  ["super-requesting-code-review", "custom-frontend-design"],
-  ["super-systematic-debugging", "custom-pipeline-troubleshooter"],
-  ["super-systematic-debugging", "custom-improve-codebase-architecture"],
-  ["super-verification-before-completion", "custom-unreal-engine-cpp-pro"],
-  ["super-verification-before-completion", "custom-pptx"],
-
-  // Bonus skill connections
-  ["bonus-architecture-diagram", "custom-3d-visualizer"],
-  ["bonus-architecture-diagram", "custom-improve-codebase-architecture"],
-  ["bonus-architecture-diagram", "custom-consulting-analysis"],
-  ["bonus-3ds-max-bridge", "custom-archviz-optimizer"],
-  ["bonus-3ds-max-bridge", "custom-unreal-engine-cpp-pro"],
-  ["super-brainstorming", "bonus-architecture-diagram"],
-  ["super-writing-plans", "bonus-3ds-max-bridge"],
+// Edges
+const E=[
+  ["sus","sbr"],["sbr","swp"],["swp","std"],["std","sgw"],["sgw","sep"],
+  ["sep","ssd"],["ssd","srq"],["srq","src"],["src","sdb"],["sdb","svb"],
+  ["svb","sfb"],["sfb","spa"],["spa","sbr"],
+  ["sbr","cfd"],["sbr","cux"],["sbr","c3d"],
+  ["swp","cui"],["swp","ccf"],["swp","civ"],
+  ["std","cia"],["std","cue"],
+  ["sep","cig"],["sep","ccf"],["sep","civ"],
+  ["srq","cui"],["srq","cfd"],
+  ["sdb","cpt"],["sdb","cia"],
+  ["svb","cue"],["svb","cpx"],
+  ["cfd","cux"],["cux","cui"],
+  ["c3d","cav"],["c3d","cue"],
+  ["cig","civ"],["cig","ccf"],
+  ["cca","cds"],["cca","ccp"],
+  ["cpx","cds"],["cdt","civ"],
+  ["cgp","cpn"],["cav","ccp"],
+  ["cgt","cux"],["cgm","cca"],
+  ["bad","c3d"],["bad","cia"],["bad","cca"],
+  ["b3d","cav"],["b3d","cue"],
+  ["sbr","bad"],["swp","b3d"]
 ];
 
-// ── Category Colors ──
-const CAT_COLORS = {
-  creation: { bg: "#312e81", ring: "#6366f1", text: "#a5b4fc" },
-  dev:      { bg: "#0f3d5c", ring: "#22d3ee", text: "#67e8f9" },
-  process:  { bg: "#0f3d2e", ring: "#34d399", text: "#6ee7b7" },
-  quality:  { bg: "#3d2e0f", ring: "#fbbf24", text: "#fde68a" },
-  business: { bg: "#3d1760", ring: "#c084fc", text: "#d8b4fe" },
-  special:  { bg: "#3d0f27", ring: "#f472b6", text: "#f9a8d4" },
+// Category config
+const CAT={
+  creation:{clr:"#6366f1",lbl:"Creation"},
+  dev:{clr:"#22d3ee",lbl:"Dev"},
+  process:{clr:"#34d399",lbl:"Process"},
+  quality:{clr:"#fbbf24",lbl:"Quality"},
+  business:{clr:"#c084fc",lbl:"Business"},
+  special:{clr:"#f472b6",lbl:"Specialist"}
 };
-const CAT_ORDER = ["creation","dev","process","quality","business","special"];
+const CAT_KEYS=Object.keys(CAT);
 
-// ════════════════════════════════════════════════════════════════
-// GRAPH SETUP
-// ════════════════════════════════════════════════════════════════
-const svg = document.getElementById('graph-svg');
-const NS = 'http://www.w3.org/2000/svg';
-let width, height;
-let simulation = null;
-let nodeElements = {}, edgeElements = {}, labelElements = {};
-let activeFilter = 'all';
-let activeId = null;
-let searchQuery = '';
-let allIds = Object.keys(SKILLS);
+// ═══════════════════════════════════════════════════
+// CANVAS ENGINE
+// ═══════════════════════════════════════════════════
+const cnv=document.getElementById('c');
+const ctx=cnv.getContext('2d');
+let W,H,centerX,centerY;
 
-// ── Resize ──
-function resize() {
-  const c = document.getElementById('graph-container');
-  width = c.clientWidth;
-  height = c.clientHeight;
-  svg.setAttribute('width', width);
-  svg.setAttribute('height', height);
+function resize(){
+  W=cnv.width=window.innerWidth;
+  H=cnv.height=window.innerHeight;
+  centerX=W/2;centerY=H/2;
 }
-window.addEventListener('resize', resize);
+window.addEventListener('resize',resize);
+resize();
 
-// ── Force Simulation ──
-function buildGraph() {
-  resize();
+// ── Skills → Nodes ──
+const NODES={},NODES_A=[];
+let selId=null,hovId=null;
+let activeFilter='all',searchQ='';
 
-  // Clear
-  while (svg.firstChild) svg.removeChild(svg.firstChild);
-
-  // Build node data
-  const nodes = allIds.map(id => {
-    const s = SKILLS[id];
-    const col = CAT_COLORS[s.category] || CAT_COLORS.process;
-    return { id, ...s, color: col };
-  });
-  const nodeMap = {};
-  nodes.forEach(n => nodeMap[n.id] = n);
-
-  // Build edge data
-  const edges = EDGES.filter(([s, t]) => nodeMap[s] && nodeMap[t]).map(([s, t]) => ({ s, t }));
-
-  // Defs: arrows, gradients, glows
-  const defs = document.createElementNS(NS, 'defs');
-
-  // Arrow marker
-  const marker = document.createElementNS(NS, 'marker');
-  marker.setAttribute('id', 'arrow');
-  marker.setAttribute('viewBox', '0 0 10 10');
-  marker.setAttribute('refX', '20');
-  marker.setAttribute('refY', '5');
-  marker.setAttribute('markerWidth', '5');
-  marker.setAttribute('markerHeight', '5');
-  marker.setAttribute('orient', 'auto-start-reverse');
-  const arrowPath = document.createElementNS(NS, 'path');
-  arrowPath.setAttribute('d', 'M 0 0 L 10 5 L 0 10 z');
-  arrowPath.setAttribute('fill', 'rgba(255,255,255,0.08)');
-  marker.appendChild(arrowPath);
-  defs.appendChild(marker);
-
-  // Glow filters per category
-  CAT_ORDER.forEach(cat => {
-    const filter = document.createElementNS(NS, 'filter');
-    filter.setAttribute('id', `glow-${cat}`);
-    filter.setAttribute('x', '-50%'); filter.setAttribute('y', '-50%');
-    filter.setAttribute('width', '200%'); filter.setAttribute('height', '200%');
-    const blur = document.createElementNS(NS, 'feGaussianBlur');
-    blur.setAttribute('stdDeviation', '3');
-    blur.setAttribute('result', 'blur');
-    filter.appendChild(blur);
-    const merge = document.createElementNS(NS, 'feMerge');
-    const m1 = document.createElementNS(NS, 'feMergeNode'); m1.setAttribute('in', 'blur');
-    const m2 = document.createElementNS(NS, 'feMergeNode'); m2.setAttribute('in', 'SourceGraphic');
-    merge.appendChild(m1); merge.appendChild(m2);
-    filter.appendChild(merge);
-    defs.appendChild(filter);
-  });
-  svg.appendChild(defs);
-
-  // ── Edges group ──
-  const edgeGroup = document.createElementNS(NS, 'g');
-  edgeGroup.setAttribute('class', 'edges');
-  svg.appendChild(edgeGroup);
-
-  edges.forEach(e => {
-    const line = document.createElementNS(NS, 'line');
-    line.setAttribute('class', 'edge-line');
-    line.setAttribute('marker-end', 'url(#arrow)');
-    line.setAttribute('data-source', e.s);
-    line.setAttribute('data-target', e.t);
-    edgeGroup.appendChild(line);
-    edgeElements[e.s + '→' + e.t] = line;
-  });
-
-  // ── Nodes group ──
-  const nodeGroup = document.createElementNS(NS, 'g');
-  nodeGroup.setAttribute('class', 'nodes');
-  svg.appendChild(nodeGroup);
-
-  nodes.forEach(n => {
-    const g = document.createElementNS(NS, 'g');
-    g.setAttribute('class', 'node-group');
-    g.setAttribute('data-id', n.id);
-    g.setAttribute('data-category', n.category);
-    g.setAttribute('data-type', n.type.toLowerCase());
-
-    // Ring
-    const ring = document.createElementNS(NS, 'circle');
-    ring.setAttribute('r', '24');
-    ring.setAttribute('class', 'node-ring');
-    ring.setAttribute('stroke', n.color.ring);
-    g.appendChild(ring);
-
-    // BG circle
-    const bg = document.createElementNS(NS, 'circle');
-    bg.setAttribute('r', '18');
-    bg.setAttribute('class', 'node-bg');
-    bg.setAttribute('fill', n.color.bg);
-    bg.setAttribute('stroke', 'none');
-    g.appendChild(bg);
-
-    // Icon text
-    const icon = document.createElementNS(NS, 'text');
-    icon.setAttribute('class', 'node-icon');
-    icon.setAttribute('dominant-baseline', 'central');
-    icon.setAttribute('text-anchor', 'middle');
-    icon.setAttribute('y', '1');
-    icon.textContent = n.icon;
-    g.appendChild(icon);
-
-    // Label
-    const label = document.createElementNS(NS, 'text');
-    label.setAttribute('class', 'node-label');
-    label.setAttribute('y', '32');
-    label.setAttribute('data-id', n.id);
-    label.textContent = n.name;
-    g.appendChild(label);
-    labelElements[n.id] = label;
-
-    // Click
-    g.addEventListener('click', () => showInfo(n.id));
-    g.addEventListener('mouseenter', () => highlightNode(n.id));
-    g.addEventListener('mouseleave', () => unhighlightNode());
-
-    nodeGroup.appendChild(g);
-    nodeElements[n.id] = { g, ring, bg, icon };
-  });
-
-  // ── Simulation ──
-  const simNodes = nodes.map(n => ({ ...n, x: width/2 + (Math.random()-0.5)*width*0.6, y: height/2 + (Math.random()-0.5)*height*0.4 }));
-
-  simulation = {
-    nodes: simNodes,
-    edges,
-    tick() {
-      const centerX = width/2, centerY = height/2;
-      const k = 0.02;
-
-      // Group nodes by category for cluster layout
-      const catRadii = { creation: 200, dev: 180, process: 160, quality: 140, business: 190, special: 170 };
-      const catAngles = {};
-      CAT_ORDER.forEach((c, i) => { catAngles[c] = (i / CAT_ORDER.length) * Math.PI * 2; });
-      const catCounts = {};
-      this.nodes.forEach(n => { catCounts[n.category] = (catCounts[n.category] || 0) + 1; });
-
-      // Force: center attraction
-      const centerForce = 0.008;
-      this.nodes.forEach(n => {
-        n.vx = (n.vx || 0) * 0.95;
-        n.vy = (n.vy || 0) * 0.95;
-        n.vx += (centerX - n.x) * centerForce;
-        n.vy += (centerY - n.y) * centerForce;
-      });
-
-      // Force: category clusters
-      const clusterForce = 0.006;
-      const nodeSpacing = (Math.PI * 2) / Math.max(catCounts[n.category] || 4, 1);
-      let idx = {};
-      CAT_ORDER.forEach(c => idx[c] = 0);
-      this.nodes.forEach(n => {
-        const total = catCounts[n.category] || 4;
-        const i = idx[n.category];
-        const angle = catAngles[n.category] + (i / total) * Math.PI * 0.8 - Math.PI * 0.4;
-        const targetX = centerX + Math.cos(angle) * (catRadii[n.category] || 160);
-        const targetY = centerY + Math.sin(angle) * (catRadii[n.category] || 160);
-        n.vx += (targetX - n.x) * clusterForce;
-        n.vy += (targetY - n.y) * clusterForce;
-        idx[n.category]++;
-      });
-
-      // Force: repulsion
-      const repulsion = 400;
-      for (let i = 0; i < this.nodes.length; i++) {
-        for (let j = i + 1; j < this.nodes.length; j++) {
-          const a = this.nodes[i], b = this.nodes[j];
-          let dx = a.x - b.x, dy = a.y - b.y;
-          let dist = Math.sqrt(dx*dx + dy*dy) || 1;
-          let force = repulsion / (dist * dist);
-          if (dist < 60) force *= 3;  // keep nodes apart
-          if (dist < 30) force *= 5;
-          a.vx += (dx / dist) * force;
-          a.vy += (dy / dist) * force;
-          b.vx -= (dx / dist) * force;
-          b.vy -= (dy / dist) * force;
-        }
-      }
-
-      // Edge tension
-      const edgeForce = 0.0004;
-      this.edges.forEach(e => {
-        const a = this.nodes.find(n => n.id === e.s);
-        const b = this.nodes.find(n => n.id === e.t);
-        if (!a || !b) return;
-        const dx = a.x - b.x, dy = a.y - b.y;
-        const dist = Math.sqrt(dx*dx + dy*dy) || 1;
-        const ideal = 120;
-        const f = (dist - ideal) * edgeForce;
-        a.vx -= (dx / dist) * f;
-        a.vy -= (dy / dist) * f;
-        b.vx += (dx / dist) * f;
-        b.vy += (dy / dist) * f;
-      });
-
-      // Apply velocities
-      this.nodes.forEach(n => {
-        n.x += n.vx;
-        n.y += n.vy;
-        n.x = Math.max(40, Math.min(width - 40, n.x));
-        n.y = Math.max(40, Math.min(height - 40, n.y));
-        // Store fixed position flag
-        n.fixed = false;
-      });
-
-      // Render
-      this.render();
-    },
-    render() {
-      const nodeMap = {};
-      this.nodes.forEach(n => nodeMap[n.id] = n);
-
-      // Update node positions
-      this.nodes.forEach(n => {
-        const el = nodeElements[n.id];
-        if (!el) return;
-        el.g.setAttribute('transform', `translate(${n.x},${n.y})`);
-      });
-
-      // Update edge positions
-      this.edges.forEach(e => {
-        const line = edgeElements[e.s + '→' + e.t];
-        if (!line) return;
-        const a = nodeMap[e.s], b = nodeMap[e.t];
-        if (!a || !b) return;
-        const dx = b.x - a.x, dy = b.y - a.y;
-        const dist = Math.sqrt(dx*dx + dy*dy);
-        const r = 22;
-        const sx = a.x + (dx / dist) * r;
-        const sy = a.y + (dy / dist) * r;
-        const tx = b.x - (dx / dist) * r;
-        const ty = b.y - (dy / dist) * r;
-        line.setAttribute('x1', sx);
-        line.setAttribute('y1', sy);
-        line.setAttribute('x2', tx);
-        line.setAttribute('y2', ty);
-      });
-    }
-  };
-
-  // Animation loop
-  let animId;
-  function animate() {
-    simulation.tick();
-    animId = requestAnimationFrame(animate);
-  }
-  animate();
-
-  // Stop animation after it settles
-  setTimeout(() => { if (animId) cancelAnimationFrame(animId); }, 8000);
-
-  // ── Initial filter ──
-  applyFilter('all');
-}
-
-// ════════════════════════════════════════════════════════════════
-// INTERACTIONS
-// ════════════════════════════════════════════════════════════════
-
-function applyFilter(filter) {
-  activeFilter = filter;
-  let visibleCount = 0;
-
-  allIds.forEach(id => {
-    const s = SKILLS[id];
-    const el = nodeElements[id];
-    if (!el) return;
-
-    let visible = true;
-    if (filter === 'superpowers' && s.type !== 'Superpowers') visible = false;
-    else if (filter === 'custom' && s.type !== 'Custom') visible = false;
-    else if (filter !== 'all' && filter !== 'superpowers' && filter !== 'custom') {
-      if (s.category !== filter) visible = false;
-    }
-
-    el.g.style.display = visible ? '' : 'none';
-    if (visible) visibleCount++;
-  });
-
-  // Show/hide edges based on both endpoints being visible
-  Object.keys(edgeElements).forEach(key => {
-    const [s, t] = key.split('→');
-    const sEl = nodeElements[s], tEl = nodeElements[t];
-    const sVis = sEl && sEl.g.style.display !== 'none';
-    const tVis = tEl && tEl.g.style.display !== 'none';
-    edgeElements[key].style.display = (sVis && tVis) ? '' : 'none';
-  });
-
-  document.getElementById('count-visible').textContent = visibleCount;
-
-  // Update filter buttons
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.filter === filter);
-  });
-}
-
-function highlightNode(id) {
-  const s = SKILLS[id];
-  if (!s) return;
-
-  // Dim all nodes
-  allIds.forEach(nid => {
-    const el = nodeElements[nid];
-    if (!el) return;
-    if (nid === id) {
-      el.ring.classList.add('active');
-      el.bg.setAttribute('filter', `url(#glow-${s.category})`);
-    } else {
-      el.g.style.opacity = '0.25';
-    }
-  });
-
-  // Highlight connected edges
-  Object.keys(edgeElements).forEach(key => {
-    const [src, tgt] = key.split('→');
-    if (src === id || tgt === id) {
-      edgeElements[key].classList.add('active');
-    }
-  });
-}
-
-function unhighlightNode() {
-  allIds.forEach(nid => {
-    const el = nodeElements[nid];
-    if (!el) return;
-    el.ring.classList.remove('active');
-    el.bg.removeAttribute('filter');
-    el.g.style.opacity = '1';
-  });
-  Object.keys(edgeElements).forEach(key => {
-    edgeElements[key].classList.remove('active');
-  });
-}
-
-function showInfo(id) {
-  const s = SKILLS[id];
-  if (!s) return;
-  activeId = id;
-
-  const panel = document.getElementById('info-panel');
-  const col = CAT_COLORS[s.category] || CAT_COLORS.process;
-
-  document.getElementById('p-name').textContent = `${s.icon} ${s.name}`;
-  document.getElementById('p-badge').textContent = s.type;
-  document.getElementById('p-badge').style.background = col.bg;
-  document.getElementById('p-badge').style.color = col.text;
-  document.getElementById('p-category').textContent = `Category: ${s.category.toUpperCase()} · ${s.tags.slice(0,4).join(' · ')}`;
-  document.getElementById('p-desc').textContent = s.description;
-  document.getElementById('p-meta').innerHTML = `📁 ${s.path} · ${s.type}`;
-
-  panel.classList.add('visible');
-}
-
-// ── Close panel ──
-document.getElementById('p-close').addEventListener('click', () => {
-  document.getElementById('info-panel').classList.remove('visible');
-  activeId = null;
+IDS.forEach(id=>{
+  const s=S[id];
+  NODES[id]={id,x:0,y:0,vx:0,vy:0,tx:0,ty:0,rad:22,...s};
+  NODES_A.push(NODES[id]);
 });
 
-// ── Filter buttons ──
-document.querySelectorAll('.filter-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    applyFilter(btn.dataset.filter);
-    document.getElementById('info-panel').classList.remove('visible');
+// ── Layout: orbital rings for categories ──
+const baseRings={
+  creation:180,dev:220,process:130,quality:160,business:240,special:260
+};
+const ringAngles={};
+CAT_KEYS.forEach((k,i)=>{ringAngles[k]=(i/CAT_KEYS.length)*Math.PI*2 - Math.PI/2});
+
+function layoutNodes(){
+  const counts={};CAT_KEYS.forEach(k=>counts[k]=0);
+  NODES_A.forEach(n=>{if(n.c&&counts[n.c]!==undefined)counts[n.c]++});
+  const offsets={};CAT_KEYS.forEach(k=>offsets[k]=0);
+  const pad=0.6;
+  NODES_A.forEach(n=>{
+    const c=n.c;
+    if(!c||counts[c]===undefined){n.tx=centerX+(Math.random()-0.5)*200;n.ty=centerY+(Math.random()-0.5)*200;return}
+    const total=counts[c],i=offsets[c]++;
+    const angle=ringAngles[c]+(i/total)*Math.PI*pad - Math.PI*pad/2;
+    const r=baseRings[c]||180;
+    const jitter=(Math.random()-0.5)*20;
+    n.tx=centerX+Math.cos(angle)*(r+jitter);
+    n.ty=centerY+Math.sin(angle)*(r+jitter);
+  });
+}
+layoutNodes();
+
+// ── Particles ──
+const PTS=[];
+for(let i=0;i<60;i++){
+  PTS.push({
+    x:Math.random()*W,y:Math.random()*H,
+    vx:(Math.random()-0.5)*0.2,vy:(Math.random()-0.5)*0.2,
+    r:Math.random()*1.2+0.3,a:Math.random()*0.3+0.1
+  });
+}
+
+// ── Animation state ──
+let time=0;
+
+// ═══════════════════════════════════════════════════
+// MAIN LOOP
+// ═══════════════════════════════════════════════════
+function draw(){
+  time+=0.005;
+  
+  // ── Clear ──
+  ctx.clearRect(0,0,W,H);
+  
+  // ── Background gradient ──
+  const grd=ctx.createRadialGradient(centerX,centerY,0,centerX,centerY,Math.max(W,H)*0.7);
+  grd.addColorStop(0,'#0f1729');
+  grd.addColorStop(0.5,'#0a0e1a');
+  grd.addColorStop(1,'#060810');
+  ctx.fillStyle=grd;
+  ctx.fillRect(0,0,W,H);
+  
+  // ── Particles ──
+  PTS.forEach(p=>{
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0)p.x=W;if(p.x>W)p.x=0;
+    if(p.y<0)p.y=H;if(p.y>H)p.y=0;
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle=`rgba(192,132,252,${p.a})`;
+    ctx.fill();
+  });
+  
+  // ── Particle connections ──
+  for(let i=0;i<PTS.length;i++){
+    for(let j=i+1;j<PTS.length;j++){
+      const dx=PTS[i].x-PTS[j].x,dy=PTS[i].y-PTS[j].y;
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<120){
+        ctx.beginPath();
+        ctx.moveTo(PTS[i].x,PTS[i].y);
+        ctx.lineTo(PTS[j].x,PTS[j].y);
+        ctx.strokeStyle=`rgba(192,132,252,${0.03*(1-dist/120)})`;
+        ctx.stroke();
+      }
+    }
+  }
+  
+  // ── Move nodes toward targets ──
+  NODES_A.forEach(n=>{
+    const dx=n.tx-n.x,dy=n.ty-n.y;
+    const dist=Math.sqrt(dx*dx+dy*dy);
+    if(dist>0.5){
+      n.vx+=dx*0.03;n.vy+=dy*0.03;
+    }
+    n.vx*=0.92;n.vy*=0.92;
+    n.x+=n.vx;n.y+=n.vy;
+  });
+  
+  // ── Determine which nodes are visible ──
+  const visible={};
+  let visCount=0;
+  NODES_A.forEach(n=>{
+    let v=true;
+    if(activeFilter!=='all'&&activeFilter!=='superpowers'&&activeFilter!=='custom'){
+      if(n.c!==activeFilter)v=false;
+    }
+    if(activeFilter==='superpowers'&&n.t!=='Superpowers')v=false;
+    if(activeFilter==='custom'&&n.t!=='Custom')v=false;
+    if(searchQ){
+      const q=searchQ.toLowerCase();
+      const mt=n.n.toLowerCase().includes(q)||n.d.toLowerCase().includes(q)||n.g.some(g=>g.includes(q));
+      if(!mt)v=false;
+    }
+    visible[n.id]=v;
+    if(v)visCount++;
+  });
+  document.getElementById('vcount').textContent=visCount;
+  document.getElementById('empty').classList.toggle('show',visCount===0);
+  
+  // ── Draw edges ──
+  E.forEach(([s,t])=>{
+    const a=NODES[s],b=NODES[t];
+    if(!a||!b)return;
+    if(!visible[s]||!visible[t])return;
+    const dx=b.x-a.x,dy=b.y-a.y;
+    const dist=Math.sqrt(dx*dx+dy*dy);
+    if(dist<5)return;
+    const r=22;
+    const sx=a.x+(dx/dist)*r,sy=a.y+(dy/dist)*r;
+    const tx=b.x-(dx/dist)*r,ty=b.y-(dy/dist)*r;
+    
+    // Check if edge touches hovered or selected node
+    const isActive=(hovId&&(s===hovId||t===hovId))||(selId&&(s===selId||t===selId));
+    
+    ctx.beginPath();
+    ctx.moveTo(sx,sy);
+    ctx.lineTo(tx,ty);
+    ctx.strokeStyle=isActive?`rgba(192,132,252,0.35)`:`rgba(255,255,255,0.05)`;
+    ctx.lineWidth=isActive?1.5:0.8;
+    ctx.stroke();
+  });
+  
+  // ── Draw category rings ──
+  CAT_KEYS.forEach(c=>{
+    const clr=CAT[c].clr;
+    // Count visible nodes in this category
+    let cnt=0;
+    NODES_A.forEach(n=>{if(n.c===c&&visible[n.id])cnt++});
+    if(cnt<2)return;
+    // Draw faint ring
+    const r=baseRings[c]||180;
+    ctx.beginPath();
+    ctx.arc(centerX,centerY,r,0,Math.PI*2);
+    ctx.strokeStyle=clr+'08';
+    ctx.lineWidth=1;
+    ctx.setLineDash([3,6]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+  });
+  
+  // ── Draw nodes ──
+  NODES_A.forEach(n=>{
+    if(!visible[n.id])return;
+    
+    const clr=CAT[n.c]?CAT[n.c].clr:'#64748b';
+    const isHov=n.id===hovId;
+    const isSel=n.id===selId;
+    const glow=isHov||isSel;
+    
+    // Glow
+    if(glow){
+      const g=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,30);
+      g.addColorStop(0,clr+'25');
+      g.addColorStop(1,'transparent');
+      ctx.beginPath();ctx.arc(n.x,n.y,30,0,Math.PI*2);
+      ctx.fillStyle=g;ctx.fill();
+    }
+    
+    // Pulse ring
+    if(isSel){
+      const pulse=0.5+0.5*Math.sin(time*3);
+      ctx.beginPath();ctx.arc(n.x,n.y,28+pulse*4,0,Math.PI*2);
+      ctx.strokeStyle=clr+Math.floor(80*pulse).toString(16).padStart(2,'0');
+      ctx.lineWidth=1.5;ctx.stroke();
+    }
+    
+    // Outer ring
+    ctx.beginPath();ctx.arc(n.x,n.y,24,0,Math.PI*2);
+    ctx.strokeStyle=glow?clr:clr+'55';
+    ctx.lineWidth=isHov?2:1.2;ctx.stroke();
+    
+    // BG circle
+    ctx.beginPath();ctx.arc(n.x,n.y,18,0,Math.PI*2);
+    ctx.fillStyle=glow?clr+'30':clr+'15';
+    ctx.fill();
+    
+    // Icon
+    ctx.font='16px sans-serif';
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(n.i,n.x,n.y+1);
+    
+    // Label — show for hovered/selected, or just a short name always
+    const showLabel=isHov||isSel;
+    if(showLabel){
+      ctx.font='bold 9px system-ui,-apple-system,sans-serif';
+      ctx.textAlign='center';ctx.textBaseline='top';
+      const txt=n.n;
+      ctx.fillStyle='rgba(0,0,0,0.5)';
+      const m=ctx.measureText(txt);
+      const pw=6,ph=4,pad=4;
+      const bw=m.width+pad*2+pw;
+      ctx.roundRect?.(n.x-bw/2,n.y+26,bw,16+ph,4)||ctx.fillRect(n.x-bw/2,n.y+26,bw,16+ph);
+      ctx.fillStyle='rgba(8,12,24,0.85)';
+      ctx.fillRect(n.x-bw/2,n.y+26,bw,16+ph);
+      ctx.fillStyle='#e2e8f0';
+      ctx.fillText(txt,n.x,n.y+28);
+    }
+  });
+  
+  requestAnimationFrame(draw);
+}
+
+// ═══════════════════════════════════════════════════
+// INTERACTIONS
+// ═══════════════════════════════════════════════════
+
+function getNodeAt(x,y){
+  const threshold=24;
+  // Search in reverse (top-most first)
+  for(let i=NODES_A.length-1;i>=0;i--){
+    const n=NODES_A[i];
+    const dx=n.x-x,dy=n.y-y;
+    if(dx*dx+dy*dy<threshold*threshold)return n;
+  }
+  return null;
+}
+
+cnv.addEventListener('mousemove',e=>{
+  const n=getNodeAt(e.clientX,e.clientY);
+  hovId=n?n.id:null;
+  cnv.style.cursor=n?'pointer':'default';
+});
+
+cnv.addEventListener('click',e=>{
+  const n=getNodeAt(e.clientX,e.clientY);
+  if(n){
+    showInfo(n.id);
+  }else{
+    hideInfo();
+  }
+});
+
+// Touch
+cnv.addEventListener('touchstart',e=>{
+  const t=e.touches[0];
+  const n=getNodeAt(t.clientX,t.clientY);
+  if(n){
+    showInfo(n.id);
+    e.preventDefault();
+  }
+});
+
+// ── Info Panel ──
+function showInfo(id){
+  const n=S[id];
+  if(!n)return;
+  selId=id;
+  const clr=CAT[n.c]?CAT[n.c].clr:'#64748b';
+  document.getElementById('pn').textContent=n.i+' '+n.n;
+  document.getElementById('pb').textContent=n.t;
+  document.getElementById('pb').style.background=clr+'20';
+  document.getElementById('pb').style.color=clr;
+  document.getElementById('pc').textContent=n.c.toUpperCase()+' · '+n.g.slice(0,4).join(' · ');
+  document.getElementById('pd').textContent=n.d;
+  document.getElementById('pm').textContent=n.p+' · '+n.t;
+  document.getElementById('infopanel').classList.add('open');
+}
+function hideInfo(){
+  selId=null;
+  document.getElementById('infopanel').classList.remove('open');
+}
+document.getElementById('pcl').addEventListener('click',hideInfo);
+
+// ── Filter ──
+document.querySelectorAll('.fbtn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.fbtn').forEach(b=>b.classList.toggle('on',b===btn));
+    activeFilter=btn.dataset.f;
+    hideInfo();
   });
 });
 
 // ── Search ──
-document.getElementById('search').addEventListener('input', (e) => {
-  searchQuery = e.target.value.toLowerCase().trim();
-  let visibleCount = 0;
-
-  allIds.forEach(id => {
-    const s = SKILLS[id];
-    const el = nodeElements[id];
-    if (!el) return;
-
-    // Apply both type filter and search
-    let visible = true;
-    if (activeFilter === 'superpowers' && s.type !== 'Superpowers') visible = false;
-    else if (activeFilter === 'custom' && s.type !== 'Custom') visible = false;
-    else if (activeFilter !== 'all' && activeFilter !== 'superpowers' && activeFilter !== 'custom') {
-      if (s.category !== activeFilter) visible = false;
-    }
-
-    // Search filter
-    if (visible && searchQuery) {
-      const matchName = s.name.toLowerCase().includes(searchQuery);
-      const matchDesc = s.description.toLowerCase().includes(searchQuery);
-      const matchTag = s.tags.some(t => t.includes(searchQuery));
-      if (!(matchName || matchDesc || matchTag)) visible = false;
-    }
-
-    el.g.style.display = visible ? '' : 'none';
-    if (visible) visibleCount++;
-  });
-
-  // Edges
-  Object.keys(edgeElements).forEach(key => {
-    const [s, t] = key.split('→');
-    const sEl = nodeElements[s], tEl = nodeElements[t];
-    const sVis = sEl && sEl.g.style.display !== 'none';
-    const tVis = tEl && tEl.g.style.display !== 'none';
-    edgeElements[key].style.display = (sVis && tVis) ? '' : 'none';
-  });
-
-  document.getElementById('count-visible').textContent = visibleCount;
+document.getElementById('search').addEventListener('input',e=>{
+  searchQ=e.target.value;
+  hideInfo();
 });
 
-// ── Particles Background ──
-function initParticles() {
-  const canvas = document.getElementById('particles');
-  const ctx = canvas.getContext('2d');
-  let w, h;
-  const particles = [];
-  const count = 80;
-
-  function resize() {
-    w = canvas.width = window.innerWidth;
-    h = canvas.height = window.innerHeight;
-  }
-  window.addEventListener('resize', resize);
-  resize();
-
-  for (let i = 0; i < count; i++) {
-    particles.push({
-      x: Math.random() * w, y: Math.random() * h,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.3,
-      r: Math.random() * 1.5 + 0.5,
-      a: Math.random() * 0.4 + 0.1
-    });
-  }
-
-  function draw() {
-    ctx.clearRect(0, 0, w, h);
-    particles.forEach(p => {
-      p.x += p.vx;
-      p.y += p.vy;
-      if (p.x < 0) p.x = w;
-      if (p.x > w) p.x = 0;
-      if (p.y < 0) p.y = h;
-      if (p.y > h) p.y = 0;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(192,132,252,${p.a})`;
-      ctx.fill();
-    });
-
-    // Lines between nearby particles
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const dx = particles[i].x - particles[j].x;
-        const dy = particles[i].y - particles[j].y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 150) {
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `rgba(192,132,252,${0.06 * (1 - dist / 150)})`;
-          ctx.stroke();
-        }
-      }
-    }
-    requestAnimationFrame(draw);
-  }
-  draw();
-}
-
-// ════════════════════════════════════════════════════════════════
-// INIT
-// ════════════════════════════════════════════════════════════════
-buildGraph();
-initParticles();
-
-// Keyboard shortcuts
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    document.getElementById('info-panel').classList.remove('visible');
-  }
-  if (e.key === '/' && !e.ctrlKey) {
-    document.getElementById('search').focus();
-    e.preventDefault();
-  }
+// ── Keyboard ──
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape')hideInfo();
+  if(e.key==='/'&&!e.ctrlKey){document.getElementById('search').focus();e.preventDefault()}
 });
+
+// ── Legend ──
+const legendEl=document.getElementById('legend');
+CAT_KEYS.forEach(c=>{
+  const item=document.createElement('div');
+  item.className='litem';
+  item.innerHTML=`<span class="dot" style="background:${CAT[c].clr}"></span>${CAT[c].lbl}`;
+  item.addEventListener('click',()=>{
+    document.querySelectorAll('.fbtn').forEach(b=>b.classList.toggle('on',b.dataset.f===c||b.dataset.f==='all'));
+    document.querySelectorAll('.fbtn').forEach(b=>{
+      if(b.dataset.f===c)b.classList.add('on');else b.classList.remove('on');
+    });
+    activeFilter=c;
+    hideInfo();
+  });
+  legendEl.appendChild(item);
+});
+
+// ═══════════════════════════════════════════════════
+// START
+// ═══════════════════════════════════════════════════
+draw();
 </script>
 </body>
 </html>
