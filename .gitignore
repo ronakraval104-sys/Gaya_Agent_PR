@@ -47,5 +47,8 @@ knowledge/user_profiles/*
 *.orig
 *.backup
 
+# Third-party repos (full clones, included as dependencies)
+skills/hyperframes/
+
 # User profiles — personal agent save files
 memory/gaya_profile.json
