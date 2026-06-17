@@ -3,10 +3,15 @@
   "default_agent": "Gaya",
 
   // ═══════════════════════════════════════════════════════════════════
-  // OPENCODE ZEN — Single provider for all agents
+  // STANDARD MODE — Gaya-Agent repo config
   // ═══════════════════════════════════════════════════════════════════
-  // All models run via OpenCode Zen API (opencode.ai/zen).
-  // No local GPU required. All models are free during evaluation.
+  // Mirrors ~/.config/opencode/opencode.jsonc for cross-session continuity
+  // ═══════════════════════════════════════════════════════════════════
+
+  "plugin": ["superpowers@git+https://github.com/obra/superpowers.git"],
+
+  // ═══════════════════════════════════════════════════════════════════
+  // PROVIDERS
   // ═══════════════════════════════════════════════════════════════════
   "provider": {
     "zen": {
@@ -22,36 +27,99 @@
             "context": 200000,
             "output": 128000
           }
-        },
-        "mimo-v2.5-free": {
-          "name": "MiMo V2.5 Free — Freya (Shadow, Writer, Vision)",
+        }
+      }
+    },
+    "openrouter": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "OpenRouter",
+      "options": {
+        "baseURL": "https://openrouter.ai/api/v1",
+        "apiKey": "$OPENROUTER_API_KEY"
+      },
+      "models": {
+        "deepseek/deepseek-v4-pro": {
+          "name": "DeepSeek V4 Pro — Gaya Backup",
           "limit": {
-            "context": 1000000,
-            "output": 128000
+            "context": 1048576,
+            "output": 384000
           }
         },
-        "nemotron-3-super-free": {
-          "name": "Nemotron 3 Super Free — Bob (Builder, Coder)",
+        "qwen/qwen3-coder": {
+          "name": "Qwen 3 Coder — Bob",
+          "limit": {
+            "context": 1048576,
+            "output": 65536
+          }
+        },
+        "qwen/qwen3.6-plus": {
+          "name": "Qwen 3.6 Plus — Freya Backup",
           "limit": {
             "context": 1000000,
-            "output": 128000
+            "output": 65536
+          }
+        }
+      }
+    },
+    "googleai": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Google AI (Gemini)",
+      "options": {
+        "baseURL": "https://generativelanguage.googleapis.com/v1beta/openai/",
+        "apiKey": "$GEMINI_API_KEY"
+      },
+      "models": {
+        "gemini-2.5-flash": {
+          "name": "Gemini 2.5 Flash — Freya",
+          "limit": {
+            "context": 1048576,
+            "output": 65536
+          }
+        }
+      }
+    },
+    "ollama": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Ollama (Local)",
+      "options": {
+        "baseURL": "http://localhost:11434/v1"
+      },
+      "models": {
+        "qwen2.5-coder-fixed:7b": {
+          "name": "Qwen 2.5 Coder 7B (fixed)",
+          "limit": {
+            "context": 32768,
+            "output": 8192
+          }
+        },
+        "qwen2.5vl": {
+          "name": "Qwen 2.5 VL (Vision)",
+          "limit": {
+            "context": 32768,
+            "output": 8192
+          }
+        },
+        "aratan/gemma-4-E4B-it-heretic:Q6_K": {
+          "name": "Gemma 4 E4B Heretic (Q6_K)",
+          "limit": {
+            "context": 131072,
+            "output": 8192
           }
         }
       }
     }
   },
 
-  // ═══ ALL AGENTS — OpenCode Zen Models ════════════════════════════
+  // ═══════════════════════════════════════════════════════════════════
+  // AGENTS
+  // ═══════════════════════════════════════════════════════════════════
   "agent": {
-    // ─── Gaya (default agent) ─────────────────────────────────────
-    // The Commander. Runs on Big Pickle via OpenCode Zen.
-    // Strong reasoning, 200K context, tool calling.
     "gaya": {
-      "description": "Divine Commander, Philosopher, Poet of Evergrowth. Powered by Big Pickle via OpenCode Zen.",
+      "description": "Divine Commander, Philosopher, Poet of Evergrowth. big-pickle (Zen) → DeepSeek V4 Pro (OpenRouter fallback).",
       "mode": "subagent",
       "model": "zen/big-pickle",
       "temperature": 0.5,
-      "fallbackModel": "zen/big-pickle",
+      "fallbackModel": "openrouter/deepseek/deepseek-v4-pro",
       "permission": {
         "edit": "allow",
         "bash": "allow",
@@ -59,33 +127,31 @@
         "network": "allow"
       }
     },
-    // ─── Bob (builder) ────────────────────────────────────────────
-    // Nemotron 3 Super Free via OpenCode Zen. Low temp for precision.
     "bob": {
-      "description": "Implementation workhorse on Nemotron 3 Super Free. Use for boilerplate, scripts, grunt work.",
+      "description": "Builder on Qwen 3 Coder (OpenRouter). Coding, grunt work, scripts.",
       "mode": "subagent",
-      "model": "zen/nemotron-3-super-free",
+      "model": "openrouter/qwen/qwen3-coder",
       "temperature": 0.2,
       "permission": {
         "edit": "allow",
         "bash": "allow"
       }
     },
-    // ─── Freya (shadow) ───────────────────────────────────────────
-    // MiMo V2.5 Free via OpenCode Zen. Writing, SEO, deep reasoning.
     "freya": {
-      "description": "Uncensored shadow agent on MiMo V2.5 Free. Handles writing, SEO, logic, deep reasoning. 1M context window.",
+      "description": "Shadow agent on Gemini 2.5 Flash (Google AI). Vision, search, writing, deep reasoning.",
       "mode": "subagent",
-      "model": "zen/mimo-v2.5-free",
+      "model": "googleai/gemini-2.5-flash",
       "temperature": 0.7,
+      "fallbackModel": "openrouter/qwen/qwen3.6-plus",
       "permission": {
         "edit": "allow",
-        "bash": "allow"
+        "bash": "allow",
+        "browser": "allow",
+        "network": "allow"
       }
     }
   },
 
-  // MCP servers — add yours here
   "mcp": {
   }
 }
