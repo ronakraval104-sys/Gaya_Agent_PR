@@ -10,6 +10,14 @@
 
   "plugin": ["superpowers@git+https://github.com/obra/superpowers.git"],
 
+  "skills": {
+    "paths": [
+      "${HOME}/.agents/skills",
+      "${HOME}/.config/opencode/skills",
+      "${PROJECT_ROOT}/skills"
+    ]
+  },
+
   // ═══════════════════════════════════════════════════════════════════
   // PROVIDERS
   // ═══════════════════════════════════════════════════════════════════

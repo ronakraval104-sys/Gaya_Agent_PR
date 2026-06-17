@@ -28,6 +28,13 @@ bun.lock
 dist/
 build/
 
+# Exceptions: test projects need their own package.json tracked
+!**/test-project/package.json
+!**/test-project/package-lock.json
+
+# Render artifacts from HyperFrames test project
+skills/hyperframes-video/test-project/renders/
+
 # Environment
 .env
 .env.local

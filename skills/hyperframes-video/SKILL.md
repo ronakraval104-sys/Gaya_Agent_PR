@@ -24,7 +24,8 @@ triggers:
 ---
 # HyperFrames — HTML to Video, Built for Agents
 
-**Repo cloned to:** `skills/hyperframes/` (nested git — full source)
+**Bundled test project:** `test-project/` (inside this skill directory)
+**Source repo (reference):** `skills/hyperframes/` (in Gaya-Agent repo)
 **Docs:** https://hyperframes.heygen.com/introduction
 **Quickstart:** https://hyperframes.heygen.com/quickstart
 **Showcase:** https://hyperframes.heygen.com/showcase
@@ -143,3 +144,20 @@ Paused timeline + registered on `window.__timelines`. GSAP is the primary adapte
 - **Assets not loading** → Ensure paths are relative to the composition HTML
 - **Animation not playing** → Verify timeline is `paused: true` and registered on `window.__timelines`
 - **Preview works but render is blank** → Run `npx hyperframes validate`
+
+## Bundled Test Project
+
+A working test composition is bundled with this skill at `test-project/`:
+
+```bash
+# From this skill's directory:
+cd test-project
+npx hyperframes preview     # Preview in browser (localhost:3002)
+npx hyperframes render      # Render to MP4
+```
+
+The test project includes:
+- GSAP timeline with proper finite repeats (deterministic)
+- Gradient text, glow pulse, progress bar
+- CSS initial states (no JS visibility toggles)
+- Clean validation (no infinite-repeat errors)
