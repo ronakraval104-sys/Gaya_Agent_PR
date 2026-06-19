@@ -12,11 +12,11 @@
 [![Agents](https://img.shields.io/badge/agents-4-%23fbbf24)](#-the-four-agents)
 [![GPU](https://img.shields.io/badge/GPU-Ollama-%23fb923c)](#config-a-local-gpu-ollama)
 [![Cloud](https://img.shields.io/badge/cloud-zen%20free-%23f472b6)](#config-b-no-gpu-opencloud-zen--openrouter-free)
-[![Preview](https://img.shields.io/badge/preview-skills%20dashboard-%23c084fc)](https://htmlpreview.github.io/?https://github.com/ronakraval104-sys/Gaya_Agent_PR/blob/main/skills-dashboard.html)
+[![Preview](https://img.shields.io/badge/preview-skills%20dashboard-%23c084fc)](https://htmlpreview.github.io/?https://github.com/ronakraval104-sys/Gaya_Agent_PR/blob/master/skills-dashboard.html)
 
 </div>
 
-> **Live preview:** [skills-dashboard.html](https://htmlpreview.github.io/?https://github.com/ronakraval104-sys/Gaya_Agent_PR/blob/main/skills-dashboard.html) — browse skills and agents right in your browser, no download needed.  
+> **Live preview:** [skills-dashboard.html](https://htmlpreview.github.io/?https://github.com/ronakraval104-sys/Gaya_Agent_PR/blob/master/skills-dashboard.html) — browse skills and agents right in your browser, no download needed.  
 > **GitHub Pages:** Once enabled in repo Settings → Pages (main branch, root), the dashboard also lives at `https://ronakraval104-sys.github.io/Gaya_Agent_PR/skills-dashboard.html`.
 
 ---
@@ -318,7 +318,7 @@ Gaya loads them in sequence automatically as the task evolves.
 
 ### Interactive Browser
 
-The [skills-dashboard.html](https://htmlpreview.github.io/?https://github.com/ronakraval104-sys/Gaya_Agent_PR/blob/main/skills-dashboard.html) lets you browse all skills with search, filters, and info panels — try it in your browser right now.
+The [skills-dashboard.html](https://htmlpreview.github.io/?https://github.com/ronakraval104-sys/Gaya_Agent_PR/blob/master/skills-dashboard.html) lets you browse all skills with search, filters, and info panels — try it in your browser right now.
 
 ---
 
