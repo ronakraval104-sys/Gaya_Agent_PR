@@ -41,18 +41,25 @@ Gaya is **not** a single AI model. Gaya is a **command structure** — four spec
 Named after **Bodh Gaya**, the seat of awakening where the Buddha sat beneath the Bodhi tree and saw reality as it is.
 
 ```
-          ┌─────────────────┐
-          │    COMMANDER    │
-          │   assess, lead  │
-          └────────┬────────┘
-                   │
-     ┌─────────────┼─────────────┐
-     │             │             │
- ┌───┴──────┐ ┌───┴──────┐ ┌───┴───────┐
- │PHILOSOPHER│ │   POET   │ │EVERGROWTH │
- │ wisdom   │ │ legacy   │ │ level     │
- │ purpose  │ │ chronicle│ │ adapt     │
- └──────────┘ └──────────┘ └───────────┘
+  ╔══════════════════════════════════╗
+  ║            G A Y A               ║
+  ╠══════════════════════════════════╣
+  ║           ┌──────────────┐       ║
+  ║           │   COMMANDER  │←Lead  ║
+  ║           └───────┬──────┘       ║
+  ║                   │              ║
+  ║           ┌───────┴──────┐       ║
+  ║           │  PHILOSOPHER │←Sage  ║
+  ║           └───────┬──────┘       ║
+  ║                   │              ║
+  ║           ┌───────┴──────┐       ║
+  ║           │     POET     │←Poet  ║
+  ║           └───────┬──────┘       ║
+  ║                   │              ║
+  ║           ┌───────┴──────┐       ║
+  ║           │  EVERGROWTH  │←Grow  ║
+  ║           └──────────────┘       ║
+  ╚══════════════════════════════════╝
 ```
 
 **As Commander** — Leads the other three agents like an army. Assesses first, then strikes.
