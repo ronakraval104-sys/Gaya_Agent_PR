@@ -29,6 +29,7 @@
 - [Two Config Modes](#-two-config-modes)
 - [Architecture](#-architecture)
 - [Skills & Superpowers](#-skills--superpowers)
+- [Two Modes: Round Table vs Token Discipline](#-two-modes-round-table-vs-token-discipline)
 - [Leveling System](#-leveling-system)
 - [Auto-Maintenance](#-auto-maintenance)
 - [Roadmap](#-roadmap)
@@ -318,6 +319,112 @@ Gaya loads them in sequence automatically as the task evolves.
 ### Interactive Browser
 
 The [skills-dashboard.html](https://htmlpreview.github.io/?https://github.com/ronakraval104-sys/Gaya_Agent_PR/blob/main/skills-dashboard.html) lets you browse all skills with search, filters, and info panels — try it in your browser right now.
+
+---
+
+## Two Modes: Round Table vs Token Discipline
+
+Gaya has two operating modes at opposite ends of the spectrum. Both exist because they serve different situations.
+
+```
+                    SIMPLE TASK                           COMPLEX TASK
+                         │                                     │
+                         ▼                                     ▼
+              ┌─────────────────────┐              ┌─────────────────────┐
+              │  TOKEN DISCIPLINE   │              │    ROUND TABLE      │
+              │                     │              │                     │
+              │  Fast. Cheap.       │              │  Thorough. Solid.   │
+              │  Gaya does it alone │              │  All agents debate  │
+              │  No ceremony.       │              │  Converge on plan.  │
+              └─────────────────────┘              └─────────────────────┘
+```
+
+### Token Discipline (Default)
+
+**Philosophy:** Don't waste tokens on ceremony. Just execute.
+
+For routine tasks — file edits, quick scripts, known patterns — Gaya skips the routing overhead and works directly:
+
+```
+You: "Change that button color to blue"
+Gaya: ⏱️ Quick edit → 5s
+      Done. Color updated.
+
+No sub-agents called. No analysis phase. No debate.
+```
+
+**When it kicks in:**
+- The task is clear, simple, and unambiguous
+- The cost of a mistake is low
+- It's a known pattern Gaya has done before
+- The request starts with `/fast`
+
+### Round Table Mode (On Demand)
+
+**Philosophy:** Multiple minds are better than one. Burn tokens to get it right.
+
+For complex, risky, or multi-approach tasks — architecture decisions, system design, critical bug fixes — Gaya brings multiple agents into the discussion:
+
+```
+You: "Design the auth system for our SaaS"
+
+Gaya: ⏱️ Round Table: LOGOS + Tvashtar debating auth approaches → 2 min
+
+  LOGOS:  "OAuth2 + JWT is standard. But consider session-based for your scale."
+  Tvashtar: "JWT is simpler for now. We can add sessions later."
+  LOGOS:  "Fair. But refresh tokens add complexity. Ready for that?"
+  Tvashtar: "Start simple with a migration path. Here's the plan."
+
+  ✓ Gaya: Consensus reached. Implementing via Tvashtar.
+```
+
+**When to use it:**
+- Architecture decisions with multiple valid approaches
+- Bug fixes where root cause is uncertain
+- New features that touch multiple parts of the system
+- Any time you say `/roundtable`
+
+### How They Coexist
+
+They're polar opposites, and that's the point:
+
+| | Token Discipline | Round Table |
+|---|---|---|
+| **Token cost** | Minimal | High (worth it) |
+| **Speed** | Instant | Takes time |
+| **Quality** | Good for simple tasks | Bulletproof for complex ones |
+| **When** | "I know exactly what I want" | "I need the right approach" |
+| **Override** | `/fast` | `/roundtable` |
+
+**Gaya auto-selects** based on your request:
+- "Change the button color" → Token Discipline (obvious, low risk)
+- "Design the auth system" → Round Table (complex, multiple approaches)
+- "Fix this crash" → Round Table if root cause is unclear, Token Discipline if it's a known fix
+
+You can always override with `/fast` or `/roundtable`.
+
+### Implementing Round Table (How the Debate Works)
+
+Round Table is not a meeting — it's a structured debate with a moderator:
+
+```
+Gaya presents the problem with context
+        │
+        ▼
+Each agent responds independently (sequentially, VRAM permitting)
+   LOGOS:  "Here's the logical approach + edge cases"
+   Freya:  "Here's what the research / competitors do"  (if relevant)
+   Tvashtar: "Here's the implementation + trade-offs"
+        │
+        ▼
+Gaya synthesizes — finds consensus or flags disagreements
+        │
+        ▼
+If consensus → Gaya routes implementation to the right agent
+If stalemate → Gaya presents options to you with recommendations
+```
+
+On GPU mode (8 GB VRAM), agents debate **sequentially** — one at a time, context passed through memory. On cloud mode, all agents can respond in parallel.
 
 ---
 
