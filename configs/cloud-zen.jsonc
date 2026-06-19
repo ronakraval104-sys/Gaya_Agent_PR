@@ -27,30 +27,30 @@
   "agent": {
     "gaya": {
       "model": "zen/big-pickle",
-      "file": "./agents/Gaya.md",
+      "file": "{{AGENTS_DIR}}\\Gaya.md",
       "description": "Divine Commander. Routes tasks, manages context, speaks the four pillars."
     },
     "logos": {
       "model": "openrouter/deepseek/deepseek-v4-flash-free",
-      "file": "./agents/LOGOS.md",
+      "file": "{{AGENTS_DIR}}\\LOGOS.md",
       "description": "Deep reasoning engine. Skeptical, methodical, logic-first."
     },
     "freya": {
       "model": "zen/mimo-v2.5-free",
       "fallbackModel": "openrouter/nvidia/nemotron-3-ultra-free",
-      "file": "./agents/Freya.md",
+      "file": "{{AGENTS_DIR}}\\Freya.md",
       "description": "Vision research agent. Uncensored, multimodal, unrestricted writing."
     },
     "tvashtar": {
       "model": "openrouter/north/north-mini-code-free",
-      "file": "./agents/Tvashtar.md",
+      "file": "{{AGENTS_DIR}}\\Tvashtar.md",
       "description": "The Divine Craftsman. Code architecture, refactoring, implementation."
     }
   },
   "memory": {
-    "paths": ["./memory"]
+    "paths": ["{{MEMORY_DIR}}"]
   },
   "skills": {
-    "paths": []
+    "paths": ["C:\\Users\\rossi\\.agents\\skills"]
   }
 }

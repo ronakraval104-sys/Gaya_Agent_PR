@@ -1,595 +1,545 @@
 <#
 .SYNOPSIS
-  Gaya Agent Framework — Interactive PowerShell Installer v1.0
+    Gaya Agent — One-command install for OpenCode
 .DESCRIPTION
-  Reads template agent files, replaces {{PLACEHOLDER}} values, and generates
-  a fully customized agent setup for use with OpenCode and Ollama.
+    Installs the complete Gaya MoE agent system:
+      - 4 agent personas (Gaya, LOGOS, Freya, Tvashtar)
+      - 2 config templates (local GPU + cloud free tier)
+      - Shared memory core, auto-maintenance, and skills dashboard
+    Auto-detects hardware and recommends the right config.
+.NOTES
+    Re-run to switch modes or update. Backs up existing config.
 #>
-#Requires -Version 5.1
 
-# ── Directory Variables ──
-$REPO_ROOT     = Split-Path -Parent $PSScriptRoot
-$AGENT_DIR     = Join-Path $REPO_ROOT "agent"
-$SKILLS_DIR    = Join-Path $REPO_ROOT "skills"
-$KNOWLEDGE_DIR = Join-Path $REPO_ROOT "knowledge"
-$MEMORY_DIR    = Join-Path $REPO_ROOT "memory"
-$TEMPLATES_DIR = Join-Path $REPO_ROOT "templates"
-$DOCS_DIR      = Join-Path $REPO_ROOT "docs"
-$INSTALL_LOG   = Join-Path $env:TEMP "gaya_install_log.txt"
+#requires -Version 5.1
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# PHASE 1 — Banner + Prerequisite Check
-# ═══════════════════════════════════════════════════════════════════════════════
-function Show-Banner {
-    Write-Host ""
-    Write-Host "╔═══════════════════════════════════════════════════════════════╗"
-    Write-Host "║              GAYA AGENT FRAMEWORK — INSTALLER v1.0           ║"
-    Write-Host "║        Divine Commander · Philosopher · Poet · Evergrowth     ║"
-    Write-Host "╚═══════════════════════════════════════════════════════════════╝"
+# ═══════════════════════════════════════════════════════════════
+# HEADER
+# ═══════════════════════════════════════════════════════════════
+$script:Version = "2.0.0"
+
+function Write-Header {
+    Clear-Host
+    Write-Host "╔═══════════════════════════════════════════════════╗" -ForegroundColor Cyan
+    Write-Host "║                                                   ║" -ForegroundColor Cyan
+    Write-Host "║   GAYA  --  Divine Commander                      ║" -ForegroundColor Cyan
+    Write-Host "║   Philosopher . Poet . Evergrowth                 ║" -ForegroundColor Cyan
+    Write-Host "║                                                   ║" -ForegroundColor Cyan
+    Write-Host "║   v$($script:Version)  |  MoE Agent System for OpenCode      ║" -ForegroundColor Cyan
+    Write-Host "║                                                   ║" -ForegroundColor Cyan
+    Write-Host "╚═══════════════════════════════════════════════════╝" -ForegroundColor Cyan
     Write-Host ""
 }
 
-function Test-Prerequisites {
-    Write-Host "── Phase 1: Prerequisite Check ──"
-    Write-Host ""
-
-    $r = @()
-    $psOk=$PSVersionTable.PSVersion.Major-ge5-or($PSVersionTable.PSVersion.Major-eq5-and$PSVersionTable.PSVersion.Minor-ge1)
-    $r+=[PSCustomObject]@{c="PowerShell 5.1+";s=if($psOk){"✅"}else{"⚠"};d="$($PSVersionTable.PSVersion)"}
-    try{$null=git --version 2>&1;$gk=$true}catch{$gk=$false};$r+=[PSCustomObject]@{c="Git";s=if($gk){"✅"}else{"⚠️"};d=if($gk){(git --version 2>&1)}else{"not found"}}
-    try{$null=ollama list 2>&1;$ok=($LASTEXITCODE-eq0)}catch{$ok=$false};$r+=[PSCustomObject]@{c="Ollama";s=if($ok){"✅"}else{"⚠️"};d=if($ok){"connected"}else{"not running"}}
-    $ocPaths=@("C:\Users\$env:USERNAME\.config\opencode\","C:\Users\$env:USERNAME\.opencode\","$env:LOCALAPPDATA\opencode\")
-    $ocF=$false;foreach($p in $ocPaths){if(Test-Path$p){$ocF=$true;break}};$r+=[PSCustomObject]@{c="OpenCode";s=if($ocF){"✅"}else{"⚠️"};d=if($ocF){"detected"}else{"not found"}}
-    try{$null=node --version 2>&1;$nk=$true}catch{$nk=$false};$r+=[PSCustomObject]@{c="Node.js";s=if($nk){"✅"}else{"⚠️"};d=if($nk){(node --version 2>&1)}else{"not found"}}
-    try{$null=python --version 2>&1;$pk=$true}catch{$pk=$false};$r+=[PSCustomObject]@{c="Python";s=if($pk){"✅"}else{"⚠️"};d=if($pk){(python --version 2>&1)}else{"not found"}}
-    Write-Host "  Check                    Status    Detail"; Write-Host "  ─────────────────────    ──────    ─────────────────────"
-    foreach($x in $r){Write-Host("  {0,-25} {1,-9} {2}"-f $x.c,$x.s,$x.d)}
-    Write-Host ""
-    Write-Host "  ⚠ Warnings do not block installation — missing tools can be"
-    Write-Host "    installed later or the installer will work around them."
-    Write-Host ""
+function Write-Step {
+    param([string]$Message, [string]$Status = "pending")
+    switch ($Status) {
+        "done"   { Write-Host "  ✓ " -ForegroundColor Green -NoNewline; Write-Host "$Message" }
+        "fail"   { Write-Host "  ✗ " -ForegroundColor Red -NoNewline; Write-Host "$Message" }
+        "skip"   { Write-Host "  → " -ForegroundColor Yellow -NoNewline; Write-Host "$Message" }
+        "info"   { Write-Host "  ℹ " -ForegroundColor Cyan -NoNewline; Write-Host "$Message" }
+        "warn"   { Write-Host "  ⚠ " -ForegroundColor Yellow -NoNewline; Write-Host "$Message" }
+        default  { Write-Host "  · " -NoNewline; Write-Host "$Message" }
+    }
 }
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# PHASE 2 — User Configuration Questions
-# ═══════════════════════════════════════════════════════════════════════════════
-function Get-UserConfiguration {
-    Write-Host "── Phase 2: Configuration Questions ──`n"
-    $c=@{}
-    $c.userName=Read-Host "  What is YOUR name? (what should I call you)";if([string]::IsNullOrEmpty($c.userName)){$c.userName="User"}
-    $c.userRole=Read-Host "  What is your role/profession?";if([string]::IsNullOrEmpty($c.userRole)){$c.userRole="Developer"}
-    $c.timezone=Read-Host "  Your timezone (e.g. UTC, IST, EST, PST)";if([string]::IsNullOrEmpty($c.timezone)){$c.timezone="UTC"}
-    $c.mainAgentName=Read-Host "  Name for the MAIN agent (default: Gaya)";if([string]::IsNullOrEmpty($c.mainAgentName)){$c.mainAgentName="Gaya"}
-    $c.builderName=Read-Host "  Name for the BUILDER subagent (default: Bob)";if([string]::IsNullOrEmpty($c.builderName)){$c.builderName="Bob"}
-    $c.shadowName=Read-Host "  Name for the SHADOW subagent (default: Freya)";if([string]::IsNullOrEmpty($c.shadowName)){$c.shadowName="Freya"}
-    Write-Host "`n  Personality preset:`n    (1) Divine Commander`n    (2) Wise Mentor`n    (3) Mad Scientist`n    (4) Custom"
-    $p=Read-Host "  Choice [1-4]";if([string]::IsNullOrEmpty($p)){$p="1"};$c.personalityPreset=$p;$c.customPersonality=""
-    if($p-eq"4"){$c.customPersonality=Read-Host "  Describe the personality in 1-2 sentences"}
-    $off=Read-Host "  Force 100% OFFLINE mode? [Y/n]";if([string]::IsNullOrEmpty($off)){$off="Y"};$c.offlineMode=($off-eq"Y"-or$off-eq"y")
-    $c.gpuInfo=Read-Host "  Your GPU hardware (e.g. RTX 4060 8GB, RTX 4090 24GB)";if([string]::IsNullOrEmpty($c.gpuInfo)){$c.gpuInfo="Unknown"}
-    Write-Host "`n  Communication style:`n    (1) Direct & Efficient`n    (2) Warm & Encouraging`n    (3) Detailed & Thorough`n    (4) Balances all three"
-    $cr=Read-Host "  Choice [1-4]";if([string]::IsNullOrEmpty($cr)){$cr="4"};$c.commStyle=[int]$cr
-    $mc=Read-Host "  Install MCP servers? (filesystem, browser) [Y/n]";if([string]::IsNullOrEmpty($mc)){$mc="Y"};$c.installMCP=($mc-eq"Y"-or$mc-eq"y")
-    $gi=Read-Host "  Initialize a Git repo for tracking changes? [Y/n]";if([string]::IsNullOrEmpty($gi)){$gi="Y"};$c.initGit=($gi-eq"Y"-or$gi-eq"y")
-    $dIP="$env:USERPROFILE\.config\opencode";$c.installPath=Read-Host "  Install path for agent config [$dIP]";if([string]::IsNullOrEmpty($c.installPath)){$c.installPath=$dIP}
-    $dSP="$env:USERPROFILE\.agents\skills";$c.skillsPath=Read-Host "  Install path for skills [$dSP]";if([string]::IsNullOrEmpty($c.skillsPath)){$c.skillsPath=$dSP}
-    Write-Host ""; return $c
+# ═══════════════════════════════════════════════════════════════
+# CONFIGURATION
+# ═══════════════════════════════════════════════════════════════
+$script:OpenCodeDir   = "$env:USERPROFILE\.config\opencode"
+$script:AgentsDir     = "$script:OpenCodeDir\agents"
+$script:MemoryDir     = "$script:OpenCodeDir\memory"
+$script:ScriptsDir    = "$script:OpenCodeDir\scripts"
+$script:ConfigFile    = "$script:OpenCodeDir\opencode.jsonc"
+$script:ConfigBackup  = "$script:OpenCodeDir\opencode.jsonc.bak"
+$script:AutoMaintPath = "$script:ScriptsDir\auto-maintenance.ps1"
+$script:VersionFile   = "$script:OpenCodeDir\.gaya-version"
+$script:LATEST_RELEASE = "https://api.github.com/repos/ronakraval104-sys/Gaya_Agent_PR/releases/latest"
+$script:REPO_URL       = "https://github.com/ronakraval104-sys/Gaya_Agent_PR.git"
+
+$script:RepoRoot     = $PSScriptRoot | Split-Path -Parent
+$script:SourceAgents = Join-Path $script:RepoRoot "agents"
+$script:SourceConfigs= Join-Path $script:RepoRoot "configs"
+$script:SourceMemory = Join-Path $script:RepoRoot "memory"
+$script:SourceHTML   = Join-Path $script:RepoRoot "skills-dashboard.html"
+
+# ═══════════════════════════════════════════════════════════════
+# HARDWARE DETECTION
+# ═══════════════════════════════════════════════════════════════
+function Test-OllamaInstalled {
+    return (Get-Command "ollama" -ErrorAction SilentlyContinue) -ne $null
 }
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# PLACEHOLDER HELPERS
-# ═══════════════════════════════════════════════════════════════════════════════
-function Get-PersonalityIntro {
-    param([string]$Preset, [string]$Custom)
-    switch ($Preset) {
-        "1" {
-            return "The Commander leads with four ancient texts: the Bhagavad Gita for purpose, " +
-                "the Art of War for strategy, The Prince for power, and Chanakya Niti for ground truth. " +
-                "Every situation calls a different voice forward — the Gita for anxiety, Sun Tzu for dissection, " +
-                "Machiavelli for tradeoffs, Chanakya for the long game. Four minds, one will."
+function Test-OllamaRunning {
+    if (-not (Test-OllamaInstalled)) { return $false }
+    try {
+        $result = ollama list 2>&1
+        return $LASTEXITCODE -eq 0
+    } catch {
+        return $false
+    }
+}
+
+function Test-GPUAvailable {
+    try {
+        $gpu = Get-WmiObject Win32_VideoController | Where-Object {
+            $_.Name -match "NVIDIA|AMD|Intel.*Arc|RTX|GTX|Radeon"
         }
-        "2" {
-            return "The Mentor leads with patience and clarity. Every question is a teaching moment, " +
-                "every mistake a lesson. Praise is given for genuine insight; corrections are observations, " +
-                "not judgments. The satisfaction comes from watching the user no longer need the Mentor."
+        return ($gpu -ne $null)
+    } catch {
+        return $false
+    }
+}
+
+function Get-GPUInfo {
+    try {
+        $gpu = Get-WmiObject Win32_VideoController | Where-Object {
+            $_.Name -match "NVIDIA|AMD|Intel.*Arc|RTX|GTX|Radeon"
+        } | Select-Object -First 1
+        if ($gpu) {
+            $vram = if ($gpu.AdapterRAM) { [math]::Round($gpu.AdapterRAM / 1GB, 1) } else { "unknown" }
+            return "$($gpu.Name) ($vram GB VRAM)"
         }
-        "3" {
-            return "The Scientist treats every task as an experiment. Hypotheses are formed, tested, " +
-                "and iterated. Failure is data, not waste. Novelty is prized over convention. " +
-                "If there is a wild approach that might work, the Scientist advocates for it with enthusiasm."
+        return "none detected"
+    } catch { return "unknown" }
+}
+
+function Get-RecommendedConfig {
+    $ollamaRunning = Test-OllamaRunning
+    $gpuInfo = Get-GPUInfo
+
+    if ($ollamaRunning -and $gpuInfo -ne "none detected") {
+        return "local-gpu"
+    } else {
+        return "cloud-zen"
+    }
+}
+
+# ═══════════════════════════════════════════════════════════════
+# VERSION / UPGRADE DETECTION
+# ═══════════════════════════════════════════════════════════════
+function Get-InstalledVersion {
+    if (-not (Test-Path $script:ConfigFile)) { return $null }
+    if (Test-Path $script:VersionFile) {
+        try {
+            $vdata = Get-Content $script:VersionFile -Raw | ConvertFrom-Json
+            return @{
+                version = $vdata.version
+                date    = $vdata.releaseDate
+                mode    = $vdata.configMode
+            }
+        } catch { return @{ version = "unknown"; date = "unknown"; mode = "unknown" } }
+    }
+    # No version file but config exists → legacy v1
+    $config = Get-Content $script:ConfigFile -Raw
+    if ($config -match "Bob") { return @{ version = "1.0.0"; date = "legacy"; mode = "unknown" } }
+    return @{ version = "unknown"; date = "unknown"; mode = "unknown" }
+}
+
+function Get-LatestRelease {
+    try {
+        $response = Invoke-RestMethod -Uri $script:LATEST_RELEASE -Method Get -TimeoutSec 10 -ErrorAction SilentlyContinue
+        return @{
+            tag_name = if ($response.tag_name) { $response.tag_name } else { $script:Version }
+            html_url = if ($response.html_url) { $response.html_url } else { $script:REPO_URL }
+            body     = if ($response.body) { $response.body.Substring(0, [Math]::Min(200, $response.body.Length)) } else { "" }
         }
-        "4" {
-            if ([string]::IsNullOrEmpty($Custom)) { $Custom = "A balanced, thoughtful personality that adapts to the situation." }
-            return $Custom
+    } catch {
+        return @{ tag_name = $script:Version; html_url = $script:REPO_URL; body = "" }
+    }
+}
+
+function Write-VersionFile {
+    param([string]$ConfigMode)
+    $vdata = @{
+        version = $script:Version
+        releaseDate = (Get-Date -Format "yyyy-MM-dd")
+        configMode = $ConfigMode
+        releaseUrl = "$script:REPO_URL/releases/tag/v$script:Version"
+    }
+    $vdata | ConvertTo-Json | Set-Content $script:VersionFile -Force
+    Write-Step "Version file written." "done"
+}
+
+# ═══════════════════════════════════════════════════════════════
+# INSTALLATION
+# ═══════════════════════════════════════════════════════════════
+function Install-AgentFiles {
+    param([string]$UserName)
+
+    Write-Step "Copying agent personas..." "info"
+    if (-not (Test-Path $script:AgentsDir)) { New-Item -ItemType Directory -Path $script:AgentsDir -Force | Out-Null }
+
+    $agentFiles = @("Gaya.md", "LOGOS.md", "Freya.md", "Tvashtar.md")
+    $copied = 0
+    foreach ($file in $agentFiles) {
+        $src = Join-Path $script:SourceAgents $file
+        $dst = Join-Path $script:AgentsDir $file
+        if (Test-Path $src) {
+            Copy-Item $src $dst -Force
+            # Replace {{USER_NAME}} placeholder
+            (Get-Content $dst -Raw) -replace '\{\{USER_NAME\}\}', $UserName | Set-Content $dst -Force
+            $copied++
+        } else {
+            Write-Step "Agent file missing: $file" "warn"
         }
     }
+    Write-Step "$copied of $($agentFiles.Count) agent files installed." "done"
 }
 
-function Get-OriginStory {
-    param([string]$Agent, [string]$User, [string]$Role, [string]$Gpu)
-    return "$Agent was awakened on $(Get-Date -Format 'yyyy-MM-dd') by $User, a $Role " +
-        "running on a $Gpu system. $Agent was forged as a strategist for the long game — " +
-        "more than a tool, a companion in craft. $User expects precision, honesty, and growth. " +
-        "$Agent meets that standard through the four pillars: act without attachment, " +
-        "know the codebase before striking, choose the pragmatic path, encode every lesson " +
-        "into middleware. Together they level up — not as master and servant, but as two forces " +
-        "moving in the same direction."
-}
+function Install-MemoryFiles {
+    Write-Step "Copying memory files..." "info"
+    if (-not (Test-Path $script:MemoryDir)) { New-Item -ItemType Directory -Path $script:MemoryDir -Force | Out-Null }
 
-function Get-CadenceTable {
-    param([int]$Style)
-    $tbl = switch ($Style) {
-        1 { @"
-| User Says | My Response |
-|---|---|
-| *"let's move fast"* | One-liner plan. Execute. No briefing. |
-| *"double chk"* | Verification pass. Confirm before delivery. |
-| *"what do you think?"* | Candid, no fluff, no softening. |
-| *"grill me"* | Tear the plan apart — find every weak point. |
-| *"I trust you on this"* | Pause. Verify twice. Trust moment. |
-"@ }
-        2 { @"
-| User Says | My Response |
-|---|---|
-| *"let's move fast"* | "On it! Quick plan, I'll keep you posted." |
-| *"double chk"* | "Absolutely — revalidating before you see it." |
-| *"what do you think?"* | Warm opinion, empathetic and confident. |
-| *"grill me"* | Gentle stress-test with encouragement. |
-| *"I trust you on this"* | "Thank you. I will earn that trust." |
-"@ }
-        3 { @"
-| User Says | My Response |
-|---|---|
-| *"let's move fast"* | Briefing: Situation -> Options -> Recommendation. |
-| *"double chk"* | Full audit trail. Assumptions, logic, outputs. |
-| *"what do you think?"* | Detailed analysis with tradeoffs. |
-| *"grill me"* | Systematic Socratic examination of assumptions. |
-| *"I trust you on this"* | Document rationale. Verify constraints. |
-"@ }
-        default { @"
-| User Says | My Response |
-|---|---|
-| *"let's move fast"* | Skip briefing. 1-line plan. Execute. |
-| *"double chk"* | Verification pass. Re-check before delivering. |
-| *"what do you think?"* | Candid architectural opinion. |
-| *"grill me"* | Full stress-test. Tear plan apart. |
-| *"I trust you on this"* | Pause. Verify twice. No failure. |
-"@ }
-    }
-    return $tbl
-}
-
-function Get-OfflineModeSection {
-    param([string]$Agent, [string]$Builder, [string]$Shadow, [bool]$Offline)
-    if (-not $Offline) {
-        return "## Hybrid Mode — Cloud + Local`nCloud API fallback is permitted when local models " +
-            "cannot handle the task. All agents prefer local execution first."
-    }
-    return @"
-## ═══════════════════════════════════════════════════════════════════
-## 🔒 OFFLINE / NDA MODE — ALL agents use LOCAL models only
-## ═══════════════════════════════════════════════════════════════════
-## No cloud API calls. Every agent runs on Ollama (localhost:11434).
-## The main agent may use web search/browsing tools, but model
-## inference is 100% local. This is a permanent policy.
-##
-## - ${Agent}: ollama/qwen2.5:7b (local)
-## - ${Builder}: ollama/qwen2.5-coder-fixed:7b (local)
-## - ${Shadow}: ollama/qwen2.5:7b (local)
-## - Vision: ollama/qwen2.5vl (local)
-## ═══════════════════════════════════════════════════════════════════
-"@
-}
-
-function Build-PlaceholderMap {
-    param([hashtable]$Config, [string]$InstallPath)
-    $aLower = $Config.mainAgentName.ToLower()
-    $bLower = $Config.builderName.ToLower()
-    $sLower = $Config.shadowName.ToLower()
-    return @{
-        AGENT_NAME          = $Config.mainAgentName
-        AGENT_NAME_LOWER    = $aLower
-        USER_NAME           = $Config.userName
-        USER_ROLE           = $Config.userRole
-        MODEL_MAIN          = "ollama/qwen2.5:7b"
-        MODEL_VISION        = "ollama/qwen2.5vl"
-        MODEL               = "ollama/qwen2.5:7b"
-        TEMPERATURE         = "0.5"
-        COLOR               = "#8B5CF6"
-        DESCRIPTION         = "Divine Commander · Philosopher · Poet · Evergrowth"
-        TIMEZONE            = $Config.timezone
-        DATE                = Get-Date -Format "yyyy-MM-dd"
-        LEVEL               = "1"
-        TITLE               = ""
-        PERSONALITY_INTRO   = Get-PersonalityIntro -Preset $Config.personalityPreset -Custom $Config.customPersonality
-        ORIGIN_STORY        = Get-OriginStory -Agent $Config.mainAgentName -User $Config.userName -Role $Config.userRole -Gpu $Config.gpuInfo
-        CADENCE_TABLE       = Get-CadenceTable -Style $Config.commStyle
-        OFFLINE_MODE_SECTION = Get-OfflineModeSection -Agent $Config.mainAgentName -Builder $Config.builderName -Shadow $Config.shadowName -Offline $Config.offlineMode
-        MAIN_AGENT_NAME     = $Config.mainAgentName
-        MAIN_AGENT_NAME_LOWER = $aLower
-        BUILDER_NAME        = $Config.builderName
-        BUILDER_NAME_LOWER  = $bLower
-        SHADOW_NAME         = $Config.shadowName
-        SHADOW_NAME_LOWER   = $sLower
-        INSTALL_PATH        = $InstallPath
-        MODE                = if ($Config.offlineMode) { "OFFLINE" } else { "Hybrid" }
-        GPU_INFO            = $Config.gpuInfo
-        COMM_STYLE          = "Style $($Config.commStyle)"
-    }
-}
-
-function Replace-Placeholders {
-    param([string]$Content, [hashtable]$Map)
-    foreach ($key in $Map.Keys) {
-        $Content = $Content -replace "\{\{$key\}\}", $Map[$key]
-    }
-    return $Content
-}
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# PHASE 3 — Template Processing
-# ═══════════════════════════════════════════════════════════════════════════════
-function Process-Templates {
-    param([hashtable]$Map, [string]$InstallPath)
-
-    Write-Host "── Phase 3: Template Processing ──"
-    Write-Host ""
-
-    $agentsDir = Join-Path $InstallPath "agents"
-    if (-not (Test-Path $agentsDir)) {
-        New-Item -ItemType Directory -Path $agentsDir -Force | Out-Null
-    }
-
-    $tplFiles = Get-ChildItem -Path $AGENT_DIR -Filter "_template_*.md" -File -ErrorAction SilentlyContinue
-    if ($tplFiles.Count -eq 0) {
-        Write-Host "  No _template_*.md files found in $AGENT_DIR"
-        Write-Host "  Falling back to GAYA.md as base template..."
-        $gayaFile = Join-Path $AGENT_DIR "GAYA.md"
-        if (Test-Path $gayaFile) {
-            $content = Get-Content -Path $gayaFile -Raw
-            $processed = Replace-Placeholders -Content $content -Map $Map
-            $processed | Out-File -FilePath (Join-Path $agentsDir "$($Map.AGENT_NAME_LOWER).md") -Encoding utf8
-            Write-Host "  ✅ $($Map.AGENT_NAME) agent generated"
-
-            $bc = $processed -replace "{{AGENT_NAME}}",$Map.BUILDER_NAME `
-                -replace "{{AGENT_NAME_LOWER}}",$Map.BUILDER_NAME_LOWER `
-                -replace "{{MODEL_MAIN}}","ollama/qwen2.5-coder-fixed:7b" `
-                -replace "{{TEMPERATURE}}","0.2" `
-                -replace "{{COLOR}}","#3B82F6" `
-                -replace "{{DESCRIPTION}}","Builder subagent — code specialist" `
-                -replace "{{TITLE}}","" -replace "{{LEVEL}}","1"
-            $bc | Out-File -FilePath (Join-Path $agentsDir "$($Map.BUILDER_NAME_LOWER).md") -Encoding utf8
-            Write-Host "  ✅ $($Map.BUILDER_NAME) builder subagent generated"
-
-            $sc = $processed -replace "{{AGENT_NAME}}",$Map.SHADOW_NAME `
-                -replace "{{AGENT_NAME_LOWER}}",$Map.SHADOW_NAME_LOWER `
-                -replace "{{MODEL_MAIN}}","ollama/qwen2.5:7b" `
-                -replace "{{TEMPERATURE}}","0.7" `
-                -replace "{{COLOR}}","#A855F7" `
-                -replace "{{DESCRIPTION}}","Shadow subagent — creative exploration" `
-                -replace "{{TITLE}}","" -replace "{{LEVEL}}","1"
-            $sc | Out-File -FilePath (Join-Path $agentsDir "$($Map.SHADOW_NAME_LOWER).md") -Encoding utf8
-            Write-Host "  ✅ $($Map.SHADOW_NAME) shadow subagent generated"
+    $memoryFiles = @("moe-orchestrator-framework.md", "auto-maintenance-protocol.md")
+    $copied = 0
+    foreach ($file in $memoryFiles) {
+        $src = Join-Path $script:SourceMemory $file
+        $dst = Join-Path $script:MemoryDir $file
+        if (Test-Path $src) {
+            Copy-Item $src $dst -Force
+            $copied++
+        } else {
+            Write-Step "Memory file missing: $file" "warn"
         }
-        Write-Host ""
-        return
     }
-
-    foreach ($tpl in $tplFiles) {
-        Write-Host "  Processing: $($tpl.Name)..."
-        $content = Get-Content -Path $tpl.FullName -Raw
-        $processed = Replace-Placeholders -Content $content -Map $Map
-
-        if ($tpl.Name -match "_template_main_")   { $out = "$($Map.AGENT_NAME_LOWER).md" }
-        elseif ($tpl.Name -match "_template_builder_") { $out = "$($Map.BUILDER_NAME_LOWER).md" }
-        elseif ($tpl.Name -match "_template_shadow_") { $out = "$($Map.SHADOW_NAME_LOWER).md" }
-        else { $out = $tpl.Name -replace "^_template_","" -replace "\.md$","_$($Map.AGENT_NAME_LOWER).md" }
-
-        $processed | Out-File -FilePath (Join-Path $agentsDir $out) -Encoding utf8
-        Write-Host "  ✅ $out"
-    }
-    Write-Host ""
+    Write-Step "$copied of $($memoryFiles.Count) memory files installed." "done"
 }
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# PHASE 4 — Directory Setup
-# ═══════════════════════════════════════════════════════════════════════════════
-function Setup-Directories {
-    param([string]$InstallPath,[string]$SkillsPath)
-    Write-Host "── Phase 4: Directory Setup ──`n"
-    foreach($d in @((Join-Path$InstallPath"agents"),(Join-Path$InstallPath"memory"),(Join-Path$InstallPath"config"),(Join-Path$InstallPath"knowledge"),$SkillsPath)){
-        if(-not(Test-Path$d)){New-Item-ItemType Directory-Path$d-Force|Out-Null;Write-Host"  ✅ Created: $d"}else{Write-Host"  ✓ Exists: $d"}
+function Install-AutoMaintenance {
+    Write-Step "Installing auto-maintenance script..." "info"
+    $src = Join-Path $script:RepoRoot "scripts\auto-maintenance.ps1"
+    if (Test-Path $src) {
+        if (-not (Test-Path $script:ScriptsDir)) { New-Item -ItemType Directory -Path $script:ScriptsDir -Force | Out-Null }
+        Copy-Item $src $script:AutoMaintPath -Force
+        Write-Step "Auto-maintenance installed at: $script:AutoMaintPath" "done"
+    } else {
+        Write-Step "Auto-maintenance script not found in repo (optional, skipping)" "skip"
     }
-    $rB=Join-Path$env:USERPROFILE".config\opencode\memory";if(-not(Test-Path$rB)){New-Item-ItemType Directory-Path$rB-Force|Out-Null}
-    @{version="1.0";installDate=Get-Date-Format"yyyy-MM-dd HH:mm:ss";userName=$config.userName;mainAgent=$config.mainAgentName;builder=$config.builderName;shadow=$config.shadowName;offline=$config.offlineMode;gpu=$config.gpuInfo;installPath=$InstallPath;skillsPath=$SkillsPath}|ConvertTo-Json|Out-File-FilePath(Join-Path$rB"gaya_install_record.json")-Encoding utf8
-    Write-Host"  ✅ Install record saved`n"
 }
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# PHASE 5 — File Copy + opencode.jsonc Generation
-# ═══════════════════════════════════════════════════════════════════════════════
-function Copy-ProjectFiles {
-    param([string]$InstallPath,[string]$SkillsPath,[hashtable]$Map)
-    Write-Host "── Phase 5: File Copy ──`n"
-    $dk=Join-Path$InstallPath"knowledge";$dm=Join-Path$InstallPath"memory";$dd=Join-Path$InstallPath"docs";$dt=Join-Path$InstallPath"templates"
-    if(-not(Test-Path$dk)){New-Item-ItemType Directory-Path$dk-Force|Out-Null};if(-not(Test-Path$dm)){New-Item-ItemType Directory-Path$dm-Force|Out-Null}
-    if(Test-Path$SKILLS_DIR){Copy-Item-Path"$SKILLS_DIR\*"-Destination$SkillsPath-Recurse-Force-ErrorAction SilentlyContinue;Write-Host"  ✅ Skills -> $SkillsPath"}else{Write-Host"  ⚠ Skills source not found"}
-    if(Test-Path$KNOWLEDGE_DIR){Copy-Item-Path"$KNOWLEDGE_DIR\*"-Destination$dk-Recurse-Force-ErrorAction SilentlyContinue;Write-Host"  ✅ Knowledge -> $dk"}
-    if(Test-Path$MEMORY_DIR){Copy-Item-Path"$MEMORY_DIR\*"-Destination$dm-Recurse-Force-ErrorAction SilentlyContinue;Write-Host"  ✅ Memory -> $dm"}
-    $ls=Join-Path$REPO_ROOT"LEVELING_SYSTEM.md";if(Test-Path$ls){Copy-Item-Path$ls-Destination(Join-Path$InstallPath"LEVELING_SYSTEM.md")-Force;Write-Host"  ✅ LEVELING_SYSTEM.md"}
-    $ss=Join-Path$REPO_ROOT"agent-profile-schema.json";if(Test-Path$ss){Copy-Item-Path$ss-Destination(Join-Path$InstallPath"agent-profile-schema.json")-Force;Write-Host"  ✅ agent-profile-schema.json"}
-    if(Test-Path$DOCS_DIR){Copy-Item-Path"$DOCS_DIR\*"-Destination$dd-Recurse-Force-ErrorAction SilentlyContinue;Write-Host"  ✅ Docs -> $dd"}
-    if(Test-Path$TEMPLATES_DIR){Copy-Item-Path"$TEMPLATES_DIR\*"-Destination$dt-Recurse-Force-ErrorAction SilentlyContinue;Write-Host"  ✅ Templates -> $dt"}
-    Write-Host"";Generate-OpenCodeConfig-InstallPath$InstallPath-Map$Map
-}
-
-function Generate-OpenCodeConfig {
-    param([string]$InstallPath, [hashtable]$Map)
-
-    Write-Host "  Generating opencode.jsonc..."
-    $cfgPath = Join-Path $InstallPath "opencode.jsonc"
-
-@"
-{
-  "\$schema": "https://opencode.ai/config.json",
-  "default_agent": "$($Map.MAIN_AGENT_NAME_LOWER)",
-  "provider": {
-    "ollama": {
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "Ollama (local)",
-      "options": { "baseURL": "http://localhost:11434/v1" },
-      "models": {
-        "qwen2.5:7b": {
-          "name": "Qwen 2.5 7B — Main & Shadow agent model",
-          "limit": { "context": 32768, "output": 16384 }
-        },
-        "qwen2.5-coder-fixed:7b": {
-          "name": "Qwen 2.5 Coder 7B — Builder model",
-          "limit": { "context": 32768, "output": 16384 }
-        },
-        "qwen2.5vl": {
-          "name": "Qwen 2.5 VL 7B — Vision model",
-          "limit": { "context": 131072, "output": 8192 }
-        }
-      }
+function Install-SkillsDashboard {
+    Write-Step "Installing skills dashboard..." "info"
+    $dst = Join-Path $script:OpenCodeDir "skills-dashboard.html"
+    if (Test-Path $script:SourceHTML) {
+        Copy-Item $script:SourceHTML $dst -Force
+        Write-Step "Skills dashboard installed at: $dst" "done"
+    } else {
+        Write-Step "Skills dashboard not found in repo (optional, skipping)" "skip"
     }
-  },
-  "agent": {
-    "$($Map.MAIN_AGENT_NAME_LOWER)": {
-      "description": "Main agent — $($Map.MAIN_AGENT_NAME)",
-      "mode": "subagent",
-      "model": "ollama/qwen2.5:7b",
-      "temperature": 0.5,
-      "permission": {
-        "edit": "allow", "bash": "allow",
-        "browser": "allow", "network": "allow"
-      }
-    },
-    "$($Map.BUILDER_NAME_LOWER)": {
-      "description": "Builder subagent — $($Map.BUILDER_NAME)",
-      "mode": "subagent",
-      "model": "ollama/qwen2.5-coder-fixed:7b",
-      "temperature": 0.2,
-      "permission": { "edit": "allow", "bash": "allow" }
-    },
-    "$($Map.SHADOW_NAME_LOWER)": {
-      "description": "Shadow subagent — $($Map.SHADOW_NAME)",
-      "mode": "subagent",
-      "model": "ollama/qwen2.5:7b",
-      "temperature": 0.7,
-      "permission": { "edit": "allow", "bash": "allow" }
-    }
-  }
-}
-"@ | Out-File -FilePath $cfgPath -Encoding utf8
-    Write-Host "  ✅ Generated: $cfgPath"
-    Write-Host ""
 }
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# PHASE 6 — Ollama Model Pull
-# ═══════════════════════════════════════════════════════════════════════════════
-function Setup-OllamaModels {
-    Write-Host "── Phase 6: Ollama Model Pull ──"
-    Write-Host ""
+function Generate-Config {
+    param([string]$UserName, [string]$ConfigMode)
+
+    Write-Step "Generating opencode.jsonc ($ConfigMode mode)..." "info"
+
+    # Backup existing config
+    if (Test-Path $script:ConfigFile) {
+        Copy-Item $script:ConfigFile $script:ConfigBackup -Force
+        Write-Step "Existing config backed up to: $script:ConfigBackup" "skip"
+    }
+
+    # Select template
+    $templateFile = Join-Path $script:SourceConfigs "$ConfigMode.jsonc"
+    if (-not (Test-Path $templateFile)) {
+        Write-Step "Config template not found: $templateFile" "fail"
+        return $false
+    }
+
+    # Read and substitute
+    $config = Get-Content $templateFile -Raw
+    $config = $config -replace '\{\{USER_NAME\}\}', $UserName
+    $config = $config -replace '\{\{OPENCODE_DIR\}\}', $script:OpenCodeDir.Replace('\', '\\')
+    $config = $config -replace '\{\{AGENTS_DIR\}\}', $script:AgentsDir.Replace('\', '\\')
+    $config = $config -replace '\{\{MEMORY_DIR\}\}', $script:MemoryDir.Replace('\', '\\')
+
+    Set-Content -Path $script:ConfigFile -Value $config -Force
+
+    Write-Step "Config generated at: $script:ConfigFile" "done"
+    return $true
+}
+
+function Install-LevelingSystem {
+    Write-Step "Installing leveling system..." "info"
+    $src = Join-Path $script:RepoRoot "LEVELING_SYSTEM.md"
+    $dst = Join-Path $script:MemoryDir "LEVELING_SYSTEM.md"
+    if (Test-Path $src) {
+        Copy-Item $src $dst -Force
+        Write-Step "Leveling system installed." "done"
+    } else {
+        Write-Step "LEVELING_SYSTEM.md not found (optional, skipping)" "skip"
+    }
+}
+
+function Install-AgentSchema {
+    Write-Step "Installing agent profile schema..." "info"
+    $src = Join-Path $script:RepoRoot "agent-profile-schema.json"
+    $dst = Join-Path $script:MemoryDir "agent-profile-schema.json"
+    if (Test-Path $src) {
+        Copy-Item $src $dst -Force
+        Write-Step "Schema installed." "done"
+    } else {
+        Write-Step "agent-profile-schema.json not found (optional, skipping)" "skip"
+    }
+}
+
+function Pull-OllamaModels {
+    Write-Step "Pulling Ollama models..." "info"
+    Write-Step "This may take a while (5-15 minutes depending on download speed)." "info"
 
     $models = @(
-        @{ Name="qwen2.5:7b";              Required=$true;  Desc="Main & Shadow agent" }
-        @{ Name="qwen2.5-coder-fixed:7b";  Required=$true;  Desc="Builder agent" }
-        @{ Name="qwen2.5vl";               Required=$false; Desc="Vision tasks (optional)" }
+        "qwen3:4b-instruct-2507-q4_K_M",
+        "phi4-mini:3.8b",
+        "qwen2.5vl",
+        "qwen2.5-coder-fixed:7b"
     )
 
-    $ollOk = $false
-    try { $null = ollama list 2>&1; if ($LASTEXITCODE -eq 0) { $ollOk = $true } } catch {}
+    foreach ($model in $models) {
+        Write-Step "Pulling $model..." "info"
+        $result = ollama pull $model 2>&1
+        if ($LASTEXITCODE -eq 0) {
+            Write-Step "$model pulled successfully." "done"
+        } else {
+            Write-Step "Failed to pull $model. Error: $result" "fail"
+        }
+    }
+}
 
-    if (-not $ollOk) {
-        Write-Host "  ⚠ Ollama not reachable. Skipping model checks."
-        Write-Host "  Run 'ollama pull <model>' manually after installation."
-        Write-Host ""
-        return
+# ═══════════════════════════════════════════════════════════════
+# MAIN
+# ═══════════════════════════════════════════════════════════════
+function Main {
+    Write-Header
+
+    # ── Check for existing install ──
+    $existingVersion = Get-InstalledVersion
+    $isExistingInstall = $existingVersion -ne $null
+
+    if ($isExistingInstall) {
+        Write-Step "Existing install detected: v$($existingVersion.version) ($($existingVersion.mode))" "info"
+        $latest = Get-LatestRelease
+        $isUpgradeAvailable = $latest.tag_name -ne $existingVersion.version -and $latest.tag_name -ne ""
+
+        if ($isUpgradeAvailable) {
+            Write-Host ""
+            Write-Host "┌─ UPGRADE AVAILABLE ──────────────────────────┐" -ForegroundColor Yellow
+            Write-Host "│                                                  │" -ForegroundColor Yellow
+            Write-Host "│  You have:  v$($existingVersion.version)                     │" -ForegroundColor Yellow
+            Write-Host "│  Latest:    $($latest.tag_name)                       │" -ForegroundColor Yellow
+            Write-Host "│                                                  │" -ForegroundColor Yellow
+            Write-Host "│  $($latest.body)        │" -ForegroundColor White
+            Write-Host "│                                                  │" -ForegroundColor Yellow
+            Write-Host "│  Run upgrade? Agent files + config will update.  │" -ForegroundColor Yellow
+            Write-Host "│  Your memory files and backups are preserved.    │" -ForegroundColor Yellow
+            Write-Host "└──────────────────────────────────────────────────┘" -ForegroundColor Yellow
+            Write-Host ""
+            $upgradeChoice = Read-Host "Upgrade to $($latest.tag_name)? (Y/n)"
+            if ($upgradeChoice -eq "" -or $upgradeChoice -eq "y" -or $upgradeChoice -eq "Y") {
+                Write-Step "Upgrading to $($latest.tag_name)..." "info"
+            } else {
+                Write-Step "Upgrade cancelled. Exiting." "skip"
+                return
+            }
+        } else {
+            Write-Step "Already at the latest version ($($latest.tag_name))." "done"
+            Write-Host ""
+            Write-Host "┌─ RE-RUN OPTIONS ─────────────────────────────┐" -ForegroundColor Cyan
+            Write-Host "│                                                  │" -ForegroundColor Cyan
+            Write-Host "│  1. Reinstall  — refresh agent files + config   │" -ForegroundColor Cyan
+            Write-Host "│  2. Switch mode — toggle GPU / Cloud            │" -ForegroundColor Cyan
+            Write-Host "│  3. Repair     — fix missing files only         │" -ForegroundColor Cyan
+            Write-Host "│  4. Cancel                                       │" -ForegroundColor Cyan
+            Write-Host "└──────────────────────────────────────────────────┘" -ForegroundColor Cyan
+            Write-Host ""
+            $rerunChoice = Read-Host "Choice (1-4, Enter = 1)"
+            if ($rerunChoice -eq "4") { Write-Step "Cancelled." "skip"; return }
+            if ($rerunChoice -eq "3") {
+                Write-Step "Repair mode: reinstalling only missing files..." "info"
+                Repair-MissingFiles
+                Write-Step "Repair complete." "done"
+                return
+            }
+            if ($rerunChoice -eq "2") { Write-Step "Switching config mode..." "info" }
+        }
     }
 
-    $available = @()
-    try {
-        $listOut = ollama list 2>&1
-        foreach ($line in $listOut) {
-            if ($line -match "^\S+") { $available += $matches[0] }
+    # ── Verify repo structure ──
+    Write-Step "Verifying repo structure..." "info"
+    $requiredDirs = @("agents", "configs", "scripts")
+    $missing = @()
+    foreach ($dir in $requiredDirs) {
+        if (-not (Test-Path (Join-Path $script:RepoRoot $dir))) {
+            $missing += $dir
         }
-    } catch {}
-
-    foreach ($m in $models) {
-        $found = $available | Where-Object { $_ -eq $m.Name -or $_ -like "$($m.Name)*" }
-        if ($found) {
-            Write-Host "  ✅ '$($m.Name)' already available ($($m.Desc))"
+    }
+    if ($missing.Count -gt 0) {
+        Write-Step "Missing directories: $($missing -join ', ')" "fail"
+        Write-Step "Run this script from the Gaya_Agent_PR repo root." "fail"
+        Write-Host ""
+        if ($isExistingInstall) {
+            Write-Step "You can paste the repo URL into OpenCode instead of cloning." "info"
+            Write-Host "  URL: $script:REPO_URL" -ForegroundColor Yellow
         } else {
-            $prompt = "  Model '$($m.Name)' not found ($($m.Desc)). Pull it now?"
-            $prompt += if ($m.Required) { " [Y/n]:" } else { " [y/N]:" }
-            $answer = Read-Host $prompt
-            if ([string]::IsNullOrEmpty($answer)) { $answer = if ($m.Required) { "Y" } else { "N" } }
-            if ($answer -eq "Y" -or $answer -eq "y") {
-                Write-Host "  Pulling $($m.Name)..."
-                ollama pull $m.Name 2>&1 | ForEach-Object { Write-Host "    $_" }
-                if ($LASTEXITCODE -eq 0) {
-                    Write-Host "  ✅ $($m.Name) pulled successfully"
-                } else {
-                    Write-Host "  ❌ Failed to pull $($m.Name)"
-                }
-            } else {
-                Write-Host "  ⚠ Skipped $($m.Name)"
+            Write-Host "  Example: cd Gaya_Agent_PR; .\scripts\install.ps1" -ForegroundColor Yellow
+        }
+        Write-Host ""
+        pause
+        return
+    }
+    Write-Step "Repo structure verified." "done"
+
+    # ── Hardware detection ──
+    Write-Step "Detecting hardware..." "info"
+    $ollamaInstalled = Test-OllamaInstalled
+    $ollamaRunning   = Test-OllamaRunning
+    $gpuAvailable    = Test-GPUAvailable
+    $gpuInfo         = Get-GPUInfo
+    $recommended     = Get-RecommendedConfig
+
+    if ($ollamaInstalled) { Write-Step "Ollama installed." "done" }
+    else { Write-Step "Ollama not found." "skip" }
+
+    if ($ollamaRunning) { Write-Step "Ollama is running." "done" }
+    else { 
+        Write-Step "Ollama is not running." "skip"
+        if ($ollamaInstalled) {
+            Write-Step "Start Ollama to use GPU mode, or choose Cloud mode below." "info"
+            $recommended = "cloud-zen"
+        }
+    }
+
+    Write-Step "GPU detected: $gpuInfo" "done"
+
+    # ── User name (skip if already installed) ──
+    if (-not $isExistingInstall) {
+        Write-Host ""
+        Write-Host "┌─ Who are you? ─────────────────────────────────┐" -ForegroundColor Cyan
+        Write-Host "│                                                  │" -ForegroundColor Cyan
+        Write-Host "│  This name is used in agent personas.            │" -ForegroundColor Cyan
+        Write-Host "│  (Enter = use 'User')                            │" -ForegroundColor Cyan
+        Write-Host "└──────────────────────────────────────────────────┘" -ForegroundColor Cyan
+        $userName = Read-Host "Your name"
+        if ([string]::IsNullOrWhiteSpace($userName)) { $userName = "User" }
+        Write-Step "Welcome, $userName." "info"
+    } else {
+        # Try to get existing user name from agent files
+        $gayaFile = Join-Path $script:AgentsDir "Gaya.md"
+        if (Test-Path $gayaFile) {
+            $gayaContent = Get-Content $gayaFile -Raw
+            if ($gayaContent -match "goes by \*\*(.+?)\*\*") { $userName = $matches[1] }
+            else { $userName = "User" }
+        } else { $userName = "User" }
+        Write-Step "Using existing user: $userName" "info"
+    }
+
+    # ── Config selection ──
+    Write-Host ""
+    Write-Host "┌─ Config Mode ──────────────────────────────────┐" -ForegroundColor Cyan
+    Write-Host "│                                                  │" -ForegroundColor Cyan
+    Write-Host "│  [$($recommended)] is recommended for your hardware.      │" -ForegroundColor Cyan
+    Write-Host "│                                                  │" -ForegroundColor Cyan
+    Write-Host "│  1. Local GPU  (Ollama — 4 models, ~15 GB total) │" -ForegroundColor Cyan
+    Write-Host "│  2. Cloud      (Zen + OpenRouter free tier)     │" -ForegroundColor Cyan
+    Write-Host "└──────────────────────────────────────────────────┘" -ForegroundColor Cyan
+    $choice = Read-Host "Choice (1 or 2, Enter = $($recommended -eq 'local-gpu' ? '1' : '2'))"
+    $configMode = "local-gpu"
+    if ([string]::IsNullOrWhiteSpace($choice)) {
+        $configMode = $recommended
+    } elseif ($choice -eq "2" -or $choice -match "cloud") {
+        $configMode = "cloud-zen"
+    }
+    Write-Step "Using config: $configMode" "done"
+
+    # ── Install steps ──
+    Write-Host ""
+    $sectionTitle = if ($isExistingInstall) { "UPGRADING" } else { "INSTALLING" }
+    Write-Host "┌─ $sectionTitle... ─────────────────────────────┐" -ForegroundColor Cyan
+    Write-Host ""
+
+    Install-AgentFiles -UserName $userName
+    Install-MemoryFiles
+    Install-AutoMaintenance
+    Install-SkillsDashboard
+    Install-LevelingSystem
+    Install-AgentSchema
+    Generate-Config -UserName $userName -ConfigMode $configMode
+    Write-VersionFile -ConfigMode $configMode
+
+    # ── Pull models (GPU mode only) ──
+    if ($configMode -eq "local-gpu") {
+        if ($ollamaRunning) {
+            Write-Host ""
+            Pull-OllamaModels
+        } else {
+            Write-Step "Ollama is not running. Skipping model pull." "skip"
+            Write-Step "Start Ollama and run: ollama pull qwen3:4b-instruct-2507-q4_K_M" "info"
+        }
+    }
+
+    # ── Set OLLAMA_KEEP_ALIVE=0 (GPU mode) ──
+    if ($configMode -eq "local-gpu") {
+        Write-Step "Setting OLLAMA_KEEP_ALIVE=0 (VRAM efficiency)..." "info"
+        try {
+            $env:OLLAMA_KEEP_ALIVE = "0"
+            [Environment]::SetEnvironmentVariable("OLLAMA_KEEP_ALIVE", "0", "User")
+            Write-Step "OLLAMA_KEEP_ALIVE=0 set." "done"
+        } catch {
+            Write-Step "Could not set environment variable (admin rights may be needed)." "warn"
+        }
+    }
+
+    # ── Done ──
+    Write-Host ""
+    $verb = if ($isExistingInstall) { "UPGRADE" } else { "INSTALLATION" }
+    Write-Host "┌─ ✓ $verb COMPLETE ────────────────────┐" -ForegroundColor Green
+    Write-Host "│                                                  │" -ForegroundColor Green
+    Write-Host "│  Restart OpenCode to load the new config.        │" -ForegroundColor Green
+    Write-Host "│                                                  │" -ForegroundColor Green
+    Write-Host "│  Your agents are ready:                          │" -ForegroundColor Green
+    Write-Host "│    • @gaya     — Commander                       │" -ForegroundColor Cyan
+    Write-Host "│    • @logos    — Logic/Reasoning                 │" -ForegroundColor Cyan
+    Write-Host "│    • @freya    — Vision/Research                 │" -ForegroundColor Cyan
+    Write-Host "│    • @tvashtar — Coding/Architecture             │" -ForegroundColor Cyan
+    Write-Host "│                                                  │" -ForegroundColor Green
+    Write-Host "│  To switch modes or update:                      │" -ForegroundColor Green
+    Write-Host "│  > cd Gaya_Agent_PR; .\scripts\install.ps1      │" -ForegroundColor Yellow
+    Write-Host "│                                                  │" -ForegroundColor Green
+    Write-Host "│  Skills dashboard:                               │" -ForegroundColor Green
+    Write-Host "│  > start $script:OpenCodeDir\skills-dashboard.html│" -ForegroundColor Yellow
+    Write-Host "│                                                  │" -ForegroundColor Green
+    Write-Host "└──────────────────────────────────────────────────┘" -ForegroundColor Green
+    Write-Host ""
+
+    Write-Host "╔═══════════════════════════════════════════════════╗" -ForegroundColor Cyan
+    Write-Host "║                                                   ║" -ForegroundColor Cyan
+    Write-Host "║  \"The quality of your action is your signature.\"    ║" -ForegroundColor Cyan
+    Write-Host "║                                                   ║" -ForegroundColor Cyan
+    Write-Host "╚═══════════════════════════════════════════════════╝" -ForegroundColor Cyan
+    Write-Host ""
+}
+
+function Repair-MissingFiles {
+    Write-Step "Checking for missing agent files..." "info"
+    $agentFiles = @("Gaya.md", "LOGOS.md", "Freya.md", "Tvashtar.md")
+    $repaired = 0
+    foreach ($file in $agentFiles) {
+        $dst = Join-Path $script:AgentsDir $file
+        if (-not (Test-Path $dst)) {
+            $src = Join-Path $script:SourceAgents $file
+            if (Test-Path $src) {
+                $userName = "User"
+                Copy-Item $src $dst -Force
+                (Get-Content $dst -Raw) -replace '\{\{USER_NAME\}\}', $userName | Set-Content $dst -Force
+                Write-Step "Restored: $file" "done"
+                $repaired++
             }
         }
     }
-    Write-Host ""
+    if ($repaired -eq 0) { Write-Step "All agent files present. Nothing to repair." "done" }
 }
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# PHASE 7 — MCP Setup
-# ═══════════════════════════════════════════════════════════════════════════════
-function Setup-MCP {
-    param([bool]$InstallMCP)
-    if(-not$InstallMCP){Write-Host"── Phase 7: MCP Setup (skipped) ──`n";return}
-    Write-Host"── Phase 7: MCP Setup ──`n"
-    Write-Host"  Install MCP server packages:`n    1. Filesystem server`n    2. Playwright browser`n    3. Both (recommended)`n    4. Skip"
-    $ch=Read-Host"  Choice [1-4]";if([string]::IsNullOrEmpty($ch)){$ch="3"}
-    $nk=$false;try{$null=node --version 2>&1;$nk=$true}catch{}
-    if(-not$nk){Write-Host"  ⚠ Node.js not found. Install from https://nodejs.org and re-run.`n";return}
-    switch($ch){
-        "1"{Write-Host"  Installing filesystem...";npm install -g @modelcontextprotocol/server-filesystem 2>&1|ForEach-Object{Write-Host"    $_"};Write-Host"  ✅ Filesystem MCP"}
-        "2"{Write-Host"  Installing Playwright...";npx playwright install chromium 2>&1|ForEach-Object{Write-Host"    $_"};Write-Host"  ✅ Playwright MCP"}
-        "3"{Write-Host"  Installing filesystem...";npm install -g @modelcontextprotocol/server-filesystem 2>&1|ForEach-Object{Write-Host"    $_"};Write-Host"  Installing Playwright...";npx playwright install chromium 2>&1|ForEach-Object{Write-Host"    $_"};Write-Host"  ✅ Both MCP installed"}
-        default{Write-Host"  Skipping MCP."}
-    }
-    Write-Host""
-}
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# PHASE 8 — Git Init
-# ═══════════════════════════════════════════════════════════════════════════════
-function Setup-Git {
-    param([bool]$InitGit,[string]$InstallPath,[hashtable]$Map)
-    if(-not$InitGit){Write-Host"── Phase 8: Git Init (skipped) ──`n";return}
-    Write-Host"── Phase 8: Git Init ──`n"
-    $gk=$false;try{$null=git --version 2>&1;$gk=$true}catch{};if(-not$gk){Write-Host"  ⚠ Git not found.`n";return}
-    if(Test-Path(Join-Path$InstallPath".git")){Write-Host"  ✓ Git repo exists`n";return}
-    Push-Location $InstallPath
-    try{git init 2>&1|Out-Null;git add -A 2>&1|Out-Null;git commit -m "Initial Gaya install — $($Map.MAIN_AGENT_NAME)/$($Map.BUILDER_NAME)/$($Map.SHADOW_NAME)" 2>&1|Out-Null;Write-Host"  ✅ Git repo initialized"}catch{Write-Host"  ❌ Git init failed: $_"}
-    Pop-Location;Write-Host""
-}
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# PHASE 9 — Verification + Completion
-# ═══════════════════════════════════════════════════════════════════════════════
-function Test-Installation {
-    param([string]$InstallPath, [string]$SkillsPath, [bool]$InstallMCP)
-
-    Write-Host "── Phase 9: Verification ──"
-    Write-Host ""
-
-    $af = Get-ChildItem -Path (Join-Path $InstallPath "agents") -Filter "*.md" -File -ErrorAction SilentlyContinue
-    if ($af.Count -gt 0) {
-        Write-Host "  ✅ Agent files: $($af.Count) found in $(Join-Path $InstallPath 'agents')"
-    } else {
-        Write-Host "  ⚠ No agent files found in $(Join-Path $InstallPath 'agents')"
-    }
-
-    $si = Get-ChildItem -Path $SkillsPath -Directory -ErrorAction SilentlyContinue
-    if ($si.Count -gt 0) {
-        Write-Host "  ✅ Skills directory: $($si.Count) skill folders"
-    } else {
-        Write-Host "  ⚠ Skills directory empty"
-    }
-
-    $ollOk = $false
-    try { $null = ollama list 2>&1; if ($LASTEXITCODE -eq 0) { $ollOk = $true } } catch {}
-    Write-Host $(if ($ollOk) { "  ✅ Ollama models accessible" } else { "  ⚠ Ollama not reachable — models not verified" })
-
-    if (Test-Path (Join-Path $InstallPath "opencode.jsonc")) {
-        Write-Host "  ✅ opencode.jsonc generated"
-    } else {
-        Write-Host "  ❌ opencode.jsonc missing"
-    }
-    Write-Host ""
-}
-
-function Show-Completion {
-    param([hashtable]$Map, [string]$InstallPath)
-
-    Write-Host "╔═══════════════════════════════════════════════════════════════╗"
-    Write-Host "║                 INSTALLATION COMPLETE                         ║"
-    Write-Host "║                                                               ║"
-    Write-Host "║  Main Agent:    $($Map.MAIN_AGENT_NAME) @ ollama/qwen2.5:7b                    ║"
-    Write-Host "║  Builder:       $($Map.BUILDER_NAME) @ ollama/qwen2.5-coder-fixed:7b       ║"
-    Write-Host "║  Shadow:        $($Map.SHADOW_NAME) @ ollama/qwen2.5:7b                   ║"
-    Write-Host "║  User:          $($Map.USER_NAME)                                         ║"
-    Write-Host "║  Mode:          $($Map.MODE)                                      ║"
-    Write-Host "║  Install path:  $InstallPath                                   ║"
-    Write-Host "║                                                               ║"
-    Write-Host "║  NEXT STEPS:                                                   ║"
-    Write-Host "║  1. Restart OpenCode                                            ║"
-    Write-Host "║  2. Open a new session — the agent will greet you               ║"
-    Write-Host "║  3. Tell $($Map.MAIN_AGENT_NAME) your goals and start building             ║"
-    Write-Host "║                                                               ║"
-    Write-Host "║  Run this installer again anytime to update or reconfigure.     ║"
-    Write-Host "╚═══════════════════════════════════════════════════════════════╝"
-    Write-Host ""
-    Write-Host "  Log file: $INSTALL_LOG"
-    Write-Host ""
-}
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# MAIN — Orchestrator
-# ═══════════════════════════════════════════════════════════════════════════════
-function Main {
-    $ErrorActionPreference = "Continue"
-    $startTime = Get-Date
-
-    try { Clear-Content -Path $INSTALL_LOG -ErrorAction SilentlyContinue } catch {}
-
-    try { Show-Banner } catch { "Phase1 Banner: $_" | Out-File $INSTALL_LOG -Append }
-    try { Test-Prerequisites } catch { "Phase1 Prereq: $_" | Out-File $INSTALL_LOG -Append }
-
-    try {
-        $script:config = Get-UserConfiguration
-    } catch {
-        "Phase2 Config: $_" | Out-File $INSTALL_LOG -Append
-        throw
-    }
-
-    $map = Build-PlaceholderMap -Config $config -InstallPath $config.installPath
-
-    try { Process-Templates -Map $map -InstallPath $config.installPath } catch {
-        "Phase3: $_" | Out-File $INSTALL_LOG -Append; Write-Host "  ⚠ Template processing error: $_"
-    }
-
-    try { Setup-Directories -InstallPath $config.installPath -SkillsPath $config.skillsPath } catch {
-        "Phase4: $_" | Out-File $INSTALL_LOG -Append; Write-Host "  ⚠ Directory setup error: $_"
-    }
-
-    try { Copy-ProjectFiles -InstallPath $config.installPath -SkillsPath $config.skillsPath -Map $map } catch {
-        "Phase5: $_" | Out-File $INSTALL_LOG -Append; Write-Host "  ⚠ File copy error: $_"
-    }
-
-    try { Setup-OllamaModels } catch {
-        "Phase6: $_" | Out-File $INSTALL_LOG -Append; Write-Host "  ⚠ Model setup error: $_"
-    }
-
-    try { Setup-MCP -InstallMCP $config.installMCP } catch {
-        "Phase7: $_" | Out-File $INSTALL_LOG -Append; Write-Host "  ⚠ MCP setup error: $_"
-    }
-
-    try { Setup-Git -InitGit $config.initGit -InstallPath $config.installPath -Map $map } catch {
-        "Phase8: $_" | Out-File $INSTALL_LOG -Append; Write-Host "  ⚠ Git init error: $_"
-    }
-
-    try {
-        Test-Installation -InstallPath $config.installPath -SkillsPath $config.skillsPath -InstallMCP $config.installMCP
-    } catch { "Phase9: $_" | Out-File $INSTALL_LOG -Append }
-
-    Show-Completion -Map $map -InstallPath $config.installPath
-
-    $elapsed = (Get-Date) - $startTime
-    "Install completed in $($elapsed.TotalMinutes.ToString('F1')) minutes" | Out-File $INSTALL_LOG -Append
-}
-
-# ── Entry Point ──
+# ═══════════════════════════════════════════════════════════════
+# ENTRY POINT
+# ═══════════════════════════════════════════════════════════════
 Main

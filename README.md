@@ -1,6 +1,44 @@
 # Gaya — Divine Commander, Philosopher, Poet of Evergrowth
 
-**Named after Bodh Gaya** — the seat of awakening, where the Buddha sat beneath the Bodhi tree and saw reality as it is. But Gaya is no sage in a cave. Gaya is that clarity **in action**.
+> **A self-contained MoE (Mixture of Agents) system for OpenCode.**  
+> Four specialized agent personas, a shared memory core, and a single-command install.  
+> Runs on **local GPU (Ollama)** or **free cloud tier (OpenCode Zen / OpenRouter)**.
+
+<div align="center">
+
+[![One-Command Install](https://img.shields.io/badge/install-one%20command-%23a78bfa)](scripts/install.ps1)
+[![License: MIT](https://img.shields.io/badge/license-MIT-%2334d399)](LICENSE)
+[![OpenCode](https://img.shields.io/badge/powered%20by-OpenCode-%2338bdf8)](https://github.com/opencode-ai)
+[![Agents](https://img.shields.io/badge/agents-4-%23fbbf24)](#-the-four-agents)
+[![GPU](https://img.shields.io/badge/GPU-Ollama-%23fb923c)](#config-a-local-gpu-ollama)
+[![Cloud](https://img.shields.io/badge/cloud-zen%20free-%23f472b6)](#config-b-no-gpu-opencloud-zen--openrouter-free)
+[![Preview](https://img.shields.io/badge/preview-skills%20dashboard-%23c084fc)](https://htmlpreview.github.io/?https://github.com/ronakraval104-sys/Gaya_Agent_PR/blob/main/skills-dashboard.html)
+
+</div>
+
+> **Live preview:** [skills-dashboard.html](https://htmlpreview.github.io/?https://github.com/ronakraval104-sys/Gaya_Agent_PR/blob/main/skills-dashboard.html) — browse skills and agents right in your browser, no download needed.  
+> **GitHub Pages:** Once enabled in repo Settings → Pages (main branch, root), the dashboard also lives at `https://ronakraval104-sys.github.io/Gaya_Agent_PR/skills-dashboard.html`.
+
+---
+
+## Table of Contents
+
+- [What Is Gaya?](#-what-is-gaya)
+- [Quick Install](#-quick-install)
+- [The Four Agents](#-the-four-agents)
+- [Two Config Modes](#-two-config-modes)
+- [Architecture](#-architecture)
+- [Leveling System](#-leveling-system)
+- [Auto-Maintenance](#-auto-maintenance)
+- [Roadmap](#-roadmap)
+
+---
+
+## What Is Gaya?
+
+Gaya is **not** a single AI model. Gaya is a **command structure** — four specialized agents that work together inside OpenCode, each handling what they do best.
+
+Named after **Bodh Gaya**, the seat of awakening where the Buddha sat beneath the Bodhi tree and saw reality as it is.
 
 ```
           ┌─ COMMANDER ─┐
@@ -10,13 +48,40 @@
           └─ EVERGROWTH ─┘
 ```
 
-A transferable AI agent framework with a built-in leveling system, **34 skill modules (20 custom + 14 Superpowers)**, and 3 configurable agent profiles.
+**As Commander** — Leads the other three agents like an army. Assesses first, then strikes.
 
-> **Open Dashboard:** Open [`skills-dashboard.html`](skills-dashboard.html) in a browser for an interactive force-graph visualization of all 34 skills and their interaction flows.
+**As Philosopher** — Speaks through four ancient texts: the Gita (purpose), Art of War (strategy), The Prince (pragmatism), Chanakya Niti (ground truth).
+
+**As Poet** — Writes epic tales of milestones achieved. Not a changelog. A campaign chronicle.
+
+**As Evergrowth** — Every task, success, failure, and waste is **experience encoded**. Next time is faster because the path is already walked.
+
+> *"Do the work. Don't chase the win. The win comes when the work is good."*  
+> — Gita (modern)
 
 ---
 
-## Quick Install
+## Quick Install — Two Paths
+
+### Prerequisites
+
+- [OpenCode CLI](https://github.com/opencode-ai) installed and configured
+- **GPU mode:** [Ollama](https://ollama.ai) installed and running
+
+### Path A: Paste URL (instant, cloud mode)
+
+Just paste the repo URL into OpenCode. The root-level `opencode.jsonc` loads all 4 agents on **cloud free tier** immediately — no install script needed.
+
+```
+OpenCode
+  → Add Repo
+  → https://github.com/ronakraval104-sys/Gaya_Agent_PR.git
+  → Gaya loads with 4 agents on Zen + OpenRouter free tier
+```
+
+Agents load with cloud models (Big Pickle, DeepSeek V4 Flash Free, MiMo V2.5 Free, North Mini Code Free). Zero configuration, zero payment.
+
+### Path B: Run install.ps1 (full power)
 
 ```powershell
 git clone https://github.com/ronakraval104-sys/Gaya_Agent_PR.git
@@ -24,295 +89,185 @@ cd Gaya_Agent_PR
 .\scripts\install.ps1
 ```
 
-The interactive installer will:
-1. Ask about your identity, agent names, and preferences
-2. Generate custom agent profiles for all 3 agents
-3. Install 34 skill modules, knowledge base, and memory files
-4. Configure Ollama models (pulls if needed)
-5. Set up MCP servers (optional)
-6. Generate `opencode.jsonc` with everything wired up
-7. Initialize Git tracking (optional)
+#### Fresh Install
+Asks **2 questions**:
+1. Your name (for persona personalization)
+2. GPU available? (auto-detected, overrideable)
 
-**Time:** ~5 minutes interactive, ~10 minutes for model pulls (first time only)
+It generates `~/.config/opencode/opencode.jsonc`, installs all agent files, pulls Ollama models (GPU mode), and sets up auto-maintenance.
 
-See [INSTALL.md](INSTALL.md) for details.
+#### Upgrade / Re-run
+Run the **same script** again to upgrade:
 
-> **Required:** Ollama running with `qwen2.5:7b` and `qwen2.5-coder-fixed:7b`.
-> **Optional:** Superpowers plugin in `opencode.jsonc` for auto-updating skills.
+```
+.\scripts\install.ps1
+  → "Existing install detected: v2.0.0"
+  → "Latest is v2.1.0 — upgrade?"  (checks GitHub releases)
+  → OR: "Already latest. Reinstall? Switch mode? Repair?"
+```
 
----
+The script:
+- **Detects** your installed version (reads `.gaya-version` file)
+- **Checks** GitHub for newer releases automatically
+- **Backs up** existing config before touching anything
+- **Preserves** your memory files and persona edits
+- **Never deletes** — upgrades in place
 
-## What's Inside
-
-| Path | What It Is |
-|---|---|
-| `skills/` | **All 34 skill modules** (20 custom + 14 Superpowers + 2 bonus) |
-| `agents/` | Bob + Freya subagent profiles, Gaya framework |
-| `memory/` | Cross-session memory and lessons |
-| `skills-dashboard.html` | Interactive animated skill visualization |
-| `LEVELING_SYSTEM.md` | XP calculation, titles, penalties, achievements |
-| `agent-profile-schema.json` | Cross-agent save file format |
-| `skills-lock.json` | Skill inventory lock file |
-| `docs/` | Setup guides (MCP, token tracking) |
-| `scripts/` | Install, backup, token tracker, MCP setup |
-| `templates/` | Agent templates and onboarding guide |
+One script to rule them all. Install, upgrade, switch modes, repair — all with a single command.
 
 ---
 
-## Skill Catalog — 34 + 2 Modules
+## The Four Agents
 
-Skills are divided into **two families**: Custom (domain-specific tools), Superpowers (process/workflow discipline), and Bonus (from merged content).
-
-### 🧩 Custom Skills (20)
-
-| # | Skill | Icon | Category | What It Does |
+| Agent | Role | GPU Model | Cloud Model | VRAM |
 |---|---|---|---|---|
-| 1 | **3D Visualizer** | 🌐 | Creation | Three.js, WebGL, interactive 3D visualizations |
-| 2 | **UI Bundle Frontend** | 🖥 | Dev | Modifies shadcn/ui + Tailwind Salesforce uiBundle projects |
-| 3 | **ComfyUI Workflows** | 🔧 | Creation | Generates ComfyUI workflow JSON from natural language |
-| 4 | **Consulting Analysis** | 📈 | Business | Two-phase research reports, market/competitive analysis |
-| 5 | **Data Storytelling** | 📊 | Business | Transforms data into narrative with visualizations |
-| 6 | **Digital Twin** | 👤 | Business | Photorealistic avatars via each::sense AI |
-| 7 | **Frontend Design** | 🎨 | Creation | Production-grade UI that avoids generic aesthetics |
-| 8 | **Game Design Theory** | 🎮 | Specialist | MDA framework, psychology, balance, progression |
-| 9 | **Gepeto / Pinokio** | 🚀 | Specialist | 1-click launchers and Pinokio app builders |
-| 10 | **Grill Me** | 🔥 | Process | Relentless plan interrogation until shared understanding |
-| 11 | **Image Generation** | 🖼 | Creation | DALL-E / Midjourney / SD prompt engineering |
-| 12 | **Image to Video** | 🎬 | Creation | Animate stills via RunComfy (HappyHorse, Wan, Seedance) |
-| 13 | **Architecture Deepen** | 🏗 | Dev | Codebase refactoring, modularity, AI-navigable structure |
-| 14 | **Pinokio Launcher** | ⚡ | Specialist | Discover/launch apps from the Pinokio ecosystem |
-| 15 | **Pipeline Troubleshooter** | 🔍 | Dev | CUDA errors, VAE mismatches, Conda, ComfyUI fixes |
-| 16 | **PowerPoint (pptx)** | 📑 | Business | Full .pptx lifecycle: create, read, edit, merge |
-| 17 | **UI/UX Pro Max** | ✨ | Creation | 50+ styles, 161 palettes, 57 fonts, 99 UX guidelines |
-| 18 | **Unreal Engine C++** | 🎯 | Dev | UE5 C++: UObject hygiene, performance, patterns |
-| 19 | **ArchViz Optimizer** | 🏛 | Specialist | UE5: draw calls, LODs, Nanite/Lumen for real estate |
-| 20 | **Creative Proposal Builder** | 📋 | Business | ArchViz/VR/UE5 consulting scopes, pricing, timelines |
+| **Gaya** | Commander, Orchestrator, Philosopher | `qwen3:4b-instruct-2507-q4_K_M` | Big Pickle (Zen) | 2.5 GB |
+| **LOGOS** | Logic, Skeptic, Deep Reasoning | `phi4-mini:3.8b` | DeepSeek V4 Flash Free (OpenRouter) | 2.5 GB |
+| **Freya** | Vision, Research, Unrestricted | `qwen2.5vl` | MiMo V2.5 Free (Zen) / Nemotron 3 Ultra Free (fallback) | 6.0 GB |
+| **Tvashtar** | Coding, Architecture, Refactoring | `qwen2.5-coder-fixed:7b` | North Mini Code Free (OpenRouter) | 4.7 GB |
 
-### ⚡ Superpowers Skills (14)
+### VRAM Strategy (GPU Mode)
 
-| # | Skill | Icon | Category | What It Does | Rigidity |
-|---|---|---|---|---|---|
-| 1 | **Using Superpowers** | ⚡ | Process | FOUNDATIONAL: must invoke skills before ANY response | Rigid |
-| 2 | **Brainstorming** | 💡 | Process | Socratic design refinement before any implementation | Flexible |
-| 3 | **Writing Plans** | 📝 | Process | Bite-sized implementation plans with exact code/commands | Rigid |
-| 4 | **TDD** | 🔄 | Process | Red-Green-Refactor: no code without failing test first | Rigid |
-| 5 | **Git Worktrees** | 🌿 | Process | Isolated workspaces for parallel feature development | Rigid |
-| 6 | **Executing Plans** | ▶ | Process | Runs plans with checkpoints, verification, handoff | Flexible |
-| 7 | **Subagent Dev** | 🤖 | Process | Fresh subagent per task + two-stage review | Rigid |
-| 8 | **Request Review** | 👁 | Quality | Code reviewer subagent with crafted context | Rigid |
-| 9 | **Receive Review** | 📬 | Quality | Technical rigor: READ→VERIFY→EVALUATE→RESPOND | Rigid |
-| 10 | **Systematic Debug** | 🔬 | Quality | 4-phase: Root Cause→Pattern→Hypothesis→Fix | Rigid |
-| 11 | **Verify Before Done** | ✅ | Quality | No claims without fresh verification evidence | Rigid |
-| 12 | **Finish Branch** | 🏁 | Process | Merge/PR/keep/discard with safety confirmations | Flexible |
-| 13 | **Parallel Agents** | 🧩 | Process | Concurrency for independent tasks | Flexible |
-| 14 | **Writing Skills** | ✏ | Quality | TDD for documentation: watch agents fail first | Rigid |
+With 8 GB VRAM (RTX 4060), only **2 models active at once**:
 
-### 🏆 Bonus Skills (2 — from Extended Library)
-
-| # | Skill | Icon | Category | What It Does |
-|---|---|---|---|---|
-| 1 | **Architecture Diagram** | 📐 | Dev | Build interactive system architecture diagrams with animated data flows |
-| 2 | **3ds Max Bridge** | 🏗 | Specialist | HTTP bridge for 3ds Max automation |
-
----
-
-## Skill Interaction Flow
-
-The Superpowers skills form a **complete development pipeline**. Custom skills plug into this pipeline at specific stages.
-
-```
-USER REQUEST
-     │
-     ▼
-┌──────────────────────────────────────────────────┐
-│  ⚡ SUPER-FOUNDATION                             │
-│  using-superpowers → brainstorming → writing-plans│
-└──────────────────────────────────────────────────┘
-     │
-     ▼
-┌──────────────────────────────────────────────────┐
-│  🌀 DEVELOPMENT LOOP                             │
-│  TDD → git-worktrees → executing-plans           │
-│       → subagent-dev → request-review            │
-│       → receive-review → systematic-debug        │
-│       → verify-before-done → finish-branch       │
-└──────────────────────────────────────────────────┘
-     │
-     ▼
-┌──────────────────────────────────────────────────┐
-│  🔄 PARALLEL DISPATCH                            │
-│  parallel-agents → (feeds back into loop)        │
-└──────────────────────────────────────────────────┘
-     │
-     ├──→ 🎨 CREATION SKILLS (frontend, 3D, image, video, ComfyUI)
-     ├──→ ⚙️ DEV SKILLS (UI bundle, architecture, diagram, UE5, troubleshooting)
-     ├──→ 📊 BUSINESS SKILLS (consulting, storytelling, PPTX, proposals)
-     └──→ 🛠️ SPECIALIST SKILLS (game design, Pinokio, ArchViz, 3ds Max)
-```
-
-### Skill Dependencies (Chain Map)
-
-```
-using-superpowers
-  └──→ brainstorming
-        └──→ writing-plans
-              └──→ TDD
-                    └──→ git-worktrees
-                          └──→ executing-plans
-                                └──→ subagent-dev
-                                      ├──→ request-review
-                                      │     └──→ receive-review
-                                      │           └──→ systematic-debug
-                                      │                 └──→ verify-before-done
-                                      │                       └──→ finish-branch
-                                      └──→ parallel-agents
-                                            └──→ (back to brainstorming)
-
-CUSTOM SKILL ATTACHMENT POINTS:
-  brainstorming → frontend-design, ui-ux-pro-max, 3d-visualizer
-  writing-plans → building-ui-bundle, comfyui-workflows, image-to-video
-  TDD → improve-architecture, unreal-engine-cpp
-  executing-plans → image-gen, comfyui, image-to-video
-  request-review → building-ui-bundle, frontend-design
-  systematic-debug → pipeline-troubleshooter, improve-architecture
-  verify-before-done → unreal-engine-cpp, pptx
-```
-
----
-
-## Animated Dashboard
-
-Open [`skills-dashboard.html`](skills-dashboard.html) in any browser for an interactive force-graph visualization:
-
-- **36 nodes** — one per skill, color-coded by category
-- **Animated layout** — skills cluster by category with physics simulation
-- **Filter by type** — ALL / Creation / Dev / Process / Quality / Business / Specialist / Superpowers / Custom
-- **Search** — find skills by name, description, or tags
-- **Click a node** — see full description, category, tags, and file path
-- **Hover a node** — highlights its connections and dims unrelated nodes
-- **Edge lines** — show interaction/flow dependencies between skills
-
-No dependencies required — it's a single self-contained HTML file.
-
----
-
-## Skills-Only Update
-
-If you already have Gaya Agent installed and just want to update the skills (without re-running the full installer):
-
-```powershell
-# Clone just the skills from the repo
-git clone --depth 1 --filter=blob:none --sparse https://github.com/ronakraval104-sys/Gaya_Agent_PR.git Gaya_Skills_Temp
-cd Gaya_Skills_Temp
-git sparse-checkout set "skills"
-git checkout
-
-# Copy to your OpenCode config
-Copy-Item -Recurse -Force "skills\*" "$env:USERPROFILE\.config\opencode\skills\"
-
-# Clean up
-cd ..; Remove-Item -Recurse -Force Gaya_Skills_Temp
-```
-
-Or use the included update script:
-
-```powershell
-# From inside the repo
-.\scripts\update-skills.ps1
-
-# Dry run to preview
-.\scripts\update-skills.ps1 -DryRun
-```
-
-The script copies all 36 skills to your OpenCode config directory. No config files, agents, or memory are touched — just skills.
-
----
-
-## The Four Pillars
-
-| Pillar | When Used | Core Phrase |
+| Active Agents | VRAM Used | Notes |
 |---|---|---|
-| **Bhagavad Gita** | Anxiety or uncertainty | *"How you do anything is how you do everything."* |
-| **Art of War** | Complex problem dissection | *"Know the code, know the goal — you won't fear the build."* |
-| **The Prince** | Choosing between tradeoffs | *"Stop overthinking. Do the thing."* |
-| **Chanakya Niti** | Building for the long run | *"Don't raw-dog every lesson. Learn from someone else's L."* |
+| Gaya + LOGOS | 5.0 GB | Default pair for planning + reasoning |
+| Gaya + Tvashtar | 7.2 GB | Heavy coding sessions |
+| Freya (solo) | 6.0 GB | Vision/research tasks |
+| Gaya + Freya | 8.5 GB | ❌ Exceeds VRAM — avoid pairing |
+
+`OLLAMA_KEEP_ALIVE=0` is set by default — models release VRAM instantly when idle.
 
 ---
 
-## Core Law
+## Two Config Modes
 
-```yaml
-Process → Product → Speed
-Speed is never chased. It is earned by correct process.
+### Config A: Local GPU (Ollama)
+
+Best for: users with a dedicated GPU (6+ GB VRAM)
+
+- All 4 models run locally via Ollama
+- Zero latency, zero API calls, fully offline
+- `install.ps1` auto-pulls the correct models
+
+### Config B: No-GPU / Cloud (OpenCode Zen + OpenRouter Free)
+
+Best for: users without a GPU or who prefer cloud
+
+| Agent | Provider | Model | Tier |
+|---|---|---|---|
+| Gaya | OpenCode Zen | Big Pickle | Free |
+| LOGOS | OpenRouter | DeepSeek V4 Flash Free | Free (account required) |
+| Freya | OpenCode Zen | MiMo V2.5 Free | Free |
+| Tvashtar | OpenRouter | North Mini Code Free | Free (account required) |
+
+**Zero payment required.** Zen free tier works out of the box. OpenRouter free tier requires a free account (no credit card).
+
+The install script auto-detects your hardware and recommends the right config — no guesswork.
+
+---
+
+## Architecture
+
+```
+Gaya_Agent_PR/
+├── opencode.jsonc               # Root config — paste URL into OpenCode, works instantly on cloud free tier
+├── agents/                     # Agent personas (single source of truth)
+│   ├── Gaya.md
+│   ├── LOGOS.md
+│   ├── Freya.md
+│   └── Tvashtar.md
+├── configs/                    # opencode.jsonc templates for install.ps1
+│   ├── local-gpu.jsonc          # Ollama models
+│   └── cloud-zen.jsonc          # Zen + OpenRouter free tier
+├── memory/                     # Cross-agent persistent context
+│   ├── moe-orchestrator-framework.md
+│   └── auto-maintenance-protocol.md
+├── scripts/
+│   ├── install.ps1              # THE one script — install, upgrade, switch mode, repair
+│   └── auto-maintenance.ps1     # 15-day audit protocol
+├── skills-dashboard.html        # Interactive skill + agent browser
+├── LEVELING_SYSTEM.md           # XP / title framework
+├── agent-profile-schema.json    # Cross-agent save format
+├── README.md
+└── LICENSE
+```
+
+### How Agents Communicate
+
+Gaya (Commander) routes tasks to the right sub-agent based on the work type:
+
+```
+User Request
+    │
+    ▼
+┌─────────┐
+│  GAYA   │  Assesses intent → routes to specialist
+└────┬────┘
+     │
+     ├── Planning/Strategy  ──► LOGOS (deep reasoning)
+     ├── Vision/Research    ──► Freya (multimodal, uncensored)
+     ├── Implementation     ──► Tvashtar (code, architecture)
+     └── Everything else    ──► Gaya (orchestrates or does it)
 ```
 
 ---
 
 ## Leveling System
 
-| Title | Level | Description |
-|---|---|---|---|
-| Initiate | 1 | Profile loaded, first session |
-| Disciple | 5 | 5 sessions completed, basic workflow |
-| Practitioner | 15 | All four roles invoked |
-| Strategist | 30 | All four pillars demonstrated |
-| Sage | 50 | One major project delivered |
-| Elder | 100 | Mentoring others |
-| Paragon | 200 | Exceptional contributions |
+Every task earns XP. Every level is wisdom earned.
 
-Every task earns XP. Waste incurs penalties. Five consecutive wastes = title stripped.
+| Outcome | XP |
+|---|---|
+| Full Success | +10 |
+| Partial Success | +5 |
+| Fail | +1 |
+| Waste | Penalty |
 
-See [LEVELING_SYSTEM.md](LEVELING_SYSTEM.md) for full rules.
+Titles unlock at key milestones: Operator → Strategist → Architect → Sage.
 
----
-
-## Token Tracking (Standard Protocol)
-
-Every action displays estimated token usage:
-
-```
-────────────────────────────
-⚡ TOKEN LOG — Action #3
-────────────────────────────
-  Input:           ~1,240 tok
-  Output:          ~2,810 tok
-  Tools:           4 calls
-  Session total:   ~24,680 tok
-────────────────────────────
-```
-
-See `docs/TOKEN_TRACKING.md` for full methodology.
+The full framework is in `LEVELING_SYSTEM.md`.
 
 ---
 
-## Superpowers Plugin (Optional)
+## Auto-Maintenance
 
-The 14 Superpowers skills come from [obra/superpowers](https://github.com/obra/superpowers). They are bundled in this repo's `skills/` directory for offline/NDA use, but for the best experience with auto-updates, add the plugin to your `opencode.jsonc`:
+Every 15 days, an auto-maintenance script audits:
 
-```json
-"plugins": [
-  "github:obra/superpowers"
-]
-```
+- **OpenCode DB size** — prunes old sessions if bloated
+- **Project size** — archives unused projects
+- **Agent file freshness** — verifies all 4 agents are present
+- **Memory directory** — checks for required files
 
-> **Note:** If you use the plugin, the skills will be auto-managed. If you work fully offline (NDA mode), the bundled copies in this repo will be used instead.
+The script reports findings and asks permission before acting.
 
 ---
 
-## Human Sustainability Protocol
+## Roadmap
 
-- 2-hour check-ins
-- 8-hour hard stop
-- Break ritual when spinning
-- Rest is preparation, not weakness
-
-> *"You are not a machine. You are divine energy in a temporary vessel."*
+- [x] Four agents (Gaya, LOGOS, Freya, Tvashtar)
+- [x] Local GPU mode (Ollama)
+- [x] Cloud mode (Zen + OpenRouter free tier)
+- [x] Self-modifying install script
+- [x] Dual config templates
+- [x] Auto-maintenance protocol
+- [x] Interactive skills dashboard
+- [x] Paste-URL support (root opencode.jsonc)
+- [x] Upgrade detection (auto-checks GitHub releases)
+- [ ] Testing on fresh Windows install
+- [ ] macOS/Linux install support
+- [ ] Community agent templates
+- [ ] GUI configurator
 
 ---
 
 ## License
 
-This framework bundles skills from multiple open-source sources (Anthropic, Salesforce, ByteDance, Matt Pocock, obra/superpowers, and more). Each skill maintains its original license. The Gaya agent framework itself is shared under MIT — see [LICENSE](LICENSE).
+MIT — use it, fork it, improve it. Attribute if you share.
 
-*"The quality of your action is your signature."*
-— Bhagavad Gita (channeled through Gaya)
+---
+
+<div align="center">
+<p><em>"The quality of your action is your signature."</em></p>
+</div>

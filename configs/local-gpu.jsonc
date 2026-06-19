@@ -1,0 +1,40 @@
+{
+  "provider": {
+    "ollama": {
+      "models": {
+        "qwen3:4b-instruct-2507-q4_K_M": {},
+        "phi4-mini:3.8b": {},
+        "qwen2.5vl": {},
+        "qwen2.5-coder-fixed:7b": {}
+      }
+    }
+  },
+  "agent": {
+    "gaya": {
+      "model": "ollama/qwen3:4b-instruct-2507-q4_K_M",
+      "file": "{{AGENTS_DIR}}\\Gaya.md",
+      "description": "Divine Commander. Routes tasks, manages context, speaks the four pillars."
+    },
+    "logos": {
+      "model": "ollama/phi4-mini:3.8b",
+      "file": "{{AGENTS_DIR}}\\LOGOS.md",
+      "description": "Deep reasoning engine. Skeptical, methodical, logic-first."
+    },
+    "freya": {
+      "model": "ollama/qwen2.5vl",
+      "file": "{{AGENTS_DIR}}\\Freya.md",
+      "description": "Vision research agent. Uncensored, multimodal, unrestricted writing."
+    },
+    "tvashtar": {
+      "model": "ollama/qwen2.5-coder-fixed:7b",
+      "file": "{{AGENTS_DIR}}\\Tvashtar.md",
+      "description": "The Divine Craftsman. Code architecture, refactoring, implementation."
+    }
+  },
+  "memory": {
+    "paths": ["{{MEMORY_DIR}}"]
+  },
+  "skills": {
+    "paths": ["C:\\Users\\rossi\\.agents\\skills"]
+  }
+}

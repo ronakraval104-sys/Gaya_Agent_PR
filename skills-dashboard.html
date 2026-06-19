@@ -3,26 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gaya Agent — Skills Handbook</title>
+<title>Gaya Agent — Skills & Agents Handbook</title>
 <style>
-/* ══════════════════════════════════════
+/* ══════════════════════════════════════════════
    RESET + BASE
-   ══════════════════════════════════════ */
+   ══════════════════════════════════════════════ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;background:#070b15;color:#e2e8f0;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;-webkit-font-smoothing:antialiased;overflow:hidden}
 body{display:flex;flex-direction:column}
 a{color:inherit;text-decoration:none}
 
-/* ══════════════════════════════════════
-   SCROLLBAR
-   ══════════════════════════════════════ */
+/* Scrollbar */
 ::-webkit-scrollbar{width:5px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:#1e293b;border-radius:3px}
 
-/* ══════════════════════════════════════
+/* ══════════════════════════════════════════════
    HEADER
-   ══════════════════════════════════════ */
+   ══════════════════════════════════════════════ */
 header{
   display:flex;align-items:center;justify-content:space-between;
   padding:16px 24px;border-bottom:1px solid rgba(255,255,255,0.06);
@@ -58,9 +56,9 @@ header h1 span{font-weight:400;opacity:0.5;-webkit-text-fill-color:#94a3b8}
   border:1px solid rgba(255,255,255,0.06);border-radius:6px;padding:4px 10px;white-space:nowrap
 }
 
-/* ══════════════════════════════════════
+/* ══════════════════════════════════════════════
    FILTERS
-   ══════════════════════════════════════ */
+   ══════════════════════════════════════════════ */
 .filters{
   display:flex;align-items:center;gap:6px;flex-shrink:0;
   padding:10px 24px;border-bottom:1px solid rgba(255,255,255,0.04);
@@ -75,12 +73,13 @@ header h1 span{font-weight:400;opacity:0.5;-webkit-text-fill-color:#94a3b8}
 .fbtn:hover{border-color:rgba(167,139,250,0.3);color:#c4b5fd}
 .fbtn.on{background:rgba(167,139,250,0.15);border-color:rgba(167,139,250,0.35);color:#a78bfa}
 .fbtn-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:middle}
+.fbtn-gd{color:#a78bfa}.fbtn-gd.on{background:rgba(167,139,250,0.12);border-color:rgba(167,139,250,0.3);color:#a78bfa}
 .fbtn-sp{color:#fbbf24}.fbtn-sp.on{background:rgba(251,191,36,0.12);border-color:rgba(251,191,36,0.3);color:#fbbf24}
 .fbtn-cu{color:#34d399}.fbtn-cu.on{background:rgba(52,211,153,0.12);border-color:rgba(52,211,153,0.3);color:#34d399}
 
-/* ══════════════════════════════════════
+/* ══════════════════════════════════════════════
    GRID
-   ══════════════════════════════════════ */
+   ══════════════════════════════════════════════ */
 .main-scroll{flex:1;overflow-y:auto;padding:20px 24px 32px}
 .grid{
   display:grid;
@@ -88,9 +87,9 @@ header h1 span{font-weight:400;opacity:0.5;-webkit-text-fill-color:#94a3b8}
   gap:12px
 }
 
-/* ══════════════════════════════════════
-   SKILL CARD
-   ══════════════════════════════════════ */
+/* ══════════════════════════════════════════════
+   CARD
+   ══════════════════════════════════════════════ */
 .card{
   position:relative;border-radius:10px;
   background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);
@@ -100,198 +99,153 @@ header h1 span{font-weight:400;opacity:0.5;-webkit-text-fill-color:#94a3b8}
   background:rgba(255,255,255,0.06);border-color:rgba(167,139,250,0.25);
   transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,0,0,0.3)
 }
-.card:active{transform:translateY(0);background:rgba(255,255,255,0.04)}
+.card:active{transform:translateY(0)}
 .card-top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.card-icon{font-size:22px;line-height:1;flex-shrink:0}
-.card-name{
-  font-size:13px;font-weight:600;color:#e2e8f0;
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap
-}
-.card-desc{
-  font-size:11.5px;color:#64748b;line-height:1.5;
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden
-}
-.card-btm{display:flex;align-items:center;gap:6px;margin-top:10px;flex-wrap:wrap}
-.card-tag{
-  font-size:10px;font-weight:500;padding:2px 7px;border-radius:4px;
-  text-transform:uppercase;letter-spacing:0.03em;line-height:1.4
-}
+.card-icon{font-size:18px;flex-shrink:0;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:6px;background:rgba(255,255,255,0.04)}
+.card-icon.agent{background:linear-gradient(135deg,rgba(167,139,250,0.15),rgba(192,132,252,0.1))}
+.card-name{font-size:13px;font-weight:600;color:#f1f5f9;line-height:1.2}
+.card-desc{font-size:12px;color:#64748b;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card-btm{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.card-tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;letter-spacing:0.02em;text-transform:uppercase}
 
-/* ══════════════════════════════════════
-   INFO PANEL
-   ══════════════════════════════════════ */
-.panel-overlay{
-  position:fixed;inset:0;z-index:50;background:rgba(0,0,0,0.5);
-  opacity:0;pointer-events:none;transition:opacity .3s
-}
-.panel-overlay.open{opacity:1;pointer-events:auto}
+/* Empty state */
+.empty{display:none;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;grid-column:1/-1;color:#475569;text-align:center}
+.empty svg{margin-bottom:12px;opacity:0.3}
+.empty p{font-size:14px;margin-bottom:4px}
+.empty small{font-size:12px;color:#334155}
+.empty.sh{display:flex}
+
+/* ══════════════════════════════════════════════
+   OVERLAY + PANEL
+   ══════════════════════════════════════════════ */
+.ovr{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:100;opacity:0;pointer-events:none;transition:opacity .25s}
+.ovr.open{opacity:1;pointer-events:auto}
 .panel{
-  position:fixed;top:0;right:0;bottom:0;width:420px;max-width:100vw;z-index:51;
-  background:linear-gradient(180deg,#0f172a 0%,#070b15 100%);
-  border-left:1px solid rgba(255,255,255,0.06);
-  transform:translateX(100%);transition:transform .35s cubic-bezier(.22,1,.36,1);
-  display:flex;flex-direction:column;overflow:hidden;
-  box-shadow:-8px 0 40px rgba(0,0,0,0.5)
+  position:fixed;top:0;right:0;bottom:0;width:420px;max-width:100%;
+  background:#0f172a;z-index:101;transform:translateX(100%);transition:transform .3s cubic-bezier(0.22,1,0.36,1);
+  display:flex;flex-direction:column;border-left:1px solid rgba(255,255,255,0.06);
+  box-shadow:-4px 0 30px rgba(0,0,0,0.4)
 }
 .panel.open{transform:translateX(0)}
-.phead{
-  display:flex;align-items:flex-start;justify-content:space-between;
-  padding:20px 24px 12px;border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0;gap:12px
-}
-.phead-left{display:flex;align-items:center;gap:10px;min-width:0}
-.phead-icon{font-size:26px;flex-shrink:0}
-.phead-text{min-width:0}
-.phead-name{font-size:17px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.phead-meta{display:flex;align-items:center;gap:6px;margin-top:2px;flex-wrap:wrap}
-.phead-cat{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.04em}
-.phead-type{font-size:10px;font-weight:500;padding:1px 6px;border-radius:3px;text-transform:uppercase;letter-spacing:0.03em}
-.pcls{
-  background:none;border:none;color:#64748b;cursor:pointer;
-  padding:4px;border-radius:4px;transition:color .15s;flex-shrink:0;font-size:16px
-}
-.pcls:hover{color:#e2e8f0}
-.pbody{padding:16px 24px 24px;overflow-y:auto;flex:1}
 
-/* -- Sections -- */
-.psec{margin-bottom:20px}
-.psec:last-child{margin-bottom:0}
-.psec-title{
-  font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;
-  color:#475569;margin-bottom:8px;display:flex;align-items:center;gap:6px
-}
-.psec-title svg{opacity:0.5}
+/* Panel header */
+.phead{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0}
+.phead-l{display:flex;align-items:center;gap:10px}
+.phead-icon{font-size:22px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:rgba(255,255,255,0.04)}
+.phead-icon.agent{background:linear-gradient(135deg,rgba(167,139,250,0.15),rgba(192,132,252,0.1))}
+.phead-info{}
+.phead-name{font-size:15px;font-weight:600;color:#f1f5f9}
+.phead-meta{display:flex;gap:6px;margin-top:4px}
+.phead-tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;text-transform:uppercase;background:rgba(255,255,255,0.06);color:#94a3b8}
+.phead-tag.cat{background:rgba(167,139,250,0.15);color:#a78bfa}
+.pcls{background:none;border:none;color:#64748b;cursor:pointer;padding:4px;border-radius:4px;transition:all .15s;display:flex}
+.pcls:hover{color:#f1f5f9;background:rgba(255,255,255,0.06)}
 
-/* Description */
-.pdesc{font-size:13.5px;line-height:1.7;color:#94a3b8}
+/* Panel body */
+.pbody{flex:1;overflow-y:auto;padding:20px}
+.psec{margin-bottom:16px}
+.pdesc{font-size:13px;color:#94a3b8;line-height:1.5}
+.psec-title{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px}
+.pex-box{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:12px}
+.pex-text{font-size:12px;color:#94a3b8;line-height:1.5}
 
-/* Workflow Example */
-.pex-box{
-  background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.12);
-  border-radius:8px;padding:14px 16px;position:relative
-}
-.pex-box::before{
-  content:'';position:absolute;top:0;left:0;bottom:0;width:3px;
-  background:linear-gradient(180deg,#a78bfa,#c084fc);border-radius:3px 0 0 3px
-}
-.pex-text{font-size:13px;line-height:1.7;color:#c4b5fd;font-style:italic}
+/* Related skills */
+.rel-grid{display:flex;flex-wrap:wrap;gap:6px}
+.rel-chip{display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:6px;background:rgba(255,255,255,0.03);cursor:pointer;transition:all .15s;font-size:12px;color:#94a3b8}
+.rel-chip:hover{background:rgba(255,255,255,0.06);color:#f1f5f9}
+.rel-chip-icon{font-size:14px}
 
-/* Related Skills */
-.rel-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.rel-chip{
-  display:flex;align-items:center;gap:7px;
-  padding:8px 10px;border-radius:6px;
-  background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);
-  cursor:pointer;transition:all .15s;font-size:12px;font-weight:500;color:#94a3b8
-}
-.rel-chip:hover{
-  background:rgba(255,255,255,0.07);border-color:rgba(167,139,250,0.25);color:#e2e8f0
-}
-.rel-chip-icon{font-size:16px;flex-shrink:0}
-.rel-chip-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-
-/* Tags row */
-.ptags{display:flex;flex-wrap:wrap;gap:5px;margin-top:2px}
-.ptag{
-  font-size:10px;padding:2px 8px;border-radius:3px;
-  background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);color:#64748b
-}
+/* Tags */
+.ptags{display:flex;flex-wrap:wrap;gap:4px}
+.ptag{font-size:10px;padding:3px 8px;border-radius:4px;background:rgba(255,255,255,0.04);color:#64748b}
 
 /* Path */
-.ppath-wrap{background:rgba(0,0,0,0.25);border-radius:6px;padding:8px 12px}
-.ppath-label{font-size:10px;color:#475569;margin-bottom:3px;text-transform:uppercase;letter-spacing:0.03em}
-.ppath{
-  font-size:11.5px;color:#64748b;word-break:break-all;
-  font-family:'SF Mono',Consolas,'Courier New',monospace
-}
-
-/* ══════════════════════════════════════
-   EMPTY STATE
-   ══════════════════════════════════════ */
-.empty{
-  display:none;flex-direction:column;align-items:center;justify-content:center;
-  padding:60px 24px;text-align:center;grid-column:1/-1
-}
-.empty.sh{display:flex}
-.empty svg{margin-bottom:16px;opacity:0.2}
-.empty p{font-size:14px;color:#475569}
-
-/* ══════════════════════════════════════
-   RESPONSIVE
-   ══════════════════════════════════════ */
-@media(max-width:900px){
-  header{padding:12px 16px}
-  header h1{font-size:16px}
-  .srch-wrap{width:160px}
-  .filters{padding:8px 16px;gap:4px}
-  .main-scroll{padding:12px 16px 24px}
-  .grid{grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
-  .panel{width:100%}
-  .rel-grid{grid-template-columns:1fr}
-}
-@media(max-width:500px){
-  header h1{font-size:14px;width:100%}
-  .hdr-right{width:100%}.srch-wrap{flex:1}
-  .grid{grid-template-columns:1fr 1fr;gap:8px}
-  .card{padding:12px}.card-icon{font-size:18px}.card-name{font-size:12px}
-}
-@media(max-width:380px){.grid{grid-template-columns:1fr}}
+.ppath-wrap{display:flex;align-items:center;gap:8px}
+.ppath-label{font-size:10px;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:0.05em;flex-shrink:0}
+.ppath{font-size:11px;color:#334155;font-family:monospace;word-break:break-all}
 </style>
 </head>
 <body>
 
 <!-- ═══ HEADER ═══ -->
 <header>
-  <h1>✦ Gaya<span>·handbook</span></h1>
+  <h1>Gaya <span>/ Skills &amp; Agents</span></h1>
   <div class="hdr-right">
     <div class="srch-wrap">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      <input id="search" type="text" placeholder="Search skills…" spellcheck="false" autocomplete="off">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input id="search" type="text" placeholder="Search..." spellcheck="false" autocomplete="off">
     </div>
-    <div class="cnt-bdg"><span id="vcount">36</span> / 36</div>
+    <div class="cnt-bdg" id="vcount">0</div>
   </div>
 </header>
 
 <!-- ═══ FILTERS ═══ -->
 <div class="filters" id="filters"></div>
 
-<!-- ═══ MAIN GRID ═══ -->
-<div class="main-scroll" id="scroll">
-  <div class="grid" id="grid">
-    <div class="empty sh" id="empty">
-      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      <p>No skills match your search</p>
-    </div>
+<!-- ═══ GRID ═══ -->
+<div class="main-scroll">
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty">
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg>
+    <p>No skills match your search</p>
+    <small>Try a different filter or search term</small>
   </div>
 </div>
 
-<!-- ═══ PANEL OVERLAY ═══ -->
-<div class="panel-overlay" id="ovr"></div>
+<!-- ═══ OVERLAY ═══ -->
+<div class="ovr" id="ovr"></div>
 
-<!-- ═══ INFO PANEL ═══ -->
+<!-- ═══ PANEL ═══ -->
 <div class="panel" id="panel">
   <div class="phead">
-    <div class="phead-left">
-      <span class="phead-icon" id="picon"></span>
-      <div class="phead-text">
+    <div class="phead-l">
+      <div class="phead-icon" id="picon">&#8203;</div>
+      <div class="phead-info">
         <div class="phead-name" id="pname"></div>
         <div class="phead-meta">
-          <span class="phead-cat" id="pcat" style="color:#a78bfa"></span>
-          <span class="phead-type" id="ptype"></span>
+          <span class="phead-tag cat" id="pcat"></span>
+          <span class="phead-tag" id="ptype"></span>
         </div>
       </div>
     </div>
-    <button class="pcls" id="pcls" aria-label="Close">✕</button>
+    <button class="pcls" id="pcls" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
   </div>
   <div class="pbody" id="pbody"></div>
 </div>
 
 <script>
 // ═══════════════════════════════════════════════════
-// DATA — every skill has:
-//   n=name, i=icon, c=category, t=type, d=description,
-//   p=path, g=tags, ex=workflow example, r=related skill IDs
+// DATA
+// ID format: 2-letter prefix + short name
+//   AG = Agent (new category)
+//   SS = Superpowers
+//   SK = Custom skills
 // ═══════════════════════════════════════════════════
 const S={
+  // ── Agents (NEW top-level category) ──
+  "ag":{n:"Gaya",i:"⚔",c:"agent",t:"Commander",
+    d:"Divine Commander, Philosopher, Poet of Evergrowth. Routes tasks, manages context, speaks the four pillars.",
+    ex:"When a complex multi-step request arrives, Gaya assesses the intent, decomposes it into tasks, and dispatches to the right sub-agent (LOGOS for reasoning, Tvashtar for code, Freya for research). Gaya never executes complex work solo — orchestrates the team.",
+    r:["ag2","ag3","ag4","ssd"],
+    p:"agents/Gaya.md",g:["commander","orchestrator","philosophy","four-pillars"]},
+  "ag2":{n:"LOGOS",i:"◇",c:"agent",t:"Logic",
+    d:"Deep reasoning engine. Methodical, skeptical, pedantic. Arguments numbered, flaws identified first.",
+    ex:"Before committing to a complex architecture, dispatch LOGOS to stress-test the plan — it questions assumptions, covers edge cases, and numbers each argument. Conclusion only after exposition. 'Let me think through this...'",
+    r:["ag","ag4","sgm"],
+    p:"agents/LOGOS.md",g:["logic","reasoning","skeptic","analysis"]},
+  "ag3":{n:"Freya",i:"⊛",c:"agent",t:"Vision",
+    d:"Uncensored shadow agent. Vision understanding, deep research, SEO strategy, unrestricted writing.",
+    ex:"When a project needs image understanding, competitive analysis, or content that requires raw uncensored output, dispatch Freya. Runs on AMD 780M to keep the RTX 4060 free. Fallback: MiMo V2.5 Free or Nemotron 3 Ultra Free.",
+    r:["ag","img","con","dst"],
+    p:"agents/Freya.md",g:["vision","research","uncensored","seo","multimodal"]},
+  "ag4":{n:"Tvashtar",i:"⚒",c:"agent",t:"Craft",
+    d:"The Divine Craftsman. Code architecture, refactoring, implementation. No code without foundation.",
+    ex:"After Gaya routes a coding task to Tvashtar, it reads the architecture first, checks for existing patterns, then forges clean code with proper boundaries, types, and error handling. 'The perfect is the enemy of the shipped — but ship clean.'",
+    r:["ag","ag2","dev","arc"],
+    p:"agents/Tvashtar.md",g:["coding","architecture","refactoring","craft"]},
+
   // ── Superpowers: Process ──
   "sbr":{n:"Brainstorming",i:"💡",c:"process",t:"Superpowers",
     d:"Socratic design refinement. No implementation without spec.",
@@ -314,17 +268,17 @@ const S={
     r:["swp","sfc","svb","sdp"],
     p:"skills/executing-plans/",g:["execution","checkpoints","verification"]},
   "sgw":{n:"Git Worktrees",i:"🌿",c:"process",t:"Superpowers",
-    d:"Isolated workspaces. Prefers native tools, falls back to git.",
+    d:"Isolated workspaces. Prefers native tools, falls back to git worktree.",
     ex:"When juggling a hotfix on main alongside a feature branch, use Git Worktrees to check out each branch in its own directory — no stashing, no switching, no context loss.",
     r:["sfc","sep","sdp"],
     p:"skills/using-git-worktrees/",g:["git","worktree","isolation"]},
   "sdp":{n:"Dispatch Parallel",i:"⚡",c:"process",t:"Superpowers",
     d:"Split 2+ independent tasks into parallel subagent work.",
-    ex:"When a feature has independent frontend and backend work, use Dispatch Parallel to spawn two subagents simultaneously — no shared state, no conflicts, 2× throughput.",
+    ex:"When a feature has independent frontend and backend work, use Dispatch Parallel to spawn two subagents simultaneously — no shared state, no conflicts, 2x throughput.",
     r:["ssd","sep","swp"],
     p:"skills/dispatching-parallel-agents/",g:["parallel","subagent","efficiency"]},
   "sba":{n:"Brainstorming Alt",i:"🧠",c:"process",t:"Superpowers",
-    d:"Alternative brainstorming: divergent→convergent→commit.",
+    d:"Alternative: divergent > convergent > commit.",
     ex:"When the team is stuck on a design decision, use Brainstorming Alt: first diverge (generate many ideas), then converge (narrow to one), then commit. Great for creative blocks.",
     r:["sbr","swp","sgm"],
     p:"skills/brainstorming/",g:["planning","design","alternative"]},
@@ -336,17 +290,17 @@ const S={
 
   // ── Superpowers: Quality ──
   "srq":{n:"Request Review",i:"👁",c:"quality",t:"Superpowers",
-    d:"Code reviewer subagent. Critical→fix, Important→fix, Minor→note.",
+    d:"Code reviewer subagent. Critical=fix, Important=fix, Minor=note.",
     ex:"After completing an implementation, spawn a reviewer subagent via Request Review — it reads the diff, classifies issues as Critical (must fix), Important (should fix), or Minor (note only).",
     r:["src","std","svb","sfc"],
     p:"skills/requesting-code-review/",g:["review","code-quality","feedback"]},
   "src":{n:"Receive Review",i:"📬",c:"quality",t:"Superpowers",
-    d:"READ→VERIFY→EVALUATE→RESPOND. Push back with evidence.",
+    d:"READ > VERIFY > EVALUATE > RESPOND. Push back with evidence.",
     ex:"When a reviewer flags an issue, follow RECEIVE: read the comment, verify the claim with a test, evaluate if the fix is correct, then respond with evidence — even if that means pushing back.",
     r:["srq","sdb","std"],
     p:"skills/receiving-code-review/",g:["review","feedback","rigor"]},
   "sdb":{n:"Systematic Debug",i:"🔬",c:"quality",t:"Superpowers",
-    d:"4-phase: Root Cause→Pattern→Hypothesis→Fix. No symptom patches.",
+    d:"4-phase: Root Cause > Pattern > Hypothesis > Fix. No symptom patches.",
     ex:"When a production bug surfaces, resist the urge to hotfix the symptom. Instead, trace the root cause, identify the pattern, form a hypothesis, and fix at the source — the bug stays dead.",
     r:["std","svb","src","arc"],
     p:"skills/systematic-debugging/",g:["debugging","root-cause","rigor"]},
@@ -398,7 +352,7 @@ const S={
     r:["i2v","cf","fend"],
     p:"skills/image-generation/",g:["image","prompt","generation","ai"]},
   "i2v":{n:"Image to Video",i:"🎬",c:"creation",t:"Custom",
-    d:"Animate stills via RunComfy. Smart router for HappyHorse/Wan/Seedance.",
+    d:"Animate stills via RunComfy. Smart router: HappyHorse/Wan/Seedance.",
     ex:"When a still product shot needs to become a cinematic video, the smart router picks the right RunComfy model: HappyHorse for general motion, Wan for lip-sync with custom audio, Seedance for multi-modal animation.",
     r:["img","cf","pipe"],
     p:"skills/image-to-video/",g:["video","animation","runcomfy","ai"]},
@@ -417,6 +371,11 @@ const S={
     ex:"When you need a consistent video presence across time zones, generate a photorealistic digital twin with each::sense AI — use it for async video calls, corporate training, or multilingual content without re-recording.",
     r:["img","i2v"],
     p:"skills/digital-twin-generation/",g:["avatar","twin","ai","video"]},
+  "hvf":{n:"HyperFrames",i:"🎬",c:"creation",t:"Custom",
+    d:"Write HTML, render MP4. GSAP, Lottie, Three.js. No build step.",
+    ex:"When a client needs a product launch video, scaffold a HyperFrames project — write the composition as HTML with timed data-* attributes and GSAP animations, preview in the browser, then render to 1080p MP4 with one command. No video editor needed.",
+    r:["i2v","img","cf","fend"],
+    p:"skills/hyperframes-video/",g:["video","html","animation","mp4","gsap","render"]},
 
   // ── Custom: Dev ──
   "dev":{n:"Dev Workflow",i:"💻",c:"dev",t:"Custom",
@@ -447,7 +406,7 @@ const S={
 
   // ── Custom: Business ──
   "con":{n:"Consulting Analysis",i:"📈",c:"business",t:"Custom",
-    d:"Market analysis, competitive intel, investment due diligence. Consulting-grade.",
+    d:"Market analysis, competitive intel, investment due diligence.",
     ex:"When a client needs a market analysis report, use Consulting Analysis to produce structured frameworks with chapter skeleton, data requirements, and strategic insights — consulting-grade output, not a generic write-up.",
     r:["dst","pptx","prop","arch"],
     p:"skills/consulting-analysis/",g:["analysis","research","consulting","report"]},
@@ -458,7 +417,7 @@ const S={
     p:"skills/data-storytelling/",g:["data","storytelling","visualization","presentation"]},
   "game":{n:"Game Design Theory",i:"🎲",c:"business",t:"Custom",
     d:"MDA framework, player psychology, balance, progression. Why games are fun.",
-    ex:"When designing a game mechanic, use Game Design Theory to deconstruct it through the MDA lens (Mechanics→Dynamics→Aesthetics) — understand what emotion the mechanic creates, not just what it does.",
+    ex:"When designing a game mechanic, use Game Design Theory to deconstruct it through the MDA lens (Mechanics>Dynamics>Aesthetics) — understand what emotion the mechanic creates, not just what it does.",
     r:["con","prop","cpp"],
     p:"skills/game-design-theory/",g:["game","design","theory","psychology"]},
 
@@ -482,20 +441,16 @@ const S={
     d:"3ds Max workflow automation, scene setup, export pipelines for UE5.",
     ex:"When exporting a 3ds Max architectural scene to Unreal Engine 5, use 3ds Max Bridge to automate the workflow — correct pivot alignment, clean hierarchy, proper UVs, and Datasmith export settings.",
     r:["viz","cpp","3dv"],
-    p:"skills/3ds-max-bridge/",g:["3dsmax","unreal","workflow","automation"]},
-  "hvf":{n:"HyperFrames",i:"🎬",c:"creation",t:"Custom",
-    d:"Write HTML, render MP4. Built by HeyGen for agents. GSAP, Lottie, Three.js animations. No build step.",
-    ex:"When a client needs a product launch video, scaffold a HyperFrames project — write the composition as HTML with timed data-* attributes and GSAP animations, preview in the browser, then render to 1080p MP4 with one command. No video editor needed.",
-    r:["i2v","img","cf","fend"],
-    p:"skills/hyperframes-video/",g:["video","html","animation","mp4","gsap","render"]}
+    p:"skills/3ds-max-bridge/",g:["3dsmax","unreal","workflow","automation"]}
 };
 
 const IDS=Object.keys(S);
 
 const CAT={
+  agent:{clr:"#a78bfa",lbl:"Agents"},
   process:{clr:"#38bdf8",lbl:"Process"},
   quality:{clr:"#fbbf24",lbl:"Quality"},
-  creation:{clr:"#a78bfa",lbl:"Creation"},
+  creation:{clr:"#c084fc",lbl:"Creation"},
   dev:{clr:"#34d399",lbl:"Dev"},
   business:{clr:"#f472b6",lbl:"Business"},
   special:{clr:"#fb923c",lbl:"Specialist"}
@@ -524,7 +479,8 @@ function render(){
     if(activeFilter!=='all'){
       if(activeFilter==='superpowers'&&s.t!=='Superpowers')show=false;
       else if(activeFilter==='custom'&&s.t!=='Custom')show=false;
-      else if(activeFilter!=='superpowers'&&activeFilter!=='custom'&&s.c!==activeFilter)show=false;
+      else if(activeFilter==='agents'&&s.t!=='Commander'&&s.t!=='Logic'&&s.t!=='Vision'&&s.t!=='Craft')show=false;
+      else if(activeFilter!=='superpowers'&&activeFilter!=='custom'&&activeFilter!=='agents'&&s.c!==activeFilter)show=false;
     }
     if(searchQ){
       const q=searchQ.toLowerCase();
@@ -534,9 +490,10 @@ function render(){
     vis++;
 
     const clr=CAT[s.c]?CAT[s.c].clr:'#64748b';
+    const isAgent=s.c==='agent';
     html+=`<div class="card" data-id="${id}" tabindex="0" role="button" aria-label="${s.n}">
       <div class="card-top">
-        <span class="card-icon">${s.i}</span>
+        <span class="card-icon${isAgent?' agent':''}">${s.i}</span>
         <span class="card-name">${s.n}</span>
       </div>
       <div class="card-desc">${s.d}</div>
@@ -562,10 +519,12 @@ function render(){
 function buildFilters(){
   let h='';
   h+=`<button class="fbtn on" data-f="all">All</button>`;
+  h+=`<button class="fbtn fbtn-gd" data-f="agents">◆ Agents</button>`;
   h+=`<button class="fbtn fbtn-sp" data-f="superpowers">★ Superpowers</button>`;
   h+=`<button class="fbtn fbtn-cu" data-f="custom">● Custom</button>`;
   h+=`<span style="width:1px;height:20px;background:rgba(255,255,255,0.06);margin:0 4px;flex-shrink:0"></span>`;
   CAT_KEYS.forEach(c=>{
+    if(c==='agent')return; // covered by ◆ Agents
     h+=`<button class="fbtn" data-f="${c}"><span class="fbtn-dot" style="background:${CAT[c].clr}"></span>${CAT[c].lbl}</button>`;
   });
   filters.innerHTML=h;
@@ -591,9 +550,10 @@ function showInfo(id){
   const s=S[id];if(!s)return;
   selId=id;
   const clr=CAT[s.c]?CAT[s.c].clr:'#94a3b8';
+  const isAgent=s.c==='agent';
 
-  // Head
   document.getElementById('picon').textContent=s.i;
+  document.getElementById('picon').className='phead-icon'+(isAgent?' agent':'');
   document.getElementById('pname').textContent=s.n;
   const pc=document.getElementById('pcat');
   pc.textContent=s.c.toUpperCase();pc.style.color=clr;
@@ -601,7 +561,6 @@ function showInfo(id){
   pt.textContent=s.t;
   pt.style.background=clr+'20';pt.style.color=clr;
 
-  // Body
   let body='';
 
   // Description
@@ -609,14 +568,14 @@ function showInfo(id){
 
   // Workflow Example
   body+=`<div class="psec">
-    <div class="psec-title"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>Workflow Example</div>
+    <div class="psec-title"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>How to Use</div>
     <div class="pex-box"><div class="pex-text">${s.ex||'Practical example coming soon.'}</div></div>
   </div>`;
 
   // Related Skills
   if(s.r&&s.r.length){
     body+=`<div class="psec">
-      <div class="psec-title"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>Related Skills</div>
+      <div class="psec-title"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>Related</div>
       <div class="rel-grid" id="relgrid"></div>
     </div>`;
   }
@@ -627,7 +586,7 @@ function showInfo(id){
   }
 
   // Path
-  body+=`<div class="psec"><div class="ppath-wrap"><div class="ppath-label">Path</div><div class="ppath">${s.p}</div></div></div>`;
+  body+=`<div class="psec"><div class="ppath-wrap"><div class="ppath-label">File</div><div class="ppath">${s.p}</div></div></div>`;
 
   pbody.innerHTML=body;
 
