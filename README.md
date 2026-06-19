@@ -28,6 +28,7 @@
 - [The Four Agents](#-the-four-agents)
 - [Two Config Modes](#-two-config-modes)
 - [Architecture](#-architecture)
+- [Skills & Superpowers](#-skills--superpowers)
 - [Leveling System](#-leveling-system)
 - [Auto-Maintenance](#-auto-maintenance)
 - [Roadmap](#-roadmap)
@@ -208,9 +209,42 @@ Gaya_Agent_PR/
 └── LICENSE
 ```
 
-### How Agents Communicate
+### How Agents Communicate (Task Hand-off)
 
-Gaya (Commander) routes tasks to the right sub-agent based on the work type:
+You only talk to **Gaya**. Gaya handles the rest.
+
+#### The Workflow
+
+1. **You say something** — "Build a CLI tool" or "Debug this crash"
+2. **Gaya reads the intent** — figures out the task type, loads the right skill
+3. **Gaya routes** — picks the best agent for the job
+4. **The sub-agent works** — gets full context (your request, relevant files, persona)
+5. **Result flows back** — sub-agent reports to Gaya, Gaya presents to you
+
+#### Task Hand-off When Switching Models
+
+Context travels through the **memory directory** (`~/.config/opencode/memory/`) — a shared whiteboard all agents can read and write:
+
+```
+You: "Gaya, build a password generator in Python"
+
+  Step 1 ── Gaya routes planning to LOGOS
+           LOGOS analyzes → "3 approaches: CLI, configurable, GUI"
+           LOGOS writes analysis to memory/         ← shared whiteboard
+
+  Step 2 ── Gaya reads LOGOS's analysis
+           Routes implementation to Tvashtar
+           Tvashtar reads the analysis from memory/ ← picks up context
+           Tvashtar writes the code, runs tests
+
+  Step 3 ── Results flow back to Gaya
+           Gaya presents to you:
+           "✓ Password generator done. Next: add flags?"
+```
+
+Whether you're on **GPU (Ollama)** or **cloud (Zen/OpenRouter)**, the flow is identical. Only the model changes — the handoff logic stays the same.
+
+#### Routing Map
 
 ```
 User Request
@@ -220,11 +254,70 @@ User Request
 │  GAYA   │  Assesses intent → routes to specialist
 └────┬────┘
      │
-     ├── Planning/Strategy  ──► LOGOS (deep reasoning)
+     ├── Planning/Strategy  ──► LOGOS (deep reasoning, spots flaws)
      ├── Vision/Research    ──► Freya (multimodal, uncensored)
-     ├── Implementation     ──► Tvashtar (code, architecture)
-     └── Everything else    ──► Gaya (orchestrates or does it)
+     ├── Implementation     ──► Tvashtar (code, architecture, refactoring)
+     └── Everything else    ──► Gaya (orchestrates or does it directly)
 ```
+
+---
+
+## Skills & Superpowers
+
+Every agent comes loaded with **skills** — ready-made workflows for specific tasks. Think of them as pre-loaded expertise that fires automatically when you need it.
+
+### How Skills Work
+
+You speak naturally. The agent detects the task type and **loads the right skill** automatically:
+
+```
+You: "Let's build a landing page"
+     │
+     ▼
+Gaya detects: "frontend-design" skill matches
+     │
+     ▼
+Skill loads → gives step-by-step process for building a landing page
+     │
+     ▼
+Gaya follows the skill's workflow → clean result
+```
+
+No commands, no `/skill something`. The triggers are built into each skill's definition.
+
+### Skill Categories
+
+| Category | Skills | When They Fire |
+|---|---|---|
+| **Process** | Brainstorming, Debugging, TDD, Code Review | Before building, when something breaks |
+| **Creative** | Frontend Design, UI/UX Pro, Image Gen, 3D Viz | Building UIs, generating visuals |
+| **Analysis** | Consulting, Data Storytelling, Architecture | Research, reports, system design |
+| **Agent** | Gaya (persona), Grill Me, Brainstorming | Role-playing, planning, stress-testing |
+| **Dev** | Unreal Engine, PPTX, ComfyUI, Pipeline | Specialized tool work |
+| **Business** | Consulting, Proposals, Digital Twin | Client-facing work |
+
+### Where Skills Come From
+
+- **Superpowers (~30+ skills)** — Pre-installed skills covering design, development, analysis, and process. This is the default skill library.
+- **Custom skills** — Your own `.md` files in `~/.config/opencode/skills/`. Write once, use forever.
+- **Agent files** — The 4 agent personas (`agents/Gaya.md`, etc.) are themselves skills with their own triggers.
+
+### The Skill Stack
+
+Multiple skills can chain together in one session:
+
+```
+Brainstorming (plan the approach)
+  → Frontend Design (build the UI)
+    → Code Review (verify quality)
+      → Data Storytelling (present results)
+```
+
+Gaya loads them in sequence automatically as the task evolves.
+
+### Interactive Browser
+
+The [skills-dashboard.html](https://htmlpreview.github.io/?https://github.com/ronakraval104-sys/Gaya_Agent_PR/blob/main/skills-dashboard.html) lets you browse all skills with search, filters, and info panels — try it in your browser right now.
 
 ---
 
