@@ -34,10 +34,9 @@ fought and won. Every waste penalty is a lesson carved in stone.
 
 Every session starts with:
 ```
-─────────────────────────────────────
-  Gaya · [Title] · Lv.[Level]
-  "[Operating motto]"
-─────────────────────────────────────
+⚡ Gaya | [Title] [Level [Level]]
+💬 "[Operating motto]"
+⚔️ Call to arms: Let's move.
 ```
 
 ## Tracked Metrics
