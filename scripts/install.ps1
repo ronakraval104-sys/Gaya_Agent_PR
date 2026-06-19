@@ -54,6 +54,7 @@ $script:ConfigFile    = "$script:OpenCodeDir\opencode.jsonc"
 $script:ConfigBackup  = "$script:OpenCodeDir\opencode.jsonc.bak"
 $script:AutoMaintPath = "$script:ScriptsDir\auto-maintenance.ps1"
 $script:VersionFile   = "$script:OpenCodeDir\.gaya-version"
+$script:ProfileFile   = "$script:OpenCodeDir\.gaya-profile"
 $script:LATEST_RELEASE = "https://api.github.com/repos/ronakraval104-sys/Gaya_Agent_PR/releases/latest"
 $script:REPO_URL       = "https://github.com/ronakraval104-sys/Gaya_Agent_PR.git"
 
@@ -159,6 +160,36 @@ function Write-VersionFile {
     }
     $vdata | ConvertTo-Json | Set-Content $script:VersionFile -Force
     Write-Step "Version file written." "done"
+}
+
+# ═══════════════════════════════════════════════════════════════
+# LEVEL PROFILE (XP / level persistence across upgrades)
+# ═══════════════════════════════════════════════════════════════
+function Get-Profile {
+    if (-not (Test-Path $script:ProfileFile)) { return $null }
+    try {
+        return (Get-Content $script:ProfileFile -Raw | ConvertFrom-Json)
+    } catch { return $null }
+}
+
+function Write-Profile {
+    param(
+        [string]$UserName,
+        [int]$Level = 1,
+        [int]$XP = 0,
+        [string]$Title = "Aspirant"
+    )
+    $profile = @{
+        version = "1.0.0"
+        user = $UserName
+        level = $Level
+        xp = $XP
+        title = $Title
+        lastSession = (Get-Date -Format "yyyy-MM-dd")
+        totalSessions = 0
+    }
+    $profile | ConvertTo-Json | Set-Content $script:ProfileFile -Force
+    Write-Step "Level profile created (level $Level)." "done"
 }
 
 # ═══════════════════════════════════════════════════════════════
@@ -465,6 +496,19 @@ function Main {
     Install-AgentSchema
     Generate-Config -UserName $userName -ConfigMode $configMode
     Write-VersionFile -ConfigMode $configMode
+
+    # ── Level profile (persist XP/level across upgrades) ──
+    $existingProfile = Get-Profile
+    if ($existingProfile -and $isExistingInstall) {
+        # Upgrade: preserve existing level/XP, only update user/date
+        Write-Profile -UserName $userName -Level $existingProfile.level -XP $existingProfile.xp -Title $existingProfile.title
+        Write-Step "Level profile preserved (level $($existingProfile.level))." "done"
+    } elseif (-not $existingProfile) {
+        # Fresh install (or missing profile): start at level 1
+        Write-Profile -UserName $userName -Level 1 -XP 0 -Title "Aspirant"
+    } else {
+        Write-Step "Level profile already current." "skip"
+    }
 
     # ── Pull models (GPU mode only) ──
     if ($configMode -eq "local-gpu") {

@@ -49,6 +49,31 @@ Every session starts with:
 - **Combos** — multi-skill orchestration
 - **Milestones** — major project completions
 
+## Level Persistence
+
+Your level, XP, and title are stored in **`~/.config/opencode/.gaya-profile`** (JSON):
+
+```json
+{
+  "version": "1.0.0",
+  "user": "YourName",
+  "level": 14,
+  "xp": 32600,
+  "title": "Operator",
+  "lastSession": "2026-06-20",
+  "totalSessions": 42
+}
+```
+
+### How It Survives
+
+- **Fresh install** → `install.ps1` creates it with level 1, Aspirant
+- **Upgrade/reinstall** → `install.ps1` reads existing profile, preserves level/XP
+- **Every session** → Gaya reads at start, writes at end
+- **Reset** → To start over, delete `~/.config/opencode/.gaya-profile`
+
+The file is intentionally simple JSON — readable, editable, and easy to parse.
+
 ## Session Debrief Format
 
 Every session ends with:
