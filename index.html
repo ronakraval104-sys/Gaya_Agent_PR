@@ -1,15 +1,15 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Ronak Raval ┬╖ Visiting Faculty Proposal ┬╖ Parul University</title>
+<title>Ronak Raval - Visiting Faculty Proposal - Parul University</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,600;1,700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+/* ═══════════════════════════════════════════════
    ROOT VARIABLES
-   ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ */
+   ═══════════════════════════════════════════════ */
 :root {
   --bg-primary:     #0a0c0f;
   --bg-secondary:   #0f1217;
@@ -50,15 +50,15 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ΓöÇΓöÇΓöÇ SCROLLBAR ΓöÇΓöÇΓöÇ */
+/* ─── SCROLLBAR ─── */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: var(--bg-secondary); }
 ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
 
-/* ΓöÇΓöÇΓöÇ SELECTION ΓöÇΓöÇΓöÇ */
+/* ─── SELECTION ─── */
 ::selection { background: var(--gold); color: var(--bg-primary); }
 
-/* ΓöÇΓöÇΓöÇ PARTICLES ΓöÇΓöÇΓöÇ */
+/* ─── PARTICLES ─── */
 #particle-canvas {
   position: fixed; top:0; left:0;
   width:100vw; height:100vh;
@@ -66,7 +66,7 @@ body {
   opacity:0.25;
 }
 
-/* ΓöÇΓöÇΓöÇ CLASSIFIED WATERMARK ΓöÇΓöÇΓöÇ */
+/* ─── CLASSIFIED WATERMARK ─── */
 .classified-watermark {
   position: fixed;
   top:50%; left:50%;
@@ -82,9 +82,9 @@ body {
   user-select:none;
 }
 
-/* ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+/* ═══════════════════════════════════════════════
    NAVIGATION
-   ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ */
+   ═══════════════════════════════════════════════ */
 nav {
   position:fixed;
   top:0; left:0; right:0;
@@ -185,7 +185,7 @@ nav.scrolled { padding:8px 48px; background:rgba(10,12,15,0.98); }
 
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
 
-/* ΓöÇΓöÇΓöÇ PRINT MODE (toggle) ΓöÇΓöÇΓöÇ */
+/* ─── PRINT MODE (toggle) ─── */
 .print-toggle {
   padding:5px 14px 5px 10px;
   border-radius:100px;
@@ -214,7 +214,7 @@ nav.scrolled { padding:8px 48px; background:rgba(10,12,15,0.98); }
   color:var(--gold);
 }
 
-/* ΓöÇΓöÇΓöÇ PRINT MODE (body state) ΓöÇΓöÇΓöÇ */
+/* ─── PRINT MODE (body state) ─── */
 body.print-mode {
   background:#fff !important;
   color:#111 !important;
@@ -235,7 +235,7 @@ body.print-mode .pc-badge,
 body.print-mode .mc-type { background:rgba(0,0,0,0.04) !important; border-color:#ccc !important; }
 body.print-mode .nav-classified { display:none !important; }
 
-/* ΓöÇΓöÇΓöÇ PRINT @media ΓöÇΓöÇΓöÇ */
+/* ─── PRINT @media ─── */
 @media print {
   @page { margin:1.2cm; }
   body { background:#fff !important; color:#111 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
@@ -257,9 +257,9 @@ body.print-mode .nav-classified { display:none !important; }
   .classified-watermark { display:none !important; }
 }
 
-/* ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+/* ═══════════════════════════════════════════════
    HERO
-   ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ */
+   ═══════════════════════════════════════════════ */
 .hero {
   position:relative;
   z-index:1;
@@ -389,7 +389,7 @@ body.print-mode .nav-classified { display:none !important; }
   color:var(--gold);
 }
 
-/* ΓöÇΓöÇΓöÇ Hero Right ΓöÇΓöÇΓöÇ */
+/* ─── Hero Right ─── */
 .hero-right {
   opacity:0;
   transform:translateY(30px);
@@ -460,9 +460,9 @@ body.print-mode .nav-classified { display:none !important; }
 
 @keyframes fadeUp { to{opacity:1;transform:translateY(0)} }
 
-/* ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+/* ═══════════════════════════════════════════════
    SECTION COMMON
-   ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ */
+   ═══════════════════════════════════════════════ */
 .section {
   position:relative;
   z-index:1;
@@ -526,9 +526,9 @@ body.print-mode .nav-classified { display:none !important; }
   border-radius:2px;
 }
 
-/* ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+/* ═══════════════════════════════════════════════
    METRICS BAR
-   ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ */
+   ═══════════════════════════════════════════════ */
 .metrics-bar {
   display:grid;
   grid-template-columns:repeat(4,1fr);
@@ -571,9 +571,9 @@ body.print-mode .nav-classified { display:none !important; }
   font-family:var(--font-mono);
 }
 
-/* ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+/* ═══════════════════════════════════════════════
    EXPERTISE GRID
-   ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ */
+   ═══════════════════════════════════════════════ */
 .expertise-grid {
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -657,9 +657,9 @@ body.print-mode .nav-classified { display:none !important; }
   font-family:var(--font-mono);
 }
 
-/* ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+/* ═══════════════════════════════════════════════
    TIMELINE
-   ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ */
+   ═══════════════════════════════════════════════ */
 .timeline {
   position:relative;
   padding-left:36px;
@@ -744,9 +744,9 @@ body.print-mode .nav-classified { display:none !important; }
   font-size:11px;
 }
 
-/* ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+/* ═══════════════════════════════════════════════
    PROJECTS
-   ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ */
+   ═══════════════════════════════════════════════ */
 .projects-grid {
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -855,7 +855,7 @@ body.print-mode .nav-classified { display:none !important; }
   border:1px solid rgba(201,149,60,0.15);
 }
 
-/* ΓöÇΓöÇΓöÇ Video Button ΓöÇΓöÇΓöÇ */
+/* ─── Video Button ─── */
 .pc-video {
   display:inline-flex;
   align-items:center;
@@ -892,9 +892,9 @@ body.print-mode .nav-classified { display:none !important; }
   flex-shrink:0;
 }
 
-/* ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+/* ═══════════════════════════════════════════════
    MODULES (PROPOSAL)
-   ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ */
+   ═══════════════════════════════════════════════ */
 .proposal-modules {
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -992,9 +992,9 @@ body.print-mode .nav-classified { display:none !important; }
 
 .module-card .mc-hours strong { color:var(--gold); }
 
-/* ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+/* ═══════════════════════════════════════════════
    VENTURES
-   ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ */
+   ═══════════════════════════════════════════════ */
 .ventures-grid {
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -1051,9 +1051,9 @@ body.print-mode .nav-classified { display:none !important; }
   line-height:1.7;
 }
 
-/* ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+/* ═══════════════════════════════════════════════
    EDUCATION
-   ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ */
+   ═══════════════════════════════════════════════ */
 .edu-grid {
   display:grid;
   grid-template-columns:repeat(4,1fr);
@@ -1098,9 +1098,9 @@ body.print-mode .nav-classified { display:none !important; }
   margin-top:3px;
 }
 
-/* ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+/* ═══════════════════════════════════════════════
    FOOTER
-   ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ */
+   ═══════════════════════════════════════════════ */
 footer {
   position:relative;
   z-index:1;
@@ -1141,10 +1141,10 @@ footer {
 .footer-note .highlight-gold { color:var(--gold); font-weight:500; }
 .footer-note .highlight-teal { color:var(--teal); }
 
-/* ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+/* ═══════════════════════════════════════════════
    VIDEO MODAL
-   ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ */
-/* ΓöÇΓöÇΓöÇ VIDEO MODAL (full-screen) ΓöÇΓöÇΓöÇ */
+   ═══════════════════════════════════════════════ */
+/* ─── VIDEO MODAL (full-screen) ─── */
 .video-modal-overlay {
   display:none;
   position:fixed;
@@ -1239,9 +1239,9 @@ footer {
   .video-modal-back{top:-36px;font-size:10px;padding:4px 10px}
 }
 
-/* ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+/* ═══════════════════════════════════════════════
    STAGGER
-   ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ */
+   ═══════════════════════════════════════════════ */
 .stagger-1 { transition-delay:0.1s; }
 .stagger-2 { transition-delay:0.2s; }
 .stagger-3 { transition-delay:0.3s; }
@@ -1256,12 +1256,12 @@ footer {
 .stagger-12 { transition-delay:1.2s; }
 .stagger-13 { transition-delay:1.3s; }
 
-/* ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+/* ═══════════════════════════════════════════════
    PRINT MODE
-   ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ */
-/* ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+   ═══════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════
    RESPONSIVE
-   ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ */
+   ═══════════════════════════════════════════════ */
 @media(max-width:1024px){
   .hero-grid{grid-template-columns:1fr;gap:36px}
   .hero-right{order:-1}
@@ -1296,19 +1296,19 @@ footer {
 </head>
 <body>
 
-<!-- ΓöÇΓöÇΓöÇ CLASSIFIED WATERMARK ΓöÇΓöÇΓöÇ -->
+<!-- ─── CLASSIFIED WATERMARK ─── -->
 <div class="classified-watermark">CONFIDENTIAL</div>
 
-<!-- ΓöÇΓöÇΓöÇ PARTICLES ΓöÇΓöÇΓöÇ -->
+<!-- ─── PARTICLES ─── -->
 <canvas id="particle-canvas"></canvas>
 
-<!-- ΓöÇΓöÇΓöÇ NAV ΓöÇΓöÇΓöÇ -->
+<!-- ─── NAV ─── -->
 <nav id="navbar">
   <div class="nav-logo">
     <div class="logo-icon">RR</div>
     <div>
       <span>Ronak Raval</span>
-      <small>Industry Expert  ┬╖  M&amp;E  ┬╖  XR</small>
+      <small>Industry Expert M&amp;E XR</small>
     </div>
   </div>
   <ul class="nav-links">
@@ -1322,16 +1322,16 @@ footer {
   </ul>
 </nav>
 
-<!-- ΓòÉΓòÉΓòÉ HERO ΓòÉΓòÉΓòÉ -->
+<!-- ═══ HERO ═══ -->
 <section class="hero" id="hero">
   <div class="hero-grid">
     <div class="hero-left">
-      <div class="hero-badge"><span class="dot"></span> Visiting Faculty  ┬╖  Parul University  2026</div>
+      <div class="hero-badge"><span class="dot"></span> Visiting Faculty  Parul University  2026</div>
       <h1 class="hero-name"><span class="highlight">Ronak</span> Raval</h1>
       <div class="hero-title">
-        Ronak Raval ,Industry Expert · M&amp;E · XR + Gen AI<br>
-        Director, <strong>Khel Online</strong> , Co-Founder Visual Rhymes &amp;<br>
-        Original Dimension &amp; Leading Industry Consultant
+        Ronak Raval, Industry Expert M&amp;E XR + Gen AI<br>
+        Director, <strong>Khel Online</strong>, Co-Founder Visual Rhymes &amp;<br>
+        Ronak Raval &amp; Leading Industry Consultant
       </div>
       <p class="hero-desc">
         25+ years in Media &amp; Entertainment &middot; 15+ years in Game Design &amp; XR &middot;
@@ -1361,7 +1361,7 @@ footer {
   </div>
 </section>
 
-<!-- ΓòÉΓòÉΓòÉ METRICS ΓòÉΓòÉΓòÉ -->
+<!-- ═══ METRICS ═══ -->
 <div class="metrics-bar" id="metricsBar">
   <div class="metric-item"><div class="mi-num">25+</div><div class="mi-label">Years in M&amp;E</div></div>
   <div class="metric-item"><div class="mi-num">15+</div><div class="mi-label">Years XR / Game Dev</div></div>
@@ -1369,7 +1369,7 @@ footer {
   <div class="metric-item"><div class="mi-num">7+</div><div class="mi-label">Industry Verticals</div></div>
 </div>
 
-<!-- ΓòÉΓòÉΓòÉ EXPERTISE ΓòÉΓòÉΓòÉ -->
+<!-- ═══ EXPERTISE ═══ -->
 <section class="section" id="expertise">
   <div class="section-header" id="expHeader">
     <div class="section-tag">Core Competencies</div>
@@ -1420,7 +1420,7 @@ footer {
   </div>
 </section>
 
-<!-- ΓòÉΓòÉΓòÉ JOURNEY ΓòÉΓòÉΓòÉ -->
+<!-- ═══ JOURNEY ═══ -->
 <section class="section" id="journey">
   <div class="section-header" id="journeyHeader">
     <div class="section-tag">Professional Arc</div>
@@ -1448,7 +1448,7 @@ footer {
     <div class="timeline-item stagger-2" data-delay="0.2">
       <div class="timeline-year">2016 &ndash; 2018</div>
       <div class="timeline-role">Co-Founder / Director / Design Lead</div>
-      <div class="timeline-org">Original Dimension &middot; Ahmedabad</div>
+      <div class="timeline-org">Ronak Raval &middot; Ahmedabad</div>
       <div class="timeline-desc">
         Built VR/AR studio from ground up. Photogrammetry for CIIE IIM Ahmedabad &amp; Sabarmati Ashram. VR for Nissan (GTR), Ferromatik Milacron, Lexus Tiles. VR games (Cave Hero, Dino Coaster).
         <ul>
@@ -1502,7 +1502,7 @@ footer {
   </div>
 </section>
 
-<!-- ΓòÉΓòÉΓòÉ PROJECTS ΓòÉΓòÉΓòÉ -->
+<!-- ═══ PROJECTS ═══ -->
 <section class="section" id="projects">
   <div class="section-header" id="projHeader">
     <div class="section-tag">Portfolio Showcase</div>
@@ -1520,7 +1520,7 @@ footer {
       <div class="pc-badge vr">VR</div>
       <div class="pc-demo-badge ready">&#9733; Demo Ready</div>
       <h4>Interactive Car Display &mdash; Nissan GTR</h4>
-      <div class="pc-client">Original Dimension &middot; Nissan &middot; 2016</div>
+      <div class="pc-client">Ronak Raval &middot; Nissan &middot; 2016</div>
       <div class="pc-desc">Fully interactive VR showroom experience for the Nissan GTR. Photorealistic model with real-time material swap, color configurator, and 360&deg; exploration.</div>
       <div class="pc-stack"><span>Unity 3D</span><span>3DS Max</span><span>VR</span><span>Oculus Rift</span></div>
     </div>
@@ -1529,7 +1529,7 @@ footer {
       <div class="pc-badge game">GAME</div>
       <div class="pc-demo-badge ready">&#9733; Demo Ready</div>
       <h4>Cave Hero &amp; Dino Coaster</h4>
-      <div class="pc-client">Funzone VR &middot; Original Dimension &middot; 2017</div>
+      <div class="pc-client">Funzone VR &middot; Ronak Raval &middot; 2017</div>
       <div class="pc-desc">Multiplayer VR arcade games deployed commercially. Cave Hero: dungeon-crawling shooter. Dino Coaster: Jurassic-themed rail shooter. Revenue-generating products.</div>
       <div class="pc-stack"><span>Unity 3D</span><span>HTC Vive</span><span>3DS Max</span><span>VR</span></div>
     </div>
@@ -1627,7 +1627,7 @@ footer {
       <div class="pc-badge vr">VR</div>
       <div class="pc-demo-badge ready">&#9733; Demo Ready</div>
       <h4>Milacron CNC Machine &mdash; Digital Twin in VR</h4>
-      <div class="pc-client">Ferromatik Milacron &middot; Original Dimension &middot; 2016</div>
+      <div class="pc-client">Ferromatik Milacron &middot; Ronak Raval &middot; 2016</div>
       <div class="pc-desc">Prototype VR digital twin of an industrial CNC machine for Ferromatik Milacron (US). Interactive product exploration, real-time component breakdown, immersive walkaround.</div>
       <div class="pc-stack"><span>Unity 3D</span><span>VR</span><span>Oculus Rift</span><span>3DS Max</span></div>
       <div>
@@ -1659,7 +1659,7 @@ footer {
   </div>
 </section>
 
-<!-- ΓòÉΓòÉΓòÉ PROPOSAL ΓòÉΓòÉΓòÉ -->
+<!-- ═══ PROPOSAL ═══ -->
 <section class="section" id="proposal">
   <div class="section-header" id="propHeader">
     <div class="section-tag">Parul University &middot; Visiting Faculty Proposal</div>
@@ -1722,7 +1722,7 @@ footer {
   </div>
 </section>
 
-<!-- ΓòÉΓòÉΓòÉ VENTURES ΓòÉΓòÉΓòÉ -->
+<!-- ═══ VENTURES ═══ -->
 <section class="section" id="ventures">
   <div class="section-header" id="ventHeader">
     <div class="section-tag">Studio Ecosystem</div>
@@ -1747,7 +1747,7 @@ footer {
     </div>
     <div class="venture-card stagger-3" data-delay="0.3">
       <div class="vc-icon">&#x25C6;</div>
-      <h4>Original Dimension</h4>
+      <h4>Ronak Raval</h4>
       <div class="vc-role">Co-Founder</div>
       <p>VR/AR studio (2016&ndash;2018). Photogrammetry, VR games, holographic displays, interactive demos for Nissan, Milacron, CIIE IIM Ahmedabad.</p>
     </div>
@@ -1772,7 +1772,7 @@ footer {
   </div>
 </section>
 
-<!-- ΓòÉΓòÉΓòÉ EDUCATION ΓòÉΓòÉΓòÉ -->
+<!-- ═══ EDUCATION ═══ -->
 <section class="section" id="education">
   <div class="section-header" id="eduHeader">
     <div class="section-tag">Background</div>
@@ -1807,11 +1807,11 @@ footer {
   </div>
 </section>
 
-<!-- ΓòÉΓòÉΓòÉ FOOTER ΓòÉΓòÉΓòÉ -->
+<!-- ═══ FOOTER ═══ -->
 <footer>
   <div class="footer-contact">
     <a href="tel:+919824087401">&#x260E; +91 98240 87401</a>
-    <a href="mailto:ronakraval104@gmail.com">&#x2709; ronakraval104@gmail.com</a>
+    <a href="mailto:ronak.raval104@gmail.com">&#x2709; ronak.raval104@gmail.com</a>
     <a href="https://www.linkedin.com/in/ronak-raval-88282557/" target="_blank">&#x25C8; linkedin.com/in/ronak-raval-88282557</a>
     <span style="color:var(--text-muted);font-size:11px;">&#x25C6; Ahmedabad, Gujarat, India</span>
   </div>
@@ -1821,7 +1821,7 @@ footer {
   </div>
 </footer>
 
-<!-- ΓòÉΓòÉΓòÉ VIDEO MODAL ΓòÉΓòÉΓòÉ -->
+<!-- ═══ VIDEO MODAL ═══ -->
 <div class="video-modal-overlay" id="videoModal" onclick="if(event.target===this)closeVideoModal()">
   <div class="video-modal-container">
     <button class="video-modal-back" onclick="closeVideoModal()">&#x2190; Back to Projects</button>
@@ -1830,11 +1830,11 @@ footer {
   </div>
 </div>
 
-<!-- ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+<!-- ═══════════════════════════════════════════════
    JAVASCRIPT
-   ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ -->
+   ═══════════════════════════════════════════════ -->
 <script>
-// ΓöÇΓöÇΓöÇ PARTICLES ΓöÇΓöÇΓöÇ
+// ─── PARTICLES ───
 (function(){
   const c=document.getElementById('particle-canvas'),ctx=c.getContext('2d');
   let p=[],w,h;
@@ -1851,7 +1851,7 @@ footer {
   anim()
 })();
 
-// ΓöÇΓöÇΓöÇ STAT RING ΓöÇΓöÇΓöÇ
+// ─── STAT RING ───
 (function(){
   const c=document.getElementById('statRing'),ctx=c.getContext('2d');
   const cx=180,cy=180,r=152;let angle=0;
@@ -1871,7 +1871,7 @@ footer {
   draw()
 })();
 
-// ΓöÇΓöÇΓöÇ SCROLL REVEAL ΓöÇΓöÇΓöÇ
+// ─── SCROLL REVEAL ───
 (function(){
   const opts={threshold:0.08,rootMargin:'0px 0px -40px 0px'};
   const obs=new IntersectionObserver((entries)=>{
@@ -1900,20 +1900,20 @@ footer {
   })
 })();
 
-// ΓöÇΓöÇΓöÇ NAV SCROLL ΓöÇΓöÇΓöÇ
+// ─── NAV SCROLL ───
 (function(){
   const nav=document.getElementById('navbar');
   window.addEventListener('scroll',()=>{if(window.scrollY>50)nav.classList.add('scrolled');else nav.classList.remove('scrolled')})
 })();
 
-// ΓöÇΓöÇΓöÇ SMOOTH SCROLL ΓöÇΓöÇΓöÇ
+// ─── SMOOTH SCROLL ───
 (function(){
   document.querySelectorAll('a[href^="#"]').forEach(a=>{
     a.addEventListener('click',function(e){e.preventDefault();const t=document.querySelector(this.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})})
   })
 })();
 
-// ΓöÇΓöÇΓöÇ VIDEO MODAL ΓöÇΓöÇΓöÇ
+// ─── VIDEO MODAL ───
 (function(){
   var modal=document.getElementById('videoModal'),iframe=document.getElementById('videoModalIframe');
   function openV(id,lb){iframe.src='https://drive.google.com/file/d/'+id+'/preview';modal.classList.add('active')}
@@ -1923,7 +1923,7 @@ footer {
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.classList.contains('active'))closeV()});
 })();
 
-// ΓöÇΓöÇΓöÇ PRINT TOGGLE ΓöÇΓöÇΓöÇ
+// ─── PRINT TOGGLE ───
 function togglePrintMode(){
   var b=document.body,p=false,btn=document.querySelector('.print-toggle');
   b.classList.toggle('print-mode');if(btn)btn.classList.toggle('active');
@@ -1935,8 +1935,8 @@ function togglePrintMode(){
   }
 }
 
-console.log('%c Ronak Raval ┬╖ Visiting Faculty Proposal ','background:#c9953c;color:#fff;font-weight:700;padding:6px 12px;');
-console.log('%c Parul University ┬╖ For: Nishant Trivedi ┬╖ 2026 ','background:#c9953c;color:#fff;padding:4px 12px;');
+console.log('%c Ronak Raval - Visiting Faculty Proposal ','background:#c9953c;color:#fff;font-weight:700;padding:6px 12px;');
+console.log('%c Parul University - For: Nishant Trivedi - 2026 ','background:#c9953c;color:#fff;padding:4px 12px;');
 console.log('%c CONFIDENTIAL ','background:#c9953c;color:#fff;font-weight:600;padding:2px 12px;');
 </script>
 

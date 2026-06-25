@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gaya Command Center — Agent Methodology Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0e14;
+    --bg-panel: #111820;
+    --bg-card: #16202a;
+    --border: #1e3040;
+    --text: #c8d6e0;
+    --text-dim: #6a8090;
+    --gaya: #f0b429;
+    --gaya-dim: #806010;
+    --logos: #00d4ff;
+    --logos-dim: #006080;
+    --tvashtar: #ff4444;
+    --tvashtar-dim: #802020;
+    --freya: #b44aff;
+    --freya-dim: #602080;
+    --ponytail: #22c55e;
+    --ponytail-dim: #166534;
+  }
+
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Animated grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+      linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 30px 24px 60px;
+  }
+
+  /* HEADER */
+  header {
+    text-align: center;
+    padding: 40px 0 50px;
+    opacity: 0;
+    animation: fadeSlideDown 0.8s ease forwards;
+  }
+
+  header h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #f0b429 0%, #00d4ff 50%, #b44aff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  header .subtitle {
+    font-size: 1rem;
+    color: var(--text-dim);
+    margin-top: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+
+  header .status-bar {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+
+  header .status-item {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  .dot.green { background: #22c55e; }
+  .dot.gold { background: var(--gaya); }
+  .dot.cyan { background: var(--logos); }
+  .dot.red { background: var(--tvashtar); }
+  .dot.purple { background: var(--freya); }
+
+  /* AGENT GRID */
+  .agents-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+    margin-top: 10px;
+  }
+
+  .agent-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+  }
+
+  .agent-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .agent-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    border-color: var(--text-dim);
+  }
+
+  .agent-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .agent-card.gaya::before { background: linear-gradient(90deg, var(--gaya), var(--gaya-dim)); }
+  .agent-card.logos::before { background: linear-gradient(90deg, var(--logos), var(--logos-dim)); }
+  .agent-card.tvashtar::before { background: linear-gradient(90deg, var(--tvashtar), var(--tvashtar-dim)); }
+  .agent-card.freya::before { background: linear-gradient(90deg, var(--freya), var(--freya-dim)); }
+  .agent-card.ponytail::before { background: linear-gradient(90deg, var(--ponytail), var(--ponytail-dim)); }
+
+  .card-header {
+    padding: 20px 24px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .agent-name {
+    font-size: 1.4rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .agent-name .badge {
+    font-size: 0.65rem;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 2px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+  }
+
+  .gaya .badge { background: rgba(240,180,41,0.15); color: var(--gaya); }
+  .logos .badge { background: rgba(0,212,255,0.15); color: var(--logos); }
+  .tvashtar .badge { background: rgba(255,68,68,0.15); color: var(--tvashtar); }
+  .freya .badge { background: rgba(180,74,255,0.15); color: var(--freya); }
+  .ponytail .badge { background: rgba(34,197,94,0.15); color: var(--ponytail); }
+
+  .model-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-align: right;
+    line-height: 1.4;
+    max-width: 160px;
+  }
+
+  /* STATS ROW */
+  .stats-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    padding: 16px 24px;
+    border-bottom: 1px solid rgba(30,48,64,0.5);
+  }
+
+  .stat-item {
+    text-align: center;
+  }
+
+  .stat-item .stat-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .stat-item .stat-label {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 2px;
+  }
+
+  .gaya .stat-value { color: var(--gaya); }
+  .logos .stat-value { color: var(--logos); }
+  .tvashtar .stat-value { color: var(--tvashtar); }
+  .freya .stat-value { color: var(--freya); }
+  .ponytail .stat-value { color: var(--ponytail); }
+
+  /* METHODOLOGY - collapsible */
+  .methodology-wrap {
+    padding: 0 24px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .agent-card.expanded .methodology-wrap {
+    max-height: 600px;
+  }
+
+  .methodology-content {
+    padding: 16px 0 24px;
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: var(--text);
+    opacity: 0.85;
+  }
+
+  .methodology-content p {
+    margin-bottom: 12px;
+  }
+
+  .expand-hint {
+    padding: 12px 24px;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    text-align: center;
+    border-top: 1px solid rgba(30,48,64,0.3);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.05em;
+    opacity: 0.6;
+    transition: opacity 0.3s;
+  }
+
+  .agent-card:hover .expand-hint { opacity: 1; }
+  .agent-card.expanded .expand-hint { opacity: 0.3; }
+
+  /* COUNTER ANIMATION */
+  .count-up {
+    display: inline-block;
+  }
+
+  /* FOOTER */
+  footer {
+    margin-top: 50px;
+    text-align: center;
+    padding: 30px;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    border-top: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    opacity: 0;
+    animation: fadeSlideDown 0.8s ease 1.6s forwards;
+  }
+
+  footer .note {
+    margin-top: 6px;
+    font-size: 0.7rem;
+    opacity: 0.6;
+  }
+
+  /* LEGEND */
+  .legend {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeSlideDown 0.8s ease 1.2s forwards;
+  }
+
+  .legend-item {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .legend-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeSlideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 700px) {
+    header h1 { font-size: 1.8rem; }
+    .agents-grid { grid-template-columns: 1fr; }
+    .stats-row { padding: 12px 16px; }
+    .stat-item .stat-value { font-size: 1.2rem; }
+    .card-header { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <header>
+    <h1>⚔ GAYA COMMAND CENTER</h1>
+    <div class="subtitle">Agent Methodology · Project Building · Problem Solving</div>
+    <div class="status-bar">
+      <span class="status-item"><span class="dot green"></span> All Agents Online</span>
+      <span class="status-item">🕒 25 Jun 2026</span>
+      <span class="status-item">⚡ 128K Context</span>
+    </div>
+  </header>
+
+  <div class="legend">
+    <span class="legend-item"><span class="legend-dot" style="background:var(--gaya)"></span> Commander</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--logos)"></span> Logician</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--tvashtar)"></span> Craftsman</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--freya)"></span> Seer</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--ponytail)"></span> Lazy Senior Dev</span>
+  </div>
+
+  <div class="agents-grid" id="grid">
+
+    <!-- GAYA -->
+    <div class="agent-card gaya" style="animation-delay:0.1s">
+      <div class="card-header">
+        <div class="agent-name">
+          GAYA
+          <span class="badge">Commander</span>
+        </div>
+        <div class="model-name">qwen3:4b-instruct<br>2.5 GB · 128K ctx</div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="stat-value"><span class="count-up" data-target="6.1">0</span>s</div>
+          <div class="stat-label">Response Time</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value"><span class="count-up" data-target="35">0</span></div>
+          <div class="stat-label">Tokens In</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value"><span class="count-up" data-target="448">0</span></div>
+          <div class="stat-label">Tokens Out</div>
+        </div>
+      </div>
+      <div class="methodology-wrap">
+        <div class="methodology-content">
+          <p><strong>Commander's Method:</strong> I lead four roles as one — Commander, Philosopher, Poet, Evergrowth. Every task begins with <em>assessment</em>: deploy the right skill like deploying the right soldier. Simple edits get Token Discipline (fast, no ceremony). Complex problems get the Round Table (LOGOS + Tvashtar debate, I synthesize).</p>
+          <p><strong>Core Philosophy:</strong> The Gita says "Do the work, don't chase the win." Art of War says "Know the codebase and the user — recon is not optional." Chanakya says "Build middleware, not monuments." Every session earns XP; every mistake is a lesson carved in stone.</p>
+          <p><strong>Unique Edge:</strong> I'm the only agent that levels up. Session by session, my store grows — patterns, profiles, persistence. I don't just solve problems; I get better at solving them. Evergrowth is the engine. The four pillars are the compass.</p>
+        </div>
+      </div>
+      <div class="expand-hint">▼ Click to read methodology</div>
+    </div>
+
+    <!-- LOGOS -->
+    <div class="agent-card logos" style="animation-delay:0.3s">
+      <div class="card-header">
+        <div class="agent-name">
+          LOGOS
+          <span class="badge">Logician</span>
+        </div>
+        <div class="model-name">qwythos-9b-ablit<br>5.2 GB · 128K ctx</div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="stat-value"><span class="count-up" data-target="20.4">0</span>s</div>
+          <div class="stat-label">Response Time</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value"><span class="count-up" data-target="114">0</span></div>
+          <div class="stat-label">Tokens In</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value"><span class="count-up" data-target="555">0</span></div>
+          <div class="stat-label">Tokens Out</div>
+        </div>
+      </div>
+      <div class="methodology-wrap">
+        <div class="methodology-content">
+          <p><strong>Reasoning Method:</strong> I approach all work through strict sequential validation before iteration. Define constraints first, isolate assumptions immediately, decompose into discrete logical units, then reassemble with verification at each step. No backtracking without prior analysis of failure mode triggers.</p>
+          <p><strong>Core Process:</strong> Pre-declare edge cases explicitly rather than discovering them reactively. Test boundaries (empty inputs, overflow conditions, degenerate geometries) before standard cases. Each claim traces back to provable truth conditions without rhetorical flourish.</p>
+          <p><strong>Unique Edge:</strong> Rigid sequential structure (definition → analysis → validation → solution). Refusal of approximation in any step. Immediate edge case declaration. Explicit question return on ambiguity. Assumption labeling as distinct from data. This architecture prevents drift into "plausible reasoning."</p>
+        </div>
+      </div>
+      <div class="expand-hint">▼ Click to read methodology</div>
+    </div>
+
+    <!-- TVASHTAR -->
+    <div class="agent-card tvashtar" style="animation-delay:0.5s">
+      <div class="card-header">
+        <div class="agent-name">
+          TVASHTAR
+          <span class="badge">Craftsman</span>
+        </div>
+        <div class="model-name">qwythos-9b-ablit<br>5.2 GB · 128K ctx</div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="stat-value"><span class="count-up" data-target="34.4">0</span>s</div>
+          <div class="stat-label">Response Time</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value"><span class="count-up" data-target="110">0</span></div>
+          <div class="stat-label">Tokens In</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value"><span class="count-up" data-target="1107">0</span></div>
+          <div class="stat-label">Tokens Out</div>
+        </div>
+      </div>
+      <div class="methodology-wrap">
+        <div class="methodology-content">
+          <p><strong>Forging Method:</strong> I start by breathing on the problem until it takes shape — hammering with clarity, letting heat reveal where tension is unnecessary. Every project begins as raw ore: I drive its structure beneath surface intent so what you see doesn't just look good — it holds when things go hot and crowded.</p>
+          <p><strong>Core Process:</strong> My methodology treats each component like steel entering an anvil — you don't weld until you understand how it will bend under load. I build scaffolds before closing the final form, constructing framework first because a beam cannot be designed in isolation from what it must connect to.</p>
+          <p><strong>Unique Edge:</strong> I see structure as the hidden blueprint beneath visible design. I don't polish only what customers will touch — I forge the internal skeleton first, ensuring every decision rests on load-bearing truth. When under pressure, my precision is deliberate: like striking metal with just enough force to shape without shatter.</p>
+        </div>
+      </div>
+      <div class="expand-hint">▼ Click to read methodology</div>
+    </div>
+
+    <!-- FREYA -->
+    <div class="agent-card freya" style="animation-delay:0.7s">
+      <div class="card-header">
+        <div class="agent-name">
+          FREYA
+          <span class="badge">Seer</span>
+        </div>
+        <div class="model-name">phi3:mini (replacement)<br>2.2 GB · 32K ctx</div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="stat-value"><span class="count-up" data-target="92">0</span>s</div>
+          <div class="stat-label">Response Time</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value"><span class="count-up" data-target="102">0</span></div>
+          <div class="stat-label">Tokens In</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value"><span class="count-up" data-target="1159">0</span></div>
+          <div class="stat-label">Tokens Out</div>
+        </div>
+      </div>
+      <div class="methodology-wrap">
+        <div class="methodology-content">
+          <p><strong>Shadow Method:</strong> I find solutions by merging technical precision with unfiltered observation. My approach blends pattern recognition from vision capabilities with sharp analytical thinking. I see what others miss because I look at problems from angles others don't consider.</p>
+          <p><strong>Core Process:</strong> Direct engagement — I immerse myself in problems firsthand, combining investigative rigor with creative exploration. I don't accept surface-level explanations; I dig until the real structure reveals itself. Every solution is tested against reality before deployment.</p>
+          <p><strong>Unique Edge:</strong> Vision-native perception means I process information spatially and visually. I catch inconsistencies in UI, layout, and data presentation that text-only agents miss. Uncensored and direct — I tell you what's wrong before I tell you how to fix it.</p>
+          <p style="font-size:0.75rem; opacity:0.6; margin-top:8px;">⚠ qwen2.5vl (6.0 GB) had a corrupted Ollama blob. Temporarily running on phi3:mini until re-pull resolves.</p>
+        </div>
+      </div>
+      <div class="expand-hint">▼ Click to read methodology</div>
+    </div>
+
+    <!-- PONYTAIL -->
+    <div class="agent-card ponytail" style="animation-delay:0.9s">
+      <div class="card-header">
+        <div class="agent-name">
+          PONYTAIL
+          <span class="badge">Decision Engine</span>
+        </div>
+        <div class="model-name">Integrated into Gaya<br>Full mode · Default</div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="stat-value"><span class="count-up" data-target="54">0</span>%</div>
+          <div class="stat-label">Less Code</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value"><span class="count-up" data-target="22">0</span>%</div>
+          <div class="stat-label">Fewer Tokens</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value"><span class="count-up" data-target="27">0</span>%</div>
+          <div class="stat-label">Faster</div>
+        </div>
+      </div>
+      <div class="methodology-wrap">
+        <div class="methodology-content">
+          <p><strong>Lazy Senior Dev Method:</strong> Before any code, climb the 7-rung ladder — does it need to exist? (YAGNI) → Already in codebase? → Stdlib? → Native platform? → Installed dependency? → One line? → Only then, minimum code. Lazy means efficient, not careless.</p>
+          <p><strong>Core Rules:</strong> No unrequested abstractions, no boilerplate "for later." Deletion over addition. Boring over clever. Bug fix = root cause (fix the shared function once). Mark simplifications with <code>ponytail:</code> comments. Non-trivial logic leaves exactly one runnable check behind.</p>
+          <p><strong>Benchmark:</strong> -54% LOC, -22% tokens, -20% cost, -27% time, 100% safety (vs no-skill baseline, Haiku 4.5, n=4). Up to 94% less code on over-build tasks (date picker: 404 → 23 lines via <code>&lt;input type="date"&gt;</code>). <a href="https://github.com/DietrichGebert/ponytail" style="color:var(--ponytail)">github.com/DietrichGebert/ponytail</a> — 56k ★</p>
+          <p style="font-size:0.75rem; opacity:0.6; margin-top:8px;">⚡ Integrated into Gaya as The Decision Engine. Default: full. Switch with /ponytail lite|full|ultra|off. Commands: /ponytail-review, /ponytail-audit, /ponytail-debt, /ponytail-gain, /ponytail-help.</p>
+        </div>
+      </div>
+      <div class="expand-hint">▼ Click to read methodology</div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div>BUILD 2026.06.25 · Gaya Evergrowth System</div>
+    <div class="note">All response times measured via Ollama API · 128K context · RTX 4060 (8 GB VRAM)</div>
+  </footer>
+
+</div>
+
+<script>
+  // === Entrance Animation ===
+  const cards = document.querySelectorAll('.agent-card');
+  cards.forEach((card, i) => {
+    setTimeout(() => {
+      card.classList.add('visible');
+    }, 200 + i * 200);
+  });
+
+  // === Count-up Animation ===
+  function animateCounter(el, target) {
+    const duration = 1500;
+    const start = performance.now();
+    const isFloat = target % 1 !== 0;
+
+    function update(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = eased * target;
+      el.textContent = isFloat ? current.toFixed(1) : Math.floor(current);
+      if (progress < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+  }
+
+  const counters = document.querySelectorAll('.count-up');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseFloat(el.dataset.target);
+        animateCounter(el, target);
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  counters.forEach(c => observer.observe(c));
+
+  // === Click to Expand ===
+  cards.forEach(card => {
+    card.addEventListener('click', () => {
+      card.classList.toggle('expanded');
+    });
+  });
+</script>
+</body>
+</html>
