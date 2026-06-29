@@ -185,6 +185,125 @@ nav.scrolled { padding:8px 48px; background:rgba(10,12,15,0.98); }
 
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
 
+/* ─── RESOURCES DROPDOWN ─── */
+.nav-dropdown {
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+}
+
+.nav-dropdown-btn {
+  padding:7px 16px;
+  border-radius:100px;
+  font-size:11px;
+  font-weight:500;
+  text-decoration:none;
+  color:var(--text-secondary);
+  transition:all 0.3s ease;
+  letter-spacing:0.5px;
+  text-transform:uppercase;
+  background:transparent;
+  border:1px solid var(--border-subtle);
+  cursor:pointer;
+  font-family:var(--font-body);
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+
+.nav-dropdown-btn:hover,
+.nav-dropdown-btn.active {
+  color:var(--gold);
+  background:var(--gold-subtle);
+  border-color:rgba(201,149,60,0.2);
+}
+
+.nav-dropdown-btn .arrow {
+  font-size:8px;
+  transition:transform 0.3s ease;
+}
+
+.nav-dropdown-btn.active .arrow {
+  transform:rotate(180deg);
+}
+
+.nav-dropdown-menu {
+  position:absolute;
+  top:calc(100% + 8px);
+  right:0;
+  min-width:220px;
+  background:var(--bg-card);
+  border:1px solid var(--border-subtle);
+  border-radius:12px;
+  padding:6px;
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(-4px);
+  transition:all 0.25s cubic-bezier(0.16,1,0.3,1);
+  box-shadow:0 12px 40px rgba(0,0,0,0.4);
+  z-index:100;
+}
+
+.nav-dropdown-menu.open {
+  opacity:1;
+  visibility:visible;
+  transform:translateY(0);
+}
+
+.nav-dropdown-menu a {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 12px;
+  border-radius:8px;
+  font-size:12px;
+  font-weight:400;
+  color:var(--text-secondary);
+  text-decoration:none;
+  text-transform:none;
+  letter-spacing:0;
+  transition:all 0.2s ease;
+}
+
+.nav-dropdown-menu a:hover {
+  color:var(--text-primary);
+  background:var(--gold-subtle);
+}
+
+.nav-dropdown-menu a .icon {
+  font-size:16px;
+  width:24px;
+  text-align:center;
+  flex-shrink:0;
+}
+
+.nav-dropdown-menu a .desc {
+  font-size:10px;
+  color:var(--text-muted);
+  margin-top:1px;
+}
+
+.nav-dropdown-menu .divider {
+  height:1px;
+  background:var(--border-subtle);
+  margin:4px 8px;
+}
+
+@media(max-width:768px){
+  .nav-dropdown-menu {
+    position:fixed;
+    top:auto;
+    right:12px;
+    left:12px;
+    min-width:auto;
+  }
+}
+
+body.print-mode .nav-dropdown { display:none !important; }
+@media print {
+  .nav-dropdown { display:none !important; }
+}
+
 /* ─── PRINT MODE (toggle) ─── */
 .print-toggle {
   padding:5px 14px 5px 10px;
@@ -1317,6 +1436,30 @@ footer {
     <li><a href="#projects">Projects</a></li>
     <li><a href="#proposal">Proposal</a></li>
     <li><a href="#ventures">Ventures</a></li>
+    <li class="nav-dropdown">
+      <button class="nav-dropdown-btn" onclick="toggleDropdown()">
+        Resources <span class="arrow">▾</span>
+      </button>
+      <div class="nav-dropdown-menu" id="resourcesMenu">
+        <a href="agent-methodology-dashboard.html">
+          <span class="icon">⚔</span>
+          <div>Skills Dashboard<span class="desc">Gaya Command Center with agent stats</span></div>
+        </a>
+        <a href="shastras-to-management-infographic.html">
+          <span class="icon">📜</span>
+          <div>Shastras to Management<span class="desc">Leadership infographic</span></div>
+        </a>
+        <a href="Idlewoods/idlewoods-dashboard.html">
+          <span class="icon">🏠</span>
+          <div>Idlewoods Digital Twin<span class="desc">Gopi Idlewoods dashboard</span></div>
+        </a>
+        <div class="divider"></div>
+        <a href="Parul%20Uni/index.html">
+          <span class="icon">🎓</span>
+          <div>Parul Proposal<span class="desc">Visiting Faculty proposal</span></div>
+        </a>
+      </div>
+    </li>
     <li><button class="print-toggle" onclick="togglePrintMode()">&#x1F5A8; Print</button></li>
     <li><span class="nav-classified">Classified</span></li>
   </ul>
@@ -1934,6 +2077,19 @@ function togglePrintMode(){
     document.querySelectorAll('.section-header,.expertise-card,.project-card,.module-card,.venture-card,.edu-card,.timeline-item,.metric-item,.metrics-bar').forEach(function(el){el.classList.add('visible')});
   }
 }
+
+// ─── RESOURCES DROPDOWN ───
+function toggleDropdown(){
+  var m=document.getElementById('resourcesMenu'),b=m.previousElementSibling;
+  m.classList.toggle('open');b.classList.toggle('active');
+}
+document.addEventListener('click',function(e){
+  var d=document.querySelector('.nav-dropdown');
+  if(d&&!d.contains(e.target)){
+    var m=document.getElementById('resourcesMenu'),b=d.querySelector('.nav-dropdown-btn');
+    if(m){m.classList.remove('open');if(b)b.classList.remove('active');}
+  }
+});
 
 console.log('%c Ronak Raval - Visiting Faculty Proposal ','background:#c9953c;color:#fff;font-weight:700;padding:6px 12px;');
 console.log('%c Parul University - For: Nishant Trivedi - 2026 ','background:#c9953c;color:#fff;padding:4px 12px;');

@@ -279,6 +279,47 @@
     display: inline-block;
   }
 
+  /* DASHBOARD NAV */
+  .dash-nav {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 0 6px;
+    border-bottom:1px solid var(--border);
+    margin-bottom:10px;
+    opacity:0;
+    animation:fadeSlideDown 0.8s ease 0.1s forwards;
+  }
+
+  .dash-nav a {
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 18px;
+    border-radius:100px;
+    font-size:0.8rem;
+    font-family:'JetBrains Mono',monospace;
+    text-decoration:none;
+    color:var(--text-dim);
+    border:1px solid var(--border);
+    transition:all 0.3s ease;
+  }
+
+  .dash-nav a:hover {
+    color:var(--gaya);
+    border-color:var(--gaya-dim);
+    background:rgba(240,180,41,0.08);
+  }
+
+  .dash-nav .nav-brand {
+    font-family:'Space Grotesk',sans-serif;
+    font-size:0.75rem;
+    color:var(--text-dim);
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    opacity:0.5;
+  }
+
   /* FOOTER */
   footer {
     margin-top: 50px;
@@ -348,6 +389,11 @@
 <body>
 
 <div class="container">
+
+  <nav class="dash-nav">
+    <a href="index.html">← Back to Home</a>
+    <span class="nav-brand">Gaya Command Center</span>
+  </nav>
 
   <header>
     <h1>⚔ GAYA COMMAND CENTER</h1>
