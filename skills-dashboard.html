@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gaya — Skills Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════
+   RESET + ROOT
+   ══════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0a0e14;
+  --bg-panel: #111820;
+  --bg-card: #16202a;
+  --border: #1e3040;
+  --text: #c8d6e0;
+  --text-dim: #6a8090;
+  --process: #38bdf8;
+  --process-dim: #006080;
+  --quality: #fbbf24;
+  --quality-dim: #806010;
+  --creation: #a78bfa;
+  --creation-dim: #503080;
+  --dev: #34d399;
+  --dev-dim: #166534;
+  --business: #f472b6;
+  --business-dim: #802050;
+  --special: #fb923c;
+  --special-dim: #804010;
+}
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Animated grid */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image:
+    linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 30px 24px 60px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* ══════════════════════════════════════
+   HEADER
+   ══════════════════════════════════════ */
+header {
+  text-align: center;
+  padding: 40px 0 20px;
+  opacity: 0;
+  animation: fadeSlideDown 0.8s ease forwards;
+}
+
+header h1 {
+  font-size: 2.6rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #a78bfa 0%, #38bdf8 50%, #34d399 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+header .subtitle {
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  margin-top: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.status-bar {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.status-item {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  display: inline-block;
+  animation: pulse 2s ease-in-out infinite;
+}
+.dot.green { background: var(--dev); }
+
+/* ══════════════════════════════════════
+   STATS ROW
+   ══════════════════════════════════════ */
+.stats-row {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeSlideDown 0.8s ease 0.3s forwards;
+}
+
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 24px;
+  text-align: center;
+  min-width: 90px;
+}
+
+.stat-card .stat-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--creation);
+}
+
+.stat-card .stat-label {
+  font-size: 0.6rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 2px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ══════════════════════════════════════
+   LEGEND
+   ══════════════════════════════════════ */
+.legend {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeSlideDown 0.8s ease 0.5s forwards;
+}
+
+.legend-item {
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.legend-dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+
+/* ══════════════════════════════════════
+   CONTROLS
+   ══════════════════════════════════════ */
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeSlideDown 0.8s ease 0.6s forwards;
+}
+
+.srch-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 14px;
+  transition: border .2s;
+  flex: 1;
+  min-width: 180px;
+  max-width: 300px;
+}
+
+.srch-wrap:focus-within { border-color: rgba(167,139,250,0.4); }
+.srch-wrap svg { flex-shrink: 0; opacity: 0.4; }
+
+.srch-wrap input {
+  background: none; border: none; outline: none;
+  color: var(--text); font-size: 0.8rem;
+  font-family: 'JetBrains Mono', monospace;
+  width: 100%;
+}
+.srch-wrap input::placeholder { color: var(--text-dim); opacity: 0.5; }
+
+.cnt-bdg {
+  font-size: 0.7rem;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text-dim);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 12px;
+  white-space: nowrap;
+}
+
+.filters {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.fbtn {
+  font-size: 0.65rem;
+  font-weight: 500;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 5px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-dim);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .15s;
+  user-select: none;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.fbtn:hover { border-color: rgba(167,139,250,0.3); color: var(--text); }
+.fbtn.on { background: rgba(167,139,250,0.15); border-color: rgba(167,139,250,0.35); color: #a78bfa; }
+.fbtn-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
+
+/* ══════════════════════════════════════
+   SKILL GRID
+   ══════════════════════════════════════ */
+.skill-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 14px;
+  margin-top: 20px;
+}
+
+/* ══════════════════════════════════════
+   SKILL CARD
+   ══════════════════════════════════════ */
+.skill-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.skill-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.skill-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+  border-color: var(--text-dim);
+}
+
+/* Colored top border */
+.skill-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.skill-card.process::before { background: linear-gradient(90deg, var(--process), var(--process-dim)); }
+.skill-card.quality::before { background: linear-gradient(90deg, var(--quality), var(--quality-dim)); }
+.skill-card.creation::before { background: linear-gradient(90deg, var(--creation), var(--creation-dim)); }
+.skill-card.dev::before { background: linear-gradient(90deg, var(--dev), var(--dev-dim)); }
+.skill-card.business::before { background: linear-gradient(90deg, var(--business), var(--business-dim)); }
+.skill-card.special::before { background: linear-gradient(90deg, var(--special), var(--special-dim)); }
+
+.skill-card-inner {
+  padding: 18px;
+}
+
+/* Card header row */
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.skill-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.skill-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.skill-type-badge {
+  font-size: 0.5rem;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 2px 7px;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+
+/* Category tag */
+.card-tag-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.skill-tag {
+  font-size: 0.55rem;
+  font-weight: 500;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Description (visible when collapsed) */
+.skill-desc {
+  font-size: 0.78rem;
+  color: var(--text);
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  opacity: 0.8;
+}
+
+/* ══════════════════════════════════════
+   EXPANDED CONTENT
+   ══════════════════════════════════════ */
+.expand-wrap {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.skill-card.expanded .expand-wrap {
+  max-height: 800px;
+}
+
+.expand-content {
+  padding: 0 18px 18px;
+  border-top: 1px solid rgba(30,48,64,0.3);
+  margin-top: 12px;
+  padding-top: 14px;
+}
+
+/* Expanded description */
+.expand-desc {
+  font-size: 0.78rem;
+  line-height: 1.7;
+  color: var(--text);
+  opacity: 0.85;
+  margin-bottom: 14px;
+}
+
+/* Workflow example */
+.expand-workflow {
+  background: rgba(167,139,250,0.05);
+  border: 1px solid rgba(167,139,250,0.1);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  position: relative;
+}
+
+.expand-workflow::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 3px;
+  border-radius: 3px 0 0 3px;
+}
+
+.expand-workflow-title {
+  font-size: 0.55rem;
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+  opacity: 0.7;
+}
+
+.expand-workflow-text {
+  font-size: 0.75rem;
+  line-height: 1.7;
+  font-style: italic;
+  opacity: 0.85;
+}
+
+/* Related skills */
+.expand-related {
+  margin-bottom: 14px;
+}
+
+.expand-related-title {
+  font-size: 0.55rem;
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+  opacity: 0.7;
+}
+
+.expand-related-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+}
+
+.expand-related-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px;
+  border-radius: 5px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all .15s;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+}
+
+.expand-related-chip:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(167,139,250,0.25);
+  color: var(--text);
+}
+
+.expand-related-chip-icon { font-size: 0.9rem; flex-shrink: 0; }
+.expand-related-chip-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Tags + Path row */
+.expand-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.expand-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  flex: 1;
+}
+
+.expand-tag {
+  font-size: 0.55rem;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 2px 7px;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+}
+
+.expand-path {
+  font-size: 0.6rem;
+  color: var(--text-dim);
+  font-family: 'JetBrains Mono', monospace;
+  word-break: break-all;
+  background: rgba(0,0,0,0.2);
+  padding: 4px 8px;
+  border-radius: 4px;
+  opacity: 0.6;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* Expand hint */
+.expand-hint {
+  padding: 8px 18px;
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  text-align: center;
+  border-top: 1px solid rgba(30,48,64,0.2);
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.05em;
+  opacity: 0.5;
+  transition: opacity 0.3s;
+}
+
+.skill-card:hover .expand-hint { opacity: 0.8; }
+.skill-card.expanded .expand-hint { opacity: 0.3; }
+
+/* ══════════════════════════════════════
+   EMPTY STATE
+   ══════════════════════════════════════ */
+.empty-state {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+  grid-column: 1 / -1;
+}
+
+.empty-state.visible { display: flex; }
+
+.empty-state p {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ══════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════ */
+footer {
+  margin-top: 40px;
+  text-align: center;
+  padding: 30px;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  border-top: 1px solid var(--border);
+  font-family: 'JetBrains Mono', monospace;
+  opacity: 0;
+  animation: fadeSlideDown 0.8s ease 1.2s forwards;
+}
+
+footer .note {
+  margin-top: 4px;
+  font-size: 0.65rem;
+  opacity: 0.6;
+}
+
+/* ══════════════════════════════════════
+   ANIMATIONS
+   ══════════════════════════════════════ */
+@keyframes fadeSlideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════ */
+@media (max-width: 900px) {
+  header h1 { font-size: 1.8rem; }
+  .skill-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+  .expand-related-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 500px) {
+  header h1 { font-size: 1.4rem; }
+  .skill-grid { grid-template-columns: 1fr; }
+  .controls { flex-direction: column; align-items: stretch; }
+  .srch-wrap { max-width: 100%; }
+  .filters { justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ═══ HEADER ═══ -->
+  <header>
+    <h1>⚔ GAYA SKILL HANDBOOK</h1>
+    <div class="subtitle">37 Modules · 21 Custom · 14 Superpowers · 2 Bonus</div>
+    <div class="status-bar">
+      <span class="status-item"><span class="dot green"></span> Skills Ready</span>
+      <span class="status-item">🕒 <span id="dateDisplay"></span></span>
+      <span class="status-item">▼ Click to expand</span>
+    </div>
+  </header>
+
+  <!-- ═══ STATS ═══ -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-value"><span class="count-up" data-target="37">0</span></div>
+      <div class="stat-label">Total</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" style="color:var(--dev)"><span class="count-up" data-target="21">0</span></div>
+      <div class="stat-label">Custom</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" style="color:var(--process)"><span class="count-up" data-target="14">0</span></div>
+      <div class="stat-label">Superpowers</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" style="color:var(--quality)"><span class="count-up" data-target="2">0</span></div>
+      <div class="stat-label">Bonus</div>
+    </div>
+  </div>
+
+  <!-- ═══ LEGEND ═══ -->
+  <div class="legend" id="legend"></div>
+
+  <!-- ═══ CONTROLS ═══ -->
+  <div class="controls">
+    <div class="srch-wrap">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input id="search" type="text" placeholder="Search…" spellcheck="false" autocomplete="off">
+    </div>
+    <div class="cnt-bdg"><span id="vcount">0</span> / <span id="vtotal">0</span></div>
+    <div class="filters" id="filters"></div>
+  </div>
+
+  <!-- ═══ SKILL GRID ═══ -->
+  <div class="skill-grid" id="grid">
+    <div class="empty-state" id="emptyState">
+      <p>◈ No skills match your search</p>
+    </div>
+  </div>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer>
+    <div>BUILD 2026.06.25 · Gaya Skill System</div>
+    <div class="note">Click any card to expand · Search · Filter by category</div>
+  </footer>
+
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════════
+const SKILLS = {
+  // Superpowers: Process
+  "sbr": { n:"Brainstorming", i:"💡", c:"process", t:"Superpowers",
+    d:"Socratic design refinement. Explore intent, requirements, and edge cases through structured dialogue before any implementation.",
+    ex:"Before writing any code for a new feature, invoke Brainstorming first — it explores the user's intent, requirements, edge cases, and design tradeoffs through structured dialogue so you never build the wrong thing.",
+    r:["swp","sgm","sba","std"], p:"skills/brainstorming/", g:["planning","design","spec","dialogue"] },
+  "swp":{ n:"Writing Plans", i:"📝", c:"process", t:"Superpowers",
+    d:"Bite-sized plans from specs. Exact file paths, code snippets, and shell commands. No TBDs.",
+    ex:"After a brainstorming session resolves the 'what', convert the spec into a structured implementation plan with exact file paths, code snippets, and shell commands — no TBDs or ambiguity allowed.",
+    r:["sbr","sep","std","sdp"], p:"skills/writing-plans/", g:["planning","spec","implementation"] },
+  "std":{ n:"TDD", i:"🔄", c:"process", t:"Superpowers",
+    d:"Red-Green-Refactor. No implementation without a failing test first. The test is living documentation.",
+    ex:"Write a failing test first (Red), then minimum code to pass (Green), then refactor safely. The test stays as living documentation forever.",
+    r:["swp","svb","srq","sdb"], p:"skills/test-driven-development/", g:["testing","tdd","discipline"] },
+  "sep":{ n:"Executing Plans", i:"▶", c:"process", t:"Superpowers",
+    d:"Runs plans with checkpoints, intermediate verification, and handoff to Finish Branch.",
+    ex:"After Writing Plans produces a step-by-step spec, dispatch it to Executing Plans — it runs each step with checkpoints, verifies intermediate outputs, and hands off to Finish Branch when complete.",
+    r:["swp","sfc","svb","sdp"], p:"skills/executing-plans/", g:["execution","checkpoints","verification"] },
+  "sgw":{ n:"Git Worktrees", i:"🌿", c:"process", t:"Superpowers",
+    d:"Isolated workspaces per branch. No stashing, no context switching.",
+    ex:"Juggle a hotfix on main alongside a feature branch — check out each branch in its own directory with no stashing, no switching, no context loss.",
+    r:["sfc","sep","sdp"], p:"skills/using-git-worktrees/", g:["git","worktree","isolation"] },
+  "sdp":{ n:"Dispatch Parallel", i:"⚡", c:"process", t:"Superpowers",
+    d:"Split 2+ independent tasks into parallel subagent work. 2× throughput.",
+    ex:"When a feature has independent frontend and backend work, spawn two subagents simultaneously — no shared state, no conflicts, 2× throughput.",
+    r:["ssd","sep","swp"], p:"skills/dispatching-parallel-agents/", g:["parallel","subagent","efficiency"] },
+  "sba":{ n:"Brainstorming Alt", i:"🧠", c:"process", t:"Superpowers",
+    d:"Alternate brainstorming: diverge → converge → commit. Great for creative blocks.",
+    ex:"When stuck on a design decision, first diverge (generate many ideas), then converge (narrow to one), then commit.",
+    r:["sbr","swp","sgm"], p:"skills/brainstorming/", g:["planning","design","alternative"] },
+  "ssd":{ n:"Subagent Dev", i:"🤖", c:"process", t:"Superpowers",
+    d:"Fresh subagent per task with two-stage spec + quality review. Focused and verifiable.",
+    ex:"For a complex multi-file feature, spawn a dedicated subagent per file with a spec stage (describe intent) and quality stage (review output).",
+    r:["sdp","srq","swp","sep"], p:"skills/subagent-driven-development/", g:["subagent","parallel","review"] },
+
+  // Superpowers: Quality
+  "srq":{ n:"Request Review", i:"👁", c:"quality", t:"Superpowers",
+    d:"Code reviewer subagent. Classifies issues: Critical → Important → Minor.",
+    ex:"After completing implementation, spawn a reviewer subagent — it reads the diff, classifies issues as Critical (must fix), Important (should fix), or Minor (note only).",
+    r:["src","std","svb","sfc"], p:"skills/requesting-code-review/", g:["review","code-quality","feedback"] },
+  "src":{ n:"Receive Review", i:"📬", c:"quality", t:"Superpowers",
+    d:"READ → VERIFY → EVALUATE → RESPOND. Push back with evidence.",
+    ex:"When a reviewer flags an issue: read the comment, verify the claim with a test, evaluate if the fix is correct, respond with evidence — even if that means pushing back.",
+    r:["srq","sdb","std"], p:"skills/receiving-code-review/", g:["review","feedback","rigor"] },
+  "sdb":{ n:"Systematic Debug", i:"🔬", c:"quality", t:"Superpowers",
+    d:"4-phase: Root Cause → Pattern → Hypothesis → Fix. No symptom patches.",
+    ex:"When a production bug surfaces, resist hotfixing the symptom. Trace the root cause, identify the pattern, form a hypothesis, fix at the source — the bug stays dead.",
+    r:["std","svb","src","arc"], p:"skills/systematic-debugging/", g:["debugging","root-cause","rigor"] },
+  "svb":{ n:"Verify Before Done", i:"✅", c:"quality", t:"Superpowers",
+    d:"No completion claims without fresh test/lint/build evidence. No assumptions.",
+    ex:"Before any 'done' claim, run the full verification battery — lint, typecheck, test suite — and confirm green output. Fresh evidence only.",
+    r:["std","sfc","srq"], p:"skills/verification-before-completion/", g:["verification","testing","evidence"] },
+  "sfc":{ n:"Finish Branch", i:"🚀", c:"quality", t:"Superpowers",
+    d:"Implementation done. Choose merge, PR, or cleanup. Each path has the right git commands.",
+    ex:"After all checks pass, decide: direct merge (trivial), create a PR (needs review), or cleanup (branch is stale).",
+    r:["svb","sep","sgw","srq"], p:"skills/finishing-a-development-branch/", g:["completion","merge","pr"] },
+  "sgm":{ n:"Grill Me", i:"🔥", c:"quality", t:"Superpowers",
+    d:"Stress-test a plan through relentless questioning. Fork until clarity.",
+    ex:"Before committing to a complex architecture, get stress-tested on every decision branch — questions assumptions, exposes blind spots, forks until shared understanding.",
+    r:["sbr","swp","src"], p:"skills/grill-me/", g:["review","stress-test","clarity"] },
+
+  // Custom: Creation
+  "uid":{ n:"UI/UX Pro Max", i:"🎨", c:"creation", t:"Custom",
+    d:"Full design system: 50+ styles, 161 palettes, 57 font pairings, 99 UX guidelines.",
+    ex:"Before building any interface, generate a complete design system — select the right style (glassmorphism, minimal, brutalism), color palette, typography, and spacing.",
+    r:["fend","bundle","arch","3dv"], p:"skills/ui-ux-pro-max/", g:["ui","ux","frontend","design"] },
+  "fend":{ n:"Frontend Design", i:"🖌", c:"creation", t:"Custom",
+    d:"Distinctive, production-grade interfaces. Not generic templates.",
+    ex:"Build a landing page or dashboard component with production-grade HTML/CSS and a unique visual identity — not generic templates, but purposeful, polished interfaces.",
+    r:["uid","bundle","arch","img"], p:"skills/frontend-design/", g:["frontend","design","html","css"] },
+  "bundle":{ n:"UI Bundle Frontend", i:"🧩", c:"creation", t:"Custom",
+    d:"Modify Salesforce UI bundle apps. appLayout, shadcn, Tailwind, base-path routing.",
+    ex:"When a Salesforce UI bundle app needs a new page or component, follow the project's appLayout shell, shadcn/ui conventions, and base-path routing.",
+    r:["uid","fend"], p:"skills/building-ui-bundle-frontend/", g:["ui","bundle","salesforce","shadcn"] },
+  "3dv":{ n:"3D Visualizer", i:"🌐", c:"creation", t:"Custom",
+    d:"Three.js expert. Interactive 3D scenes, models, animations. Single HTML file.",
+    ex:"Create an interactive 3D viewer with Three.js — orbit controls, lighting, and animations for product pages or architectural walkthroughs, all in a single HTML file.",
+    r:["uid","fend","viz","cpp"], p:"skills/3d-visualizer/", g:["3d","three.js","visualization","webgl"] },
+  "arch":{ n:"Architecture Diagram", i:"📐", c:"creation", t:"Custom",
+    d:"Interactive click-through system architecture diagrams with animated data flows.",
+    ex:"Produce an interactive click-through flow with step-by-step animations, mode toggles (dev/prod), and payload details for onboarding or microservice design.",
+    r:["uid","arc","con","dst"], p:"skills/architecture-diagram/", g:["architecture","diagram","flow","visualization"] },
+  "img":{ n:"Image Generation", i:"🖼", c:"creation", t:"Custom",
+    d:"DALL-E, Midjourney, Stable Diffusion prompts for any style and use case.",
+    ex:"Craft optimized prompts with proven patterns — style injection, lighting cues, composition rules — for DALL-E, Midjourney, or Stable Diffusion.",
+    r:["i2v","cf","fend"], p:"skills/image-generation/", g:["image","prompt","generation","ai"] },
+  "i2v":{ n:"Image to Video", i:"🎬", c:"creation", t:"Custom",
+    d:"Animate stills via RunComfy. Smart router picks HappyHorse, Wan, or Seedance.",
+    ex:"When a still product shot needs to become a cinematic video, the smart router picks: HappyHorse for general motion, Wan for lip-sync with custom audio, Seedance for multi-modal animation.",
+    r:["img","cf","pipe"], p:"skills/image-to-video/", g:["video","animation","runcomfy","ai"] },
+  "cf":{ n:"ComfyUI Workflows", i:"⚙", c:"creation", t:"Custom",
+    d:"Generate node graphs from plain English. txt2img, ControlNet, LoRA, upscale.",
+    ex:"Describe a Stable Diffusion pipeline in plain English and get a valid ComfyUI workflow JSON — no manual node wiring.",
+    r:["img","i2v","pipe"], p:"skills/comfyui-workflow-builder/", g:["comfyui","workflow","stable-diffusion"] },
+  "pptx":{ n:"PowerPoint Builder", i:"📊", c:"creation", t:"Custom",
+    d:"Create, read, edit, parse .pptx files. Decks, slides, templates, speaker notes.",
+    ex:"When a consulting report needs a polished slide deck, create, read, or edit .pptx files programmatically — templates, speaker notes, charts, layout control.",
+    r:["dst","con","prop"], p:"skills/pptx/", g:["powerpoint","slides","presentation","office"] },
+  "dt":{ n:"Digital Twin", i:"👤", c:"creation", t:"Custom",
+    d:"Photorealistic AI avatars via each::sense. Video calls, content, multilingual.",
+    ex:"Generate a photorealistic digital twin with each::sense AI for async video calls, corporate training, or multilingual content without re-recording.",
+    r:["img","i2v"], p:"skills/digital-twin-generation/", g:["avatar","twin","ai","video"] },
+  "hvf":{ n:"HyperFrames Video", i:"🎬", c:"creation", t:"Custom",
+    d:"Write HTML, render MP4. GSAP, Lottie, Three.js animations. No build step.",
+    ex:"Scaffold a video as HTML with timed data-* attributes and GSAP animations, preview in the browser, render to 1080p MP4 with one command.",
+    r:["i2v","img","cf","fend"], p:"skills/hyperframes-video/", g:["video","html","animation","mp4","gsap","render"] },
+
+  // Custom: Dev
+  "dev":{ n:"Dev Workflow", i:"💻", c:"dev", t:"Custom",
+    d:"Coding, debugging, scripting, automation across any language or framework.",
+    ex:"Need a quick script to batch-rename files, parse a log, or automate a build step? The Swiss Army knife of everyday development.",
+    r:["arc","std","sdb","pin"], p:"skills/coding-expertise/", g:["code","script","automation","debug"] },
+  "cpp":{ n:"Unreal Engine C++", i:"🎮", c:"dev", t:"Custom",
+    d:"UE5 C++: UObject hygiene, performance patterns, stable editor at scale.",
+    ex:"Apply UObject lifecycle rules, avoid string-based lookups in hot paths, use TObjectPtr for GC references — patterns that keep the editor stable at scale.",
+    r:["3dv","viz","pipe","3ds"], p:"skills/unreal-engine-cpp-pro/", g:["unreal","cpp","game-dev","performance"] },
+  "arc":{ n:"Architecture Improve", i:"🏗", c:"dev", t:"Custom",
+    d:"Find deepening opportunities. Consolidate, decouple, make AI-navigable.",
+    ex:"When a codebase feels tangled, identify tightly-coupled modules, extract shared logic, create a CONTEXT.md that makes the system navigable by humans and AI.",
+    r:["sdb","dev","std","arch"], p:"skills/improve-codebase-architecture/", g:["architecture","refactor","cleanup"] },
+  "pin":{ n:"Pinokio Launcher", i:"🚀", c:"dev", t:"Custom",
+    d:"Discover and launch AI apps via Pinokio. 1-click setup, no dependency hell.",
+    ex:"Run ComfyUI, Ollama, or Automatic1111 without manual Python env setup — discover, install, and launch with one click.",
+    r:["gep","pipe","cf"], p:"skills/pinokio/", g:["launcher","pinokio","setup"] },
+  "gep":{ n:"Gepeto Builder", i:"📦", c:"dev", t:"Custom",
+    d:"Build 1-click launchers with Pinokio. Package your tool for instant install.",
+    ex:"Package your own tool so anyone can run it instantly — create a Pinokio launcher with all dependencies handled automatically.",
+    r:["pin","dev"], p:"skills/gepeto/", g:["launcher","pinokio","builder"] },
+
+  // Custom: Business
+  "con":{ n:"Consulting Analysis", i:"📈", c:"business", t:"Custom",
+    d:"Market analysis, competitive intel, due diligence. Consulting-grade output.",
+    ex:"Produce structured frameworks with chapter skeleton, data requirements, and strategic insights — consulting-grade, not a generic write-up.",
+    r:["dst","pptx","prop","arch"], p:"skills/consulting-analysis/", g:["analysis","research","consulting","report"] },
+  "dst":{ n:"Data Storytelling", i:"📖", c:"business", t:"Custom",
+    d:"Transform data into narratives with visualization, context, persuasive structure.",
+    ex:"When presenting quarterly metrics, frame the narrative — what changed, why it matters, what to do next — with visual hierarchy that guides the eye.",
+    r:["con","pptx","arch"], p:"skills/data-storytelling/", g:["data","storytelling","visualization","presentation"] },
+  "game":{ n:"Game Design Theory", i:"🎲", c:"business", t:"Custom",
+    d:"MDA framework, player psychology, balance, progression. Why games are fun.",
+    ex:"Deconstruct a game mechanic through the MDA lens (Mechanics→Dynamics→Aesthetics) — understand the emotion it creates, not just what it does.",
+    r:["con","prop","cpp"], p:"skills/game-design-theory/", g:["game","design","theory","psychology"] },
+  "prop":{ n:"Creative Proposals", i:"📋", c:"business", t:"Custom",
+    d:"ArchViz/VR/UE5 consulting scopes, pricing tiers, proposals that convert.",
+    ex:"Build a professional scope document with deliverables, timeline, pricing tiers, and visual references — converts conversations into contracts.",
+    r:["con","pptx","viz","3ds"], p:"skills/creative-proposal-builder/", g:["proposal","consulting","archviz","scope"] },
+
+  // Custom: Specialist
+  "viz":{ n:"ArchViz Optimizer", i:"🏛", c:"special", t:"Custom",
+    d:"UE5 draw call optimization, LODs, Nanite/Lumen for real estate visualization.",
+    ex:"When an ArchViz tour runs at 18fps — reduce draw calls by merging static meshes, set sensible LOD distances, tune Nanite/Lumen for 60fps.",
+    r:["cpp","3dv","prop","3ds"], p:"skills/archviz-optimizer/", g:["archviz","unreal","optimization","real-estate"] },
+  "pipe":{ n:"Pipeline Troubleshooter", i:"🔧", c:"special", t:"Custom",
+    d:"CUDA errors, VAE mismatches, Conda fixes, environment diagnostics.",
+    ex:"When ComfyUI crashes with CUDA OOM and a VAE shape mismatch — check VRAM, fix dtype mismatches, resolve environment conflicts systematically.",
+    r:["cf","img","pin"], p:"skills/pipeline-troubleshooter/", g:["troubleshooting","cuda","pipeline","environment"] },
+  "3ds":{ n:"3ds Max Bridge", i:"🏗", c:"special", t:"Custom",
+    d:"3ds Max workflow automation, scene setup, export pipelines for UE5.",
+    ex:"Export a 3ds Max architectural scene to UE5 — automate pivot alignment, clean hierarchy, proper UVs, and Datasmith export settings.",
+    r:["viz","cpp","3dv"], p:"skills/3ds-max-bridge/", g:["3dsmax","unreal","workflow","automation"] },
+
+  // Custom: Quality
+  "plg":{ n:"Plagiarism Checker", i:"🔍", c:"quality", t:"Custom",
+    d:"Detect textual plagiarism between documents using TF-IDF vectorization and cosine similarity.",
+    ex:"Compare two documents side-by-side — TF-IDF vectorization, cosine similarity scoring, and percentage-based plagiarism detection with highlighted matching passages.",
+    r:["src","sdb"], p:"skills/plagiarism-checker/", g:["plagiarism","detection","quality","similarity","text"] }
+};
+
+const SKILL_IDS = Object.keys(SKILLS);
+
+const CAT = {
+  process:{clr:"#38bdf8",lbl:"Process"},
+  quality:{clr:"#fbbf24",lbl:"Quality"},
+  creation:{clr:"#a78bfa",lbl:"Creation"},
+  dev:{clr:"#34d399",lbl:"Dev"},
+  business:{clr:"#f472b6",lbl:"Business"},
+  special:{clr:"#fb923c",lbl:"Specialist"}
+};
+const CAT_KEYS = Object.keys(CAT);
+
+// ═══ DATE ═══
+document.getElementById('dateDisplay').textContent =
+  new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+
+// ═══ LEGEND ═══
+(function(){
+  let h='';
+  for(const k of CAT_KEYS) h+=`<span class="legend-item"><span class="legend-dot" style="background:${CAT[k].clr}"></span>${CAT[k].lbl}</span>`;
+  h+=`<span class="legend-item"><span class="legend-dot" style="background:rgba(255,255,255,0.3)"></span>Superpowers</span>`;
+  h+=`<span class="legend-item"><span class="legend-dot" style="background:rgba(255,255,255,0.15)"></span>Custom</span>`;
+  document.getElementById('legend').innerHTML=h;
+})();
+
+// ═══ RENDER ═══
+const grid=document.getElementById('grid');
+const vcount=document.getElementById('vcount'), vtotal=document.getElementById('vtotal');
+const searchInput=document.getElementById('search'), filtersEl=document.getElementById('filters');
+let activeFilter='all', searchQ='';
+
+function catColor(c){return CAT[c]?CAT[c].clr:'#64748b';}
+
+function render(){
+  let html='', vis=0;
+
+  for(const id of SKILL_IDS){
+    const s=SKILLS[id];
+    let show=true;
+    if(activeFilter!=='all'){
+      if(activeFilter==='superpowers'&&s.t!=='Superpowers')show=false;
+      else if(activeFilter==='custom'&&s.t!=='Custom')show=false;
+      else if(activeFilter!=='superpowers'&&activeFilter!=='custom'&&s.c!==activeFilter)show=false;
+    }
+    if(show&&searchQ){
+      const q=searchQ.toLowerCase();
+      if(!s.n.toLowerCase().includes(q)&&!s.d.toLowerCase().includes(q)&&!s.g.some(g=>g.includes(q)))show=false;
+    }
+    if(!show)continue;
+    vis++;
+
+    const clr=catColor(s.c);
+
+    // Related skills HTML
+    let relHtml='';
+    if(s.r&&s.r.length){
+      relHtml+='<div class="expand-related"><div class="expand-related-title">Related Skills</div><div class="expand-related-grid">';
+      for(const rid of s.r){
+        const rs=SKILLS[rid];
+        if(rs) relHtml+=`<div class="expand-related-chip" data-id="${rid}"><span class="expand-related-chip-icon">${rs.i}</span><span class="expand-related-chip-name">${rs.n}</span></div>`;
+      }
+      relHtml+='</div></div>';
+    }
+
+    // Tags HTML
+    let tagsHtml='';
+    if(s.g&&s.g.length){
+      tagsHtml=s.g.map(g=>`<span class="expand-tag">${g}</span>`).join('');
+    }
+
+    // Path
+    const pathHtml=`<span class="expand-path">${s.p}</span>`;
+
+    // Workflow example
+    const wfColor=clr;
+    const wfHtml=s.ex?`<div class="expand-workflow" style="border-color:${wfColor}40"><div class="expand-workflow-title">Workflow Example</div><div class="expand-workflow-text" style="color:${wfColor}bb">${s.ex}</div></div>`:'';
+
+    html+=`<div class="skill-card ${s.c}" data-id="${id}" tabindex="0" role="button" aria-label="${s.n}">
+      <div class="skill-card-inner">
+        <div class="card-header">
+          <span class="skill-icon">${s.i}</span>
+          <span class="skill-name">${s.n}</span>
+          <span class="skill-type-badge">${s.t}</span>
+        </div>
+        <div class="card-tag-row">
+          <span class="skill-tag" style="background:${clr}18;color:${clr}">${s.c}</span>
+        </div>
+        <div class="skill-desc">${s.d}</div>
+      </div>
+      <div class="expand-wrap">
+        <div class="expand-content">
+          <div class="expand-desc">${s.d}</div>
+          ${wfHtml}
+          ${relHtml}
+          <div class="expand-meta">
+            ${tagsHtml?`<div class="expand-tags">${tagsHtml}</div>`:''}
+            ${pathHtml}
+          </div>
+        </div>
+      </div>
+      <div class="expand-hint">▼ Click to expand details</div>
+    </div>`;
+  }
+
+  const emptyHtml=vis===0?'<div class="empty-state visible"><p>◈ No skills match your search</p></div>':'';
+  grid.innerHTML=html+emptyHtml;
+  vcount.textContent=vis;
+  vtotal.textContent=SKILL_IDS.length;
+
+  // Card click to expand
+  document.querySelectorAll('.skill-card').forEach(el=>{
+    el.addEventListener('click',()=>{
+      el.classList.toggle('expanded');
+    });
+    el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();el.classList.toggle('expanded')}});
+  });
+
+  // Related chip clicks
+  document.querySelectorAll('.expand-related-chip').forEach(el=>{
+    el.addEventListener('click',e=>{
+      e.stopPropagation();
+      const id=el.dataset.id;
+      // Find the card with this id and scroll to it
+      const targetCard=document.querySelector(`.skill-card[data-id="${id}"]`);
+      if(targetCard){
+        targetCard.scrollIntoView({behavior:'smooth',block:'center'});
+        targetCard.classList.add('expanded');
+      }
+    });
+  });
+
+  // Entrance animation
+  const cards=document.querySelectorAll('.skill-card');
+  cards.forEach((card,i)=>{setTimeout(()=>{card.classList.add('visible')},100+i*40)});
+}
+
+// ═══ FILTERS ═══
+function buildFilters(){
+  let h='<button class="fbtn on" data-f="all">All</button>';
+  h+='<button class="fbtn" data-f="superpowers">★ Superpowers</button>';
+  h+='<button class="fbtn" data-f="custom">● Custom</button>';
+  h+='<span style="width:1px;height:20px;background:var(--border);margin:0 4px;flex-shrink:0"></span>';
+  for(const c of CAT_KEYS) h+=`<button class="fbtn" data-f="${c}"><span class="fbtn-dot" style="background:${CAT[c].clr}"></span>${CAT[c].lbl}</button>`;
+  filtersEl.innerHTML=h;
+  filtersEl.querySelectorAll('.fbtn').forEach(b=>{
+    b.addEventListener('click',()=>{
+      filtersEl.querySelectorAll('.fbtn').forEach(x=>x.classList.toggle('on',x===b));
+      activeFilter=b.dataset.f;
+      render();
+    });
+  });
+}
+
+// ═══ SEARCH ═══
+searchInput.addEventListener('input',()=>{searchQ=searchInput.value;render();});
+document.addEventListener('keydown',e=>{if(e.key==='/'&&!e.ctrlKey&&!e.metaKey){searchInput.focus();e.preventDefault()}});
+
+// ═══ COUNT-UP ═══
+function animateCounter(el,target){
+  const d=1200,s=performance.now();
+  function update(now){
+    const p=Math.min((now-s)/d,1),cur=Math.floor((1-Math.pow(1-p,3))*target);
+    el.textContent=cur;
+    if(p<1)requestAnimationFrame(update);
+  }
+  requestAnimationFrame(update);
+}
+const cuObs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){const t=parseFloat(e.target.dataset.target);animateCounter(e.target,t);cuObs.unobserve(e.target)}});
+},{threshold:0.3});
+document.querySelectorAll('.count-up').forEach(c=>cuObs.observe(c));
+
+// ═══ GO ═══
+buildFilters();
+render();
+</script>
+</body>
+</html>

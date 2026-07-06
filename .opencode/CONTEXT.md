@@ -1,24 +1,14 @@
-# Project Context — OpenCode Workspace
+# Project Context — Gaya Dashboard System
 
-**Last updated:** 19-Jun-2026
+**Last updated:** 06-Jul-2026
 **Updated by:** Gaya
 
 ## Domain
-General-purpose development workspace for R0n (Ronak). Contains multiple sub-projects:
-- `agent-system/` — Agent framework
-- `autodesk-bim/` — BIM automation with Autodesk
-- `Gaya-Agent/` — Gaya agent skill development (HyperFrames video, skills)
-- `god-simulator/` — Game/simulation project
-- `kiosk-chatbot/` — Kiosk chatbot app
-- `Ryze studio/` — Ryze brand studio work
-- `Visual_chat_bot/` — Visual chatbot development
-- Various Python scripts, PDF pipelines, HTML infographics
+Gaya dashboard system — agent methodology dashboard + interactive skill catalog. Cleaned, focused, Gaya-only.
 
 ## Tech Stack
-- **Runtime:** Node.js, Python 3.x
-- **Rendering:** Three.js, GSAP, HyperFrames (HTML-to-video)
-- **Local AI:** Ollama (qwen3:4b, phi4-mini, qwen2.5vl, qwen2.5-coder)
-- **GPU:** RTX 4060 (8 GB VRAM)
+- **Runtime:** None (static HTML)
+- **Rendering:** Vanilla HTML/CSS/JS
 - **OS:** Windows 11, PowerShell 5.1
 
 ## Active Agent System
@@ -29,9 +19,12 @@ General-purpose development workspace for R0n (Ronak). Contains multiple sub-pro
 | FREYA | qwen2.5vl:7b | 6.0 GB | Vision/Research |
 | TVASHTAR | qwen2.5-coder-fixed:7b | 4.7 GB | Coding/Architecture |
 
-## Active Projects History
-- **HyperFrames video rendering** — Completed 19-Jun-2026. 8-second GSAP timeline animation rendered at 30fps.
-- **MoE framework setup** — Completed 19-Jun-2026. Four-blade local agent formation established.
+## Repo Contents
+- `agent-methodology-dashboard.html` — Gaya Command Center dashboard
+- `skills-dashboard.html` — Interactive Gaya skill catalog (37 modules)
+- `.opencode/` — Agent handoff protocol, project context
+- `docs/gaya-skill.md` — Versioned Gaya skill
+- `memory/` — Lessons learned and milestones
 
 ## Important Paths
 - Global memory: `~/.config/opencode/memory/`
