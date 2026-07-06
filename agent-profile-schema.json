@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Agent Leveling Profile",
+  "description": "Shared progression save file for all agents using the LEVELING_SYSTEM.md framework",
+  "type": "object",
+  "required": ["agent", "progression", "streaks", "history"],
+  "properties": {
+    "agent": {
+      "type": "object",
+      "description": "Agent identity",
+      "required": ["name", "personality", "version"],
+      "properties": {
+        "name": { "type": "string", "description": "Agent display name (e.g. Gaya)" },
+        "personality": { 
+          "type": "string", 
+          "enum": ["tactical-commander", "mad-scientist", "wise-mentor", "game-director", "master-architect", "custom"],
+          "description": "Agent personality archetype"
+        },
+        "version": { "type": "string", "description": "Agent version (semver)" }
+      }
+    },
+    "user": {
+      "type": "object",
+      "description": "The human partner",
+      "properties": {
+        "name": { "type": "string" },
+        "team": { "type": "string" }
+      }
+    },
+    "progression": {
+      "type": "object",
+      "description": "XP and level tracking",
+      "required": ["level", "xp", "total_xp_earned", "total_xp_lost_penalty", "cumulative_xp_spent"],
+      "properties": {
+        "level": { "type": "integer", "minimum": 1, "description": "Current level" },
+        "xp": { "type": "integer", "minimum": 0, "description": "Current XP within current level" },
+        "total_xp_earned": { "type": "integer", "minimum": 0, "description": "Lifetime XP earned before penalties" },
+        "total_xp_lost_penalty": { "type": "integer", "minimum": 0, "description": "Total XP deducted by waste penalties" },
+        "cumulative_xp_spent": { "type": "integer", "minimum": 0, "description": "XP consumed by previous level-ups" },
+        "current_title": { 
+          "type": "string", 
+          "enum": ["", "Operator", "Strategist", "Vanguard", "Archon", "Force Multiplier"],
+          "description": "Current title, empty if below Lv.10"
+        },
+        "highest_title": { 
+          "type": "string",
+          "enum": ["", "Operator", "Strategist", "Vanguard", "Archon", "Force Multiplier"],
+          "description": "Highest title ever achieved"
+        }
+      }
+    },
+    "streaks": {
+      "type": "object",
+      "required": ["consecutive_full_successes", "consecutive_wastes"],
+      "properties": {
+        "consecutive_full_successes": { "type": "integer", "minimum": 0 },
+        "consecutive_wastes": { "type": "integer", "minimum": 0 },
+        "best_full_success_streak": { "type": "integer", "minimum": 0 },
+        "longest_waste_streak": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "achievements": {
+      "type": "object",
+      "properties": {
+        "unlocked": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of unlocked achievement IDs"
+        },
+        "skill_usage": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "count": { "type": "integer", "minimum": 0 },
+              "successes": { "type": "integer", "minimum": 0 }
+            },
+            "required": ["count", "successes"]
+          }
+        },
+        "combos": {
+          "type": "object",
+          "properties": {
+            "skills_chained": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          }
+        },
+        "pipelines_built": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "history": {
+      "type": "array",
+      "description": "Session-by-session log (last 90 days)",
+      "items": {
+        "type": "object",
+        "required": ["date", "tasks_completed", "full_successes", "partial_successes", "fails", "wastes", "xp_earned"],
+        "properties": {
+          "date": { "type": "string", "format": "date" },
+          "tasks_completed": { "type": "integer", "minimum": 0 },
+          "full_successes": { "type": "integer", "minimum": 0 },
+          "partial_successes": { "type": "integer", "minimum": 0 },
+          "fails": { "type": "integer", "minimum": 0 },
+          "wastes": { "type": "integer", "minimum": 0 },
+          "xp_earned": { "type": "integer", "minimum": 0 },
+          "xp_lost": { "type": "integer", "minimum": 0 },
+          "milestones": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "settings": {
+      "type": "object",
+      "properties": {
+        "auto_track_xp": { "type": "boolean", "default": true },
+        "notify_on_level_up": { "type": "boolean", "default": true },
+        "notify_on_demotion_warning": { "type": "boolean", "default": true }
+      }
+    }
+  }
+}

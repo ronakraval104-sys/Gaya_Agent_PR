@@ -1,0 +1,63 @@
+﻿name: 3ds-max-bridge
+kind: skill
+description: "MaxLink REST API bridge + threading architecture for pymxs in 3ds Max 2024. Covers HTTP server inside 3ds Max Python, queue-based pymxs dispatch with MAXScript main-thread timer, and ENU reset/EditorMode fix for material editor crashes."
+preconditions:
+  - check: "file_exists('autodesk-bim/MaxLink')"
+    description: MaxLink project directory exists with server, client, and examples.
+    required: false
+  - check: "env_running('3dsmax.exe')"
+    description: 3ds Max 2024 is running with Python 3.10 and pymxs available.
+    required: false
+effects:
+  - controls_3ds_max_programmatically
+  - bypasses_material_editor_crash
+  - enables_ai_to_max_scene_generation
+domains:
+  - 3ds-max
+  - pymxs
+  - maxscript
+  - archviz
+  - automation
+cost: high
+latency: medium
+risk_level: high
+side_effects:
+  - modifies_3ds_max_enu_preferences
+  - runs_http_server_inside_3ds_max
+  - creates_startup_scripts
+idempotent: false
+success_signal: MaxLink server responds with status ok and pymxs operations execute without threading errors.
+failure_signals:
+  - maxscript_call_only_allowed_on_main_thread
+  - port_9876_already_in_use
+  - pymxs_not_available
+compatibility:
+  requires:
+    - 3ds-max-2024
+  composes_with:
+    - archviz-pipeline
+  enables:
+    - ai-driven-scene-generation
+    - automated-material-assignment
+    - programmatic-3ds-max-control
+observability:
+  logs:
+    - maxlink_server_started
+    - queue_drained
+    - pymxs_command_executed
+  metrics:
+    - queue_depth
+    - command_latency_ms
+    - main_thread_dispatch_rate
+metadata:
+  version: 1.0.0
+  tags:
+    - 3ds-max
+    - maxlink
+    - pymxs
+    - bridge
+    - archviz
+  examples:
+    - Create a box in 3ds Max from an AI agent via HTTP.
+    - Fix material editor crash by resetting ENU and setting EditorMode=0.
+    - Set up MAXScript timer on main thread for pymxs dispatch.

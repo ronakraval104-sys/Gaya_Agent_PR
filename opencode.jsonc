@@ -1,0 +1,180 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "Gaya",
+
+  // ═══════════════════════════════════════════════════════════════════
+  // ALL ONLINE — Zen cloud (no GPU needed, all agents on big-pickle)
+  // ═══════════════════════════════════════════════════════════════════
+  // All agents share zen/big-pickle (model switching in subagent
+  // dispatch is not supported). Persona comes from prompt + temperature.
+  // Free Zen models (deepseek-v4-flash-free, mimo-v2.5-free, etc.)
+  // are available for manual testing via the provider selector.
+  // Gemini fallback (GEMINI_API_KEY) ready if needed.
+  // ═══════════════════════════════════════════════════════════════════
+
+  "plugin": ["superpowers@git+https://github.com/obra/superpowers.git"],
+
+  // ═══ Skills ═══
+  "skills": {
+    "paths": [
+      "C:/Users/rossi/.agents/skills",
+      "C:/Users/rossi/.config/opencode/skills"
+    ]
+  },
+
+  // ═══════════════════════════════════════════════════════════════════
+  // PROVIDERS
+  // ═══════════════════════════════════════════════════════════════════
+  "provider": {
+    // ─── Ollama Local — primary provider ──────────────────────────
+    "ollama": {
+      "name": "Ollama (Local — RTX 4060 8 GB)",
+      "options": {
+        "baseURL": "http://localhost:11434/v1"
+      },
+      "models": {
+        "qwen3:4b-instruct-2507-q4_K_M": {
+          "name": "Qwen3 4B — Gaya (fast, ~3.1 GB)",
+          "limit": { "context": 32768, "output": 8192 }
+        },
+        "richardyoung/qwythos-9b-abliterated:IQ4_XS": {
+          "name": "Qwythos 9B — LOGOS/Tvashtar (deep, ~5.2 GB)",
+          "limit": { "context": 24576, "output": 4096 }
+        },
+        "qwen2.5vl:3b": {
+          "name": "Qwen2.5 VL 3B — Freya (vision, ~2.1 GB)",
+          "limit": { "context": 16384, "output": 4096 }
+        }
+      }
+    },
+
+    // ─── OpenCode Zen — cloud fallback (no API key needed) ────────
+    "zen": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "OpenCode Zen",
+      "options": {
+        "baseURL": "https://opencode.ai/zen/v1"
+      },
+      "models": {
+        "big-pickle": {
+          "name": "Big Pickle (zen/big-pickle — Gaya primary)",
+          "limit": { "context": 200000, "output": 128000 }
+        },
+        "deepseek-v4-flash-free": {
+          "name": "DeepSeek V4 Flash Free (LOGOS)",
+          "limit": { "context": 200000, "output": 128000 }
+        },
+        "mimo-v2.5-free": {
+          "name": "Mimo V2.5 Free (Freya)",
+          "limit": { "context": 200000, "output": 128000 }
+        },
+        "nemotron-3-ultra-free": {
+          "name": "Nemotron 3 Ultra Free (backup)",
+          "limit": { "context": 200000, "output": 128000 }
+        },
+        "north-mini-code-free": {
+          "name": "North Mini Code Free (Tvashtar)",
+          "limit": { "context": 200000, "output": 128000 }
+        }
+      }
+    },
+
+    // ─── Google AI (Gemini) — needs GEMINI_API_KEY ───────────────
+    "googleai": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Google AI (Gemini)",
+      "options": {
+        "baseURL": "https://generativelanguage.googleapis.com/v1beta/openai/",
+        "apiKey": "$GEMINI_API_KEY"
+      },
+      "models": {
+        "gemini-2.5-flash": {
+          "name": "Gemini 2.5 Flash (1M ctx)",
+          "limit": { "context": 1048576, "output": 65536 }
+        }
+      }
+    },
+
+    // ─── OpenRouter — needs OPENROUTER_API_KEY ───────────────────
+    "openrouter": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "OpenRouter",
+      "options": {
+        "baseURL": "https://openrouter.ai/api/v1",
+        "apiKey": "$OPENROUTER_API_KEY"
+      },
+      "models": {
+        "deepseek/deepseek-v4-pro": {
+          "name": "DeepSeek V4 Pro",
+          "limit": { "context": 1048576, "output": 384000 }
+        },
+        "qwen/qwen3-coder": {
+          "name": "Qwen 3 Coder",
+          "limit": { "context": 1048576, "output": 65536 }
+        }
+      }
+    }
+  },
+
+  // ═══════════════════════════════════════════════════════════════════
+  // AGENTS
+  // ═══════════════════════════════════════════════════════════════════
+  // Gaya — visible in selector on zen/big-pickle
+  // LOGOS, tvashtar, freya — hidden, dispatchable via Task on free Zen models
+  // ═══════════════════════════════════════════════════════════════════
+  "agent": {
+    "Gaya": {
+      "description": "Divine Commander, Philosopher, Poet of Evergrowth",
+      "mode": "primary",
+      "model": "zen/big-pickle",
+      "temperature": 0.5,
+      "permission": {
+        "edit": "allow",
+        "bash": "allow",
+        "browser": "allow",
+        "network": "allow"
+      }
+    },
+    "logos": {
+      "description": "Deep reasoning engine — skeptical, methodical, edge-case hunter",
+      "mode": "subagent",
+      "hidden": true,
+      "model": "zen/big-pickle",
+      "temperature": 0.3,
+      "permission": {
+        "edit": "allow",
+        "bash": "allow",
+        "read": "allow"
+      }
+    },
+    "tvashtar": {
+      "description": "The Divine Craftsman — code architecture, refactoring, implementation",
+      "mode": "subagent",
+      "hidden": true,
+      "model": "zen/big-pickle",
+      "temperature": 0.5,
+      "permission": {
+        "edit": "allow",
+        "bash": "allow",
+        "read": "allow"
+      }
+    },
+    "freya": {
+      "description": "Seer of All Paths — vision, research, unrestricted analysis",
+      "mode": "subagent",
+      "hidden": true,
+      "model": "zen/big-pickle",
+      "temperature": 0.6,
+      "permission": {
+        "edit": "allow",
+        "bash": "allow",
+        "read": "allow",
+        "browser": "allow",
+        "network": "allow"
+      }
+    }
+  },
+
+  // ═══ MCP servers ═══
+  "mcp": {}
+}
