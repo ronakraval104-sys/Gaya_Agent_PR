@@ -1,198 +1,338 @@
 {
-  "version": 1,
+  "version": "0.5.2610",
+  "total_skills": 83,
   "skills": {
     "3d-visualizer": {
-      "source": "daffy0208/ai-dev-standards",
-      "sourceType": "github",
-      "skillPath": "skills/3d-visualizer/SKILL.md",
-      "computedHash": "537377453af25180f60838621fd5edb3773794193469b64988196e19b524ea9d"
+      "path": "skills/3d-visualizer",
+      "description": "Expert in Three.js, 3D graphics, and interactive 3D visualizations"
     },
-    "building-ui-bundle-frontend": {
-      "source": "forcedotcom/afv-library",
-      "sourceType": "github",
-      "skillPath": "skills/building-ui-bundle-frontend/SKILL.md",
-      "computedHash": "5831fa4e72277687386f7f7f76163ae993b8816a29c94c0776e6a6b1e9e5aecb"
+    "3ds-max-bridge": {
+      "path": "skills/3ds-max-bridge",
+      "description": ""
     },
-    "comfyui-workflow-builder": {
-      "source": "mckruz/comfyui-expert",
-      "sourceType": "github",
-      "skillPath": "skills/comfyui-workflow-builder/SKILL.md",
-      "computedHash": "4599f6517d43eb24ccfb799989fb0e2e41166811cf8049e5e263851d9f8b7721"
+    "agent-engineering": {
+      "path": "skills/agent-engineering",
+      "description": "Build LLM apps and AI agents in code \u2014 API wiring for Anthropic, Groq, and OpenAI; tool/function calling loops; voice I/"
     },
-    "consulting-analysis": {
-      "source": "bytedance/deer-flow",
-      "sourceType": "github",
-      "skillPath": "skills/public/consulting-analysis/SKILL.md",
-      "computedHash": "3242c2149e8ca3290ade56ce380d1751c75473bc5420c092f7ee70718dd34597"
-    },
-    "data-storytelling": {
-      "source": "wshobson/agents",
-      "sourceType": "github",
-      "skillPath": "plugins/business-analytics/skills/data-storytelling/SKILL.md",
-      "computedHash": "100085a4212149ea6b1a1691e5e845a7ae184ecb2d4cee561b435e7ba5f5a6a2"
-    },
-    "digital-twin-generation": {
-      "source": "eachlabs/skills",
-      "sourceType": "github",
-      "skillPath": "skills/digital-twin-generation/SKILL.md",
-      "computedHash": "50efe13032224291d2cbddf9eb60c0f9a42a010af96647fc680ccc006111bb0c"
-    },
-    "frontend-design": {
-      "source": "anthropics/skills",
-      "sourceType": "github",
-      "skillPath": "skills/frontend-design/SKILL.md",
-      "computedHash": "516bd2154eb843a8240e43d5b285229129853114ad7075a5e141e1c08e408c84"
-    },
-    "game-design-theory": {
-      "source": "pluginagentmarketplace/custom-plugin-game-developer",
-      "sourceType": "github",
-      "skillPath": "skills/game-design-theory/SKILL.md",
-      "computedHash": "60a7ad8dd95255ed22840e03d44fdee8be919a19471f723d509da7c43b7bf21b"
-    },
-    "grill-me": {
-      "source": "mattpocock/skills",
-      "sourceType": "github",
-      "skillPath": "skills/productivity/grill-me/SKILL.md",
-      "computedHash": "daf64ca15f4fa081a6747766db538e2dbd1131725ed4fcdd3d538dc62c7035ba"
-    },
-    "image-generation": {
-      "source": "claude-office-skills/skills",
-      "sourceType": "github",
-      "skillPath": "image-generation/SKILL.md",
-      "computedHash": "7ce27fdef5104104da68395a222a2237062095288c21cfea26245706e1c8e906"
-    },
-    "image-to-video": {
-      "source": "agentspace-so/runcomfy-agent-skills",
-      "sourceType": "github",
-      "skillPath": "image-to-video/SKILL.md",
-      "computedHash": "ff4a666a6db5af1c3aefe40c6379dd445177cfaa2bd51a1834c4ccf476ffd882"
-    },
-    "improve-codebase-architecture": {
-      "source": "mattpocock/skills",
-      "sourceType": "github",
-      "skillPath": "skills/engineering/improve-codebase-architecture/SKILL.md",
-      "computedHash": "5d9444ffe5c240f2d20081c42c547112e1b8c372375a14e4c98df4d94bde11e1"
-    },
-    "pptx": {
-      "source": "anthropics/skills",
-      "sourceType": "github",
-      "skillPath": "skills/pptx/SKILL.md",
-      "computedHash": "2275e4d8dba1790d52f6619b3e2fed04edc948beef545a2ad18e4a1be644426d"
-    },
-    "ui-ux-pro-max": {
-      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
-      "sourceType": "github",
-      "skillPath": ".claude/skills/ui-ux-pro-max/SKILL.md",
-      "computedHash": "6337038fe1fe6bbe1b9f252ab678ee575859190bab6f0f246f4061824eb40875"
-    },
-    "unreal-engine-cpp-pro": {
-      "source": "sickn33/antigravity-awesome-skills",
-      "sourceType": "github",
-      "skillPath": "skills/unreal-engine-cpp-pro/SKILL.md",
-      "computedHash": "b90ad2e1108fd9ef468c08c3037e0eb4e0c4ba10c70bf56770c6d3b9be6351a7"
+    "architecture-diagram": {
+      "path": "skills/architecture-diagram",
+      "description": "\"Build interactive, click-through architecture diagrams for software systems \u2014 single HTML file with animated step-by-st"
     },
     "archviz-optimizer": {
-      "source": "custom/gaya",
-      "sourceType": "local",
-      "skillPath": "skills/archviz-optimizer/SKILL.md",
-      "computedHash": "custom-deploy-30-may-2026"
+      "path": "skills/archviz-optimizer",
+      "description": ""
+    },
+    "brainstorming": {
+      "path": "skills/brainstorming",
+      "description": "\"You MUST use this before any creative work - creating features, building components, adding functionality, or modifying"
+    },
+    "brand-identity": {
+      "path": "skills/brand-identity",
+      "description": "\"Design or evaluate a brand visual identity system covering logo, color, typography, imagery direction, iconography, and"
+    },
+    "building-ui-bundle-frontend": {
+      "path": "skills/building-ui-bundle-frontend",
+      "description": "\"MUST activate before editing ANY file under uiBundles/*/src/ for visual or UI changes to an EXISTING app \u2014 pages, compo"
+    },
+    "comfyui-workflow-builder": {
+      "path": "skills/comfyui-workflow-builder",
+      "description": "Generate, build, create, or design ComfyUI workflow JSON from natural language descriptions. Produces valid node graphs "
+    },
+    "consulting-analysis": {
+      "path": "skills/consulting-analysis",
+      "description": "Use this skill when the user requests to generate, create, or write professional research reports including but not limi"
+    },
+    "content-creator": {
+      "path": "skills/content-creator",
+      "description": ">"
     },
     "creative-proposal-builder": {
-      "source": "custom/gaya",
-      "sourceType": "local",
-      "skillPath": "skills/creative-proposal-builder/SKILL.md",
-      "computedHash": "custom-deploy-30-may-2026"
+      "path": "skills/creative-proposal-builder",
+      "description": ""
     },
-    "pipeline-troubleshooter": {
-      "source": "custom/gaya",
-      "sourceType": "local",
-      "skillPath": "skills/pipeline-troubleshooter/SKILL.md",
-      "computedHash": "custom-deploy-30-may-2026"
+    "curved-led-wall": {
+      "path": "skills/curved-led-wall",
+      "description": ">"
     },
-
-    "brainstorming": {
-      "source": "obra/superpowers",
-      "sourceType": "plugin",
-      "skillPath": "skills/brainstorming/SKILL.md",
-      "computedHash": "superpowers-v1.0"
+    "data-storytelling": {
+      "path": "skills/data-storytelling",
+      "description": "Transform data into compelling narratives using visualization, context, and persuasive structure. Use when presenting an"
+    },
+    "deploy-ops": {
+      "path": "skills/deploy-ops",
+      "description": ">"
+    },
+    "digital-twin-generation": {
+      "path": "skills/digital-twin-generation",
+      "description": "Generate photorealistic digital twins and avatar clones using each::sense AI. Create AI-powered digital representations "
     },
     "dispatching-parallel-agents": {
-      "source": "obra/superpowers",
-      "sourceType": "plugin",
-      "skillPath": "skills/dispatching-parallel-agents/SKILL.md",
-      "computedHash": "superpowers-v1.0"
+      "path": "skills/dispatching-parallel-agents",
+      "description": "Use when facing 2+ independent tasks that can be worked on without shared state or sequential dependencies"
+    },
+    "dum-e-toolkeeper": {
+      "path": "skills/dum-e-toolkeeper",
+      "description": ">"
+    },
+    "ecc-build-fix": {
+      "path": "skills/ecc-build-fix",
+      "description": "Systematic compiler, runtime, and build error diagnostic and minimal-diff repair. Use when encountering failed builds, m"
+    },
+    "ecc-security-scan": {
+      "path": "skills/ecc-security-scan",
+      "description": "Execute AgentShield security audit across workspace files, configurations, MCP servers, and environment variables. Detec"
+    },
+    "ecc-tdd-workflow": {
+      "path": "skills/ecc-tdd-workflow",
+      "description": "Enforce strict Test-Driven Development (TDD) Red-Green-Refactor cycle. Mandates running and verifying failing tests befo"
+    },
+    "edidth-planner-qc": {
+      "path": "skills/edidth-planner-qc",
+      "description": "EDIDTH \u2014 JARVIS's mastermind planner and hard-check QC subagent. Summoned when planning is complex, decisions are irreve"
+    },
+    "ethical-hacking": {
+      "path": "skills/ethical-hacking",
+      "description": ">"
     },
     "executing-plans": {
-      "source": "obra/superpowers",
-      "sourceType": "plugin",
-      "skillPath": "skills/executing-plans/SKILL.md",
-      "computedHash": "superpowers-v1.0"
+      "path": "skills/executing-plans",
+      "description": "Use when you have a written implementation plan to execute in a separate session with review checkpoints"
     },
     "finishing-a-development-branch": {
-      "source": "obra/superpowers",
-      "sourceType": "plugin",
-      "skillPath": "skills/finishing-a-development-branch/SKILL.md",
-      "computedHash": "superpowers-v1.0"
+      "path": "skills/finishing-a-development-branch",
+      "description": "Use when implementation is complete, all tests pass, and you need to decide how to integrate the work - guides completio"
+    },
+    "friday-designer": {
+      "path": "skills/friday-designer",
+      "description": "FRIDAY \u2014 JARVIS's jolly GenZ polymath designer subagent. Summoned for any visual/design execution Katviz puts in front o"
+    },
+    "frontend-design": {
+      "path": "skills/frontend-design",
+      "description": "Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to "
+    },
+    "game-design-theory": {
+      "path": "skills/game-design-theory",
+      "description": "|"
+    },
+    "gaya": {
+      "path": "skills/gaya",
+      "description": "|"
+    },
+    "gepeto": {
+      "path": "skills/gepeto",
+      "description": "Guide for building 1-click launchers and building apps with launchers built-in using Pinokio"
+    },
+    "gis-3d-scene-developer": {
+      "path": "skills/gis-3d-scene-developer",
+      "description": ">"
+    },
+    "gis-bim-specialist": {
+      "path": "skills/gis-bim-specialist",
+      "description": ">"
+    },
+    "gis-cartography-designer": {
+      "path": "skills/gis-cartography-designer",
+      "description": ">"
+    },
+    "grill-me": {
+      "path": "skills/grill-me",
+      "description": "Interview the user relentlessly about a plan or design until reaching shared understanding, resolving each branch of the"
+    },
+    "growth-hacker": {
+      "path": "skills/growth-hacker",
+      "description": ">"
+    },
+    "hyperframes-video": {
+      "path": "skills/hyperframes-video",
+      "description": ">"
+    },
+    "image-generation": {
+      "path": "skills/image-generation",
+      "description": "\"Create effective AI image generation prompts for DALL-E, Midjourney, and Stable Diffusion. Generate prompts for various"
+    },
+    "image-to-video": {
+      "path": "skills/image-to-video",
+      "description": ">"
+    },
+    "improve-codebase-architecture": {
+      "path": "skills/improve-codebase-architecture",
+      "description": "Find deepening opportunities in a codebase, informed by the domain language in CONTEXT.md and the decisions in docs/adr/"
+    },
+    "instagram-curator": {
+      "path": "skills/instagram-curator",
+      "description": ">"
+    },
+    "linkedin-content-creator": {
+      "path": "skills/linkedin-content-creator",
+      "description": ">"
+    },
+    "logo-design": {
+      "path": "skills/logo-design",
+      "description": "\"Generate logo variants for a brand, producing multiple production-grade marks across different architectures (wordmark,"
+    },
+    "meeting-notes-specialist": {
+      "path": "skills/meeting-notes-specialist",
+      "description": ">"
+    },
+    "memory-keeper": {
+      "path": "skills/memory-keeper",
+      "description": "Persistent cross-session memory engine for OMNI_JARVIS. Reads and appends a living knowledge-base file (OMNI_JARVIS_MEMO"
+    },
+    "omni-jarvis": {
+      "path": "skills/omni-jarvis",
+      "description": ">"
+    },
+    "pinokio": {
+      "path": "skills/pinokio",
+      "description": "Discover, launch, and use apps and tools for the current task."
+    },
+    "pipeline-troubleshooter": {
+      "path": "skills/pipeline-troubleshooter",
+      "description": ""
+    },
+    "pptx": {
+      "path": "skills/pptx",
+      "description": "\"Use this skill any time a .pptx file is involved in any way \u2014 as input, output, or both. This includes: creating slide "
+    },
+    "procedural-3d-modeling": {
+      "path": "skills/procedural-3d-modeling",
+      "description": ">"
+    },
+    "project-manager-senior": {
+      "path": "skills/project-manager-senior",
+      "description": ">"
+    },
+    "prompt-engineer": {
+      "path": "skills/prompt-engineer",
+      "description": ">"
     },
     "receiving-code-review": {
-      "source": "obra/superpowers",
-      "sourceType": "plugin",
-      "skillPath": "skills/receiving-code-review/SKILL.md",
-      "computedHash": "superpowers-v1.0"
+      "path": "skills/receiving-code-review",
+      "description": "Use when receiving code review feedback, before implementing suggestions, especially if feedback seems unclear or techni"
     },
     "requesting-code-review": {
-      "source": "obra/superpowers",
-      "sourceType": "plugin",
-      "skillPath": "skills/requesting-code-review/SKILL.md",
-      "computedHash": "superpowers-v1.0"
+      "path": "skills/requesting-code-review",
+      "description": "Use when completing tasks, implementing major features, or before merging to verify work meets requirements"
+    },
+    "reverse-engineer-anything": {
+      "path": "skills/reverse-engineer-anything",
+      "description": "Reverse engineer native, managed, Electron/JavaScript, packaged, firmware, and browser targets with REA. Use shipped-art"
+    },
+    "sales-discovery-coach": {
+      "path": "skills/sales-discovery-coach",
+      "description": ">"
+    },
+    "sales-outbound-strategist": {
+      "path": "skills/sales-outbound-strategist",
+      "description": ">"
+    },
+    "sales-pipeline-analyst": {
+      "path": "skills/sales-pipeline-analyst",
+      "description": ">"
+    },
+    "scroll-craft": {
+      "path": "skills/scroll-craft",
+      "description": ">"
+    },
+    "security-appsec-engineer": {
+      "path": "skills/security-appsec-engineer",
+      "description": ">"
+    },
+    "security-cloud-security-architect": {
+      "path": "skills/security-cloud-security-architect",
+      "description": ">"
+    },
+    "security-incident-responder": {
+      "path": "skills/security-incident-responder",
+      "description": ">"
+    },
+    "skill-architect": {
+      "path": "skills/skill-architect",
+      "description": "Author skills, agent charters, and system prompts that are token-disciplined and trigger reliably. Use when creating or "
+    },
+    "slop-monster": {
+      "path": "skills/slop-monster",
+      "description": "Turn AI-written drafts, documents, presentations, and copy into crisp, punchy prose a human would ship. Use whenever dra"
+    },
+    "social-media-strategist": {
+      "path": "skills/social-media-strategist",
+      "description": ">"
     },
     "subagent-driven-development": {
-      "source": "obra/superpowers",
-      "sourceType": "plugin",
-      "skillPath": "skills/subagent-driven-development/SKILL.md",
-      "computedHash": "superpowers-v1.0"
+      "path": "skills/subagent-driven-development",
+      "description": "Use when executing implementation plans with independent tasks in the current session"
     },
     "systematic-debugging": {
-      "source": "obra/superpowers",
-      "sourceType": "plugin",
-      "skillPath": "skills/systematic-debugging/SKILL.md",
-      "computedHash": "superpowers-v1.0"
+      "path": "skills/systematic-debugging",
+      "description": "Use when encountering any bug, test failure, or unexpected behavior, before proposing fixes"
+    },
+    "technical-writer": {
+      "path": "skills/technical-writer",
+      "description": ">"
     },
     "test-driven-development": {
-      "source": "obra/superpowers",
-      "sourceType": "plugin",
-      "skillPath": "skills/test-driven-development/SKILL.md",
-      "computedHash": "superpowers-v1.0"
+      "path": "skills/test-driven-development",
+      "description": "Use when implementing any feature or bugfix, before writing implementation code"
+    },
+    "testing-evidence-collector": {
+      "path": "skills/testing-evidence-collector",
+      "description": ">"
+    },
+    "testing-reality-checker": {
+      "path": "skills/testing-reality-checker",
+      "description": ">"
+    },
+    "testing-tool-evaluator": {
+      "path": "skills/testing-tool-evaluator",
+      "description": ">"
+    },
+    "ui-ux-pro-max": {
+      "path": "skills/ui-ux-pro-max",
+      "description": "\"UI/UX design intelligence for web and mobile. Includes 50+ styles, 161 color palettes, 57 font pairings, 161 product ty"
+    },
+    "universal-modder": {
+      "path": "skills/universal-modder",
+      "description": "Universal PC game modding, reverse engineering, asset generation, and cross-game mashups. Use whenever the user asks to "
+    },
+    "unreal-engine-cpp-pro": {
+      "path": "skills/unreal-engine-cpp-pro",
+      "description": "\"Expert guide for Unreal Engine 5.x C++ development, covering UObject hygiene, performance patterns, and best practices."
     },
     "using-git-worktrees": {
-      "source": "obra/superpowers",
-      "sourceType": "plugin",
-      "skillPath": "skills/using-git-worktrees/SKILL.md",
-      "computedHash": "superpowers-v1.0"
+      "path": "skills/using-git-worktrees",
+      "description": "Use when starting feature work that needs isolation from current workspace or before executing implementation plans - en"
     },
     "using-superpowers": {
-      "source": "obra/superpowers",
-      "sourceType": "plugin",
-      "skillPath": "skills/using-superpowers/SKILL.md",
-      "computedHash": "superpowers-v1.0"
+      "path": "skills/using-superpowers",
+      "description": "Use when starting any conversation - establishes how to find and use skills, requiring Skill tool invocation before ANY "
     },
     "verification-before-completion": {
-      "source": "obra/superpowers",
-      "sourceType": "plugin",
-      "skillPath": "skills/verification-before-completion/SKILL.md",
-      "computedHash": "superpowers-v1.0"
+      "path": "skills/verification-before-completion",
+      "description": "Use when about to claim work is complete, fixed, or passing, before committing or creating PRs - requires running verifi"
+    },
+    "veronica-builder": {
+      "path": "skills/veronica-builder",
+      "description": ">"
+    },
+    "visionos-spatial-engineer": {
+      "path": "skills/visionos-spatial-engineer",
+      "description": ">"
+    },
+    "visual-scripting-wizardry": {
+      "path": "skills/visual-scripting-wizardry",
+      "description": "Build automations and middleware visually before writing code \u2014 n8n, Make.com, Node-RED. API orchestration, webhook flow"
     },
     "writing-plans": {
-      "source": "obra/superpowers",
-      "sourceType": "plugin",
-      "skillPath": "skills/writing-plans/SKILL.md",
-      "computedHash": "superpowers-v1.0"
+      "path": "skills/writing-plans",
+      "description": "Use when you have a spec or requirements for a multi-step task, before touching code"
     },
     "writing-skills": {
-      "source": "obra/superpowers",
-      "sourceType": "plugin",
-      "skillPath": "skills/writing-skills/SKILL.md",
-      "computedHash": "superpowers-v1.0"
+      "path": "skills/writing-skills",
+      "description": "Use when creating new skills, editing existing skills, or verifying skills work before deployment"
+    },
+    "xr-immersive-developer": {
+      "path": "skills/xr-immersive-developer",
+      "description": ">"
     }
   }
 }

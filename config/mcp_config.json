@@ -1,0 +1,38 @@
+{
+  "mcpServers": {
+    "chrome-devtools-mcp": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "chrome-devtools-mcp@latest"
+      ]
+    },
+    "parallel-search": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://search.parallel.ai/mcp"
+      ]
+    },
+    "canva": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://mcp.canva.com/mcp"
+      ]
+    },
+    "rea": {
+      "command": "cmd.exe",
+      "args": [
+        "/d",
+        "/c",
+        "npx",
+        "-y",
+        "rea-agents@6.5.0",
+        "mcp"
+      ]
+    }
+  }
+}

@@ -1,168 +1,152 @@
 # ⚔ Gaya — Divine Commander, Philosopher, Poet of Evergrowth
+### Gaya Update 0.5.2610 · The Multi-Agent Council Architecture
 
-[![Last Commit](https://img.shields.io/github/last-commit/ronakraval104-sys/Gaya_Agent_PR)](https://github.com/ronakraval104-sys/Gaya_Agent_PR)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Skills](https://img.shields.io/badge/Skills-38%20modules-a78bfa)](skills-dashboard.html)
-[![Agents](https://img.shields.io/badge/Agents-5-34d399)](agents/)
-[![Install](https://img.shields.io/badge/Install-script-38bdf8)](scripts/install.ps1)
+[![Skills](https://img.shields.io/badge/Skills-83%20modules-a78bfa)](skills-dashboard.html)
+[![Council Seats](https://img.shields.io/badge/Council%20Seats-4%20Specialists-38bdf8)](agent-methodology-dashboard.html)
+[![Multi--Client](https://img.shields.io/badge/Platforms-Antigravity%20%7C%20OpenCode%20%7C%20Claude%20Code%20%7C%20Codex-22c55e)](docs/MULTI_CLIENT_SETUP.md)
 
-> Named after **Bodh Gaya** — the seat of awakening. A transferable AI agent framework with 38 skill modules, 5 agent profiles, leveling system, and interactive dashboards.
+> Named after **Bodh Gaya** — the seat of awakening. A battle-tested multi-agent operating system featuring the **Subagent Council**, **83 specialized skills**, the **Council of Gaya** Next.js dashboard, and the **Mini Gaya** reactive desktop companion.
 
 ---
 
-## Quick Start
+## 🏛️ What is Gaya?
 
+Gaya unites four ancient pragmatic doctrines with modern agentic execution:
+```
+          ┌─ COMMANDER ─┐
+          │              │
+    PHILOSOPHER      POET
+          │              │
+          └─ EVERGROWTH ─┘
+```
+1. **The Bhagavad Gita**: Duty, discipline, and action without emotional attachment to outcomes (*"Do the work. Don't chase the win."*).
+2. **The Art of War**: Positioning and reconnaissance first. Win before fighting.
+3. **The Prince**: Power, pragmatism, avoiding brute force, shipping clean code.
+4. **Chanakya Niti**: Ground truth, learning from previous failures, building reusable middleware.
+
+---
+
+## 🛡️ The Subagent Council & No-Ventriloquism Protocol
+
+Gaya deploys specialized agents with distinct mandates. No agent oversteps its role:
+
+```
+                  ┌───────────────┐
+                  │ ⚔ GAYA (Lead) │
+                  └───────┬───────┘
+          ┌───────────────┼───────────────┐
+          ▼               ▼               ▼
+   [🛡️ LOGOS]         [🔨 BOB]        [🎨 FREYA]
+    Mind / QC        Hands / Build   Heart / Design
+          ▲               │               │
+          │               ▼               │
+          └─────── [🦾 TVASHTAR] ────────┘
+                   Craftsman / REA
+```
+
+| Agent | Council Seat | Designated Mandate | Protocol Block |
+|---|---|---|---|
+| **🛡️ LOGOS** | **Mind** | Mastermind Planner & Hard-Check QC Gate. **Read-only auditor**. No code or mutation ships without an explicit PASS verdict. | `[🛡️ LOGOS] VERDICT: PASS scope=<path>` |
+| **🔨 Bob** | **Hands** | Precision Builder & Execution Engine. Delivers atomic commits, minimal diffs, and honest command receipts. | `[🔨 Bob] Shipped: ... Receipts: ...` |
+| **🎨 Freya** | **Heart** | Polymath Designer & Seer of the Unfiltered. High-taste UI/UX, brand identity, vector assets, 3D mockups, and uncensored research. | `[🎨 Freya] Design: ...` |
+| **🦾 Tvashtar** | **Craftsman** | Systems Architect, Deep Reverse Engineering Engine & Toolkeeper. Sole owner of **REA** (`reverse-engineer-anything`) and **Universal Modder**. Binary disassembly, ASAR extraction, protocol recovery. | `[🦾 Tvashtar] REA Execution: ... Specs: ...` |
+
+---
+
+## 🪜 Ponytail's Ladder — The Decision Engine
+> *"The best code is the code never written."*
+
+Before writing any code, climb the 7-rung ladder from top to bottom:
+1. **Does this need to exist at all?** $\rightarrow$ Skip it (YAGNI).
+2. **Already in this codebase?** $\rightarrow$ Reuse it.
+3. **Standard library does it?** $\rightarrow$ Use stdlib.
+4. **Native OS/platform covers it?** $\rightarrow$ Use native platform.
+5. **Already-installed dependency solves it?** $\rightarrow$ Use it.
+6. **Can it be one line?** $\rightarrow$ One line.
+7. **Only then** $\rightarrow$ Write the minimum working code that works.
+
+---
+
+## 🌐 Multi-Platform Support Matrix
+
+Gaya runs natively across four major agent ecosystems:
+
+| Platform | Primary Config | Skills Directory | Instructions |
+|---|---|---|---|
+| **Google Antigravity (AGY)** | `config/AGENTS.md` | `~/.gemini/config/skills/` | [Antigravity Guide](docs/MULTI_CLIENT_SETUP.md#1-google-antigravity-agy) |
+| **OpenCode** | `config/opencode.jsonc` | `~/.config/opencode/skills/` | [OpenCode Guide](docs/MULTI_CLIENT_SETUP.md#2-opencode) |
+| **Claude Code** | `CLAUDE.md` | Built-in / Shared | [Claude Code Guide](docs/MULTI_CLIENT_SETUP.md#3-claude-code) |
+| **OpenAI Codex / Copilot** | `CODEX.md` | Built-in / Shared | [Codex Guide](docs/MULTI_CLIENT_SETUP.md#4-openai-codex--github-copilot-cli) |
+
+### Universal Installer:
 ```powershell
-git clone https://github.com/ronakraval104-sys/Gaya_Agent_PR.git
-cd Gaya_Agent_PR
+# Run the universal installer
 .\scripts\install.ps1
 ```
 
-The installer will guide you through identity setup, agent naming, Ollama model pulls, MCP server config, and generates your `opencode.jsonc`.
-
-**Quick open (no install):** 
-- [📚 Skill Catalog](https://htmlpreview.github.io/?https://github.com/ronakraval104-sys/Gaya_Agent_PR/blob/master/skills-dashboard.html) — 38 skill cards with search & filters
-- [⚔ Agent Dashboard](https://htmlpreview.github.io/?https://github.com/ronakraval104-sys/Gaya_Agent_PR/blob/master/agent-methodology-dashboard.html) — 5 agent cards with stats & methodology
-
 ---
 
-## Agents
+## 🏛️ Council of Gaya — Next.js Dashboard
 
-| Agent | Role | File |
-|-------|------|------|
-| **Gaya** | Divine Commander — orchestrator, philosopher, poet | [`agents/Gaya.persona.md`](agents/Gaya.persona.md) |
-| **Bob** | Primary subagent — generalist executor | [`agent/bob.md`](agent/bob.md) |
-| **Freya** | Research/exploration subagent | [`agent/freya.md`](agent/freya.md) |
-| **LOGOS** | Logic & reasoning subagent | via [`opencode.jsonc`](opencode.jsonc) |
-| **Tvashtar** | Implementation & architecture subagent | via [`opencode.jsonc`](opencode.jsonc) |
+A real-time command center running on **port 4200**:
+- **Live Antigravity Telemetry**: Hooks directly into session transcripts to reflect active tools, token consumption, and guard states in real time.
+- **Seat Roster**: Live status indicators for LOGOS, Bob, Freya, and Tvashtar.
+- **Knowledge Core & Graph**: Visualizes memory, lessons learned, and active instincts.
 
-Agent templates stored in [`agent/`](agent/) and profiles in [`agents/`](agents/).
-
----
-
-## Skill Catalog — 38 Modules
-
-### 🛠 Custom Skills (22)
-
-| # | Skill | Category | File |
-|---|-------|----------|------|
-| 1 | **3D Visualizer** | Creation | [`skills/3d-visualizer/`](skills/3d-visualizer/) |
-| 2 | **3ds Max Bridge** | Specialist | [`skills/3ds-max-bridge/`](skills/3ds-max-bridge/) |
-| 3 | **ArchViz Optimizer** | Specialist | [`skills/archviz-optimizer/`](skills/archviz-optimizer/) |
-| 4 | **Architecture Diagram** | Dev | [`skills/architecture-diagram/`](skills/architecture-diagram/) |
-| 5 | **Architecture Improve** | Dev | [`skills/improve-codebase-architecture/`](skills/improve-codebase-architecture/) |
-| 6 | **ComfyUI Workflows** | Creation | [`skills/comfyui-workflow-builder/`](skills/comfyui-workflow-builder/) |
-| 7 | **Consulting Analysis** | Business | [`skills/consulting-analysis/`](skills/consulting-analysis/) |
-| 8 | **Creative Proposals** | Business | [`skills/creative-proposal-builder/`](skills/creative-proposal-builder/) |
-| 9 | **Data Storytelling** | Business | [`skills/data-storytelling/`](skills/data-storytelling/) |
-| 10 | **Digital Twin** | Creation | [`skills/digital-twin-generation/`](skills/digital-twin-generation/) |
-| 11 | **Frontend Design** | Creation | [`skills/frontend-design/`](skills/frontend-design/) |
-| 12 | **Game Design Theory** | Business | [`skills/game-design-theory/`](skills/game-design-theory/) |
-| 13 | **Gepeto Builder** | Dev | [`skills/gepeto/`](skills/gepeto/) |
-| 14 | **HyperFrames Video** | Creation | [`skills/hyperframes-video/`](skills/hyperframes-video/) |
-| 15 | **Image Generation** | Creation | [`skills/image-generation/`](skills/image-generation/) |
-| 16 | **Image to Video** | Creation | [`skills/image-to-video/`](skills/image-to-video/) |
-| 17 | **Pinokio Launcher** | Dev | [`skills/pinokio/`](skills/pinokio/) |
-| 18 | **Pipeline Troubleshooter** | Specialist | [`skills/pipeline-troubleshooter/`](skills/pipeline-troubleshooter/) |
-| 19 | **Plagiarism Checker** | Quality | [`skills/`](skills/) *(registered externally)* |
-| 20 | **PowerPoint Builder** | Business | [`skills/pptx/`](skills/pptx/) |
-| 21 | **UI/UX Pro Max** | Creation | [`skills/ui-ux-pro-max/`](skills/ui-ux-pro-max/) |
-| 22 | **Unreal Engine C++** | Dev | [`skills/unreal-engine-cpp-pro/`](skills/unreal-engine-cpp-pro/) |
-
-### ⚡ Superpowers Skills (14)
-
-| # | Skill | Category | File |
-|---|-------|----------|------|
-| 1 | Brainstorming | Process | [`skills/brainstorming/`](skills/brainstorming/) |
-| 2 | Writing Plans | Process | [`skills/writing-plans/`](skills/writing-plans/) |
-| 3 | TDD | Process | [`skills/test-driven-development/`](skills/test-driven-development/) |
-| 4 | Executing Plans | Process | [`skills/executing-plans/`](skills/executing-plans/) |
-| 5 | Git Worktrees | Process | [`skills/using-git-worktrees/`](skills/using-git-worktrees/) |
-| 6 | Dispatch Parallel | Process | [`skills/dispatching-parallel-agents/`](skills/dispatching-parallel-agents/) |
-| 7 | Brainstorming Alt | Process | *(via brainstorming)* |
-| 8 | Subagent Dev | Process | [`skills/subagent-driven-development/`](skills/subagent-driven-development/) |
-| 9 | Request Review | Quality | [`skills/requesting-code-review/`](skills/requesting-code-review/) |
-| 10 | Receive Review | Quality | [`skills/receiving-code-review/`](skills/receiving-code-review/) |
-| 11 | Systematic Debug | Quality | [`skills/systematic-debugging/`](skills/systematic-debugging/) |
-| 12 | Verify Before Done | Quality | [`skills/verification-before-completion/`](skills/verification-before-completion/) |
-| 13 | Finish Branch | Quality | [`skills/finishing-a-development-branch/`](skills/finishing-a-development-branch/) |
-| 14 | Grill Me | Quality | [`skills/grill-me/`](skills/grill-me/) |
-
-### 🧩 Bonus Skills (2)
-- **Architecture Diagram** — interactive click-through diagrams
-- **3ds Max Bridge** — 3ds Max workflow automation
-
----
-
-## Directory Structure
-
+### Quick Start:
+```bash
+cd council_of_gaya
+npm install
+npm run dev
 ```
-├── agent/                  # Agent profile markdown files
-│   ├── Gaya.md
-│   ├── bob.md
-│   └── freya.md
-├── agents/                 # Agent persona files
-│   ├── Gaya.persona.md
-│   └── profiles/gaya.json
-├── docs/                   # Setup guides
-│   ├── MCP_SETUP.md
-│   └── TOKEN_TRACKING.md
-├── knowledge/              # Cross-session knowledge base
-│   ├── base/               # Core patterns & lessons
-│   └── community/          # Community contributions
-├── memory/                 # Session memory & milestones
-├── scripts/                # Install, backup, token tracker, MCP setup
-├── skills/                 # 38 skill modules
-├── templates/              # Agent & contribution templates
-│   ├── agent-methodology-dashboard.html
-│   ├── skills-dashboard.html
-│   ├── INSTALL.md
-│   ├── INSTALL_PROTOCOL.md
-│   ├── LEVELING_SYSTEM.md
-│   ├── SYSTEM.md
-│   ├── opencode.jsonc
-│   └── skills-lock.json
+👉 Open **`http://localhost:4200`**
+
+---
+
+## 🤖 Mini Gaya — Desktop Companion & Voice Suite
+
+An interactive anime desktop pet and audio telemetry HUD built in PySide6:
+- **Interactive Avatar**: Dynamic gold-and-obsidian anime guardian sprite that reacts to live thinking, subagents, and approvals.
+- **Bi-Directional Telemetry**: Tracks Antigravity sessions and toasts critical alerts (e.g. LOGOS PASS, question prompts).
+- **Audio Voice Suite (STT + TTS)**:
+  - Accurate local TTS addressing the user as **"Ros"** (`R0n`).
+  - Announces session milestones and LOGOS pass gates audibly.
+
+### Quick Start:
+```bash
+cd mini_gaya
+pip install PySide6 Pillow requests pyttsx3
+python launch_mini_gaya.py
 ```
 
 ---
 
-## Leveling System
+## 🦾 Reverse Engineer Anything (REA) & Universal Modder
 
-Gaya gains XP per task, levels up, and earns titles. See [`LEVELING_SYSTEM.md`](LEVELING_SYSTEM.md) for full details.
-
-| Title | Level | Requirement |
-|-------|-------|-------------|
-| Initiate | 1 | First session |
-| Disciple | 5 | 5 sessions |
-| Practitioner | 15 | All roles invoked |
-| Strategist | 30 | All pillars demonstrated |
-| Sage | 50 | Major project delivered |
-| Elder | 100 | Mentoring others |
-| Paragon | 200 | Exceptional |
+Governed exclusively by **🦾 Tvashtar**:
+- **Binary Disassembly**: Native inspection with Ghidra, Hopper, and IDA.
+- **Bundle Unpacking**: Electron ASAR extraction, Webpack/Vite module recovery.
+- **Android APKs**: JADX decompilation and DEX inspection.
+- **Protocol Recovery**: Recovering undocumented WebSocket, IPC, and REST endpoints.
+- Read more in [REVERSE_ENGINEERING_REA.md](docs/REVERSE_ENGINEERING_REA.md).
 
 ---
 
-## Four Pillars
+## 🛠️ The 83 Skill Modules
 
-| Pillar | When | Core Phrase |
-|--------|------|-------------|
-| **Bhagavad Gita** | Anxiety | *"How you do anything is how you do everything."* |
-| **Art of War** | Complexity | *"Know the code, know the goal."* |
-| **The Prince** | Tradeoffs | *"Stop overthinking. Do the thing."* |
-| **Chanakya Niti** | Long run | *"Build middleware, not monuments."* |
+Explore the complete interactive catalog:
+- 📊 **[Interactive Skills Dashboard](skills-dashboard.html)** (search, filter, dependencies)
+- ⚔️ **[Agent Methodology Dashboard](agent-methodology-dashboard.html)** (council cards, model specs)
 
----
-
-## Ponytail Integration
-
-YAGNI-first decision engine baked into Gaya's Commander role — 7-rung ladder: skip → reuse → stdlib → native → dependency → one line → minimum code.
-
-See SYSTEM.md for full rules.
+### Highlighted Additions in Update 0.5.2610:
+- **`reverse-engineer-anything`**: Complete local REA engine.
+- **`universal-modder`**: Universal PC game modding and asset extraction.
+- **`slop-monster`**: Anti-corporate jargon and AI-tell removal tool.
+- **`scroll-craft`**: Premium scrollytelling websites and dimensional dashboards.
+- **`ecc-build-fix` / `ecc-security-scan` / `ecc-tdd-workflow`**: Enterprise coding and security shields.
 
 ---
 
-## License
-
-MIT © Ronak Raval
-
-Bundled skills carry their original licenses.
+## 📜 License
+MIT License. Created by Ronak Raval & the Gaya Evergrowth Community.

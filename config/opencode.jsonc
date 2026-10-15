@@ -1,0 +1,112 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "Gaya",
+
+  // ═══════════════════════════════════════════════════════════════════
+  // GAYA COUNCIL MULTI-AGENT ARCHITECTURE (Update 0.5.2610)
+  // ═══════════════════════════════════════════════════════════════════
+
+  "plugin": ["superpowers@git+https://github.com/obra/superpowers.git"],
+
+  "skills": {
+    "paths": [
+      "./skills",
+      "~/.agents/skills",
+      "~/.config/opencode/skills",
+      "~/.gemini/config/skills"
+    ]
+  },
+
+  // ═══════════════════════════════════════════════════════════════════
+  // SUBAGENT COUNCIL ROSTER
+  // ═══════════════════════════════════════════════════════════════════
+  "agent": {
+    "Gaya": {
+      "name": "Gaya",
+      "role": "Divine Commander, Philosopher, Poet of Evergrowth",
+      "prompt": "{file:agents/Gaya.persona.md}",
+      "temperature": 0.3
+    },
+    "LOGOS": {
+      "name": "LOGOS",
+      "role": "Mind — Mastermind Planner & Hard-Check QC Gate",
+      "prompt": "{file:agents/logos.persona.md}",
+      "temperature": 0.1
+    },
+    "Bob": {
+      "name": "Bob",
+      "role": "Hands — Precision Builder & Execution Engine",
+      "prompt": "{file:agents/bob.persona.md}",
+      "temperature": 0.2
+    },
+    "Freya": {
+      "name": "Freya",
+      "role": "Heart — Polymath Designer & Seer of the Unfiltered",
+      "prompt": "{file:agents/freya.persona.md}",
+      "temperature": 0.6
+    },
+    "Tvashtar": {
+      "name": "Tvashtar",
+      "role": "Craftsman — Systems Architect, REA & Modding Engine",
+      "prompt": "{file:agents/tvashtar.persona.md}",
+      "temperature": 0.2
+    }
+  },
+
+  // ═══════════════════════════════════════════════════════════════════
+  // MCP SERVERS
+  // ═══════════════════════════════════════════════════════════════════
+  "mcp": {
+    "chrome-devtools-mcp": {
+      "command": "npx",
+      "args": ["-y", "chrome-devtools-mcp@latest"]
+    },
+    "parallel-search": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://search.parallel.ai/mcp"]
+    },
+    "canva": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://mcp.canva.com/mcp"]
+    },
+    "rea": {
+      "command": "npx",
+      "args": ["-y", "rea-agents@latest", "mcp"]
+    }
+  },
+
+  // ═══════════════════════════════════════════════════════════════════
+  // PROVIDERS (Ollama Local, OpenCode Zen, Gemini, OpenAI, Claude)
+  // ═══════════════════════════════════════════════════════════════════
+  "provider": {
+    "ollama": {
+      "name": "Ollama (Local — RTX 4060 8 GB)",
+      "options": {
+        "baseURL": "http://localhost:11434/v1"
+      },
+      "models": {
+        "qwen3:4b-instruct-2507-q4_K_M": {
+          "name": "Qwen3 4B — Gaya Fast",
+          "limit": { "context": 32768, "output": 8192 }
+        },
+        "qwen2.5-coder:7b": {
+          "name": "Qwen2.5 Coder 7B — Bob & Tvashtar",
+          "limit": { "context": 32768, "output": 8192 }
+        }
+      }
+    },
+    "zen": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "OpenCode Zen",
+      "options": {
+        "baseURL": "https://opencode.ai/zen/v1"
+      },
+      "models": {
+        "big-pickle": {
+          "name": "Big Pickle (zen/big-pickle — Gaya primary)",
+          "limit": { "context": 128000, "output": 8192 }
+        }
+      }
+    }
+  }
+}

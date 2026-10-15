@@ -1,0 +1,28 @@
+# deps
+node_modules/
+.pnp
+.pnp.js
+
+# next
+.next/
+out/
+build/
+dist/
+
+# env
+.env
+.env.local
+
+# db (backup elsewhere, not in git)
+data/*.db
+data/*.db-journal
+data/backups/
+
+# logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini

@@ -637,11 +637,11 @@ footer .note {
   <!-- ═══ STATS ═══ -->
   <div class="stats-row">
     <div class="stat-card">
-      <div class="stat-value"><span class="count-up" data-target="38">0</span></div>
+      <div class="stat-value"><span class="count-up" data-target="46">0</span></div>
       <div class="stat-label">Total</div>
     </div>
     <div class="stat-card">
-      <div class="stat-value" style="color:var(--dev)"><span class="count-up" data-target="22">0</span></div>
+      <div class="stat-value" style="color:var(--dev)"><span class="count-up" data-target="30">0</span></div>
       <div class="stat-label">Custom</div>
     </div>
     <div class="stat-card">
@@ -851,7 +851,39 @@ const SKILLS = {
   "plg":{ n:"Plagiarism Checker", i:"🔍", c:"quality", t:"Custom",
     d:"Detect textual plagiarism between documents using TF-IDF vectorization and cosine similarity.",
     ex:"Compare two documents side-by-side — TF-IDF vectorization, cosine similarity scoring, and percentage-based plagiarism detection with highlighted matching passages.",
-    r:["src","sdb"], p:"skills/plagiarism-checker/", g:["plagiarism","detection","quality","similarity","text"] }
+    r:["src","sdb"], p:"skills/plagiarism-checker/", g:["plagiarism","detection","quality","similarity","text"] },
+  "rea":{ n:"Reverse Engineer Anything", i:"🦾", c:"special", t:"Custom",
+    d:"Evidence-driven binary disassembly (Ghidra, Hopper, IDA), Electron ASAR extraction, Android APK reversing, and protocol recovery.",
+    ex:"Reverse engineer native binaries, extract packaged Electron bundles without source code, reconstruct undocumented WebSocket/IPC protocols, and recover complete schemas for implementation.",
+    r:["um","sdb","arc","dev"], p:"skills/reverse-engineer-anything/", g:["reversing","binary","ghidra","hopper","ida","asar","android","protocol","rea"] },
+  "um":{ n:"Universal Modder", i:"🎮", c:"special", t:"Custom",
+    d:"PC game modding, binary reversing, asset extraction, memory patching, and cross-game mashups.",
+    ex:"Inspect game files, write BepInEx/Harmony patches, decompile assemblies, extract 3D meshes and textures, and create cross-game mod experiences.",
+    r:["rea","cpp","3dv"], p:"skills/universal-modder/", g:["modding","game","reverse-engineering","unity","unreal","patch"] },
+  "slp":{ n:"SlopMonster", i:"🧹", c:"quality", t:"Custom",
+    d:"AI tell elimination, corporate jargon stripping, and humanized, punchy copy editing.",
+    ex:"Transform AI-written drafts, presentations, and READMEs into punchy human prose. Runs against deslop patterns to eliminate buzzwords like 'delve', 'leverage', and 'seamless'.",
+    r:["dst","pptx","src"], p:"skills/slop-monster/", g:["de-slop","copywriting","humanize","editing","clarity"] },
+  "scf":{ n:"ScrollCraft", i:"✨", c:"creation", t:"Custom",
+    d:"Premium scroll-driven websites, interactive landing pages, layered hero sections, and scrollytelling dashboards.",
+    ex:"Build dimensional hero sections with independent visual planes, pinned metric rails, live surface interactions, and bespoke scroll signature moves.",
+    r:["fend","uid","arch"], p:"skills/scroll-craft/", g:["scroll","landing-page","frontend","scrollytelling","ui"] },
+  "ebf":{ n:"ECC Build Fix", i:"🛠", c:"quality", t:"Custom",
+    d:"Systematic compiler, runtime, and build error diagnostic and minimal-diff repair.",
+    ex:"Diagnose broken npm/pip builds, missing native dependencies, syntax/type errors, and repair with minimal diffs.",
+    r:["sdb","std","dev"], p:"skills/ecc-build-fix/", g:["build","fix","compiler","diagnostics","repair"] },
+  "ess":{ n:"ECC Security Scan", i:"🛡", c:"quality", t:"Custom",
+    d:"AgentShield security audit across workspace files, configurations, MCP servers, and environment variables.",
+    ex:"Audit workspace files and MCP configurations for leaked API keys, secret credentials, high-risk shell commands, and untrusted network endpoints.",
+    r:["sdb","svb"], p:"skills/ecc-security-scan/", g:["security","secrets","audit","agentshield","scan"] },
+  "etd":{ n:"ECC TDD Workflow", i:"🧪", c:"process", t:"Custom",
+    d:"Strict Test-Driven Development Red-Green-Refactor cycle enforcement.",
+    ex:"Enforce running and verifying failing tests before implementing production code, then verifying clean pass before committing.",
+    r:["std","svb","swp"], p:"skills/ecc-tdd-workflow/", g:["tdd","testing","discipline","ecc"] },
+  "gay":{ n:"Gaya Protocol", i:"⚔", c:"process", t:"Custom",
+    d:"Gaya leveling system, 4-role persona engine, and ASSESS→EXECUTE operational loop.",
+    ex:"Adopt the Divine Commander, Philosopher, Poet of Evergrowth operating mode with session leveling, XP tracking, and structured debriefs.",
+    r:["sbr","swp","sgm"], p:"skills/gaya/", g:["gaya","persona","commander","leveling","evergrowth"] }
 };
 
 const SKILL_IDS = Object.keys(SKILLS);

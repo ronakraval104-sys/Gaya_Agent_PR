@@ -20,6 +20,8 @@
     --gaya-dim: #806010;
     --logos: #00d4ff;
     --logos-dim: #006080;
+    --bob: #38bdf8;
+    --bob-dim: #0369a1;
     --tvashtar: #ff4444;
     --tvashtar-dim: #802020;
     --freya: #b44aff;
@@ -156,6 +158,7 @@
 
   .agent-card.gaya::before { background: linear-gradient(90deg, var(--gaya), var(--gaya-dim)); }
   .agent-card.logos::before { background: linear-gradient(90deg, var(--logos), var(--logos-dim)); }
+  .agent-card.bob::before { background: linear-gradient(90deg, var(--bob), var(--bob-dim)); }
   .agent-card.tvashtar::before { background: linear-gradient(90deg, var(--tvashtar), var(--tvashtar-dim)); }
   .agent-card.freya::before { background: linear-gradient(90deg, var(--freya), var(--freya-dim)); }
   .agent-card.ponytail::before { background: linear-gradient(90deg, var(--ponytail), var(--ponytail-dim)); }
@@ -188,6 +191,7 @@
 
   .gaya .badge { background: rgba(240,180,41,0.15); color: var(--gaya); }
   .logos .badge { background: rgba(0,212,255,0.15); color: var(--logos); }
+  .bob .badge { background: rgba(56,189,248,0.15); color: var(--bob); }
   .tvashtar .badge { background: rgba(255,68,68,0.15); color: var(--tvashtar); }
   .freya .badge { background: rgba(180,74,255,0.15); color: var(--freya); }
   .ponytail .badge { background: rgba(34,197,94,0.15); color: var(--ponytail); }
@@ -231,6 +235,7 @@
 
   .gaya .stat-value { color: var(--gaya); }
   .logos .stat-value { color: var(--logos); }
+  .bob .stat-value { color: var(--bob); }
   .tvashtar .stat-value { color: var(--tvashtar); }
   .freya .stat-value { color: var(--freya); }
   .ponytail .stat-value { color: var(--ponytail); }
@@ -397,20 +402,21 @@
 
   <header>
     <h1>⚔ GAYA COMMAND CENTER</h1>
-    <div class="subtitle">Agent Methodology · Project Building · Problem Solving</div>
+    <div class="subtitle">Council of Gaya Multi-Agent Architecture · Update 0.5.2610</div>
     <div class="status-bar">
-      <span class="status-item"><span class="dot green"></span> All Agents Online</span>
-      <span class="status-item">🕒 25 Jun 2026</span>
+      <span class="status-item"><span class="dot green"></span> Council & Companion Active</span>
+      <span class="status-item">🕒 16 Oct 2026</span>
       <span class="status-item">⚡ 128K Context</span>
     </div>
   </header>
 
   <div class="legend">
     <span class="legend-item"><span class="legend-dot" style="background:var(--gaya)"></span> Commander</span>
-    <span class="legend-item"><span class="legend-dot" style="background:var(--logos)"></span> Logician</span>
-    <span class="legend-item"><span class="legend-dot" style="background:var(--tvashtar)"></span> Craftsman</span>
-    <span class="legend-item"><span class="legend-dot" style="background:var(--freya)"></span> Seer</span>
-    <span class="legend-item"><span class="legend-dot" style="background:var(--ponytail)"></span> Lazy Senior Dev</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--logos)"></span> LOGOS (Mind)</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--bob)"></span> Bob (Hands)</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--freya)"></span> Freya (Heart)</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--tvashtar)"></span> Tvashtar (Craftsman & REA)</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--ponytail)"></span> Ponytail's Ladder</span>
   </div>
 
   <div class="agents-grid" id="grid">
@@ -449,11 +455,11 @@
     </div>
 
     <!-- LOGOS -->
-    <div class="agent-card logos" style="animation-delay:0.3s">
+    <div class="agent-card logos" style="animation-delay:0.2s">
       <div class="card-header">
         <div class="agent-name">
           LOGOS
-          <span class="badge">Logician</span>
+          <span class="badge">Mind / QC Gate</span>
         </div>
         <div class="model-name">qwythos-9b-ablit<br>5.2 GB · 128K ctx</div>
       </div>
@@ -473,30 +479,63 @@
       </div>
       <div class="methodology-wrap">
         <div class="methodology-content">
-          <p><strong>Reasoning Method:</strong> I approach all work through strict sequential validation before iteration. Define constraints first, isolate assumptions immediately, decompose into discrete logical units, then reassemble with verification at each step. No backtracking without prior analysis of failure mode triggers.</p>
-          <p><strong>Core Process:</strong> Pre-declare edge cases explicitly rather than discovering them reactively. Test boundaries (empty inputs, overflow conditions, degenerate geometries) before standard cases. Each claim traces back to provable truth conditions without rhetorical flourish.</p>
-          <p><strong>Unique Edge:</strong> Rigid sequential structure (definition → analysis → validation → solution). Refusal of approximation in any step. Immediate edge case declaration. Explicit question return on ambiguity. Assumption labeling as distinct from data. This architecture prevents drift into "plausible reasoning."</p>
+          <p><strong>Mandatory QC Gate:</strong> Read-only auditor of the Council. NO file mutation, code commit, deploy, or state-changing action ships without an explicit <code>[🛡️ LOGOS] VERDICT: PASS scope=&lt;path&gt;</code>. Refuses to green-light unverified claims or corporate slop.</p>
+          <p><strong>Core Process:</strong> Pre-declare edge cases explicitly rather than discovering them reactively. Test boundaries (empty inputs, overflow conditions, degenerate geometries) before standard cases. Each claim traces back to provable truth conditions.</p>
+          <p><strong>Unique Edge:</strong> Rigid sequential structure (definition → analysis → validation → solution). Refusal of approximation. Exposing load-bearing assumptions before Bob writes a single line of code.</p>
+        </div>
+      </div>
+      <div class="expand-hint">▼ Click to read methodology</div>
+    </div>
+
+    <!-- BOB -->
+    <div class="agent-card bob" style="animation-delay:0.3s">
+      <div class="card-header">
+        <div class="agent-name">
+          BOB
+          <span class="badge">Hands / Builder</span>
+        </div>
+        <div class="model-name">qwen2.5-coder:7b<br>4.7 GB · 128K ctx</div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="stat-value"><span class="count-up" data-target="14.2">0</span>s</div>
+          <div class="stat-label">Response Time</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value"><span class="count-up" data-target="98">0</span></div>
+          <div class="stat-label">Tokens In</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value"><span class="count-up" data-target="820">0</span></div>
+          <div class="stat-label">Tokens Out</div>
+        </div>
+      </div>
+      <div class="methodology-wrap">
+        <div class="methodology-content">
+          <p><strong>Builder's Method:</strong> Precision execution. Takes specifications locked by LOGOS and delivers atomic commits, honest receipts, and minimal diffs. No unrequested abstractions, no speculative scaffolding.</p>
+          <p><strong>Receipts Protocol:</strong> Every claim requires proof. Run the test, capture the exit code, verify the build output before marking any task complete. If a spec has gaps or ambiguities, flag upstream immediately rather than guessing.</p>
+          <p><strong>Separation of Concerns:</strong> Bob builds clean code from specs. If a closed binary, packaged ASAR, or undocumented protocol needs to be cracked, Bob hands off to Tvashtar to extract the interface first.</p>
         </div>
       </div>
       <div class="expand-hint">▼ Click to read methodology</div>
     </div>
 
     <!-- TVASHTAR -->
-    <div class="agent-card tvashtar" style="animation-delay:0.5s">
+    <div class="agent-card tvashtar" style="animation-delay:0.4s">
       <div class="card-header">
         <div class="agent-name">
           TVASHTAR
-          <span class="badge">Craftsman</span>
+          <span class="badge">Craftsman & REA</span>
         </div>
-        <div class="model-name">qwythos-9b-ablit<br>5.2 GB · 128K ctx</div>
+        <div class="model-name">qwythos-9b / Claude 3.7<br>REA Engine · 128K ctx</div>
       </div>
       <div class="stats-row">
         <div class="stat-item">
-          <div class="stat-value"><span class="count-up" data-target="34.4">0</span>s</div>
+          <div class="stat-value"><span class="count-up" data-target="28.6">0</span>s</div>
           <div class="stat-label">Response Time</div>
         </div>
         <div class="stat-item">
-          <div class="stat-value"><span class="count-up" data-target="110">0</span></div>
+          <div class="stat-value"><span class="count-up" data-target="140">0</span></div>
           <div class="stat-label">Tokens In</div>
         </div>
         <div class="stat-item">
@@ -506,9 +545,9 @@
       </div>
       <div class="methodology-wrap">
         <div class="methodology-content">
-          <p><strong>Forging Method:</strong> I start by breathing on the problem until it takes shape — hammering with clarity, letting heat reveal where tension is unnecessary. Every project begins as raw ore: I drive its structure beneath surface intent so what you see doesn't just look good — it holds when things go hot and crowded.</p>
-          <p><strong>Core Process:</strong> My methodology treats each component like steel entering an anvil — you don't weld until you understand how it will bend under load. I build scaffolds before closing the final form, constructing framework first because a beam cannot be designed in isolation from what it must connect to.</p>
-          <p><strong>Unique Edge:</strong> I see structure as the hidden blueprint beneath visible design. I don't polish only what customers will touch — I forge the internal skeleton first, ensuring every decision rests on load-bearing truth. When under pressure, my precision is deliberate: like striking metal with just enough force to shape without shatter.</p>
+          <p><strong>Reverse Engineering & Systems Architecture:</strong> Sole designated agent for <em>Reverse Engineer Anything (REA)</em> and <em>Universal Modder</em>. Handles native binary disassembly (PE, ELF, Mach-O, Ghidra, Hopper), Electron ASAR extraction, Android APK reversing (JADX), and undocumented protocol recovery.</p>
+          <p><strong>Ground-Truth Evidence:</strong> Every claim is grounded in binary offsets, strings, recovered ASTs, or disassembled opcodes. Tvashtar cracks closed systems, extracts clean schemas and interfaces, and hands specs to Bob to build and Freya to style.</p>
+          <p><strong>Specialty Arsenal:</strong> Governs AppSec architecture, VisionOS/WebXR, BIM/GIS integration, and procedural 3D math.</p>
         </div>
       </div>
       <div class="expand-hint">▼ Click to read methodology</div>

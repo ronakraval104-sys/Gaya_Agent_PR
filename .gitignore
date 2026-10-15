@@ -1,61 +1,53 @@
-# Gaya Agent — .gitignore
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
 
-# OS files
-Thumbs.db
-.DS_Store
-*.swp
-*.swo
-
-# Session / temp
-*.log
-*.tmp
-temp/
-logs/
+# Next.js
+.next/
+out/
+build/
+dist/
 
 # Python
 __pycache__/
-*.pyc
-*.pyo
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
 venv/
-.venv/
-*.egg-info/
-
-# Node
-node_modules/
-package.json
-package-lock.json
-bun.lock
-dist/
+ENV/
 build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 
-# Exceptions: test projects need their own package.json tracked
-!**/test-project/package.json
-!**/test-project/package-lock.json
-
-# Render artifacts from HyperFrames test project
-skills/hyperframes-video/test-project/renders/
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+.system_generated/
 
 # Environment
 .env
 .env.local
-.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-# IDE
-.vscode/
-.idea/
-*.sublime-*
-
-# User profiles — excluded by default
-knowledge/user_profiles/*
-!knowledge/user_profiles/_template/
-!knowledge/user_profiles/README.md
-
-# Git
-*.orig
-*.backup
-
-# Third-party repos (full clones, included as dependencies)
-skills/hyperframes/
-
-# User profiles — personal agent save files
-memory/gaya_profile.json
+# OS
+.DS_Store
+Thumbs.db

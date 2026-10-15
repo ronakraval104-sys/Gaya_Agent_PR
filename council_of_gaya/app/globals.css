@@ -1,0 +1,233 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap");
+
+/* ============================================================
+   MONOLITH SIGNAL — Stark Council v2 design system
+   Adapted from FounderOS. Bare black, white accent, grayscale
+   hierarchy, traffic-light STATUS colors only. Glow is dead.
+   ============================================================ */
+
+:root {
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+
+  /* structure — Obsidian Base */
+  --bg: #0B090A;
+  --bg-2: #100C0E;
+  --surface: #130F11;         /* boxes flatten to deep obsidian */
+  --surface-2: #1A1518;       /* hover fill */
+  --surface-3: #231C20;
+  --border: #2C2422;          /* gold-tinted structural rules */
+  --border-strong: #4D3F33;   /* brightened borders */
+  --hairline: #1F191D;        /* row dividers */
+
+  /* text hierarchy — Warm Parchment & Gold */
+  --text: #F7F2EC;
+  --text-2: #BDB3A8;
+  --text-3: #756B61;
+
+  /* accent = Sacred Gold (#D4AF37 / #FFD73C) */
+  --accent: #D4AF37;
+  --accent-2: #FFD73C;
+  --accent-ink: #0B090A;
+  --accent-soft: rgba(212, 175, 55, 0.09);
+  --accent-line: rgba(212, 175, 55, 0.38);
+
+  /* traffic-light STATUS with Bodhi Gold warn */
+  --ok:   #2FD36F;  /* verified / green */
+  --warn: #FFD73C;  /* sacred gold attention */
+  --err:  #FF3B3B;  /* crimson gate block / red */
+
+  /* persona shift */
+  --persona-primary: #D4AF37;
+  --persona-metal:   #E5C07B;
+  --persona-scope-label: "GAYA // BODHI VANGUARD";
+
+  /* ambient gold glow */
+  --glow: 0 0 20px rgba(212, 175, 55, 0.2);
+  --grid: rgba(212, 175, 55, 0.02);
+
+  /* legacy tokens kept during transition */
+  --void-000: #0B090A;
+  --void-100: #130F11;
+  --void-200: #1A1518;
+  --void-glass: rgba(11, 9, 10, 0.94);
+  --arc-teal: #D4AF37;
+  --arc-teal-glow: #FFD73C;
+  --stark-orange: #FFD73C;
+  --stark-orange-hot: #FFE066;
+  --hud-line: rgba(77, 63, 51, 0.8);
+  --hud-scan: transparent;
+  --persona-lift: #FFD73C;
+  --persona-deep: #0B090A;
+  --persona-halo: rgba(212, 175, 55, 0.4);
+  --persona-vignette: transparent;
+  --persona-flow: #D4AF37;
+
+  /* motion durations */
+  --dur-reticle: 180ms;
+  --dur-holo: 220ms;
+  --dur-morph: 900ms;
+  --ease-arc: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-persona="gaya-core"] {
+  --persona-scope-label: "GAYA // BODHI VANGUARD";
+}
+
+[data-persona="visual-rhyme"] {
+  --persona-scope-label: "VR // MICROTRONIX";
+}
+
+[data-persona="katviz-ai"] {
+  --persona-scope-label: "KV // PRISM NOIR";
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "JetBrains Mono", "SFMono-Regular", ui-monospace, monospace;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "calt", "ss01";
+  overflow-x: hidden;
+}
+
+/* vignette + scanlines + watermark are DEAD.
+   Optional 48px background grid, extremely subtle. */
+body {
+  background-image:
+    repeating-linear-gradient(0deg,  rgba(242,242,242,0.015) 0 1px, transparent 1px 48px),
+    repeating-linear-gradient(90deg, rgba(242,242,242,0.015) 0 1px, transparent 1px 48px);
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 0;
+  border: 3px solid var(--bg);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--text-3); }
+
+/* Terminal cards answer the mouse with a border brighten only — no lift. */
+.hoverable {
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+.hoverable:hover { border-color: var(--border-strong); }
+.hoverable:active { transition-duration: 0.06s; }
+
+/* Mono chrome helper (legacy hud-label references keep working) */
+.hud-label {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-3);
+}
+
+.hud-line { border-color: var(--border); }
+
+/* Legacy holo-panel maps to sharp flat card (no blur, no shadow) */
+.holo-panel {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 0;
+}
+.holo-panel::before { content: none; }
+
+/* --- terminal LED status dots (square, blink not pulse) --- */
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 0;
+  flex-shrink: 0;
+  display: inline-block;
+}
+.dot.ok  { background: var(--ok);  }
+.dot.warn{ background: var(--warn);}
+.dot.err { background: var(--err); }
+.dot.off { background: transparent; border: 1px solid var(--text-3); }
+.dot.ok.pulse { animation: led-blink 2.6s steps(1) infinite; }
+@keyframes led-blink {
+  0%,70%,100% { opacity: 1; }
+  85%         { opacity: 0.25; }
+}
+
+/* --- eyebrow reads as a code comment --- */
+.page-eyebrow {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  color: var(--text-3);
+  text-transform: uppercase;
+}
+.page-eyebrow::before {
+  content: "// ";
+  color: var(--text-3);
+}
+
+/* --- blinking caret --- */
+.caret-blink::after {
+  content: "▊";
+  margin-left: 4px;
+  animation: blink 1.1s steps(1) infinite;
+  color: var(--accent);
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* View entrance — transform only so content is never hidden */
+.view { animation: view-in 0.24s var(--ease); }
+@keyframes view-in { from { transform: translateY(8px); } }
+
+/* Reduced motion — kill every ambient animation */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* --- Kill any leftover watermark from v1 layout --- */
+.jarvis-watermark { display: none !important; }
+
+/* ---- JARVIS Command Core sprite (components/JarvisSprite.tsx) ---- */
+.jarvis-core { animation: jarvis-float 4.5s ease-in-out infinite; }
+.jarvis-core .jarvis-glow, .jarvis-core .jarvis-bloom { transition: background-color .4s ease; }
+.jarvis-bloom { filter: blur(2px); }
+.jarvis-idle .jarvis-glow { animation: jarvis-breathe 4s ease-in-out infinite; }
+.jarvis-idle .jarvis-bloom { animation: jarvis-breathe 4s ease-in-out infinite; opacity: .6; }
+.jarvis-thinking .jarvis-glow { opacity: .65; }
+.jarvis-sweep { background: linear-gradient(90deg, transparent 0%, transparent 40%, #fff 50%, transparent 60%, transparent 100%) !important; background-size: 300% 100% !important; animation: jarvis-sweep 1.6s linear infinite; mix-blend-mode: screen; }
+.jarvis-spawning .jarvis-bloom { animation: jarvis-breathe .8s ease-in-out infinite; }
+.jarvis-hold .jarvis-glow, .jarvis-hold .jarvis-bloom { animation: jarvis-breathe 2.2s ease-in-out infinite; }
+.jarvis-broken .jarvis-base { opacity: .7; }
+.jarvis-broken .jarvis-glow, .jarvis-broken .jarvis-bloom { animation: jarvis-flicker 1.7s steps(1) infinite; }
+.jarvis-approved .jarvis-glow { animation: jarvis-breathe 1.2s ease-in-out infinite; }
+.jarvis-asleep .jarvis-base { opacity: .55; }
+.jarvis-asleep .jarvis-glow { opacity: .08; }
+.jarvis-asleep .jarvis-bloom { opacity: 0; }
+.jarvis-sat { position: absolute; left: 50%; top: 50%; width: 14%; height: 14%; margin: -7% 0 0 -7%; border-radius: 50%;
+  background: radial-gradient(circle, #f0f8ff 0%, rgba(160,210,255,.6) 40%, transparent 70%);
+  animation: jarvis-orbit 2.4s linear infinite; }
+@keyframes jarvis-float { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-1.5px) } }
+@keyframes jarvis-breathe { 0%,100% { opacity: .7 } 50% { opacity: 1 } }
+@keyframes jarvis-sweep { from { background-position: 100% 0 } to { background-position: -50% 0 } }
+@keyframes jarvis-flicker { 0% { opacity: 1 } 8% { opacity: .15 } 12% { opacity: .9 } 55% { opacity: 1 } 58% { opacity: .3 } 62% { opacity: 1 } }
+@keyframes jarvis-orbit { from { transform: rotate(0deg) translateX(85%) rotate(0deg) scaleY(1) } to { transform: rotate(360deg) translateX(85%) rotate(-360deg) } }
