@@ -60,7 +60,7 @@ export function Badge({
 }) {
   return (
     <span
-      className={`inline-flex items-center gap-1.5 whitespace-nowrap border px-2 py-[3px] font-mono text-[9.5px] uppercase tracking-[0.14em] ${BADGE_TONE[tone]} ${
+      className={`inline-flex items-center gap-1.5 whitespace-nowrap border px-2.5 py-1 font-mono text-xs uppercase tracking-[0.14em] ${BADGE_TONE[tone]} ${
         ghost ? "border-dashed" : ""
       }`}
     >
@@ -80,7 +80,7 @@ export function Label({
   rule?: boolean;
 }) {
   return (
-    <div className="flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-[0.26em] text-os-dim">
+    <div className="flex items-center gap-2.5 font-mono text-xs font-bold uppercase tracking-[0.24em] text-os-dim">
       <span className="whitespace-nowrap">{children}</span>
       {count != null && <span className="text-os-muted">{count}</span>}
       {rule && <span className="h-px flex-1 bg-os-border" />}
@@ -166,23 +166,23 @@ export function StatCard({
     : tone === "err" ? "text-os-err"
     : "text-os-text";
   return (
-    <div className="border border-os-border bg-os-surface p-4 hoverable">
-      <div className="mb-3">
+    <div className="border border-os-border bg-os-surface p-5 hoverable">
+      <div className="mb-3.5">
         <Label>{label}</Label>
       </div>
       <div className="flex items-end justify-between gap-3">
-        <div className="flex items-baseline gap-2">
-          <span className={`font-mono text-[28px] leading-none font-semibold ${toneColor}`}>
+        <div className="flex items-baseline gap-2.5">
+          <span className={`font-mono text-[34px] leading-none font-bold ${toneColor}`}>
             {value}
           </span>
           {suffix && (
-            <span className="font-mono text-[11px] text-os-muted">{suffix}</span>
+            <span className="font-mono text-xs text-os-muted">{suffix}</span>
           )}
         </div>
         {spark && <Spark data={spark} />}
       </div>
       {delta && (
-        <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-os-muted">
+        <div className="mt-2.5 font-mono text-xs uppercase tracking-[0.16em] text-os-muted">
           {delta}
         </div>
       )}

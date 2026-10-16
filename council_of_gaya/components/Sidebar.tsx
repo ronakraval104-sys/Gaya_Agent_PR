@@ -51,24 +51,24 @@ export function Sidebar() {
 
   return (
     <aside
-      className="hidden lg:flex flex-col w-[240px] shrink-0 border-r border-os-border bg-os-bg sticky top-0"
+      className="hidden lg:flex flex-col w-[275px] shrink-0 border-r border-os-border bg-os-bg sticky top-0"
       style={{ height: "calc(100vh - 32px)" }}
       aria-label="Primary navigation"
     >
       {/* wordmark — fixed top */}
-      <div className="px-4 pt-4 pb-6 border-b border-os-border shrink-0">
-        <div className="flex items-center gap-2">
+      <div className="px-5 pt-5 pb-5 border-b border-os-border shrink-0">
+        <div className="flex items-center gap-2.5">
           <div
             aria-hidden
-            className="w-5 h-5 border border-os-border-strong grid place-items-center shadow-[0_0_8px_rgba(212,175,55,0.3)]"
+            className="w-6 h-6 border border-os-border-strong grid place-items-center shadow-[0_0_10px_rgba(212,175,55,0.4)]"
           >
-            <span className="w-1.5 h-1.5 bg-os-accent" />
+            <span className="w-2 h-2 bg-os-accent" />
           </div>
-          <div className="font-mono text-[13px] font-bold uppercase tracking-[0.12em] text-os-text">
+          <div className="font-mono text-base font-bold uppercase tracking-[0.14em] text-os-text">
             COUNCIL OF GAYA
           </div>
         </div>
-        <div className="mt-1 pl-7 font-mono text-[9px] uppercase tracking-[0.22em] text-os-accent opacity-80">
+        <div className="mt-1 pl-8 font-mono text-xs uppercase tracking-[0.22em] text-os-accent opacity-90">
           Bodhi Vanguard · OS
         </div>
       </div>
@@ -129,30 +129,21 @@ export function Sidebar() {
         </NavGroup>
       </div>
 
-      {/* Compact Council Graph & Reactor dial inside the left side panel */}
-      <div className="shrink-0 p-3 flex flex-col items-center justify-center border-t border-os-border bg-os-surface/40">
-        <div className="w-full flex items-center justify-between pb-1.5 px-1 font-mono text-[9px] uppercase tracking-[0.2em] text-os-dim">
-          <span>Council Core</span>
-          <span className="text-os-accent font-bold">ONLINE</span>
-        </div>
-        <ArcReactor size={200} />
-      </div>
-
       {/* bottom status — aura tracker, ALWAYS visible (shrink-0 pinned) */}
-      <div className="shrink-0 border-t border-os-border">
+      <div className="shrink-0 border-t border-os-border bg-os-surface/40">
         {/* title + level line */}
-        <div className="px-4 pt-3 pb-2 flex items-center justify-between">
-          <div className="font-mono text-[11px] font-bold text-os-text">
+        <div className="px-5 pt-3.5 pb-2 flex items-center justify-between">
+          <div className="font-mono text-sm font-bold text-os-text">
             {aura.title}
           </div>
-          <div className="font-mono text-[9px] uppercase tracking-[0.16em] text-os-dim">
+          <div className="font-mono text-xs uppercase tracking-[0.16em] text-os-accent font-bold">
             L{aura.level}
           </div>
         </div>
 
         {/* XP progress bar — hairline */}
-        <div className="px-4">
-          <div className="h-[3px] w-full bg-os-surface2 relative">
+        <div className="px-5">
+          <div className="h-[4px] w-full bg-os-surface2 relative">
             <div
               className="h-full bg-os-accent transition-[width] duration-500 ease-out"
               style={{ width: `${aura.pctToNext}%` }}
@@ -161,8 +152,8 @@ export function Sidebar() {
         </div>
 
         {/* aura state + xp count */}
-        <div className="px-4 pt-2 pb-2 flex items-center justify-between">
-          <div className="flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.16em]">
+        <div className="px-5 pt-2.5 pb-2.5 flex items-center justify-between">
+          <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.16em]">
             <Dot state={auraDotState(aura.aura)} pulse={aura.aura === "alive"} />
             <span
               style={{
@@ -175,16 +166,16 @@ export function Sidebar() {
               {auraLabel(aura.aura)}
             </span>
           </div>
-          <div className="font-mono text-[9px] uppercase tracking-[0.14em] text-os-dim">
+          <div className="font-mono text-xs uppercase tracking-[0.14em] text-os-dim">
             {aura.sessionXp} XP · {aura.recentEventCount}/5m
           </div>
         </div>
 
         {/* system hairline */}
-        <div className="px-4 pb-3 border-t border-os-hairline pt-2">
-          <div className="flex items-center gap-2 font-mono text-[9px] text-os-dim">
+        <div className="px-5 pb-3 border-t border-os-hairline pt-2">
+          <div className="flex items-center gap-2 font-mono text-xs text-os-dim">
             <Dot state="ok" pulse />
-            <span>localhost:4200 · lowdb · live</span>
+            <span>localhost:4200 · live</span>
           </div>
         </div>
       </div>
@@ -194,11 +185,11 @@ export function Sidebar() {
 
 function NavGroup({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="px-2 py-3 border-b border-os-border">
-      <div className="px-2 pb-2 font-mono text-[9px] font-bold uppercase tracking-[0.26em] text-os-dim">
+    <div className="px-3 py-3.5 border-b border-os-border">
+      <div className="px-3 pb-2 font-mono text-xs font-bold uppercase tracking-[0.24em] text-os-dim">
         {title}
       </div>
-      <div className="flex flex-col gap-0.5">{children}</div>
+      <div className="flex flex-col gap-1">{children}</div>
     </div>
   );
 }
@@ -206,21 +197,21 @@ function NavGroup({ title, children }: { title: string; children: React.ReactNod
 function NavRow({ label, hint, active, onClick, status }: NavItem) {
   const Content = (
     <>
-      <div className="flex items-center gap-2 min-w-0">
+      <div className="flex items-center gap-2.5 min-w-0">
         {status && <Dot state={status} />}
         <span className="truncate">{label}</span>
       </div>
       {hint && (
-        <span className="font-mono text-[9px] text-os-dim uppercase tracking-[0.14em]">
+        <span className="font-mono text-xs text-os-dim uppercase tracking-[0.14em] shrink-0">
           {hint}
         </span>
       )}
     </>
   );
 
-  const className = `flex items-center justify-between px-2 py-1.5 font-mono text-[12px] ${
+  const className = `flex items-center justify-between px-3 py-2 font-mono text-sm ${
     active
-      ? "bg-os-surface2 text-os-text border-l-2 border-os-accent"
+      ? "bg-os-surface2 text-os-text border-l-2 border-os-accent font-semibold"
       : "text-os-muted hover:bg-os-surface2 hover:text-os-text border-l-2 border-transparent"
   } transition-colors cursor-pointer`;
 

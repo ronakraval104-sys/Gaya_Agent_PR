@@ -146,26 +146,26 @@ export function OperatorConsoleShell() {
   const empireName = "Gaya OS";
 
   return (
-    <div className="px-6 py-6 max-w-[1600px] mx-auto view">
+    <div className="px-6 py-4 max-w-[1600px] mx-auto view">
       {/* Eyebrow */}
-      <div className="page-eyebrow mb-3">Council of Gaya Console · Bodhi Vanguard</div>
+      <div className="page-eyebrow mb-2">Council of Gaya Console · Bodhi Vanguard</div>
 
       {/* Hero prompt */}
       <div className="mb-2">
-        <div className="font-mono text-[28px] md:text-[36px] font-bold uppercase tracking-[0.02em] text-os-text caret-blink">
+        <div className="font-mono text-[32px] md:text-[42px] font-bold uppercase tracking-[0.02em] text-os-text caret-blink">
           At your command, R0n
         </div>
       </div>
-      <div className="flex items-center gap-3 mb-8 flex-wrap font-mono text-[11px]">
-        <span className="text-os-ok">▪ {scopedTotal} records</span>
+      <div className="flex items-center gap-3.5 mb-6 flex-wrap font-mono text-xs md:text-sm">
+        <span className="text-os-ok font-semibold">▪ {scopedTotal} records</span>
         <span className="text-os-dim">/</span>
         <span className="text-os-dim">{globalTotal} total</span>
         <span className="text-os-dim">·</span>
-        <span className="text-os-err">▪ {boulderCount} boulder</span>
+        <span className="text-os-err font-semibold">▪ {boulderCount} boulder</span>
         <span className="text-os-dim">·</span>
-        <span className="text-os-warn">▪ {highCount} high</span>
+        <span className="text-os-warn font-semibold">▪ {highCount} high</span>
         <span className="text-os-dim">·</span>
-        <span className="text-os-accent">context :: {personaLabel}</span>
+        <span className="text-os-accent font-bold">context :: {personaLabel}</span>
         <span className="text-os-dim">·</span>
         <span className="text-os-muted">{activeTasks.length}/60 tasks</span>
         <span className="text-os-dim">·</span>

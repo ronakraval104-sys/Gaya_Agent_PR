@@ -19,6 +19,7 @@ HOME = os.path.expanduser("~")
 VOICE_DIR = os.path.join(HOME, ".gaya", "voice")
 CONFIG_PATH = os.path.join(VOICE_DIR, "voice_config.json")
 DEFAULT_VOICE = "Microsoft Heera - English (India)"
+PIPER_MODEL_PATH = os.path.join(HOME, ".local", "share", "piper", "voices", "en_US-amy-medium.onnx")
 
 def get_user_profile():
     prof_path = os.path.join(HOME, ".gaya", "user_profile.json")
@@ -151,16 +152,36 @@ class Speaker:
                 pass
 
     def set_voice(self, name_part):
+        if "piper" in name_part.lower() or "amy" in name_part.lower() or "neural" in name_part.lower():
+            if getattr(self, "_piper_voice", None):
+                self.use_piper = True
+                self.current_voice_name = "Piper Neural (Amy - Ultra Natural)"
+                _save_config({"voice_name": self.current_voice_name, "rate": getattr(self._sp, "Rate", 0), "volume": self.volume})
+                return True
+        self.use_piper = False
         for name, tok in self._tokens.items():
             if name_part.lower() in name.lower():
                 try:
                     self._sp.Voice = tok
                     self.current_voice_name = name
-                    _save_config({"voice_name": name, "rate": self._sp.Rate, "volume": self._sp.Volume})
+                    _save_config({"voice_name": name, "rate": self._sp.Rate, "volume": self.volume})
                     return True
                 except Exception:
                     pass
         return False
+
+    def set_volume(self, vol):
+        try:
+            v = max(0, min(100, int(vol)))
+            self.volume = v
+            if self._sp:
+                self._sp.Volume = v
+            cfg = _get_config()
+            cfg["volume"] = v
+            _save_config(cfg)
+            return True
+        except Exception:
+            return False
 
     def _load(self):
         import pythoncom
@@ -169,6 +190,18 @@ class Speaker:
 
         sp = win32com.client.Dispatch("SAPI.SpVoice")
         self._tokens = {}
+        self.use_piper = False
+        self._piper_voice = None
+        self.volume = 100
+
+        # Try to load Piper Neural voice
+        try:
+            if os.path.exists(PIPER_MODEL_PATH):
+                import piper
+                self._piper_voice = piper.PiperVoice.load(PIPER_MODEL_PATH)
+        except Exception as e:
+            import logging
+            logging.warning("Piper neural TTS unavailable: %s", e)
 
         # 1. Load OneCore voices (Heera, Susan, Hazel, Zira, etc.)
         try:
@@ -191,25 +224,30 @@ class Speaker:
         # Set voice based on user configuration
         cfg = _get_config()
         wanted = cfg.get("voice_name", DEFAULT_VOICE)
+        self.volume = int(cfg.get("volume", 100))
 
-        matched = False
-        for name, tok in self._tokens.items():
-            if wanted.lower() in name.lower():
-                sp.Voice = tok
-                self.current_voice_name = name
-                matched = True
-                break
-
-        # Fallback to Heera if not matched
-        if not matched:
+        if ("piper" in wanted.lower() or "amy" in wanted.lower() or "neural" in wanted.lower()) and self._piper_voice:
+            self.use_piper = True
+            self.current_voice_name = "Piper Neural (Amy - Ultra Natural)"
+        else:
+            matched = False
             for name, tok in self._tokens.items():
-                if "heera" in name.lower() or "zira" in name.lower() or "hazel" in name.lower():
+                if wanted.lower() in name.lower():
                     sp.Voice = tok
                     self.current_voice_name = name
+                    matched = True
                     break
 
+            # Fallback to Heera if not matched
+            if not matched:
+                for name, tok in self._tokens.items():
+                    if "heera" in name.lower() or "zira" in name.lower() or "hazel" in name.lower():
+                        sp.Voice = tok
+                        self.current_voice_name = name
+                        break
+
         sp.Rate = int(cfg.get("rate", 0))
-        sp.Volume = int(cfg.get("volume", 100))
+        sp.Volume = self.volume
         self._sp = sp
         self.ready = True
         self.on_state("tts-ready:%s" % self.current_voice_name)
@@ -228,11 +266,28 @@ class Speaker:
             try:
                 self.is_speaking = True
                 self.on_state("speaking")
-                # 0 = Synchronous speak inside worker thread
                 clean_text = clean_for_speech(text)
                 import logging
-                logging.info("tts: speaking %r (voice=%s)", clean_text[:80], getattr(self, "current_voice_name", "?"))
-                self._sp.Speak(clean_text, 0)
+                logging.info("tts: speaking %r (voice=%s, vol=%d)", clean_text[:80], getattr(self, "current_voice_name", "?"), getattr(self, "volume", 100))
+                
+                # Check if Piper Neural is selected
+                if getattr(self, "use_piper", False) and self._piper_voice:
+                    try:
+                        import sounddevice as sd
+                        import numpy as np
+                        chunks = list(self._piper_voice.synthesize(clean_text))
+                        raw_bytes = b"".join(c.audio_int16_bytes for c in chunks)
+                        audio = np.frombuffer(raw_bytes, dtype=np.int16)
+                        vol_frac = max(0.0, min(1.0, float(self.volume) / 100.0))
+                        if vol_frac < 1.0:
+                            audio = (audio.astype(np.float32) * vol_frac).astype(np.int16)
+                        sd.play(audio, self._piper_voice.config.sample_rate)
+                        sd.wait()
+                    except Exception as piper_err:
+                        logging.warning("Piper playback error, falling back to OneCore: %s", piper_err)
+                        self._sp.Speak(clean_text, 0)
+                else:
+                    self._sp.Speak(clean_text, 0)
             except Exception as e:
                 import logging
                 logging.error("tts-error: %s", e)

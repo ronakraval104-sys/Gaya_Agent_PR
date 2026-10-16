@@ -89,6 +89,20 @@
   box-sizing: border-box;
 }
 
+html {
+  font-size: 16px;
+}
+@media (min-width: 1024px) {
+  html {
+    font-size: 17px;
+  }
+}
+@media (min-width: 1440px) {
+  html {
+    font-size: 18px;
+  }
+}
+
 html, body {
   margin: 0;
   padding: 0;
@@ -101,12 +115,13 @@ html, body {
   overflow-x: hidden;
 }
 
-/* vignette + scanlines + watermark are DEAD.
-   Optional 48px background grid, extremely subtle. */
+/* Base text scaling for laptops */
 body {
+  font-size: 1rem;
+  line-height: 1.6;
   background-image:
-    repeating-linear-gradient(0deg,  rgba(242,242,242,0.015) 0 1px, transparent 1px 48px),
-    repeating-linear-gradient(90deg, rgba(242,242,242,0.015) 0 1px, transparent 1px 48px);
+    repeating-linear-gradient(0deg,  rgba(242,242,242,0.018) 0 1px, transparent 1px 48px),
+    repeating-linear-gradient(90deg, rgba(242,242,242,0.018) 0 1px, transparent 1px 48px);
 }
 
 ::selection {
@@ -135,7 +150,7 @@ body {
   font-family: "JetBrains Mono", ui-monospace, monospace;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 700;
   color: var(--text-3);
 }
@@ -152,8 +167,8 @@ body {
 
 /* --- terminal LED status dots (square, blink not pulse) --- */
 .dot {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
   border-radius: 0;
   flex-shrink: 0;
   display: inline-block;
@@ -171,9 +186,9 @@ body {
 /* --- eyebrow reads as a code comment --- */
 .page-eyebrow {
   font-family: "JetBrains Mono", monospace;
-  font-size: 9.5px;
+  font-size: 13px;
   font-weight: 700;
-  letter-spacing: 0.32em;
+  letter-spacing: 0.24em;
   color: var(--text-3);
   text-transform: uppercase;
 }

@@ -116,19 +116,28 @@ def make_sounds():
 
 
 class Sound:
-    def __init__(self):
+    def __init__(self, initial_volume=0.8):
         self.muted = False
         self.fx = {}
+        self.volume = max(0.0, min(1.0, float(initial_volume)))
         try:
             from PySide6.QtMultimedia import QSoundEffect
-            for f in os.listdir(SOUNDS):                 # CC0 Kenney cues (see sounds/LICENSE.txt)
+            for f in os.listdir(SOUNDS):                 # Bodhi Vanguard acoustic cues
                 if f.endswith(".wav"):
                     e = QSoundEffect()
                     e.setSource(QUrl.fromLocalFile(os.path.join(SOUNDS, f)))
-                    e.setVolume(0.32)
+                    e.setVolume(self.volume)
                     self.fx[f[:-4]] = e
         except Exception:
             pass
+
+    def set_volume(self, frac):
+        self.volume = max(0.0, min(1.0, float(frac)))
+        for s in self.fx.values():
+            try:
+                s.setVolume(self.volume)
+            except Exception:
+                pass
 
     def play(self, name):
         if not self.muted and name in self.fx:
@@ -526,6 +535,9 @@ class Sprite(QWidget):
         self.roam = p.get("roam", True)
         self.brief_day = p.get("brief_day", "")
         self.scale_factor = float(p.get("scale", 1.0))
+        self.audio_volume = int(p.get("volume", 100))
+        if hasattr(self, "sound") and hasattr(self.sound, "set_volume"):
+            self.sound.set_volume(self.audio_volume / 100.0)
         import sprite_body
         self.body = sprite_body.Body(self.dpr, BODY_H) if sprite_body.available() else None
         self.body_on = bool(self.body) and p.get("body", True)
@@ -701,6 +713,26 @@ class Sprite(QWidget):
                 pass
             self._safe_close(sock)
             return
+        elif event in ("SetVolume", "volume", "set_volume"):
+            vol = int(p.get("volume", 100))
+            self.set_volume(vol)
+            try:
+                sock.write((json.dumps({"ok": True, "volume": getattr(self, "audio_volume", 100)}) + "\n").encode())
+                sock.flush()
+            except Exception:
+                pass
+            self._safe_close(sock)
+            return
+        elif event in ("SetVoice", "voice", "set_voice"):
+            vname = str(p.get("voice", ""))
+            self.set_voice(vname)
+            try:
+                sock.write((json.dumps({"ok": True, "voice": vname}) + "\n").encode())
+                sock.flush()
+            except Exception:
+                pass
+            self._safe_close(sock)
+            return
         self._safe_close(sock)
 
     def set_scale(self, factor):
@@ -715,6 +747,30 @@ class Sprite(QWidget):
         self._layout_bubbles()
         self.anim["pulse"] = 0.8
         self.sound.play("notify")
+
+    def set_volume(self, factor):
+        try:
+            v = max(0, min(100, int(factor)))
+        except (ValueError, TypeError):
+            return
+        self.audio_volume = v
+        if hasattr(self, "voice") and hasattr(self.voice, "speaker"):
+            self.voice.speaker.set_volume(v)
+        frac = v / 100.0
+        if hasattr(self, "sound"):
+            if hasattr(self.sound, "set_volume"):
+                self.sound.set_volume(frac)
+            elif hasattr(self.sound, "fx"):
+                for s in self.sound.fx.values():
+                    try:
+                        s.setVolume(frac)
+                    except Exception:
+                        pass
+        self._save()
+
+    def set_voice(self, vname):
+        if hasattr(self, "voice") and hasattr(self.voice, "speaker"):
+            self.voice.speaker.set_voice(vname)
 
     @staticmethod
     def _safe_close(sock):
@@ -1494,6 +1550,7 @@ class Sprite(QWidget):
             json.dump({"x": self.x(), "y": self.y(), "muted": spk_muted,
                        "roam": getattr(self, "roam", True), "body": getattr(self, "body_on", True),
                        "scale": getattr(self, "scale_factor", 1.0),
+                       "volume": getattr(self, "audio_volume", 100),
                        "voice": bool(v and v.enabled),
                        "wake_word": bool(v and getattr(v, "wake_word_enabled", True)),
                        "speaking_muted": spk_muted,

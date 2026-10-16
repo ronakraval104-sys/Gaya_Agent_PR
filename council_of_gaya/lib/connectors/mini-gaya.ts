@@ -237,3 +237,78 @@ export async function setMiniGayaScale(scale: number): Promise<{ ok: boolean; sc
     return { ok: true, scale: clamped, error: err.message };
   }
 }
+
+/**
+ * Dispatch volume change (0-100%) to Mini Gaya and persist to voice_config.json.
+ */
+export async function setMiniGayaVolume(volume: number): Promise<{ ok: boolean; volume: number; error?: string }> {
+  const clamped = Math.max(0, Math.min(100, Math.round(volume)));
+
+  // 1. Persist to voice_config.json
+  try {
+    const voiceConfigPath = path.join(os.homedir(), ".gaya", "voice", "voice_config.json");
+    await fs.mkdir(path.dirname(voiceConfigPath), { recursive: true });
+    let cfg: any = { voice_name: "Piper Neural (Amy - Ultra Natural)", rate: 0, volume: 100 };
+    try {
+      const raw = await fs.readFile(voiceConfigPath, "utf-8");
+      cfg = JSON.parse(raw);
+    } catch {}
+    cfg.volume = clamped;
+    await fs.writeFile(voiceConfigPath, JSON.stringify(cfg, null, 2), "utf-8");
+  } catch {}
+
+  // 2. Dispatch real-time HMAC packet to live Mini Gaya sprite socket
+  try {
+    const keyFile = path.join(os.homedir(), ".gaya", "secrets", "sprite.key");
+    const key = (await fs.readFile(keyFile, "utf-8")).trim();
+    const rid = crypto.randomUUID().replace(/-/g, "");
+
+    function sig(...parts: string[]) {
+      return crypto.createHmac("sha256", key).update(parts.join("|")).digest("hex");
+    }
+
+    return await new Promise((resolve) => {
+      const socket = net.createConnection({ host: HOST, port: PORT, timeout: 2000 }, () => {
+        const helloMsg = JSON.stringify({ hello: rid, auth: sig("hook", rid) }) + "\n";
+        socket.write(helloMsg);
+      });
+
+      let buf = "";
+      socket.on("data", (data) => {
+        buf += data.toString();
+        const lines = buf.split("\n");
+        for (let i = 0; i < lines.length - 1; i++) {
+          const line = lines[i].trim();
+          if (!line) continue;
+          try {
+            const parsed = JSON.parse(line);
+            if (parsed.ready) {
+              const payload = {
+                event: "SetVolume",
+                payload: { volume: clamped },
+                truncated: false,
+                sizes: {}
+              };
+              socket.write(JSON.stringify(payload) + "\n");
+            } else if (parsed.ok) {
+              socket.destroy();
+              resolve({ ok: true, volume: parsed.volume ?? clamped });
+              return;
+            }
+          } catch {}
+        }
+      });
+
+      socket.on("error", (err) => {
+        resolve({ ok: true, volume: clamped, error: `Saved to prefs (live socket: ${err.message})` });
+      });
+      socket.on("timeout", () => {
+        socket.destroy();
+        resolve({ ok: true, volume: clamped, error: "Saved to prefs (socket timeout)" });
+      });
+    });
+  } catch (err: any) {
+    return { ok: true, volume: clamped, error: err.message };
+  }
+}
+
