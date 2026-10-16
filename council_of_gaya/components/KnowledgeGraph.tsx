@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useJarvis } from "@/lib/store";
+import { useGaya } from "@/lib/store";
 
 interface NodeRecord {
   slug: string;
@@ -45,9 +45,9 @@ interface Props {
  * Self-contained: hand-rolled force simulation, SVG rendering, no d3 dep.
  */
 export function KnowledgeGraph({ size = 200, padding = 8, showLabels = false }: Props) {
-  const openRecord = useJarvis((s) => s.openRecord);
-  const openRecordSlug = useJarvis((s) => s.openRecordSlug);
-  const persona = useJarvis((s) => s.persona);
+  const openRecord = useGaya((s) => s.openRecord);
+  const openRecordSlug = useGaya((s) => s.openRecordSlug);
+  const persona = useGaya((s) => s.persona);
   const inPersonaScope = (p: string) => p === persona || p === "shared";
   const [records, setRecords] = useState<NodeRecord[]>([]);
   const [hover, setHover] = useState<string | null>(null);

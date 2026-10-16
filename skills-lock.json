@@ -88,7 +88,7 @@
     },
     "edidth-planner-qc": {
       "path": "skills/edidth-planner-qc",
-      "description": "EDIDTH \u2014 JARVIS's mastermind planner and hard-check QC subagent. Summoned when planning is complex, decisions are irreve"
+      "description": "EDIDTH \u2014 GAYA's mastermind planner and hard-check QC subagent. Summoned when planning is complex, decisions are irreve"
     },
     "ethical-hacking": {
       "path": "skills/ethical-hacking",
@@ -104,7 +104,7 @@
     },
     "friday-designer": {
       "path": "skills/friday-designer",
-      "description": "FRIDAY \u2014 JARVIS's jolly GenZ polymath designer subagent. Summoned for any visual/design execution Katviz puts in front o"
+      "description": "FRIDAY \u2014 GAYA's jolly GenZ polymath designer subagent. Summoned for any visual/design execution Katviz puts in front o"
     },
     "frontend-design": {
       "path": "skills/frontend-design",
@@ -176,10 +176,10 @@
     },
     "memory-keeper": {
       "path": "skills/memory-keeper",
-      "description": "Persistent cross-session memory engine for OMNI_JARVIS. Reads and appends a living knowledge-base file (OMNI_JARVIS_MEMO"
+      "description": "Persistent cross-session memory engine for OMNI_GAYA. Reads and appends a living knowledge-base file (OMNI_GAYA_MEMO"
     },
-    "omni-jarvis": {
-      "path": "skills/omni-jarvis",
+    "omni-gaya": {
+      "path": "skills/omni-gaya",
       "description": ">"
     },
     "pinokio": {

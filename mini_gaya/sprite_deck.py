@@ -1,4 +1,4 @@
-"""JARVIS Deck - the panel that opens when you click the sprite.
+"""GAYA Deck - the panel that opens when you click the sprite.
 
   Top bar : Home · Sessions · Agents tabs, settings, sound, close
   Home    : big live Command Core + status + quick actions | agent grid
@@ -17,7 +17,7 @@ from PySide6.QtGui import QColor, QDesktopServices, QFont, QPainter, QPen
 from PySide6.QtWidgets import (QGridLayout, QHBoxLayout, QLabel, QPushButton, QSizePolicy,
                                QStackedWidget, QVBoxLayout, QWidget)
 
-from jarvis_island import STATE_RGB, compose_core, to_pixmap
+from gaya_island import STATE_RGB, compose_core, to_pixmap
 from sprite_brief import TodayView, gather
 from sprite_ui import NOFOCUS, SessionRow, _ago, esc, focus_session, ui_font
 
@@ -50,7 +50,7 @@ QPushButton:checked { background: rgba(143,211,255,50); border-color: #8fd3ff; }
 
 
 class CoreView(QWidget):
-    """Big live Command Core - breathes in JARVIS's state colour."""
+    """Big live Command Core - breathes in GAYA's state colour."""
 
     def __init__(self, sprite, size=104):
         super().__init__()

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { useJarvis } from "@/lib/store";
+import { useGaya } from "@/lib/store";
 
 interface CountsPayload {
   ok: boolean;
@@ -27,7 +27,7 @@ interface PillarSpec {
  * normalized against the tallest pillar in the current set.
  */
 export function KnowledgeCore({ width = 640, height = 380 }: { width?: number; height?: number }) {
-  const persona = useJarvis((s) => s.persona);
+  const persona = useGaya((s) => s.persona);
   const [counts, setCounts] = useState<CountsPayload | null>(null);
 
   useEffect(() => {

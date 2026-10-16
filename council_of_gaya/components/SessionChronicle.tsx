@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { useJarvis } from "@/lib/store";
+import { useGaya } from "@/lib/store";
 
 const KIND_ICON: Record<string, { icon: string; color: string; label: string }> = {
   record:  { icon: "◆", color: "var(--text)",  label: "REC"    },
@@ -23,12 +23,12 @@ function relTime(then: number): string {
 }
 
 export function SessionChronicle() {
-  const chronicle = useJarvis((s) => s.chronicle);
-  const openRecord = useJarvis((s) => s.openRecord);
-  const togglePinnedSeat = useJarvis((s) => s.togglePinnedSeat);
-  const clearChronicle = useJarvis((s) => s.clearChronicle);
-  const chronicleVisible = useJarvis((s) => s.chronicleVisible);
-  const hideChronicle = useJarvis((s) => s.hideChronicle);
+  const chronicle = useGaya((s) => s.chronicle);
+  const openRecord = useGaya((s) => s.openRecord);
+  const togglePinnedSeat = useGaya((s) => s.togglePinnedSeat);
+  const clearChronicle = useGaya((s) => s.clearChronicle);
+  const chronicleVisible = useGaya((s) => s.chronicleVisible);
+  const hideChronicle = useGaya((s) => s.hideChronicle);
   const [expanded, setExpanded] = useState(false);
 
   // Guard against hydration mismatch: store reads localStorage at import time

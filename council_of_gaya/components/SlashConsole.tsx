@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { useJarvis } from "@/lib/store";
+import { useGaya } from "@/lib/store";
 
 const SLASH_COMMANDS = [
   { cmd: "/search",    help: "Search knowledge base: /search <query>" },
@@ -23,13 +23,13 @@ interface LogLine {
 }
 
 export function SlashConsole() {
-  const open = useJarvis((s) => s.consoleOpen);
-  const toggle = useJarvis((s) => s.toggleConsole);
-  const persona = useJarvis((s) => s.persona);
-  const setPersona = useJarvis((s) => s.setPersona);
-  const swapPersona = useJarvis((s) => s.swapPersona);
-  const fireSkill = useJarvis((s) => s.fireSkill);
-  const openRecord = useJarvis((s) => s.openRecord);
+  const open = useGaya((s) => s.consoleOpen);
+  const toggle = useGaya((s) => s.toggleConsole);
+  const persona = useGaya((s) => s.persona);
+  const setPersona = useGaya((s) => s.setPersona);
+  const swapPersona = useGaya((s) => s.swapPersona);
+  const fireSkill = useGaya((s) => s.fireSkill);
+  const openRecord = useGaya((s) => s.openRecord);
   const [input, setInput] = useState("");
   const [log, setLog] = useState<LogLine[]>([
     { kind: "out", text: "At your command, R0n. Council of Gaya standing by. Try /search, /decision, or /help." }
@@ -177,7 +177,7 @@ export function SlashConsole() {
           >
             <div className="flex items-center justify-between px-4 py-2 border-b" style={{ borderColor: "var(--border)" }}>
               <div className="hud-label" style={{ color: "var(--text)" }}>
-                JARVIS // CONSOLE
+                GAYA // CONSOLE
               </div>
               <div className="hud-label opacity-60">ESC to close</div>
             </div>

@@ -2,7 +2,7 @@
 
 import { motion, useAnimation } from "framer-motion";
 import { useEffect, useMemo } from "react";
-import { useJarvis } from "@/lib/store";
+import { useGaya } from "@/lib/store";
 import { KnowledgeGraph } from "./KnowledgeGraph";
 
 interface Props {
@@ -22,9 +22,9 @@ interface Props {
  *   5. LIVE KNOWLEDGE GRAPH sitting in the well — replaces petals + core
  */
 export function ArcReactor({ size = 240 }: Props) {
-  const activeTasks = useJarvis((s) => s.activeTasks);
-  const persona = useJarvis((s) => s.persona);
-  const flare = useJarvis((s) => s.reactorFlare);
+  const activeTasks = useGaya((s) => s.activeTasks);
+  const persona = useGaya((s) => s.persona);
+  const flare = useGaya((s) => s.reactorFlare);
   const flareCtrl = useAnimation();
 
   useEffect(() => {

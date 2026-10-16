@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { COUNCIL, type CouncilSeatId } from "@/lib/council";
-import { useJarvis } from "@/lib/store";
+import { useGaya } from "@/lib/store";
 
 interface KnowledgeSummary {
   slug: string;
@@ -22,10 +22,10 @@ interface CountsPayload {
 }
 
 export function SeatBrief() {
-  const pinnedSeat = useJarvis((s) => s.pinnedSeat) as CouncilSeatId | null;
-  const clear = useJarvis((s) => s.clearPinnedSeat);
-  const togglePinnedSeat = useJarvis((s) => s.togglePinnedSeat);
-  const openRecord = useJarvis((s) => s.openRecord);
+  const pinnedSeat = useGaya((s) => s.pinnedSeat) as CouncilSeatId | null;
+  const clear = useGaya((s) => s.clearPinnedSeat);
+  const togglePinnedSeat = useGaya((s) => s.togglePinnedSeat);
+  const openRecord = useGaya((s) => s.openRecord);
 
   // Bootstrap from URL ?seat=<id> so screenshots + deep-links work.
   // StrictMode double-fires useEffect — use useRef to guard against a re-toggle.
@@ -35,8 +35,8 @@ export function SeatBrief() {
     if (typeof window === "undefined") return;
     const params = new URLSearchParams(window.location.search);
     const seatParam = params.get("seat");
-    if (seatParam && useJarvis.getState().pinnedSeat !== seatParam) {
-      useJarvis.getState().togglePinnedSeat(seatParam);
+    if (seatParam && useGaya.getState().pinnedSeat !== seatParam) {
+      useGaya.getState().togglePinnedSeat(seatParam);
     }
     bootstrappedRef.current = true;
   }, []);

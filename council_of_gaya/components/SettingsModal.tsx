@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useJarvis } from "@/lib/store";
+import { useGaya } from "@/lib/store";
 import { Dot } from "./terminal";
 
 export function SettingsModal() {
-  const open = useJarvis((s) => s.settingsOpen);
-  const closeSettings = useJarvis((s) => s.closeSettings);
+  const open = useGaya((s) => s.settingsOpen);
+  const closeSettings = useGaya((s) => s.closeSettings);
   const [testingIpc, setTestingIpc] = useState(false);
   const [ipcResult, setIpcResult] = useState<string | null>(null);
   const [telemetryCadence, setTelemetryCadence] = useState("5s");

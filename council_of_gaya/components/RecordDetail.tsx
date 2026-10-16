@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { useJarvis } from "@/lib/store";
+import { useGaya } from "@/lib/store";
 
 interface FullRecord {
   id: string;
@@ -38,9 +38,9 @@ const ORIGIN_LABEL: Record<string, string> = {
 };
 
 export function RecordDetail() {
-  const slug = useJarvis((s) => s.openRecordSlug);
-  const closeRecord = useJarvis((s) => s.closeRecord);
-  const openRecord = useJarvis((s) => s.openRecord);
+  const slug = useGaya((s) => s.openRecordSlug);
+  const closeRecord = useGaya((s) => s.closeRecord);
+  const openRecord = useGaya((s) => s.openRecord);
   const [record, setRecord] = useState<FullRecord | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -52,8 +52,8 @@ export function RecordDetail() {
     if (typeof window === "undefined") return;
     const params = new URLSearchParams(window.location.search);
     const recordParam = params.get("record");
-    if (recordParam && useJarvis.getState().openRecordSlug !== recordParam) {
-      useJarvis.getState().openRecord(recordParam);
+    if (recordParam && useGaya.getState().openRecordSlug !== recordParam) {
+      useGaya.getState().openRecord(recordParam);
     }
     bootstrappedRef.current = true;
   }, []);

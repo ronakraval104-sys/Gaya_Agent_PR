@@ -1,20 +1,20 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useJarvis } from "@/lib/store";
+import { useGaya } from "@/lib/store";
 import { PERSONAS, type PersonaId } from "@/lib/personas";
 import { Kbd } from "./terminal";
 import { GayaSprite } from "./GayaSprite";
 
 export function Topbar() {
-  const persona = useJarvis((s) => s.persona);
-  const swapPersona = useJarvis((s) => s.swapPersona);
-  const setPersona = useJarvis((s) => s.setPersona);
-  const toggleConsole = useJarvis((s) => s.toggleConsole);
+  const persona = useGaya((s) => s.persona);
+  const swapPersona = useGaya((s) => s.swapPersona);
+  const setPersona = useGaya((s) => s.setPersona);
+  const toggleConsole = useGaya((s) => s.toggleConsole);
   const p = PERSONAS[persona];
 
   useEffect(() => {
-    if (useJarvis.getState().persona !== "gaya-core") {
+    if (useGaya.getState().persona !== "gaya-core") {
       setPersona("gaya-core");
     }
   }, [setPersona]);

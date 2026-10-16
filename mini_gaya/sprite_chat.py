@@ -4,7 +4,7 @@ session - the one that's open ("all docs 2"), a closed one, or a new one.
 Routes (best available first):
   1. cc_peer.send(...)  - Claude Code's own session-to-session pipe, when
      sprite/cc_peer.py exists and the target is live. Arrives as a message
-     from "JARVIS sprite" inside that chat.
+     from "GAYA sprite" inside that chat.
   2. New / closed session: vscode://anthropic.claude-code/open?session=..&prompt=..
      pre-fills the chat input (the extension only pre-fills, it never sends),
      then J presses Enter for you - or not, if you chose Draft.
@@ -24,7 +24,7 @@ from PySide6.QtGui import QFont, QKeySequence, QShortcut
 from PySide6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QLabel, QPlainTextEdit,
                                QPushButton, QVBoxLayout, QWidget)
 
-from jarvis_island import live_sessions
+from gaya_island import live_sessions
 from sprite_ui import _focus_window, esc, ui_font
 
 VK_RETURN, VK_CONTROL, VK_V = 0x0D, 0x11, 0x56
@@ -110,7 +110,7 @@ def deliver(sprite, sid, text, submit=True, title="", route="auto"):
     """Get `text` into session `sid` (None = new session). Never blocks the UI.
 
     route: "auto"  = Claude Code's own session pipe when the target is open
-                     (arrives as a message from "JARVIS sprite"); else the UI route
+                     (arrives as a message from "GAYA sprite"); else the UI route
            "type"  = always the UI route: it's typed into the chat as you
            "draft" = UI route, no Enter
     """
@@ -187,7 +187,7 @@ def deliver(sprite, sid, text, submit=True, title="", route="auto"):
 
 # ------------------------------------------------------------------ the composer window
 class Composer(QWidget):
-    """The one JARVIS window that DOES take focus - you type in it."""
+    """The one GAYA window that DOES take focus - you type in it."""
 
     def __init__(self, sprite):
         super().__init__(None, Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint | Qt.Tool

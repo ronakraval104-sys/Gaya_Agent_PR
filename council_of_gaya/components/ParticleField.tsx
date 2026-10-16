@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useJarvis } from "@/lib/store";
+import { useGaya } from "@/lib/store";
 
 /**
  * Ambient particle field — ~200 particles drifting in the void.
@@ -10,7 +10,7 @@ import { useJarvis } from "@/lib/store";
  */
 export function ParticleField() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const activeCount = useJarvis((s) => s.activeTasks.length);
+  const activeCount = useGaya((s) => s.activeTasks.length);
   const activeRef = useRef(activeCount);
   activeRef.current = activeCount;
 

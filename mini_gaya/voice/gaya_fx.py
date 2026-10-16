@@ -1,6 +1,6 @@
-"""The JARVIS treatment - make a clean TTS voice sound like a refined AI, not a narrator.
+"""The GAYA treatment - make a clean TTS voice sound like a refined AI, not a narrator.
 
-    python jarvis_fx.py in.wav out.wav [light|mid|heavy]
+    python gaya_fx.py in.wav out.wav [light|mid|heavy]
 
 light : presence EQ + a whisper of room  (barely there - "a very good speaker system")
 mid   : + subtle doubling (8 ms) and a slightly lower, steadier pitch (the sci-fi AI sheen)

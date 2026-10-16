@@ -3,7 +3,7 @@ pass
 sys.path.insert(0, r"C:\Users\Ronak\Desktop\JARVIS\sprite")
 from PySide6.QtWidgets import QApplication
 app=QApplication([])
-import jarvis_sprite as js, jarvis_sprite_hook as hk
+import gaya_sprite as js, gaya_sprite_hook as hk
 S=js.RequestCard.summary
 cwd=r"C:\Users\Ronak\Desktop\proj"
 for p in [r"C:\Users\Ronak\Desktop\proj\..\..\..\AppData\Local\evil.ps1",

@@ -6,7 +6,7 @@ description: >
   scripts, deploy platforms (Vercel, Netlify, Railway, Cloudflare,
   VPS/Docker), basic CI/CD wiring, and the "works on my machine /
   doesn't work in prod" diagnostic playbook. Lifted from recurring
-  deploy friction in the Jarvis voice app build, the Pixel Quote Max
+  deploy friction in the Gaya voice app build, the Pixel Quote Max
   sprint, and similar. Fires on "deploy this", "set up env",
   "fix the build", "ship to prod", "lockfile broke", "env var missing",
   "secrets management", or any runtime/deployment friction.
@@ -72,7 +72,7 @@ The diagnostic playbook, in order:
 
 ## 8 · Anti-patterns (the ones we've actually hit)
 - **`git add -A` blindly** — sweeps stray files (lesson from the Pixel Quote Max sprint). Use `git add <specific files>` or a tight `.gitignore`.
-- **Cross-drive venvs** — venv created against a Python that gets garbage-collected by the package manager (uv) silently breaks the venv (lesson from the Jarvis voice app build). Pin the Python; rebuild the venv if the base Python moves.
+- **Cross-drive venvs** — venv created against a Python that gets garbage-collected by the package manager (uv) silently breaks the venv (lesson from the Gaya voice app build). Pin the Python; rebuild the venv if the base Python moves.
 - **`.bat` without `pause`** — error windows flash-close and you never see the error.
 - **Hard-coding API keys "just for testing"** then accidentally committing. Use `.env` from day one.
 - **Skipping `.gitignore` until later.** `.gitignore` is a day-one file, not a day-fifty file.

@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { useJarvis } from "@/lib/store";
+import { useGaya } from "@/lib/store";
 import { PERSONAS } from "@/lib/personas";
 
 export function StatusBar() {
-  const persona = useJarvis((s) => s.persona);
-  const activeTasks = useJarvis((s) => s.activeTasks);
-  const morph = useJarvis((s) => s.morph);
+  const persona = useGaya((s) => s.persona);
+  const activeTasks = useGaya((s) => s.activeTasks);
+  const morph = useGaya((s) => s.morph);
   const [time, setTime] = useState<string>("");
   const [mounted, setMounted] = useState(false);
   const [ecc, setEcc] = useState<{ instinctsCount: number; contextPressure: number; securityStatus: string } | null>(null);
@@ -24,7 +24,7 @@ export function StatusBar() {
     const id = setInterval(tick, 1000);
 
     const fetchEcc = () => {
-      fetch("/api/jarvis-state")
+      fetch("/api/gaya-state")
         .then((r) => r.json())
         .then((d) => {
           if (d?.ecc) setEcc(d.ecc);

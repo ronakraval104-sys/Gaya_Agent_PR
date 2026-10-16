@@ -24,15 +24,16 @@ import urllib.request
 HOME = os.path.expanduser("~")
 MEM_DIR = os.path.join(HOME, ".claude", "projects", "C--Users-Ronak", "memory")
 MEM_INDEX = os.path.join(MEM_DIR, "MEMORY.md")
-KB = os.path.join(HOME, ".jarvis", "kb")
-BRAIN_CFG = os.path.join(HOME, ".jarvis", "voice", "brain.json")      # {"model": "...", "endpoint": "..."}
+GDIR = os.path.join(HOME, ".gaya")
+KB = os.path.join(GDIR if os.path.exists(GDIR) else os.path.join(HOME, ".jarvis"), "kb")
+BRAIN_CFG = os.path.join(GDIR if os.path.exists(GDIR) else os.path.join(HOME, ".jarvis"), "voice", "brain.json")      # {"model": "...", "endpoint": "..."}
 AGENTS = {"edidth": "Edith", "edith": "Edith", "veronica": "Veronica", "friday": "Friday",
           "dum-e": "Dum-E", "dume": "Dum-E", "dummy": "Dum-E"}
 AGENT_FILE = {"edith": "edidth", "dummy": "dum-e", "dume": "dum-e"}
 
 _STOP = set("""what did we do on the a an of is are was were about status where how in for me tell give update
 report last latest any with to from our my it its that this and or case project at up going happening been
-have has you your i am be there here now today yesterday please jarvis boss j""".split())
+have has you your i am be there here now today yesterday please gaya r0n ronak j""".split())
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 

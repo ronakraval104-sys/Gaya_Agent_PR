@@ -1,13 +1,13 @@
 """End-to-end test: real Sprite (offscreen) + real hook subprocess, robot clicks."""
 import json, os, subprocess, sys, threading, time
 os.environ["QT_QPA_PLATFORM"] = "offscreen"
-SPRITE_DIR = r"C:\Users\Ronak\Desktop\JARVIS\sprite"
+SPRITE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, SPRITE_DIR)
 from PySide6.QtWidgets import QApplication
 from PySide6.QtCore import QTimer
-import jarvis_sprite as js
+import gaya_sprite as js
 
-HOOK = os.path.join(SPRITE_DIR, "jarvis_sprite_hook.py")
+HOOK = os.path.join(SPRITE_DIR, "gaya_sprite_hook.py")
 app = QApplication([])
 s = js.Sprite()
 s.show()

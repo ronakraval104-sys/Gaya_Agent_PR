@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useJarvis } from "@/lib/store";
+import { useGaya } from "@/lib/store";
 import { Label, Dot, Badge } from "./terminal";
 
 interface ThreadRow {
@@ -39,8 +39,8 @@ interface FullPayload {
  * Click a row → openRecord(slug).
  */
 export function ThreadsBoard() {
-  const persona = useJarvis((s) => s.persona);
-  const openRecord = useJarvis((s) => s.openRecord);
+  const persona = useGaya((s) => s.persona);
+  const openRecord = useGaya((s) => s.openRecord);
   const [rows, setRows] = useState<ThreadRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [mounted, setMounted] = useState(false);

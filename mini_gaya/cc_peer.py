@@ -26,7 +26,7 @@ Transport  Windows named pipe, byte mode, newline-delimited JSON, 1 MiB line cap
 Frame 1    {"type":"auth","token":"<peerToken>"}\n
 Frame 2    {"msgV":1,"msg_id":"<uuid>","type":"user","priority":"next",
             "message":{"role":"user","content":
-              "<cross-session-message from-name=\"JARVIS sprite\" [from=\"uds:...\"] [from-mode=\"prompting|bypass\"]>\n<text>\n</cross-session-message>"},
+              "<cross-session-message from-name=\"GAYA sprite\" [from=\"uds:...\"] [from-mode=\"prompting|bypass\"]>\n<text>\n</cross-session-message>"},
             ["from":"uds:<sender pipe>"],          # only if the sender has an inbox
             ["session_id":"<receiver sessionId>"]} # receiver drops on mismatch
 Receiver   -> parses envelope, applies inbound policy (settings.crossSessionInbound,
@@ -214,7 +214,7 @@ def read_peer_token(sock: str, prefer_pid: Optional[int] = None) -> str:
 
 # --------------------------------------------------------------------------- envelope
 
-def build_frames(text: str, token: str, *, from_name: str = "JARVIS sprite",
+def build_frames(text: str, token: str, *, from_name: str = "GAYA sprite",
                  from_mode: Optional[str] = None, reply_to: Optional[str] = None,
                  session_id: Optional[str] = None, priority: str = "next") -> bytes:
     if from_mode is not None and from_mode not in FROM_MODES:
@@ -350,7 +350,7 @@ def _pipe_roundtrip(path: str, payload: bytes, timeout: float) -> tuple[bytes, s
 
 # --------------------------------------------------------------------------- public API
 
-def send(session_id: str | int, text: str, from_name: str = "JARVIS sprite", *,
+def send(session_id: str | int, text: str, from_name: str = "GAYA sprite", *,
          from_mode: Optional[str] = None, reply_to: Optional[str] = None,
          priority: str = "next", timeout: float = 5.0) -> dict:
     """
@@ -396,7 +396,7 @@ def _main(argv: list[str]) -> int:
     if len(argv) < 4:
         print("send <sessionId|pid|name> \"text\" [--from NAME] [--mode prompting|bypass]"); return 2
     target, text = argv[2], argv[3]
-    from_name, mode = "JARVIS sprite", None
+    from_name, mode = "GAYA sprite", None
     rest = argv[4:]
     while rest:
         flag = rest.pop(0)

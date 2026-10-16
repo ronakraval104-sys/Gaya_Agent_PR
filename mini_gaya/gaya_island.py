@@ -1,7 +1,7 @@
-"""JARVIS Island - the Command Core, docked to the top edge of the screen.
+"""GAYA Island - the Command Core, docked to the top edge of the screen.
 
 Collapsed : a small black notch fused to the top edge. The Command Core glows
-            inside it (colour = JARVIS's live state); one dot per Claude Code
+            inside it (colour = GAYA's live state); one dot per Claude Code
             session (cyan pulsing = working, amber = waiting for you, grey = idle).
 Hover     : expands into a brief - every recent session, what it is doing,
             the last thing you asked it, harness status.
@@ -27,10 +27,10 @@ from PySide6.QtWidgets import QApplication, QMenu, QSystemTrayIcon, QWidget
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-import jarvis_state  # noqa: E402
+import gaya_state  # noqa: E402
 
 LAYERS = os.path.join(HERE, "layers")
-PREFS = os.path.join(os.path.expanduser("~"), ".jarvis", "island.json")
+PREFS = os.path.join(os.path.expanduser("~"), ".gaya", "island.json")
 PROJECTS = os.path.join(os.path.expanduser("~"), ".claude", "projects")
 
 STATE_RGB = {"idle": (255, 215, 60), "thinking": (255, 175, 40), "spawning": (255, 235, 120),
@@ -268,7 +268,7 @@ def ago(s):
 
 
 # ------------------------------------------------------------------ fullscreen / game check
-# Apps that go fullscreen but are work, not games - JARVIS stays visible over them.
+# Apps that go fullscreen but are work, not games - GAYA stays visible over them.
 WORK_APPS = {"code.exe", "chrome.exe", "msedge.exe", "firefox.exe", "explorer.exe",
              "windowsterminal.exe", "claude.exe", "obsidian.exe", "coucou.exe", "python.exe",
              "pythonw.exe", "powershell.exe", "cmd.exe", "searchhost.exe", "shellexperiencehost.exe",
@@ -382,7 +382,7 @@ class Island(QWidget):
     # ---------------------------------------------------------------- data
     def _log_size(self):
         try:
-            return os.path.getsize(jarvis_state.LOG)
+            return os.path.getsize(gaya_state.LOG)
         except OSError:
             return 0
 
@@ -392,7 +392,7 @@ class Island(QWidget):
             self.state = states[int((time.time() - self.t0) // 3) % len(states)]
         else:
             try:
-                s = jarvis_state.current()
+                s = gaya_state.current()
                 self.state, self.detail = s["state"], s.get("detail", "")
                 self.armed, self.holds = s.get("armed", "?"), s.get("holds_today", 0)
             except Exception as e:
@@ -405,7 +405,7 @@ class Island(QWidget):
         self._notify_from_log()
         if not self.anim.state() and not self.toast:
             self._resize_to(self.target_size())
-        self.tray.setToolTip("JARVIS - %s" % self.state)
+        self.tray.setToolTip("GAYA - %s" % self.state)
 
     def _notify_from_sessions(self):
         for r in self.sessions:
@@ -420,7 +420,7 @@ class Island(QWidget):
             self.seen_ev = size
             return
         try:
-            with open(jarvis_state.LOG, "rb") as f:
+            with open(gaya_state.LOG, "rb") as f:
                 f.seek(self.seen_ev)
                 chunk = f.read().decode("utf-8", "replace")
         except OSError:
@@ -583,7 +583,7 @@ class Island(QWidget):
     def _paint_brief(self, p, w, h, t):
         p.setPen(TEXT)
         p.setFont(self.f_title)
-        p.drawText(QRectF(14 + ICON + 10, 0, 200, COLLAPSED_H), Qt.AlignVCenter, "JARVIS")
+        p.drawText(QRectF(14 + ICON + 10, 0, 200, COLLAPSED_H), Qt.AlignVCenter, "GAYA")
         p.setFont(self.f_mono)
         p.setPen(QColor(*STATE_RGB[self.state]))
         right = "%s  ·  %s  ·  %d holds today%s" % (self.state.upper(), self.armed, self.holds,
@@ -698,11 +698,11 @@ class Island(QWidget):
         m = QMenu()
         m.addAction(("Unpin" if self.pinned else "Pin") + " the brief", self._toggle_pin)
         m.addAction(("Stop" if self.demo else "Start") + " demo (all states)", self._toggle_demo)
-        m.addAction("Test notification", lambda: self.push_toast("approved", "JARVIS online",
+        m.addAction("Test notification", lambda: self.push_toast("approved", "GAYA online",
                                                                  "notifications are working, Boss"))
         m.addAction("Reset position", self._reset_pos)
         m.addSeparator()
-        m.addAction("Hide JARVIS" if not self.user_hidden else "Show JARVIS", self.toggle_visible)
+        m.addAction("Hide GAYA" if not self.user_hidden else "Show GAYA", self.toggle_visible)
         m.addAction("Quit", QApplication.quit)
         return m
 
@@ -722,7 +722,7 @@ class Island(QWidget):
     # ---------------------------------------------------------------- tray
     def _tray(self):
         self.tray = QSystemTrayIcon(QIcon(self.tray_icon_pm), self)
-        self.tray.setToolTip("JARVIS")
+        self.tray.setToolTip("GAYA")
         self.tray.activated.connect(lambda reason: self.toggle_visible()
                                     if reason == QSystemTrayIcon.Trigger else None)
         self.tray_menu = self._menu()
@@ -750,5 +750,5 @@ if __name__ == "__main__":
     app.setQuitOnLastWindowClosed(False)
     isl = Island()
     isl.show()
-    isl.push_toast("approved", "JARVIS online", "hover me for the brief, Boss")
+    isl.push_toast("approved", "GAYA online", "hover me for the brief, Boss")
     sys.exit(app.exec())

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useJarvis } from "@/lib/store";
+import { useGaya } from "@/lib/store";
 import { COUNCIL } from "@/lib/council";
 import { Dot } from "./terminal";
 import { computeAura, auraDotState, auraLabel } from "@/lib/aura";
@@ -16,15 +16,15 @@ interface NavItem {
 }
 
 export function Sidebar() {
-  const pinnedSeat = useJarvis((s) => s.pinnedSeat);
-  const togglePinnedSeat = useJarvis((s) => s.togglePinnedSeat);
-  const toggleConsole = useJarvis((s) => s.toggleConsole);
-  const openRecord = useJarvis((s) => s.openRecord);
-  const chronicle = useJarvis((s) => s.chronicle);
-  const chronicleVisible = useJarvis((s) => s.chronicleVisible);
-  const toggleChronicleVisible = useJarvis((s) => s.toggleChronicleVisible);
-  const settingsOpen = useJarvis((s) => s.settingsOpen);
-  const toggleSettings = useJarvis((s) => s.toggleSettings);
+  const pinnedSeat = useGaya((s) => s.pinnedSeat);
+  const togglePinnedSeat = useGaya((s) => s.togglePinnedSeat);
+  const toggleConsole = useGaya((s) => s.toggleConsole);
+  const openRecord = useGaya((s) => s.openRecord);
+  const chronicle = useGaya((s) => s.chronicle);
+  const chronicleVisible = useGaya((s) => s.chronicleVisible);
+  const toggleChronicleVisible = useGaya((s) => s.toggleChronicleVisible);
+  const settingsOpen = useGaya((s) => s.settingsOpen);
+  const toggleSettings = useGaya((s) => s.toggleSettings);
 
   // Aura tracker — hydration-safe: server render is neutral, client updates
   // on mount + every 30s so relative activity windows stay honest.

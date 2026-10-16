@@ -11,7 +11,7 @@ import os
 import subprocess
 import sys
 
-HOOK = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "jarvis_sprite_hook.py")
+HOOK = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "gaya_sprite_hook.py")
 
 
 def _send(payload):

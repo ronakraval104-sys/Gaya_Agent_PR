@@ -15,7 +15,8 @@ import time
 import yaml
 
 HOME = os.path.expanduser("~")
-ROUTINES = os.path.join(HOME, ".jarvis", "voice", "routines.yaml")
+GDIR = os.path.join(HOME, ".gaya")
+ROUTINES = os.path.join(GDIR if os.path.exists(GDIR) else os.path.join(HOME, ".jarvis"), "voice", "routines.yaml")
 
 DEFAULT_ROUTINES = """\
 # Voice routines. Say any phrase in `say` and J runs the steps in order.
@@ -23,7 +24,7 @@ DEFAULT_ROUTINES = """\
 work:
   say: ["prepare for work", "work mode", "let's work", "start work", "office mode"]
   steps:
-    - say: "Preparing for work, Boss."
+    - say: "Preparing for work, Ros."
     - app: "D:/Microsoft VS Code/Code.exe"
       args: ["C:/Users/Ronak/Desktop/JARVIS"]
     - app: "C:/Program Files/Google/Chrome/Application/chrome.exe"
@@ -32,12 +33,12 @@ work:
 agency:
   say: ["agency mode", "katviz mode", "prepare for agency"]
   steps:
-    - say: "Agency mode, Boss."
+    - say: "Agency mode, Ros."
     - app: "C:/Program Files/Google/Chrome/Application/chrome.exe"
       args: ["--profile-directory=Profile 12"]         # katviz.ai
     - folder: "C:/Users/Ronak/Desktop/Katviz AI"
 council:
-  say: ["open the council", "stark council", "show me the council"]
+  say: ["open the council", "gaya council", "show me the council"]
   steps:
     - url: "http://localhost:4200"
 """

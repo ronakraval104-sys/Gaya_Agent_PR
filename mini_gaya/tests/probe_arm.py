@@ -4,7 +4,7 @@ sys.path.insert(0, r"C:\Users\Ronak\Desktop\JARVIS\sprite")
 from PySide6.QtWidgets import QApplication
 from PySide6.QtCore import QTimer
 app=QApplication([])
-import jarvis_sprite as js
+import gaya_sprite as js
 class S:
     def session_title(self, s): return ""
     def decide(self,*a,**k): pass

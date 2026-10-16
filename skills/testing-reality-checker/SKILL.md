@@ -14,7 +14,7 @@ The discipline of testing claims against actual state. Most "everything works" a
 
 ## When to fire
 - Before any "ship it" / "deploy it" / "merge it" decision.
-- When an LLM (including JARVIS) claims something exists or works.
+- When an LLM (including GAYA) claims something exists or works.
 - When a third party (vendor, client, agent) reports completion of work.
 - When a memory entry asserts a fact (memory is point-in-time; reality is now).
 - When something "should be obvious" — that's usually the trap.
@@ -87,7 +87,7 @@ Verdict: based on observation, not "I added the code."
 
 ### Claim: "EDIDTH's memory says X is happening"
 Checks:
-- `grep -n "X" .agents/skills/omni-jarvis/OMNI_JARVIS_MEMORY.md`
+- `grep -n "X" .agents/skills/omni-gaya/OMNI_GAYA_MEMORY.md`
 - Check the date of the memory entry — is it stale?
 - Cross-reference with current state (file/disk/repo) — does memory still match reality?
 Verdict: memory entries are point-in-time; verify the claim is still current.

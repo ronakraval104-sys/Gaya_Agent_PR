@@ -1,4 +1,4 @@
-"""JARVIS sprite - the Command Core, free on the desktop. Replaces Coucou.
+"""GAYA sprite - the Command Core, free on the desktop. Replaces Coucou.
 
   * Drag it anywhere. It floats, breathes, blinks, glances toward your cursor,
     hops when a session finishes, shakes amber when it needs you, dozes when idle,
@@ -11,7 +11,7 @@
   * Sounds per event (mute from the tray). Hides itself during games.
   * Tray icon: click = show/hide.
 
-Events come from jarvis_sprite_hook.py over 127.0.0.1:8767 (HMAC-signed both
+Events come from gaya_sprite_hook.py over 127.0.0.1:8767 (HMAC-signed both
 ways) and from the v10 log ~/.jarvis/logs/events.jsonl. Nothing is ever
 allowed without Boss clicking - see the hook's docstring.
 """
@@ -37,14 +37,15 @@ from PySide6.QtWidgets import (QApplication, QGridLayout, QHBoxLayout, QLabel, Q
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-import jarvis_state  # noqa: E402
-import jarvis_sprite_hook as hk  # noqa: E402  (shared rules: safe_suggestions, canon)
+import gaya_state  # noqa: E402
+import gaya_sprite_hook as hk  # noqa: E402  (shared rules: safe_suggestions, canon)
 from sprite_deck import Deck  # noqa: E402
 from sprite_ui import RadialMenu, load_fonts, ui_font  # noqa: E402
-from jarvis_island import (STATE_RGB, ago, compose_core, fullscreen_busy,  # noqa: E402
+from gaya_island import (STATE_RGB, ago, compose_core, fullscreen_busy,  # noqa: E402
                            read_sessions, to_pixmap)
 
-JDIR = os.path.join(os.path.expanduser("~"), ".jarvis")
+GDIR = os.path.join(os.path.expanduser("~"), ".gaya")
+JDIR = GDIR if os.path.exists(GDIR) else os.path.join(os.path.expanduser("~"), ".jarvis")
 KEYFILE = os.path.join(JDIR, "secrets", "sprite.key")
 PREFS = os.path.join(JDIR, "sprite.json")
 SOUNDS = os.path.join(HERE, "sounds")
@@ -242,7 +243,7 @@ class RequestCard(Bubble):
             self._question(p)
             return
         self.arm_timer = QTimer(self, singleShot=True, timeout=self._rearm)
-        self.label("JARVIS needs your call - %s" % tool, "title")
+        self.label("GAYA needs your call - %s" % tool, "title")
         self.label("%s%s" % (sess or "session", ("  ·  " + proj) if proj else ""), "muted")
         text, complete, why = self.summary(tool, p.get("tool_input") or {}, req.get("truncated"),
                                            str(p.get("cwd", "")), req.get("sizes") or {})
@@ -515,7 +516,7 @@ class Sprite(QWidget):
         self.body = sprite_body.Body(self.dpr, BODY_H) if sprite_body.available() else None
         self.body_on = bool(self.body) and p.get("body", True)
         self._apply_size()
-        self.panel = Deck(self)      # the JARVIS Deck (click the sprite)
+        self.panel = Deck(self)      # the GAYA Deck (click the sprite)
         self.brief = self.panel      # old name, same thing
         from sprite_chat import Composer
         self.composer = Composer(self)
@@ -524,7 +525,7 @@ class Sprite(QWidget):
         if p.get("voice", True):
             self._start_voice()
         self.ring = RadialMenu(self)
-        self._active_log_file = jarvis_state.get_active_log_path()
+        self._active_log_file = gaya_state.get_active_log_path()
         try:
             self.log_pos = os.path.getsize(self._active_log_file) if (self._active_log_file and os.path.exists(self._active_log_file)) else 0
         except OSError:
@@ -830,7 +831,7 @@ class Sprite(QWidget):
     # ---------------------------------------------------------------- polling
     def _log_size(self):
         try:
-            return os.path.getsize(jarvis_state.get_active_log_path())
+            return os.path.getsize(gaya_state.get_active_log_path())
         except OSError:
             return 0
 
@@ -840,7 +841,7 @@ class Sprite(QWidget):
 
     def _poll(self):
         try:
-            s = jarvis_state.current()
+            s = gaya_state.current()
             self.state, self.detail = s["state"], s.get("detail", "")
             self.armed, self.holds = s.get("armed", "?"), s.get("holds_today", 0)
         except Exception as e:
@@ -869,7 +870,7 @@ class Sprite(QWidget):
         if self.panel.isVisible():
             self.panel.refresh()
         self._maybe_roam()
-        # new day while JARVIS kept running (laptop woke from sleep): morning brief once
+        # new day while GAYA kept running (laptop woke from sleep): morning brief once
         if (time.strftime("%Y-%m-%d") != self.brief_day and time.localtime().tm_hour >= 5
                 and self.isVisible() and not getattr(self, "daily", None) in self.toasts):
             self.show_daily_brief()
@@ -920,7 +921,7 @@ class Sprite(QWidget):
         self.next_roam = time.time() + random.uniform(30, 70)
 
     def _log_events(self):
-        log_path = jarvis_state.get_active_log_path()
+        log_path = gaya_state.get_active_log_path()
         if not log_path or not os.path.exists(log_path):
             return
         if getattr(self, "_active_log_file", None) != log_path:
@@ -1285,7 +1286,7 @@ class Sprite(QWidget):
         import logging
         try:
             sys.path.insert(0, os.path.join(HERE, "voice"))
-            from jarvis_voice import VoiceEngine
+            from voice.gaya_voice import VoiceEngine
             self.voice = VoiceEngine(self)
         except Exception:
             logging.exception("voice engine failed to start")

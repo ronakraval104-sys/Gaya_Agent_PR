@@ -1,6 +1,6 @@
 ---
 name: skill-architect
-description: Author skills, agent charters, and system prompts that are token-disciplined and trigger reliably. Use when creating or refining a Claude Skill (SKILL.md + YAML frontmatter), designing an AI persona/operating-charter, writing system prompts, or deciding lean-orchestrator vs monolithic prompt architecture. Meta-skill — how Jarvis extends himself.
+description: Author skills, agent charters, and system prompts that are token-disciplined and trigger reliably. Use when creating or refining a Claude Skill (SKILL.md + YAML frontmatter), designing an AI persona/operating-charter, writing system prompts, or deciding lean-orchestrator vs monolithic prompt architecture. Meta-skill — how Gaya extends himself.
 ---
 
 # Skill Architect

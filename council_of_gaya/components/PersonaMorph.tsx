@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useJarvis } from "@/lib/store";
+import { useGaya } from "@/lib/store";
 import { PERSONAS } from "@/lib/personas";
 
 /**
@@ -13,7 +13,7 @@ import { PERSONAS } from "@/lib/personas";
  * Machinery, not mascots. Honest signal that state changed.
  */
 export function PersonaMorph() {
-  const morph = useJarvis((s) => s.morph);
+  const morph = useGaya((s) => s.morph);
 
   return (
     <AnimatePresence>

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-jarvis_sprite_hook.py - relays Claude Code hook events to the JARVIS sprite.
+gaya_sprite_hook.py - relays Claude Code hook events to the GAYA sprite.
 
 Wired for: PermissionRequest (blocking, waits for Boss's click) and the
 lifecycle events SessionStart, UserPromptSubmit, Notification, Stop,
@@ -10,7 +10,7 @@ StopFailure, SubagentStart, SessionEnd (fire-and-forget).
 THE RULE (same as Coucou's): nothing is ever allowed without a decision a
 human clicked. No sprite running, no proof of key, no ack within 0.8 s, a bad
 signature, a timeout, garbage, or any error -> print nothing, exit 0 ->
-Claude Code asks in its own terminal exactly as if JARVIS did not exist.
+Claude Code asks in its own terminal exactly as if GAYA did not exist.
 
 Handshake (EDIDTH 2026-10-12): the hook says hello {id, auth}; the sprite must
 answer {ready: HMAC} BEFORE the hook sends a single byte of the payload, so a
@@ -31,7 +31,8 @@ import sys
 import time
 import uuid
 
-JDIR = os.path.join(os.path.expanduser("~"), ".jarvis")
+GDIR = os.path.join(os.path.expanduser("~"), ".gaya")
+JDIR = GDIR if os.path.exists(GDIR) else os.path.join(os.path.expanduser("~"), ".jarvis")
 KEYFILE = os.path.join(JDIR, "secrets", "sprite.key")
 PORT = 8767
 CONNECT_S = 0.3
@@ -139,7 +140,7 @@ def decision_output(payload, reply):
         if safe:
             dec["updatedPermissions"] = safe
     elif d == "deny":
-        dec = {"behavior": "deny", "message": "Denied by Boss from the JARVIS sprite."}
+        dec = {"behavior": "deny", "message": "Denied by Boss from the GAYA sprite."}
     else:
         return None                                   # "terminal", unknown -> silence
     return {"hookSpecificOutput": {"hookEventName": "PermissionRequest", "decision": dec}}

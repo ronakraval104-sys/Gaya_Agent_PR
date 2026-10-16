@@ -36,7 +36,7 @@ export function GayaSprite({
     let alive = true;
     const tick = async () => {
       try {
-        const r = await fetch("/api/jarvis-state", { cache: "no-store" });
+        const r = await fetch("/api/gaya-state", { cache: "no-store" });
         const j = await r.json();
         if (alive && j.state) setS(j);
       } catch {}

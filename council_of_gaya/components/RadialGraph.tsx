@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useMemo } from "react";
 import { COUNCIL, type CouncilSeatId } from "@/lib/council";
 import { ALWAYS_ON } from "@/lib/skills-inventory";
-import { useJarvis } from "@/lib/store";
+import { useGaya } from "@/lib/store";
 import { ArcReactor } from "./ArcReactor";
 
 interface Props {
@@ -17,11 +17,11 @@ export function RadialGraph({ size = 720 }: Props) {
   const rInnerOrbit = size * 0.28;
   const rOuterRing = size * 0.44;
 
-  const hoverSeat = useJarvis((s) => s.focusedSeat);
-  const setFocusedSeat = useJarvis((s) => s.setFocusedSeat);
-  const pinnedSeat = useJarvis((s) => s.pinnedSeat);
-  const togglePinnedSeat = useJarvis((s) => s.togglePinnedSeat);
-  const activeTasks = useJarvis((s) => s.activeTasks);
+  const hoverSeat = useGaya((s) => s.focusedSeat);
+  const setFocusedSeat = useGaya((s) => s.setFocusedSeat);
+  const pinnedSeat = useGaya((s) => s.pinnedSeat);
+  const togglePinnedSeat = useGaya((s) => s.togglePinnedSeat);
+  const activeTasks = useGaya((s) => s.activeTasks);
 
   // effective focus = pinned wins over hover
   const effectiveFocus = pinnedSeat ?? hoverSeat;

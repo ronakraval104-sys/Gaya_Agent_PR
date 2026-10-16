@@ -1,10 +1,10 @@
 "use client";
 
-import { useJarvis } from "@/lib/store";
+import { useGaya } from "@/lib/store";
 import { PERSONAS } from "@/lib/personas";
 
 export function PersonaSwitcher() {
-  const persona = useJarvis((s) => s.persona);
+  const persona = useGaya((s) => s.persona);
   const p = PERSONAS[persona] ?? PERSONAS["gaya-core"];
 
   return (

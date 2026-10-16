@@ -1,8 +1,8 @@
 """What is Gaya / Antigravity doing right now?
 Reads live from Google Antigravity session transcripts with fallback to legacy .jarvis events.
 
-    python jarvis_state.py          -> JSON  {"state": ..., "detail": ..., "source": ...}
-    python jarvis_state.py --line   -> one status-line string
+    python gaya_state.py          -> JSON  {"state": ..., "detail": ..., "source": ...}
+    python gaya_state.py --line   -> one status-line string
 
 States: broken > hold > approved > spawning > thinking > idle > asleep
 """
@@ -14,7 +14,8 @@ import time
 from datetime import datetime
 
 USER_HOME = os.path.expanduser("~")
-J = os.path.join(USER_HOME, ".jarvis")
+G = os.path.join(USER_HOME, ".gaya")
+J = G if os.path.exists(G) else os.path.join(USER_HOME, ".jarvis")
 LEGACY_LOG = os.path.join(J, "logs", "events.jsonl")
 BRAIN_DIR = os.path.join(USER_HOME, ".gemini", "antigravity", "brain")
 

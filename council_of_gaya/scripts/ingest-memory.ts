@@ -1,5 +1,5 @@
 import { ingestMemoryDir } from "../lib/knowledge/ingest";
-import { ingestOmniJarvisMemory } from "../lib/knowledge/omni-parser";
+import { ingestOmniGayaMemory } from "../lib/knowledge/omni-parser";
 import { ingestObsidianVault } from "../lib/knowledge/obsidian-ingest";
 import { replaceAll } from "../lib/knowledge/repo";
 
@@ -10,12 +10,12 @@ async function main() {
   const { records: fileRecords, report } = await ingestMemoryDir({ memoryDir: overrideDir });
   console.log(`[ingest] memory dir: parsed ${report.parsedRecords}/${report.scannedFiles} files in ${report.durationMs}ms`);
 
-  console.log("[ingest] parsing OMNI_JARVIS_MEMORY.md sections...");
-  const omniRecords = await ingestOmniJarvisMemory();
-  console.log(`[ingest] omni-jarvis: ${omniRecords.length} records extracted`);
+  console.log("[ingest] parsing OMNI_GAYA_MEMORY.md sections...");
+  const omniRecords = await ingestOmniGayaMemory();
+  console.log(`[ingest] omni-gaya: ${omniRecords.length} records extracted`);
   const omniBreakdown: Record<string, number> = {};
   for (const r of omniRecords) omniBreakdown[r.type] = (omniBreakdown[r.type] ?? 0) + 1;
-  console.log("[ingest] omni-jarvis breakdown:", omniBreakdown);
+  console.log("[ingest] omni-gaya breakdown:", omniBreakdown);
 
   console.log("[ingest] walking Obsidian vault...");
   const { records: obsidianRecords, report: obsidianReport } = await ingestObsidianVault();
@@ -32,10 +32,10 @@ async function main() {
   console.log("[ingest] combined countsByPersona:", combinedCounts(allRecords, "persona"));
   console.log("[ingest] combined countsByPriority:", combinedCounts(allRecords, "priority"));
 
-  console.log(`[ingest] boulder rules: ${report.boulderRules.length + allRecords.filter((r) => r.priority === "boulder" && r.source.origin === "omni-jarvis").length}`);
+  console.log(`[ingest] boulder rules: ${report.boulderRules.length + allRecords.filter((r) => r.priority === "boulder" && r.source.origin === "omni-gaya").length}`);
   for (const b of report.boulderRules) console.log(`  🚨 ${b} (memory-dir)`);
-  for (const r of allRecords.filter((r) => r.priority === "boulder" && r.source.origin === "omni-jarvis")) {
-    console.log(`  🚨 ${r.slug} (omni-jarvis)`);
+  for (const r of allRecords.filter((r) => r.priority === "boulder" && r.source.origin === "omni-gaya")) {
+    console.log(`  🚨 ${r.slug} (omni-gaya)`);
   }
 
   if (report.brokenLinks.length) {

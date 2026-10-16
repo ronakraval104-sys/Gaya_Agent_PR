@@ -1,25 +1,21 @@
-# Mini J — the desktop companion
+# Mini Gaya — Divine Desktop Companion
 
-A full-body JARVIS that lives on the desktop and replaces Coucou as the Claude Code companion.
+A full-body animated sprite that lives on your desktop, monitors live Antigravity sessions, holds interactive approvals, and guides the Council of Gaya.
 
-| | |
+| Feature | Description |
 |---|---|
-| **Approvals** | Allow / Always / Deny / Terminal cards from the PermissionRequest hook; Claude's questions as buttons. Nothing is allowed without a click. |
-| **Talk to J** | right-click → *Talk to J…*: a message into the open chat (Claude Code's own session pipe, `cc_peer.py`), a closed one, or a new session. *Type as me* types it as you. |
-| **The Deck** | click J: Home (live core, agent grid, Jump in), Today (done + tickable to-do), Sessions (hover to expand, jump / folder / copy), Agents (latest reports) |
-| **Morning brief** | on boot / new day: what got done, what's waiting |
-| **Life** | walks and floats around, breathes, blinks, watches the cursor, hops on done, shakes when it needs you, dozes, gets dizzy if poked; hides during games |
+| **Approvals** | Allow / Always / Deny / Terminal cards from permission hooks; tool parameters and questions as buttons. Nothing runs without explicit authorization. |
+| **Talk to Gaya** | Right-click → *Talk to Gaya…*: direct communication into active sessions, or voice query answered from local knowledge. |
+| **The Deck** | Click the sprite: Home (live Command Core & status), Today (completed + checklist), Sessions (hover to expand, jump/focus), Council (latest verdicts & metrics). |
+| **Morning Brief** | On boot / new day: what got done yesterday and what's waiting for you today. |
+| **Physics & Life** | Walks, glides, bounces, watches cursor, hops on done, shakes on hold, dozes, and hides during fullscreen media/games. |
 
+```bat
+start_gaya_pet.bat            :: Launch Mini Gaya companion
+launch_mini_gaya.py           :: Interactive desktop launcher on WinSta0\Default
+swap_coucou_for_gaya.py       :: Wire/unwire permission hooks
 ```
-start_jarvis_pet.bat          start J (also in Windows Startup)
-swap_coucou_for_jarvis.py     wire / unwire the hooks in ~/.claude/settings.json (--undo)
-tests/test_sprite_bridge.py   12 approval-safety fixtures - run with no sprite on port 8767
-prep_body.py / prep_layers.py cut the art into light layers (rembg)
-```
 
-Files: `jarvis_sprite.py` (sprite, bubbles, cards) · `sprite_deck.py` · `sprite_chat.py` · `sprite_body.py` ·
-`sprite_brief.py` · `sprite_ui.py` · `jarvis_sprite_hook.py` (the hook) · `cc_peer.py` (session pipe) ·
-`jarvis_state.py` (state from the harness log; also the Claude Code status line).
+Files: `mini_gaya.py` · `gaya_sprite.py` · `gaya_island.py` · `gaya_state.py` · `gaya_sprite_hook.py` · `sprite_deck.py` · `sprite_chat.py` · `sprite_body.py`.
 
-Art: Katviz's Command Core emblem + Android Sentinel sheet (`art/`). Sounds: Kenney, CC0. Fonts: Space Grotesk / Space Mono, OFL.
-Logs: `~/.jarvis/logs/sprite.log`.
+Logs & Preferences: `~/.gaya/logs/sprite.log` and `~/.gaya/sprite.json`.

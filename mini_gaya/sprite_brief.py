@@ -1,6 +1,6 @@
 """Daily brief + to-do checklist - what got done, what's left.
 
-Shown when JARVIS starts with Windows (and as the Deck's "Today" tab).
+Shown when GAYA starts with Windows (and as the Deck's "Today" tab).
   Done   : Antigravity sessions you worked in (yesterday, or earlier today),
            EDIDTH sign-offs, commits.
   To do  : sessions still waiting on your reply, memory items marked
@@ -23,7 +23,7 @@ HOME = os.path.expanduser("~")
 JDIR = os.path.join(HOME, ".jarvis")
 TODO = os.path.join(JDIR, "todo.json")
 MEMORY = os.path.join(HOME, ".claude", "projects", "C--Users-Ronak", "memory", "MEMORY.md")
-REPO = os.path.join(HOME, "Desktop", "JARVIS")
+REPO = os.path.join(HOME, "Desktop", "GAYA")
 
 
 def _window():
@@ -120,7 +120,7 @@ def gather(sessions_now=()):
     commits = [c for c in _git("log", "--since", start.isoformat(), "--until", end.isoformat(),
                                "--pretty=%s").splitlines() if c]
     if commits:
-        done.append(("%d commit%s to JARVIS" % (len(commits), "s" * (len(commits) > 1)), commits[0][:60]))
+        done.append(("%d commit%s to GAYA" % (len(commits), "s" * (len(commits) > 1)), commits[0][:60]))
 
     todo = []
     for r in sessions_now:
@@ -139,7 +139,7 @@ def gather(sessions_now=()):
     ahead = _git("rev-list", "--count", "@{u}..HEAD")
     if ahead.isdigit() and int(ahead) > 0:
         todo.append({"id": "push:%s" % _git("rev-parse", "--short", "HEAD"),
-                     "text": "Push %s JARVIS commit%s (your go needed)" % (ahead, "s" * (int(ahead) > 1))})
+                     "text": "Push %s GAYA commit%s (your go needed)" % (ahead, "s" * (int(ahead) > 1))})
     if os.path.exists(r"C:\Program Files\Coucou\coucou.exe"):
         todo.append({"id": "uninstall-coucou", "text": "Uninstall Coucou (admin prompt)"})
     return {"label": label, "done": done, "todo": todo[:10]}

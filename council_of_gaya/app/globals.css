@@ -205,29 +205,29 @@ body {
 }
 
 /* --- Kill any leftover watermark from v1 layout --- */
-.jarvis-watermark { display: none !important; }
+.gaya-watermark { display: none !important; }
 
 /* ---- JARVIS Command Core sprite (components/JarvisSprite.tsx) ---- */
-.jarvis-core { animation: jarvis-float 4.5s ease-in-out infinite; }
-.jarvis-core .jarvis-glow, .jarvis-core .jarvis-bloom { transition: background-color .4s ease; }
-.jarvis-bloom { filter: blur(2px); }
-.jarvis-idle .jarvis-glow { animation: jarvis-breathe 4s ease-in-out infinite; }
-.jarvis-idle .jarvis-bloom { animation: jarvis-breathe 4s ease-in-out infinite; opacity: .6; }
-.jarvis-thinking .jarvis-glow { opacity: .65; }
-.jarvis-sweep { background: linear-gradient(90deg, transparent 0%, transparent 40%, #fff 50%, transparent 60%, transparent 100%) !important; background-size: 300% 100% !important; animation: jarvis-sweep 1.6s linear infinite; mix-blend-mode: screen; }
-.jarvis-spawning .jarvis-bloom { animation: jarvis-breathe .8s ease-in-out infinite; }
-.jarvis-hold .jarvis-glow, .jarvis-hold .jarvis-bloom { animation: jarvis-breathe 2.2s ease-in-out infinite; }
-.jarvis-broken .jarvis-base { opacity: .7; }
-.jarvis-broken .jarvis-glow, .jarvis-broken .jarvis-bloom { animation: jarvis-flicker 1.7s steps(1) infinite; }
-.jarvis-approved .jarvis-glow { animation: jarvis-breathe 1.2s ease-in-out infinite; }
-.jarvis-asleep .jarvis-base { opacity: .55; }
-.jarvis-asleep .jarvis-glow { opacity: .08; }
-.jarvis-asleep .jarvis-bloom { opacity: 0; }
-.jarvis-sat { position: absolute; left: 50%; top: 50%; width: 14%; height: 14%; margin: -7% 0 0 -7%; border-radius: 50%;
+.gaya-core { animation: gaya-float 4.5s ease-in-out infinite; }
+.gaya-core .gaya-glow, .gaya-core .gaya-bloom { transition: background-color .4s ease; }
+.gaya-bloom { filter: blur(2px); }
+.gaya-idle .gaya-glow { animation: gaya-breathe 4s ease-in-out infinite; }
+.gaya-idle .gaya-bloom { animation: gaya-breathe 4s ease-in-out infinite; opacity: .6; }
+.gaya-thinking .gaya-glow { opacity: .65; }
+.gaya-sweep { background: linear-gradient(90deg, transparent 0%, transparent 40%, #fff 50%, transparent 60%, transparent 100%) !important; background-size: 300% 100% !important; animation: gaya-sweep 1.6s linear infinite; mix-blend-mode: screen; }
+.gaya-spawning .gaya-bloom { animation: gaya-breathe .8s ease-in-out infinite; }
+.gaya-hold .gaya-glow, .gaya-hold .gaya-bloom { animation: gaya-breathe 2.2s ease-in-out infinite; }
+.gaya-broken .gaya-base { opacity: .7; }
+.gaya-broken .gaya-glow, .gaya-broken .gaya-bloom { animation: gaya-flicker 1.7s steps(1) infinite; }
+.gaya-approved .gaya-glow { animation: gaya-breathe 1.2s ease-in-out infinite; }
+.gaya-asleep .gaya-base { opacity: .55; }
+.gaya-asleep .gaya-glow { opacity: .08; }
+.gaya-asleep .gaya-bloom { opacity: 0; }
+.gaya-sat { position: absolute; left: 50%; top: 50%; width: 14%; height: 14%; margin: -7% 0 0 -7%; border-radius: 50%;
   background: radial-gradient(circle, #f0f8ff 0%, rgba(160,210,255,.6) 40%, transparent 70%);
-  animation: jarvis-orbit 2.4s linear infinite; }
-@keyframes jarvis-float { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-1.5px) } }
-@keyframes jarvis-breathe { 0%,100% { opacity: .7 } 50% { opacity: 1 } }
-@keyframes jarvis-sweep { from { background-position: 100% 0 } to { background-position: -50% 0 } }
-@keyframes jarvis-flicker { 0% { opacity: 1 } 8% { opacity: .15 } 12% { opacity: .9 } 55% { opacity: 1 } 58% { opacity: .3 } 62% { opacity: 1 } }
-@keyframes jarvis-orbit { from { transform: rotate(0deg) translateX(85%) rotate(0deg) scaleY(1) } to { transform: rotate(360deg) translateX(85%) rotate(-360deg) } }
+  animation: gaya-orbit 2.4s linear infinite; }
+@keyframes gaya-float { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-1.5px) } }
+@keyframes gaya-breathe { 0%,100% { opacity: .7 } 50% { opacity: 1 } }
+@keyframes gaya-sweep { from { background-position: 100% 0 } to { background-position: -50% 0 } }
+@keyframes gaya-flicker { 0% { opacity: 1 } 8% { opacity: .15 } 12% { opacity: .9 } 55% { opacity: 1 } 58% { opacity: .3 } 62% { opacity: 1 } }
+@keyframes gaya-orbit { from { transform: rotate(0deg) translateX(85%) rotate(0deg) scaleY(1) } to { transform: rotate(360deg) translateX(85%) rotate(-360deg) } }

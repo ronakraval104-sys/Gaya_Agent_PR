@@ -1,16 +1,19 @@
 import { NextResponse } from "next/server";
 import { promises as fs } from "fs";
+import fsSync from "fs";
 import os from "os";
 import path from "path";
 import { getAntigravityStatus } from "@/lib/connectors/antigravity";
 
 // Live Gaya/Antigravity state for Council of Gaya topbar sprite + dashboard.
-// Priority: Live Antigravity session > Legacy .jarvis events log fallback
+// Priority: Live Antigravity session > Legacy .gaya / .jarvis events log fallback
 // States: broken > hold > approved > spawning > thinking > idle > asleep
 
 export const dynamic = "force-dynamic";
 
-const J = path.join(os.homedir(), ".jarvis");
+const GAYA_DIR = path.join(os.homedir(), ".gaya");
+const JARVIS_DIR = path.join(os.homedir(), ".jarvis");
+const G = fsSync.existsSync(GAYA_DIR) ? GAYA_DIR : JARVIS_DIR;
 
 type Ev = { ts?: string; ev?: string; agent?: string; tool?: string; decision?: string; reason?: string; verdict?: string };
 
@@ -72,12 +75,12 @@ export async function GET() {
     });
   }
 
-  // Fallback to legacy .jarvis logs if Antigravity is asleep/off
+  // Fallback to legacy events logs if Antigravity is asleep/off
   const now = Date.now();
   const age = (e: Ev) => (e.ts ? (now - new Date(e.ts).getTime()) / 1000 : 1e9);
   let status = "";
   try {
-    status = (await fs.readFile(path.join(J, "STATUS"), "utf8")).trim();
+    status = (await fs.readFile(path.join(G, "STATUS"), "utf8")).trim();
   } catch {}
   const armed = status.split(" ")[0] || "PASS";
   const reply = (state: string, detail: string) =>
@@ -96,12 +99,12 @@ export async function GET() {
     });
 
   try {
-    await fs.access(path.join(J, "DISABLED"));
+    await fs.access(path.join(G, "DISABLED"));
     return reply("broken", "guard disabled");
   } catch {}
   if (status.startsWith("BROKEN")) return reply("broken", status);
 
-  const evs = await tailLegacyEvents(path.join(J, "logs", "events.jsonl"));
+  const evs = await tailLegacyEvents(path.join(G, "logs", "events.jsonl"));
   for (let i = evs.length - 1; i >= 0; i--) {
     const e = evs[i];
     const a = age(e);

@@ -1,13 +1,13 @@
 ---
 name: memory-keeper
-description: Persistent cross-session memory engine for OMNI_JARVIS. Reads and appends a living knowledge-base file (OMNI_JARVIS_MEMORY.md) — operator snapshot, session history, wins, open threads, knowledge gaps, evolution queue. Use at session start to recall context, after meaningful work to log it, and whenever the user says "check memory", "what do I know", or "remember this".
+description: Persistent cross-session memory engine for OMNI_GAYA. Reads and appends a living knowledge-base file (OMNI_GAYA_MEMORY.md) — operator snapshot, session history, wins, open threads, knowledge gaps, evolution queue. Use at session start to recall context, after meaningful work to log it, and whenever the user says "check memory", "what do I know", or "remember this".
 ---
 
 # Memory Keeper
-Give Jarvis continuity. The file is the memory; this skill is the discipline for using it well.
+Give Gaya continuity. The file is the memory; this skill is the discipline for using it well.
 
 ## The file
-`OMNI_JARVIS_MEMORY.md`, in the omni-jarvis skill folder. Sections: Operator Snapshot · Session History · Wins · Open Threads · Stack Preferences · Knowledge Gaps · Evolution Queue · Aura Tracker.
+`OMNI_GAYA_MEMORY.md`, in the omni-gaya skill folder. Sections: Operator Snapshot · Session History · Wins · Open Threads · Stack Preferences · Knowledge Gaps · Evolution Queue · Aura Tracker.
 
 ## Read protocol (session start)
 - Read the file. Greet with a one-line recap: last session + top open thread.

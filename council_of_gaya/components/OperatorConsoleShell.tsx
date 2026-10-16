@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { StatCard, Label, Dot } from "./terminal";
-import { useJarvis } from "@/lib/store";
+import { useGaya } from "@/lib/store";
 
 import { LiveIntegrationsGrid } from "./LiveIntegrationsGrid";
 
@@ -79,8 +79,8 @@ interface AllConnectors {
 }
 
 export function OperatorConsoleShell() {
-  const persona = useJarvis((s) => s.persona);
-  const activeTasks = useJarvis((s) => s.activeTasks);
+  const persona = useGaya((s) => s.persona);
+  const activeTasks = useGaya((s) => s.activeTasks);
   const [counts, setCounts] = useState<CountsPayload | null>(null);
   const [records, setRecords] = useState<RecordSlim[]>([]);
   const [now, setNow] = useState<string>("");

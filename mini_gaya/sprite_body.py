@@ -1,4 +1,4 @@
-"""Full-body JARVIS - renders the commander from art/body (cut by prep_body.py).
+"""Full-body GAYA - renders the commander from art/body (cut by prep_body.py).
 
 Poses by state:
   standing (idle/thinking/spawning/approved/broken) : three-quarter view, breathing
@@ -16,7 +16,7 @@ from PySide6.QtCore import QPointF, QRectF, Qt
 from PySide6.QtGui import QColor, QPainter, QPen, QRadialGradient, QTransform
 
 from sprite_ui import ui_font
-from jarvis_island import STATE_RGB, to_pixmap
+from gaya_island import STATE_RGB, to_pixmap
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 BODY_DIR = os.path.join(HERE, "art", "body")
