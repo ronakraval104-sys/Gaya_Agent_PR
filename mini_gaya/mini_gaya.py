@@ -524,7 +524,11 @@ class Sprite(QWidget):
         if p.get("voice", True):
             self._start_voice()
         self.ring = RadialMenu(self)
-        self.log_pos = self._log_size()
+        self._active_log_file = jarvis_state.get_active_log_path()
+        try:
+            self.log_pos = os.path.getsize(self._active_log_file) if (self._active_log_file and os.path.exists(self._active_log_file)) else 0
+        except OSError:
+            self.log_pos = 0
         g = QApplication.primaryScreen().availableGeometry()
         self.move(p.get("x", g.right() - self.width() - 40), p.get("y", g.bottom() - self.height() - 60))
         # physics: it glides, gets flung, bounces off edges, roams on its own
@@ -751,17 +755,29 @@ class Sprite(QWidget):
             b.label(body, "muted")
         b.mousePressEvent = lambda e, b=b: self._drop_toast(b)
         self.toasts.append(b)
-        self.toasts = self.toasts[-3:]
-        self._layout_bubbles()
+        while len(self.toasts) > 3:
+            old = self.toasts.pop(0)
+            try:
+                old.hide()
+                old.close()
+                old.deleteLater()
+            except Exception:
+                pass
+        b.adjustSize()
         b.show()
+        self._layout_bubbles()
         QTimer.singleShot(6000, lambda b=b: self._drop_toast(b))
 
     def _drop_toast(self, b):
         if b in self.toasts:
             self.toasts.remove(b)
+        try:
             b.hide()
+            b.close()
             b.deleteLater()
-            self._layout_bubbles()
+        except Exception:
+            pass
+        self._layout_bubbles()
 
     # ---------------------------------------------------------------- bubble layout
     def _layout_bubbles(self):
@@ -789,7 +805,8 @@ class Sprite(QWidget):
     def place_bubble(self, w, above):
         """Speech-bubble placement: the first bubble sits just above the head
         with its tail pointing at the visor; more stack upward."""
-        g = self.screen().availableGeometry()
+        scr = self.screen() or QApplication.primaryScreen()
+        g = scr.availableGeometry() if scr else QRect(0, 0, 1920, 1080)
         hx, hy = self.head_point()
         right_side = hx > g.center().x()
         tail_px = getattr(w, "TAIL", 0)
@@ -903,12 +920,28 @@ class Sprite(QWidget):
         self.next_roam = time.time() + random.uniform(30, 70)
 
     def _log_events(self):
-        size = self._log_size()
+        log_path = jarvis_state.get_active_log_path()
+        if not log_path or not os.path.exists(log_path):
+            return
+        if getattr(self, "_active_log_file", None) != log_path:
+            self._active_log_file = log_path
+            try:
+                self.log_pos = os.path.getsize(log_path)
+            except OSError:
+                self.log_pos = 0
+            return
+
+        try:
+            size = os.path.getsize(log_path)
+        except OSError:
+            return
+
         if size < self.log_pos:
-            self.log_pos = 0
+            self.log_pos = size
+            return
         if size == self.log_pos:
             return
-        log_path = jarvis_state.get_active_log_path()
+
         try:
             with open(log_path, "rb") as f:
                 f.seek(self.log_pos)
@@ -917,6 +950,11 @@ class Sprite(QWidget):
             return
         self.log_pos = size
         is_antigravity = "transcript.jsonl" in log_path
+
+        seen_logos_pass = False
+        waiting_event = None
+        subagent_event = None
+
         for ln in chunk.splitlines():
             try:
                 e = json.loads(ln)
@@ -926,21 +964,16 @@ class Sprite(QWidget):
                 content = str(e.get("content", ""))
                 tool_calls = e.get("tool_calls") or []
                 if "[🛡️ LOGOS]" in content and "PASS" in content:
-                    self.sound.play("done")
-                    self.anim["hop"] = 1.0
-                    self.toast("approved", "🛡️ LOGOS signed off - PASS", "Gate verified")
-                    self.speak("LOGOS passed it, Ros.")
+                    seen_logos_pass = True
                 elif tool_calls and isinstance(tool_calls, list):
                     tc = tool_calls[0]
                     t_name = tc.get("name", "")
                     args = tc.get("args") or {}
                     t_summary = args.get("toolSummary") or args.get("toolAction") or t_name
                     if t_name == "ask_question":
-                        self.sound.play("alert")
-                        self.toast("hold", "Antigravity is waiting", str(t_summary)[:90])
-                        self.speak("Antigravity needs your input, Ros.")
+                        waiting_event = str(t_summary)[:90]
                     elif t_name == "invoke_subagent":
-                        self.toast("spawning", "Subagents dispatched", str(t_summary)[:90])
+                        subagent_event = str(t_summary)[:90]
             else:
                 if e.get("ev") == "guard" and e.get("decision") == "deny":
                     self.toast("hold", "Guard blocked %s" % (e.get("tool") or "a call"),
@@ -948,16 +981,25 @@ class Sprite(QWidget):
                 elif e.get("ev") == "subagent_stop":
                     v = str(e.get("verdict") or "")
                     if v.startswith("PASS"):
-                        self.sound.play("done")
-                        self.anim["hop"] = 1.0
-                        self.toast("approved", "🛡️ LOGOS signed off - PASS", ", ".join(e.get("tokens") or [])[:90])
-                        self.speak("LOGOS passed it, Ros.")
+                        seen_logos_pass = True
                     elif v.startswith("FAIL"):
                         self.sound.play("error")
                         self.toast("broken", "🛡️ LOGOS: FAIL", "fixes needed - report saved to the KB")
                         self.speak("LOGOS held it. Fixes needed, Ros.")
                     else:
                         self.toast("info", "%s reported back" % str(e.get("agent", "agent")).upper(), "saved to the KB")
+
+        if seen_logos_pass:
+            self.sound.play("done")
+            self.anim["hop"] = 1.0
+            self.toast("approved", "🛡️ LOGOS signed off - PASS", "Gate verified")
+            self.speak("LOGOS passed it, Ros.")
+        if waiting_event:
+            self.sound.play("alert")
+            self.toast("hold", "Antigravity is waiting", waiting_event)
+            self.speak("Antigravity needs your input, Ros.")
+        elif subagent_event:
+            self.toast("spawning", "Subagents dispatched", subagent_event)
 
     # ---------------------------------------------------------------- visibility
     def _visibility(self):
@@ -1016,12 +1058,16 @@ class Sprite(QWidget):
                 for c in self.cards.values():
                     c.arm(400)                         # landed: a short settle, then clickable
                 self._save()
+                if self.toasts or self.requests or self.panel.isVisible():
+                    self._layout_bubbles()
         else:
             vx, vy = self.vel[0] / 0.016, self.vel[1] / 0.016      # stored as px/frame -> px/s
             if abs(vx) + abs(vy) < 20:
                 if self.vel != [0.0, 0.0]:
                     self.vel = [0.0, 0.0]
                     self._save()
+                    if self.toasts or self.requests or self.panel.isVisible():
+                        self._layout_bubbles()
                 return
             decay = math.exp(-2.6 * dt)
             vx, vy = vx * decay, vy * decay
@@ -1040,8 +1086,7 @@ class Sprite(QWidget):
         rx, ry = round(x), round(y)
         if (rx, ry) != (self.x(), self.y()):
             self.move(rx, ry)
-            self._bubble_frame = getattr(self, "_bubble_frame", 0) + 1
-            if self._bubble_frame % 3 == 0 and (self.toasts or self.requests or self.panel.isVisible()):
+            if self.toasts or self.requests or self.panel.isVisible():
                 self._layout_bubbles()
 
     def dozing(self):
