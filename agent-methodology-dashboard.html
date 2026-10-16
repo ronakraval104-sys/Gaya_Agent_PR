@@ -51,7 +51,6 @@ body {
   padding: 32px 28px 80px;
 }
 
-/* NAVBAR */
 .navbar {
   display: flex;
   align-items: center;
@@ -110,12 +109,6 @@ body {
   border-color: var(--border-focus);
 }
 
-.nav-link.active {
-  color: var(--logos-cyan);
-  border-color: rgba(0, 212, 255, 0.4);
-}
-
-/* HERO */
 .hero {
   margin-bottom: 40px;
 }
@@ -156,7 +149,6 @@ body {
   line-height: 1.6;
 }
 
-/* SECTION TITLE */
 .section-header {
   display: flex;
   align-items: center;
@@ -179,7 +171,6 @@ body {
   letter-spacing: 0.05em;
 }
 
-/* COUNCIL CHAMBER GRID */
 .chamber-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
@@ -216,7 +207,6 @@ body {
 .card-bob::before { background: var(--bob-blue); }
 .card-freya::before { background: var(--freya-purple); }
 .card-tvashtar::before { background: var(--tvashtar-red); }
-.card-gaya::before { background: var(--gaya-gold); }
 
 .seat-header {
   display: flex;
@@ -243,7 +233,6 @@ body {
 .badge-bob { color: var(--bob-blue); }
 .badge-freya { color: var(--freya-purple); }
 .badge-tvashtar { color: var(--tvashtar-red); }
-.badge-gaya { color: var(--gaya-gold); }
 
 .seat-name {
   font-family: var(--font-display);
@@ -302,7 +291,6 @@ body {
   font-family: var(--font-mono);
 }
 
-/* PONYTAIL STEPPER */
 .ponytail-wrap {
   background: var(--surface-card);
   border: 1px solid var(--border);
@@ -326,13 +314,6 @@ body {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.step-card:hover, .step-card.active {
-  border-color: var(--ponytail-green);
-  background: var(--surface-2);
 }
 
 .step-num {
@@ -355,7 +336,6 @@ body {
   line-height: 1.4;
 }
 
-/* PROTOCOL GENERATOR */
 .sim-panel {
   background: var(--surface-card);
   border: 1px solid var(--border);
@@ -451,7 +431,7 @@ body {
       <span class="brand-title">Agent Methodology</span>
     </div>
     <div class="nav-actions">
-      <a href="skills-dashboard.html" class="nav-link">Skills Matrix (83) &rarr;</a>
+      <a href="skills-dashboard.html" class="nav-link">Skills Matrix (98) &rarr;</a>
       <a href="https://github.com/ronakraval104-sys/Gaya_Agent_PR" target="_blank" class="nav-link">GitHub Repo</a>
     </div>
   </nav>
@@ -459,9 +439,9 @@ body {
   <!-- HERO -->
   <header class="hero">
     <div class="hero-meta">&bull; THE EXECUTIVE GOVERNANCE CHAMBER &bull;</div>
-    <h1 class="hero-title"><span>No-Ventriloquism Protocol</span> and Council Specialists</h1>
+    <h1 class="hero-title"><span>Auto-Assigned Skills Invariant</span> and Council Specialists</h1>
     <p class="hero-sub">
-      Strict division of responsibilities across four specialized Council seats. No code ships without an explicit verification pass, every claim requires proof, and closed systems are cleanly dissected before implementation.
+      Strict division of responsibilities across four specialized Council seats. Every task explicitly binds designated skills, no code ships without a verified pass, and all claims provide honest receipts.
     </p>
   </header>
 
@@ -484,15 +464,15 @@ body {
           <div class="seat-model">Qwythos 9B / DeepSeek<br>128K context</div>
         </div>
         <p class="seat-mandate">
-          Read-only auditor of the Council. No file mutation, code commit, deploy, or state-changing action ships without an explicit PASS verdict. Exposes load-bearing assumptions before execution.
+          Read-only auditor of the Council. No file mutation, code commit, deploy, or state-changing action ships without an explicit PASS verdict. Binds QC and review skills.
         </p>
         <div class="protocol-box">[🛡️ LOGOS]
-VERDICT: PASS scope=&lt;path&gt; -- &lt;rationale&gt;
+Skill: &lt;skill&gt; | VERDICT: PASS scope=&lt;path&gt; -- &lt;rationale&gt;
 [/LOGOS]</div>
       </div>
       <div class="seat-stats">
         <div>
-          <div class="seat-stat-val">17</div>
+          <div class="seat-stat-val">20</div>
           <div class="seat-stat-lbl">Assigned Skills</div>
         </div>
         <div>
@@ -513,16 +493,15 @@ VERDICT: PASS scope=&lt;path&gt; -- &lt;rationale&gt;
           <div class="seat-model">Qwen 2.5 Coder 7B<br>128K context</div>
         </div>
         <p class="seat-mandate">
-          Precision execution engine. Takes specifications locked by LOGOS and delivers atomic commits, minimal diffs, and honest command receipts. Flags spec gaps upstream immediately.
+          Precision execution engine. Takes specifications locked by LOGOS and delivers atomic commits, minimal diffs, and honest command receipts. Binds build, ops, and systems skills.
         </p>
         <div class="protocol-box">[🔨 Bob]
-Shipped: &lt;files, lines, components&gt;
-Receipts: &lt;test runs, exit codes&gt;
+Skill: &lt;skill&gt; | Shipped: &lt;files&gt; | Receipts: &lt;exit codes&gt;
 [/Bob]</div>
       </div>
       <div class="seat-stats">
         <div>
-          <div class="seat-stat-val">15</div>
+          <div class="seat-stat-val">20</div>
           <div class="seat-stat-lbl">Assigned Skills</div>
         </div>
         <div>
@@ -543,15 +522,15 @@ Receipts: &lt;test runs, exit codes&gt;
           <div class="seat-model">Vision-Native / Phi-3<br>32K-128K context</div>
         </div>
         <p class="seat-mandate">
-          Polymath designer and unfiltered strategic seer. High-taste UI/UX, brand identity, vector assets, 3D visualization, and commercial agency growth. Direct and fearless critique.
+          Polymath designer and unfiltered strategic seer. High-taste UI/UX, Emil Kowalski craft motion, brand identity, 3D visualization, and commercial agency growth.
         </p>
         <div class="protocol-box">[🎨 Freya]
-Design: &lt;visual rationale, tokens, layout decisions&gt;
+Skill: &lt;skill&gt; | Design: &lt;visual rationale, motion tokens&gt;
 [/Freya]</div>
       </div>
       <div class="seat-stats">
         <div>
-          <div class="seat-stat-val">29</div>
+          <div class="seat-stat-val">36</div>
           <div class="seat-stat-lbl">Assigned Skills</div>
         </div>
         <div>
@@ -575,10 +554,9 @@ Design: &lt;visual rationale, tokens, layout decisions&gt;
           Systems architect and deep reverse engineering engine. Sole owner of REA and Universal Modder. Handles binary disassembly, Electron ASAR unpacking, Android APKs, and undocumented protocol extraction.
         </p>
         <div class="protocol-box">[🦾 Tvashtar]
-Target / Objective: &lt;target&gt;
+Skill: &lt;skill&gt; | Target: &lt;target&gt;
 REA Execution: &lt;disassembly, extraction&gt;
 Recovered Specs: &lt;schemas, endpoints&gt;
-Handoff: Bob builds / Freya styles / LOGOS verifies
 [/Tvashtar]</div>
       </div>
       <div class="seat-stats">
@@ -606,7 +584,7 @@ Handoff: Bob builds / Freya styles / LOGOS verifies
       "The best code is the code never written." Before writing any code, climb the 7-rung ladder from top to bottom:
     </p>
     <div class="ponytail-steps">
-      <div class="step-card active">
+      <div class="step-card">
         <span class="step-num">RUNG 01</span>
         <h4 class="step-name">Exist at all?</h4>
         <p class="step-desc">Skip it completely (YAGNI). Eliminate unnecessary complexity.</p>
@@ -647,7 +625,7 @@ Handoff: Bob builds / Freya styles / LOGOS verifies
   <!-- PROTOCOL SIMULATOR -->
   <div class="section-header">
     <h2 class="section-title">Council Protocol Simulator</h2>
-    <span class="section-tag">Interactive Syntax Validator</span>
+    <span class="section-tag">Auto-Assigned Skill Validator</span>
   </div>
 
   <div class="sim-panel">
@@ -660,6 +638,10 @@ Handoff: Bob builds / Freya styles / LOGOS verifies
           <option value="freya">&#127912; Freya (Heart / Creative Director)</option>
           <option value="tvashtar">&#129302; Tvashtar (Craftsman & REA Engine)</option>
         </select>
+      </div>
+      <div>
+        <label class="sim-label">Auto-Assigned Skill:</label>
+        <input type="text" id="simSkill" class="sim-input" style="width:100%; margin-top:6px;" value="verification-before-completion" oninput="updateSim()">
       </div>
       <div>
         <label class="sim-label">Target Scope / Objective:</label>
@@ -686,18 +668,19 @@ Handoff: Bob builds / Freya styles / LOGOS verifies
 <script>
 function updateSim() {
   const seat = document.getElementById('simSeat').value;
+  const skill = document.getElementById('simSkill').value || 'general';
   const scope = document.getElementById('simScope').value || 'workspace';
   const details = document.getElementById('simDetails').value || 'clean pass';
   let out = '';
 
   if (seat === 'logos') {
-    out = `[🛡️ LOGOS]\nVERDICT: PASS scope=${scope} -- ${details}\n[/LOGOS]`;
+    out = `[🛡️ LOGOS]\nSkill: ${skill} | VERDICT: PASS scope=${scope} -- ${details}\n[/LOGOS]`;
   } else if (seat === 'bob') {
-    out = `[🔨 Bob]\nShipped: ${scope}\nReceipts: ${details}\n[/Bob]`;
+    out = `[🔨 Bob]\nSkill: ${skill} | Shipped: ${scope} | Receipts: ${details}\n[/Bob]`;
   } else if (seat === 'freya') {
-    out = `[🎨 Freya]\nDesign: ${details}\nScope: ${scope}\n[/Freya]`;
+    out = `[🎨 Freya]\nSkill: ${skill} | Design: ${details} | Scope: ${scope}\n[/Freya]`;
   } else {
-    out = `[🦾 Tvashtar]\nTarget / Objective: ${scope}\nREA Execution: binary inspection & interface recovery\nRecovered Specs: ${details}\nHandoff: Bob implements code / Freya executes visual design / LOGOS verifies integrity\n[/Tvashtar]`;
+    out = `[🦾 Tvashtar]\nSkill: ${skill} | Target: ${scope}\nREA Execution: binary inspection & interface recovery\nRecovered Specs: ${details}\nHandoff: Bob implements code / Freya executes visual design / LOGOS verifies integrity\n[/Tvashtar]`;
   }
 
   document.getElementById('simCode').innerText = out;

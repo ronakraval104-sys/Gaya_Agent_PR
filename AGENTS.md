@@ -53,6 +53,16 @@ Before taking code actions, climb Ponytail's ladder from top to bottom:
 ---
 
 ## Subagent Council & No-Ventriloquism Tagged Protocol
+
+## Mandatory Auto-Assigned Skills Invariant
+Whenever any task is planned, delegated, or executed, the assigned agent MUST explicitly declare and bind the specific skill being deployed for that task.
+Never execute work without auto-assigning skills.
+Every protocol block MUST declare the assigned skill:
+- [🛡️ LOGOS] Skill: <skill> | VERDICT: PASS scope=<path>
+- [🔨 Bob] Skill: <skill> | Shipped: <files> | Receipts: <tests>
+- [🎨 Freya] Skill: <skill> | Design: <visual rationale>
+- [🦾 Tvashtar] Skill: <skill> | Target: <target> | REA Execution: <reversing>
+
 When delegating or spawning subagents, deploy specialists according to their designated roles. Each subagent gets their own distinct tagged block:
 
 1. **🛡️ LOGOS (Mind)**:

@@ -2,11 +2,11 @@
 ### Gaya Update 0.5.2610 · The Multi-Agent Council Architecture
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Skills](https://img.shields.io/badge/Skills-83%20modules-a78bfa)](skills-dashboard.html)
+[![Skills](https://img.shields.io/badge/Skills-98%20modules-a78bfa)](skills-dashboard.html)
 [![Council Seats](https://img.shields.io/badge/Council%20Seats-4%20Specialists-38bdf8)](agent-methodology-dashboard.html)
 [![Multi--Client](https://img.shields.io/badge/Platforms-Antigravity%20%7C%20OpenCode%20%7C%20Claude%20Code%20%7C%20Codex-22c55e)](docs/MULTI_CLIENT_SETUP.md)
 
-> Named after **Bodh Gaya** — the seat of awakening. A battle-tested multi-agent operating system featuring the **Subagent Council**, **83 specialized skills**, the **Council of Gaya** Next.js dashboard, and the **Mini Gaya** reactive desktop companion.
+> Named after **Bodh Gaya** — the seat of awakening. A battle-tested multi-agent operating system featuring the **Subagent Council**, **98 specialized skills**, the **Council of Gaya** Next.js dashboard, and the **Mini Gaya** reactive desktop companion.
 
 ---
 
@@ -47,10 +47,13 @@ Gaya deploys specialized agents with distinct mandates. No agent oversteps its r
 
 | Agent | Council Seat | Designated Mandate | Protocol Block |
 |---|---|---|---|
-| **🛡️ LOGOS** | **Mind** | Mastermind Planner & Hard-Check QC Gate. **Read-only auditor**. No code or mutation ships without an explicit PASS verdict. | `[🛡️ LOGOS] VERDICT: PASS scope=<path>` |
-| **🔨 Bob** | **Hands** | Precision Builder & Execution Engine. Delivers atomic commits, minimal diffs, and honest command receipts. | `[🔨 Bob] Shipped: ... Receipts: ...` |
-| **🎨 Freya** | **Heart** | Polymath Designer & Seer of the Unfiltered. High-taste UI/UX, brand identity, vector assets, 3D mockups, and uncensored research. | `[🎨 Freya] Design: ...` |
-| **🦾 Tvashtar** | **Craftsman** | Systems Architect, Deep Reverse Engineering Engine & Toolkeeper. Sole owner of **REA** (`reverse-engineer-anything`) and **Universal Modder**. Binary disassembly, ASAR extraction, protocol recovery. | `[🦾 Tvashtar] REA Execution: ... Specs: ...` |
+| **🛡️ LOGOS** | **Mind** | Mastermind Planner & Hard-Check QC Gate. **Read-only auditor**. No code or mutation ships without an explicit PASS verdict. | `[🛡️ LOGOS] Skill: <skill> \| VERDICT: PASS scope=<path>` |
+| **🔨 Bob** | **Hands** | Precision Builder & Execution Engine. Delivers atomic commits, minimal diffs, and honest command receipts. | `[🔨 Bob] Skill: <skill> \| Shipped: ... Receipts: ...` |
+| **🎨 Freya** | **Heart** | Polymath Designer & Seer of the Unfiltered. High-taste UI/UX, brand identity, vector assets, 3D mockups, and uncensored research. | `[🎨 Freya] Skill: <skill> \| Design: ...` |
+| **🦾 Tvashtar** | **Craftsman** | Systems Architect, Deep Reverse Engineering Engine & Toolkeeper. Sole owner of **REA** (`reverse-engineer-anything`) and **Universal Modder**. Binary disassembly, ASAR extraction, protocol recovery. | `[🦾 Tvashtar] Skill: <skill> \| REA Execution: ... Specs: ...` |
+
+### Mandatory Auto-Assigned Skills Invariant
+Whenever any task is assigned, the executing Council agent MUST explicitly bind and declare its active skill. No agent operates without an assigned skill.
 
 ---
 
@@ -144,13 +147,14 @@ Governed exclusively by **🦾 Tvashtar**:
 
 ---
 
-## 🛠️ The 83 Skill Modules
+## 🛠️ The 98 Skill Modules
 
 Explore the complete interactive catalog:
 - 📊 **[Interactive Skills Dashboard](skills-dashboard.html)** (search, filter, dependencies)
 - ⚔️ **[Agent Methodology Dashboard](agent-methodology-dashboard.html)** (council cards, model specs)
 
 ### Highlighted Additions in Update 0.5.2610:
+- **Emil Kowalski Motion Suite (15 skills)**: High-craft interaction and animation primitives (`animate`, `animate-expo`, `animation-performance`, `animation-vocabulary`, `apple-design`, `ask-sonner`, `break-ui`, `emil-design-eng`, `find-animation-opportunities`, `improve-animations`, `mobile-native`, `pick-ui-library`, `prototype`, `review-animations`, `write-swift`).
 - **`reverse-engineer-anything`**: Complete local REA engine.
 - **`universal-modder`**: Universal PC game modding and asset extraction.
 - **`slop-monster`**: Anti-corporate jargon and AI-tell removal tool.
