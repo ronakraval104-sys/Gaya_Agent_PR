@@ -156,13 +156,14 @@ class Listener:
             if not in_speech:
                 noise_floor = 0.95 * noise_floor + 0.05 * rms
 
-            speech_threshold = max(0.012, noise_floor * 2.2)
+            speech_threshold = max(0.024, noise_floor * 2.4)
 
             if rms >= speech_threshold:
                 if not in_speech:
                     in_speech = True
                     silence_blocks = 0
-                    self.on_state("listening")
+                    if time.time() < self.active_window_until:
+                        self.on_state("listening")
                 speech_frames.append(chunk)
                 silence_blocks = 0
             elif in_speech:

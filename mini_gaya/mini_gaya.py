@@ -537,7 +537,7 @@ class Sprite(QWidget):
         self.listening = False
         self.voice = None
         if p.get("voice", True):
-            self._start_voice(wake_word=p.get("wake_word", True))
+            self._start_voice(wake_word=p.get("wake_word", True), speaking_muted=p.get("speaking_muted", p.get("muted", False)))
         self.ring = RadialMenu(self)
         self.sal = get_user_salutation()
         self._active_log_file = gaya_state.get_active_log_path()
@@ -546,9 +546,15 @@ class Sprite(QWidget):
         except OSError:
             self.log_pos = 0
         g = QApplication.primaryScreen().availableGeometry()
-        self.move(p.get("x", g.right() - self.width() - 40), p.get("y", g.bottom() - self.height() - 60))
+        init_x = p.get("x", g.right() - self.width() - 40)
+        init_y = p.get("y", g.bottom() - self.height() - 60)
+        if init_x > g.right() - 20 or init_x < g.left():
+            init_x = g.right() - self.width() - 40
+        if init_y > g.bottom() - 20 or init_y < g.top():
+            init_y = g.bottom() - self.height() - 60
+        self.move(int(init_x), int(init_y))
         # physics: it glides, gets flung, bounces off edges, roams on its own
-        self.fpos = [float(self.x()), float(self.y())]
+        self.fpos = [float(init_x), float(init_y)]
         self.vel = [0.0, 0.0]
         self.target = None
         self.drag_trail = []
@@ -890,7 +896,14 @@ class Sprite(QWidget):
         if (time.strftime("%Y-%m-%d") != self.brief_day and time.localtime().tm_hour >= 5
                 and self.isVisible() and not getattr(self, "daily", None) in self.toasts):
             self.show_daily_brief()
-        self.tray.setToolTip("Mini Gaya - %s" % self.state)
+        v = getattr(self, "voice", None)
+        w_on = bool(v and getattr(v, "wake_word_enabled", False))
+        spk_muted = bool((v and v.speaker and v.speaker.muted) or getattr(self.sound, "muted", False))
+        tip = "Mini Gaya (%s)\n🎙️ Listening: %s  |  🔊 Speaking: %s" % (
+            self.state.capitalize(), "ON" if w_on else "MUTED", "MUTED" if spk_muted else "ON"
+        )
+        self.setToolTip(tip)
+        self.tray.setToolTip(tip)
 
     # ---------------------------------------------------------------- movement
     def _screen_box(self):
@@ -1282,11 +1295,10 @@ class Sprite(QWidget):
         m.addAction("Voice: on (say 'Hey Gaya' or hold Right Ctrl)" if v_on else "Voice: off", self.toggle_voice)
         if v_on:
             w_on = bool(getattr(self.voice, "wake_word_enabled", False))
-            m.addAction("Mute Wake Word ('Hey Gaya')" if w_on else "Unmute Wake Word ('Hey Gaya')", self.toggle_wake)
-            m.addAction("Unmute Mini Gaya" if self.voice.speaker.muted else "Mute Mini Gaya",
-                        lambda: self.voice.mute(not self.voice.speaker.muted))
+            spk_muted = bool((self.voice.speaker and self.voice.speaker.muted) or self.sound.muted)
+            m.addAction("🎙️ Mute Listening ('Hey Gaya')" if w_on else "🎙️ Unmute Listening ('Hey Gaya')", self.toggle_wake)
+            m.addAction("🔇 Mute Speaking (Gaya Voice)" if not spk_muted else "🔊 Unmute Speaking (Gaya Voice)", self.toggle_speaking)
         m.addAction("Hide Mini Gaya" if not self.user_hidden else "Show Mini Gaya", self.toggle)
-        m.addAction("Unmute sounds" if self.sound.muted else "Mute sounds", self._mute)
         m.addAction("Test notification", lambda: (self.sound.play("done"), self.toast(
             "approved", "Mini Gaya online", "notifications working, %s" % self.sal)))
         m.addAction("Bring me to the corner", self._home)
@@ -1296,16 +1308,33 @@ class Sprite(QWidget):
         return m
 
     def _mute(self):
-        self.sound.muted = not self.sound.muted
-        self._save()
+        self.toggle_speaking()
 
-    def _start_voice(self, wake_word=True):
+    def toggle_speaking(self):
+        v = getattr(self, "voice", None)
+        if v and v.speaker:
+            new_muted = not v.speaker.muted
+            v.mute(new_muted)
+            self.sound.muted = new_muted
+            self.toast("info", "Speaking: %s" % ("MUTED" if new_muted else "ACTIVE"),
+                       "Gaya is silent" if new_muted else "Gaya voice output active")
+        else:
+            self.sound.muted = not self.sound.muted
+            new_muted = self.sound.muted
+            self.toast("info", "Speaking: %s" % ("MUTED" if new_muted else "ACTIVE"), "")
+        self._save()
+        if hasattr(self, "panel") and hasattr(self.panel, "_sync"):
+            self.panel._sync()
+
+    def _start_voice(self, wake_word=True, speaking_muted=False):
         """Kokoro + Whisper on background threads; J keeps working if they fail."""
         import logging
         try:
             sys.path.insert(0, os.path.join(HERE, "voice"))
             from voice.gaya_voice import VoiceEngine
             self.voice = VoiceEngine(self, wake_word_enabled=wake_word)
+            if speaking_muted:
+                self.voice.mute(True)
         except Exception:
             logging.exception("voice engine failed to start")
             self.voice = None
@@ -1324,8 +1353,8 @@ class Sprite(QWidget):
         if self.voice:
             new_val = not getattr(self.voice, "wake_word_enabled", True)
             self.voice.set_wake_enabled(new_val)
-            self.toast("info", "Wake Word 'Hey Gaya': %s" % ("Active" if new_val else "Muted"),
-                       "Hands-free active" if new_val else "Hold Right Ctrl to talk")
+            self.toast("info", "Listening: %s" % ("ACTIVE" if new_val else "MUTED"),
+                       "Hands-free active" if new_val else "Mic passive listening off · Hold Right Ctrl to talk")
             self._save()
             if hasattr(self, "panel") and hasattr(self.panel, "_sync"):
                 self.panel._sync()
@@ -1434,8 +1463,11 @@ class Sprite(QWidget):
         self._save()
 
     def _home(self):
-        g = self.screen().availableGeometry()
-        self.move(g.right() - self.width() - 40, g.bottom() - self.height() - 60)
+        g = QApplication.primaryScreen().availableGeometry()
+        self.fpos = [float(g.right() - self.width() - 40), float(g.bottom() - self.height() - 60)]
+        self.vel = [0.0, 0.0]
+        self.target = self.glide = None
+        self.move(int(self.fpos[0]), int(self.fpos[1]))
         self._save()
         self._layout_bubbles()
 
@@ -1457,11 +1489,14 @@ class Sprite(QWidget):
 
     def _save(self):
         try:
-            json.dump({"x": self.x(), "y": self.y(), "muted": self.sound.muted,
+            v = getattr(self, "voice", None)
+            spk_muted = bool((v and v.speaker and v.speaker.muted) or getattr(self.sound, "muted", False))
+            json.dump({"x": self.x(), "y": self.y(), "muted": spk_muted,
                        "roam": getattr(self, "roam", True), "body": getattr(self, "body_on", True),
                        "scale": getattr(self, "scale_factor", 1.0),
-                       "voice": bool(getattr(self, "voice", None) and self.voice.enabled),
-                       "wake_word": bool(getattr(self, "voice", None) and getattr(self.voice, "wake_word_enabled", True)),
+                       "voice": bool(v and v.enabled),
+                       "wake_word": bool(v and getattr(v, "wake_word_enabled", True)),
+                       "speaking_muted": spk_muted,
                        "brief_day": getattr(self, "brief_day", "")}, open(PREFS, "w"))
         except Exception:
             pass

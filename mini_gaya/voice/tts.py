@@ -230,8 +230,12 @@ class Speaker:
                 self.on_state("speaking")
                 # 0 = Synchronous speak inside worker thread
                 clean_text = clean_for_speech(text)
+                import logging
+                logging.info("tts: speaking %r (voice=%s)", clean_text[:80], getattr(self, "current_voice_name", "?"))
                 self._sp.Speak(clean_text, 0)
             except Exception as e:
+                import logging
+                logging.error("tts-error: %s", e)
                 self.on_state("tts-error: %s" % e)
             finally:
                 self.is_speaking = False

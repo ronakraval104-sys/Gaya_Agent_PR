@@ -165,11 +165,11 @@ class Deck(QWidget):
         self.gear.setToolTip("Settings")
         self.gear.clicked.connect(self._toggle_settings)
         self.mic = QPushButton("🎙️", objectName="icon")
-        self.mic.setToolTip("Wake Word 'Hey Gaya': click to mute/unmute")
+        self.mic.setToolTip("Listening ('Hey Gaya'): click to mute/unmute")
         self.mic.clicked.connect(lambda: (self.sprite.toggle_wake(), self._sync()))
         self.snd = QPushButton("🔊", objectName="icon")
-        self.snd.setToolTip("Sound on/off")
-        self.snd.clicked.connect(self._toggle_sound)
+        self.snd.setToolTip("Speaking (Gaya voice): click to mute/unmute")
+        self.snd.clicked.connect(lambda: (self.sprite.toggle_speaking(), self._sync()))
         close = QPushButton("✕", objectName="icon")
         close.clicked.connect(self.hide)
         for w in (self.gear, self.mic, self.snd, close):
@@ -185,19 +185,23 @@ class Deck(QWidget):
         self.s_body = QPushButton("Full body")
         self.s_start = QPushButton("Start with Windows")
         self.s_focus = QPushButton("Focus mode · 1 h")
-        self.s_voice = QPushButton("Voice")
-        self.s_voice.setToolTip("Gaya speaks and listens - say 'Hey Gaya' or hold Right Ctrl")
-        self.s_wake = QPushButton("Wake: 'Hey Gaya'")
-        self.s_wake.setToolTip("Continuous hands-free wake word detection ('Hey Gaya')")
-        for b in (self.s_roam, self.s_body, self.s_start, self.s_voice, self.s_wake):
+        self.s_voice = QPushButton("Voice Engine")
+        self.s_voice.setToolTip("Voice system on/off")
+        self.s_listen = QPushButton("🎙️ Listening: ON")
+        self.s_listen.setToolTip("Hands-free wake-word listening: click to mute/unmute")
+        self.s_wake = self.s_listen  # backward compatibility alias
+        self.s_speak = QPushButton("🔊 Speaking: ON")
+        self.s_speak.setToolTip("Voice speech output: click to mute/unmute")
+        for b in (self.s_roam, self.s_body, self.s_start, self.s_voice, self.s_listen, self.s_speak):
             b.setCheckable(True)
         self.s_roam.clicked.connect(lambda: (self.sprite._toggle_roam(), self._sync()))
         self.s_body.clicked.connect(lambda: (self.sprite.toggle_body(), self._sync()))
         self.s_start.clicked.connect(self._toggle_startup)
         self.s_focus.clicked.connect(self._focus)
         self.s_voice.clicked.connect(lambda: (self.sprite.toggle_voice(), self._sync()))
-        self.s_wake.clicked.connect(lambda: (self.sprite.toggle_wake(), self._sync()))
-        for b in (self.s_roam, self.s_body, self.s_start, self.s_voice, self.s_wake, self.s_focus):
+        self.s_listen.clicked.connect(lambda: (self.sprite.toggle_wake(), self._sync()))
+        self.s_speak.clicked.connect(lambda: (self.sprite.toggle_speaking(), self._sync()))
+        for b in (self.s_roam, self.s_body, self.s_start, self.s_voice, self.s_listen, self.s_speak, self.s_focus):
             b.setCursor(Qt.PointingHandCursor)
             sl.addWidget(b)
         sl.addStretch(1)
@@ -402,21 +406,37 @@ class Deck(QWidget):
         v = getattr(self.sprite, "voice", None)
         v_on = bool(v and v.enabled)
         w_on = bool(v and getattr(v, "wake_word_enabled", False))
+        spk_muted = bool((v and v.speaker and v.speaker.muted) or getattr(self.sprite.sound, "muted", False))
+
         self.s_voice.setChecked(v_on)
-        self.s_wake.setChecked(w_on)
+        self.s_listen.setChecked(w_on)
+        self.s_speak.setChecked(not spk_muted)
+
+        # 1. Listening (Mic / Wake Word) UI state
         if w_on:
-            self.s_wake.setText("🎙️ Wake: 'Hey Gaya' (ON)")
             self.mic.setText("🎙️")
-            self.mic.setToolTip("Wake Word Active ('Hey Gaya') - click to mute")
+            self.mic.setToolTip("Listening: ON ('Hey Gaya' wake word active) — click to mute")
+            self.s_listen.setText("🎙️ Listening: ON")
         else:
-            self.s_wake.setText("🔇 Wake: 'Hey Gaya' (MUTED)")
-            self.mic.setText("🔇")
-            self.mic.setToolTip("Wake Word Muted - click to unmute ('Hey Gaya')")
+            self.mic.setText("🚫🎙️")
+            self.mic.setToolTip("Listening: MUTED (Passive mic off) — click to unmute")
+            self.s_listen.setText("🚫 Listening: MUTED")
+
+        # 2. Speaking (Voice output / TTS) UI state
+        if not spk_muted:
+            self.snd.setText("🔊")
+            self.snd.setToolTip("Speaking: ON (Gaya speech active) — click to mute")
+            self.s_speak.setText("🔊 Speaking: ON")
+        else:
+            self.snd.setText("🔇")
+            self.snd.setToolTip("Speaking: MUTED (Gaya silent) — click to unmute")
+            self.s_speak.setText("🔇 Speaking: MUTED")
+
         self.s_start.setChecked(os.path.exists(STARTUP))
 
     def _toggle_sound(self):
-        self.sprite._mute()
-        self.snd.setText("🔇" if self.sprite.sound.muted else "🔊")
+        self.sprite.toggle_speaking()
+        self._sync()
 
     def _toggle_startup(self):
         try:

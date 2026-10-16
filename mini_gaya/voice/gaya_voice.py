@@ -67,6 +67,13 @@ class VoiceEngine(QObject):
             sp.sound.play("notify")
         sp.toast("spawning", "Hey Gaya", "Listening for your command...")
         sp.update()
+        from PySide6.QtCore import QTimer
+        QTimer.singleShot(6500, self._clear_wake_listening)
+
+    def _clear_wake_listening(self):
+        if self.listener and time.time() >= getattr(self.listener, "active_window_until", 0.0):
+            self.sprite.listening = False
+            self.sprite.update()
 
     # ---------------------------------------------------------------- speaking
     def say(self, text, interrupt=False):
@@ -106,6 +113,8 @@ class VoiceEngine(QObject):
     # ---------------------------------------------------------------- what Boss said
     def _on_heard(self, text, dt_, audio_s):
         sp = self.sprite
+        sp.listening = False
+        sp.update()
         logging.info("voice heard (%.1fs audio, %.2fs stt): %r", audio_s, dt_, text)
         kind, payload, reply = intents.route(text, len(sp.requests))
         shown = text.strip()[:80]
