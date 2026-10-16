@@ -31,19 +31,42 @@ class VoiceEngine(QObject):
     heard = Signal(str, float, float)       # text, stt seconds, audio seconds
     state = Signal(str)
     answered = Signal(str, str, str)        # reply, detail, what Boss said
+    wake = Signal()
 
-    def __init__(self, sprite):
+    def __init__(self, sprite, wake_word_enabled=True):
         super().__init__()
         self.sprite = sprite
         self.enabled = True
+        self.wake_word_enabled = wake_word_enabled
         self.stt_dev = "?"
         self.speaker = Speaker(on_state=self.state.emit)
-        self.listener = Listener(on_text=lambda t, dt_, a: self.heard.emit(t, dt_, a), on_state=self.state.emit)
+        self.listener = Listener(
+            on_text=lambda t, dt_, a: self.heard.emit(t, dt_, a),
+            on_state=self.state.emit,
+            on_wake=lambda: self.wake.emit(),
+            speaker=self.speaker,
+            wake_word_enabled=self.wake_word_enabled
+        )
         self.heard.connect(self._on_heard)
         self.state.connect(self._on_state)
         self.answered.connect(self._on_answered)
+        self.wake.connect(self._on_wake)
         self.listener.start()
         self.last_session = None
+
+    def set_wake_enabled(self, enabled):
+        self.wake_word_enabled = bool(enabled)
+        if self.listener:
+            self.listener.set_wake_enabled(enabled)
+
+    def _on_wake(self):
+        sp = self.sprite
+        sp.listening = True
+        sp.anim["pulse"] = 1.0
+        if hasattr(sp, "sound"):
+            sp.sound.play("notify")
+        sp.toast("spawning", "Hey Gaya", "Listening for your command...")
+        sp.update()
 
     # ---------------------------------------------------------------- speaking
     def say(self, text, interrupt=False):
@@ -75,7 +98,7 @@ class VoiceEngine(QObject):
         elif s.startswith("stt-ready"):
             self.stt_dev = s.split(":", 1)[-1]
             logging.info("voice: STT ready on %s", self.stt_dev)
-            self.say("Voice is online, Ros. Hold right control and talk.")
+            self.say("Voice online, Ros. Say Hey Gaya or hold right control.")
         elif s.startswith("stt-error") or s.startswith("tts-error"):
             logging.error("voice: %s", s)
         sp.update()

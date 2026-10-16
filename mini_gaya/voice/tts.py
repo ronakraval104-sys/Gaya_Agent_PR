@@ -119,6 +119,7 @@ class Speaker:
         self.on_state = on_state or (lambda s: None)
         self.muted = False
         self.ready = False
+        self.is_speaking = False
         self.gen = 0
         self._sp = None
         self._tokens = {}
@@ -225,6 +226,7 @@ class Speaker:
             if g != self.gen:
                 continue
             try:
+                self.is_speaking = True
                 self.on_state("speaking")
                 # 0 = Synchronous speak inside worker thread
                 clean_text = clean_for_speech(text)
@@ -232,6 +234,7 @@ class Speaker:
             except Exception as e:
                 self.on_state("tts-error: %s" % e)
             finally:
+                self.is_speaking = False
                 if self.q.empty():
                     self.on_state("idle")
 

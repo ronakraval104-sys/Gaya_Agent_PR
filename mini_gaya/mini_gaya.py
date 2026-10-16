@@ -537,7 +537,7 @@ class Sprite(QWidget):
         self.listening = False
         self.voice = None
         if p.get("voice", True):
-            self._start_voice()
+            self._start_voice(wake_word=p.get("wake_word", True))
         self.ring = RadialMenu(self)
         self.sal = get_user_salutation()
         self._active_log_file = gaya_state.get_active_log_path()
@@ -1279,8 +1279,10 @@ class Sprite(QWidget):
         m = QMenu()
         m.addAction("Talk to Mini Gaya…", lambda: self.open_chat())
         v_on = bool(self.voice and self.voice.enabled)
-        m.addAction("Voice: on (hold Right Ctrl to talk)" if v_on else "Voice: off", self.toggle_voice)
+        m.addAction("Voice: on (say 'Hey Gaya' or hold Right Ctrl)" if v_on else "Voice: off", self.toggle_voice)
         if v_on:
+            w_on = bool(getattr(self.voice, "wake_word_enabled", False))
+            m.addAction("Wake word: 'Hey Gaya' (ON)" if w_on else "Wake word: 'Hey Gaya' (OFF)", self.toggle_wake)
             m.addAction("Unmute Mini Gaya" if self.voice.speaker.muted else "Mute Mini Gaya",
                         lambda: self.voice.mute(not self.voice.speaker.muted))
         m.addAction("Hide Mini Gaya" if not self.user_hidden else "Show Mini Gaya", self.toggle)
@@ -1297,13 +1299,13 @@ class Sprite(QWidget):
         self.sound.muted = not self.sound.muted
         self._save()
 
-    def _start_voice(self):
+    def _start_voice(self, wake_word=True):
         """Kokoro + Whisper on background threads; J keeps working if they fail."""
         import logging
         try:
             sys.path.insert(0, os.path.join(HERE, "voice"))
             from voice.gaya_voice import VoiceEngine
-            self.voice = VoiceEngine(self)
+            self.voice = VoiceEngine(self, wake_word_enabled=wake_word)
         except Exception:
             logging.exception("voice engine failed to start")
             self.voice = None
@@ -1317,6 +1319,13 @@ class Sprite(QWidget):
             self.voice.on()
             self.voice.say("Voice on, %s." % self.sal)
         self._save()
+
+    def toggle_wake(self):
+        if self.voice:
+            new_val = not getattr(self.voice, "wake_word_enabled", True)
+            self.voice.set_wake_enabled(new_val)
+            self.toast("info", "Wake Word 'Hey Gaya': %s" % ("Enabled" if new_val else "Disabled"), "")
+            self._save()
 
     def speak(self, text, interrupt=False):
         if self.voice and self.voice.enabled:
@@ -1449,6 +1458,7 @@ class Sprite(QWidget):
                        "roam": getattr(self, "roam", True), "body": getattr(self, "body_on", True),
                        "scale": getattr(self, "scale_factor", 1.0),
                        "voice": bool(getattr(self, "voice", None) and self.voice.enabled),
+                       "wake_word": bool(getattr(self, "voice", None) and getattr(self.voice, "wake_word_enabled", True)),
                        "brief_day": getattr(self, "brief_day", "")}, open(PREFS, "w"))
         except Exception:
             pass

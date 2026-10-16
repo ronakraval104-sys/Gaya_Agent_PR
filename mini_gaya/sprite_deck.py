@@ -183,15 +183,18 @@ class Deck(QWidget):
         self.s_start = QPushButton("Start with Windows")
         self.s_focus = QPushButton("Focus mode · 1 h")
         self.s_voice = QPushButton("Voice")
-        self.s_voice.setToolTip("J speaks and listens - hold Right Ctrl to talk")
-        for b in (self.s_roam, self.s_body, self.s_start, self.s_voice):
+        self.s_voice.setToolTip("Gaya speaks and listens - say 'Hey Gaya' or hold Right Ctrl")
+        self.s_wake = QPushButton("Wake: 'Hey Gaya'")
+        self.s_wake.setToolTip("Continuous hands-free wake word detection ('Hey Gaya')")
+        for b in (self.s_roam, self.s_body, self.s_start, self.s_voice, self.s_wake):
             b.setCheckable(True)
         self.s_roam.clicked.connect(lambda: (self.sprite._toggle_roam(), self._sync()))
         self.s_body.clicked.connect(lambda: (self.sprite.toggle_body(), self._sync()))
         self.s_start.clicked.connect(self._toggle_startup)
         self.s_focus.clicked.connect(self._focus)
         self.s_voice.clicked.connect(lambda: (self.sprite.toggle_voice(), self._sync()))
-        for b in (self.s_roam, self.s_body, self.s_start, self.s_voice, self.s_focus):
+        self.s_wake.clicked.connect(lambda: (self.sprite.toggle_wake(), self._sync()))
+        for b in (self.s_roam, self.s_body, self.s_start, self.s_voice, self.s_wake, self.s_focus):
             b.setCursor(Qt.PointingHandCursor)
             sl.addWidget(b)
         sl.addStretch(1)
@@ -395,6 +398,7 @@ class Deck(QWidget):
         self.s_body.setChecked(bool(getattr(self.sprite, "body_on", False)))
         v = getattr(self.sprite, "voice", None)
         self.s_voice.setChecked(bool(v and v.enabled))
+        self.s_wake.setChecked(bool(v and getattr(v, "wake_word_enabled", False)))
         self.s_start.setChecked(os.path.exists(STARTUP))
 
     def _toggle_sound(self):
