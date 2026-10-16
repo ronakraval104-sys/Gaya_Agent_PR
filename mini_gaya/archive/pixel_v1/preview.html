@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>JARVIS — Command Core</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* Monolith Signal tokens (stark-council/app/globals.css) */
+  :root {
+    --bg: #0a0a0a; --surface-2: #141414; --surface-3: #1c1c1c;
+    --border: #242424; --border-strong: #3a3a3a;
+    --text: #f2f2f2; --text-2: #9c9c9c; --text-3: #5c5c5c;
+    --ok: #2fd36f; --warn: #ffb000; --err: #ff2d3f;
+    --S: 6;                 /* display scale */
+    --F: 64px;              /* frame size */
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--text);
+    font-family: "JetBrains Mono", ui-monospace, Consolas, monospace; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 56px 32px 72px; }
+
+  header { display: flex; justify-content: space-between; align-items: flex-end;
+    border-bottom: 1px solid var(--border); padding-bottom: 24px; margin-bottom: 32px; }
+  h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 8px; }
+  .sub { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-2); }
+  .phase { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-3);
+    text-align: right; line-height: 1.8; }
+  .phase b { color: var(--text); font-weight: 500; }
+
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .card { border: 1px solid var(--border); background: var(--bg); }
+  .stage { display: grid; place-items: center; padding: 20px 0;
+    border-bottom: 1px solid var(--border); background: #0c0c0c; }
+  .sprite { width: calc(var(--F) * var(--S)); height: calc(var(--F) * var(--S));
+    background-image: url("jarvis_sheet_64.png");
+    background-repeat: no-repeat;
+    background-size: calc(var(--F) * var(--S) * 7) calc(var(--F) * var(--S));
+    background-position: calc(var(--F) * var(--S) * var(--i) * -1) 0;
+    image-rendering: pixelated; }
+  .meta { padding: 14px 16px 16px; }
+  .row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+  .num { font-size: 11px; color: var(--text-3); letter-spacing: 0.1em; }
+  .name { font-size: 13px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
+  .dot { width: 7px; height: 7px; margin-left: auto; }
+  .dot.warn { background: var(--warn); } .dot.err { background: var(--err); } .dot.ok { background: var(--ok); }
+  .dot.mono { background: var(--border-strong); }
+  .means { font-size: 12px; line-height: 1.55; color: var(--text-2); margin: 0; }
+
+  .mini { grid-column: span 2; display: grid; grid-template-rows: 1fr auto auto; }
+  .mini .tray { display: inline-flex; }
+  .mini .stage { grid-template-columns: 1fr 1fr 1fr 1.6fr; align-items: center; gap: 0; padding: 32px 24px 40px; }
+  .cell { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .cap { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-3); }
+  .px { image-rendering: pixelated; display: block; }
+  .tray { display: flex; align-items: center; gap: 8px; border: 1px solid var(--border);
+    background: var(--surface-2); padding: 6px 10px; font-size: 11px; color: var(--text-2); }
+  .tray b { color: var(--text); font-weight: 500; }
+  .strip { margin-top: 16px; border: 1px solid var(--border); padding: 18px 16px;
+    display: flex; align-items: center; gap: 24px; }
+  .strip img { image-rendering: pixelated; }
+  .pal { display: flex; gap: 6px; margin-left: auto; }
+  .pal i { width: 14px; height: 14px; display: block; border: 1px solid var(--border); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>JARVIS — Command Core</h1>
+      <div class="sub">Chief-of-command sprite · original design · Monolith Signal palette</div>
+    </div>
+    <div class="phase"><b>Phase 1 · key frames</b><br>64×64 master · shown 6× nearest-neighbour<br>awaiting Boss sign-off</div>
+  </header>
+
+  <section class="grid">
+    <article class="card"><div class="stage"><div class="sprite" style="--i:0"></div></div>
+      <div class="meta"><div class="row"><span class="num">01</span><span class="name">Idle</span><span class="dot mono"></span></div>
+      <p class="means">Level white gaze, core lit. Standing by, all systems nominal.</p></div></article>
+
+    <article class="card"><div class="stage"><div class="sprite" style="--i:1"></div></div>
+      <div class="meta"><div class="row"><span class="num">02</span><span class="name">Thinking</span><span class="dot mono"></span></div>
+      <p class="means">Visor scans right, core throttles down. Reasoning; nothing touched yet.</p></div></article>
+
+    <article class="card"><div class="stage"><div class="sprite" style="--i:2"></div></div>
+      <div class="meta"><div class="row"><span class="num">03</span><span class="name">Spawning</span><span class="dot mono"></span></div>
+      <p class="means">Core at full output, four tethered satellites. Subagent wave out (max 4).</p></div></article>
+
+    <article class="card"><div class="stage"><div class="sprite" style="--i:3"></div></div>
+      <div class="meta"><div class="row"><span class="num">04</span><span class="name">Hold</span><span class="dot warn"></span></div>
+      <p class="means">Amber, narrowed and level. A guard asked or denied; waiting on Boss.</p></div></article>
+
+    <article class="card"><div class="stage"><div class="sprite" style="--i:4"></div></div>
+      <div class="meta"><div class="row"><span class="num">05</span><span class="name">Broken</span><span class="dot err"></span></div>
+      <p class="means">Fragmented red signal, core dark, rank dimmed. Harness doctor: BROKEN.</p></div></article>
+
+    <article class="card"><div class="stage"><div class="sprite" style="--i:5"></div></div>
+      <div class="meta"><div class="row"><span class="num">06</span><span class="name">Approved</span><span class="dot ok"></span></div>
+      <p class="means">Full-rank green pulse, gaze lifts one pixel. EDIDTH signed PASS.</p></div></article>
+
+    <article class="card"><div class="stage"><div class="sprite" style="--i:6"></div></div>
+      <div class="meta"><div class="row"><span class="num">07</span><span class="name">Asleep</span><span class="dot mono"></span></div>
+      <p class="means">Visor off, core banked. Session idle; wakes on the next command.</p></div></article>
+
+    <article class="card mini">
+      <div class="stage">
+        <div class="cell"><img class="px" src="jarvis_mini_16.png" width="16" height="16" alt="mini 1x"><span class="cap">1×</span></div>
+        <div class="cell"><img class="px" src="jarvis_mini_16.png" width="32" height="32" alt="mini 2x"><span class="cap">2× · hidpi</span></div>
+        <div class="cell"><img class="px" src="jarvis_mini_16.png" width="64" height="64" alt="mini 4x"><span class="cap">4×</span></div>
+        <div class="cell"><img class="px" src="jarvis_mini_16.png" width="128" height="128" alt="mini 8x"><span class="cap">8× · pixel check</span></div>
+      </div>
+      <div class="meta" style="border-bottom:1px solid var(--border)"><div class="tray"><img class="px" src="jarvis_mini_16.png" width="16" height="16" alt=""><b>JARVIS</b> idle · doctor ok · 0 holds</div></div>
+      <div class="meta"><div class="row"><span class="num">08</span><span class="name">Mini · idle</span></div>
+      <p class="means">Hand-tuned 16×16 for tray / status line. Same hex, visor, crystal and three chevrons.</p></div>
+    </article>
+  </section>
+
+  <div class="strip">
+    <img src="jarvis_sheet_64.png" width="448" height="64" alt="sheet 1x">
+    <span class="cap">jarvis_sheet_64.png · 448×64 · 1×</span>
+    <div class="pal" title="12 colours, all Monolith Signal tokens">
+      <i style="background:#0a0a0a"></i><i style="background:#141414"></i><i style="background:#1c1c1c"></i>
+      <i style="background:#242424"></i><i style="background:#3a3a3a"></i><i style="background:#5c5c5c"></i>
+      <i style="background:#9c9c9c"></i><i style="background:#d4d4d4"></i><i style="background:#f2f2f2"></i>
+      <i style="background:#ffb000"></i><i style="background:#ff2d3f"></i><i style="background:#2fd36f"></i>
+    </div>
+  </div>
+</div>
+</body>
+</html>

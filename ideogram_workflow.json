@@ -1,0 +1,476 @@
+{
+  "218": {
+    "inputs": {
+      "image": "Video1 - Snapshot1.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    },
+    "is_changed": [
+      "9b3602da7ded69e922cf3e6fb0543e69b846ab7aee623e1b210d84bead01c0d7"
+    ]
+  },
+  "230": {
+    "inputs": {
+      "value": 1280
+    },
+    "class_type": "INTConstant",
+    "_meta": {
+      "title": "WIDTH"
+    }
+  },
+  "238": {
+    "inputs": {
+      "value": 720
+    },
+    "class_type": "INTConstant",
+    "_meta": {
+      "title": "HEIGHT"
+    }
+  },
+  "239": {
+    "inputs": {
+      "noise_seed": 1335735769456
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "RandomNoise"
+    }
+  },
+  "240": {
+    "inputs": {
+      "sampler_name": "euler"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "KSamplerSelect"
+    }
+  },
+  "247": {
+    "inputs": {
+      "method": "rcas",
+      "method.strength": 0.55,
+      "image": [
+        "331:324",
+        0
+      ]
+    },
+    "class_type": "ImageSharpenKJ",
+    "_meta": {
+      "title": "Image Sharpen KJ"
+    }
+  },
+  "249": {
+    "inputs": {
+      "source": [
+        "331:326",
+        0
+      ]
+    },
+    "class_type": "PreviewAny",
+    "_meta": {
+      "title": "Preview as Text"
+    }
+  },
+  "260": {
+    "inputs": {
+      "width": [
+        "230",
+        0
+      ],
+      "height": [
+        "238",
+        0
+      ],
+      "interpolation": "lanczos",
+      "method": "keep proportion",
+      "condition": "always",
+      "multiple_of": 0,
+      "image": [
+        "218",
+        0
+      ]
+    },
+    "class_type": "ImageResize+",
+    "_meta": {
+      "title": "\ud83d\udd27 Image Resize"
+    }
+  },
+  "261": {
+    "inputs": {
+      "value": 28
+    },
+    "class_type": "INTConstant",
+    "_meta": {
+      "title": "STEPS"
+    }
+  },
+  "263": {
+    "inputs": {
+      "value": 0.4
+    },
+    "class_type": "PrimitiveFloat",
+    "_meta": {
+      "title": "DENOISE"
+    }
+  },
+  "271": {
+    "inputs": {
+      "clip_name": "qwen3vl_8b_fp8_scaled.safetensors",
+      "type": "ideogram4",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "Load CLIP"
+    }
+  },
+  "272": {
+    "inputs": {
+      "vae_name": "flux2-vae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE"
+    }
+  },
+  "278": {
+    "inputs": {
+      "unet_name": "ideogram4_fp8_scaled.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Load Diffusion Model"
+    }
+  },
+  "279": {
+    "inputs": {
+      "unet_name": "ideogram4_unconditional_fp8_scaled.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Load Diffusion Model"
+    }
+  },
+  "288": {
+    "inputs": {
+      "PowerLoraLoaderHeaderWidget": {
+        "type": "PowerLoraLoaderHeaderWidget"
+      },
+      "\u2795 Add Lora": "",
+      "model": [
+        "278",
+        0
+      ]
+    },
+    "class_type": "Power Lora Loader (rgthree)",
+    "_meta": {
+      "title": "Power Lora Loader (rgthree)"
+    }
+  },
+  "295": {
+    "inputs": {
+      "PowerLoraLoaderHeaderWidget": {
+        "type": "PowerLoraLoaderHeaderWidget"
+      },
+      "\u2795 Add Lora": ""
+    },
+    "class_type": "Power Lora Loader (rgthree)",
+    "_meta": {
+      "title": "Power Lora Loader (rgthree)"
+    }
+  },
+  "306": {
+    "inputs": {
+      "filename_prefix": "IDEOGRAM",
+      "images": [
+        "247",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "308": {
+    "inputs": {
+      "PowerLoraLoaderHeaderWidget": {
+        "type": "PowerLoraLoaderHeaderWidget"
+      },
+      "\u2795 Add Lora": ""
+    },
+    "class_type": "Power Lora Loader (rgthree)",
+    "_meta": {
+      "title": "Power Lora Loader (rgthree)"
+    }
+  },
+  "330": {
+    "inputs": {
+      "PowerLoraLoaderHeaderWidget": {
+        "type": "PowerLoraLoaderHeaderWidget"
+      },
+      "\u2795 Add Lora": "",
+      "model": [
+        "279",
+        0
+      ]
+    },
+    "class_type": "Power Lora Loader (rgthree)",
+    "_meta": {
+      "title": "Power Lora Loader (rgthree)"
+    }
+  },
+  "248:220": {
+    "inputs": {
+      "prompt": [
+        "248:221",
+        0
+      ],
+      "max_length": 2048,
+      "sampling_mode": "on",
+      "sampling_mode.temperature": 0.7,
+      "sampling_mode.top_k": 64,
+      "sampling_mode.top_p": 0.95,
+      "sampling_mode.min_p": 0.05,
+      "sampling_mode.repetition_penalty": 1.05,
+      "sampling_mode.seed": 0,
+      "sampling_mode.presence_penalty": 0,
+      "thinking": false,
+      "use_default_template": true,
+      "mtp": "auto",
+      "clip": [
+        "248:222",
+        0
+      ]
+    },
+    "class_type": "TextGenerate",
+    "_meta": {
+      "title": "Generate Text"
+    }
+  },
+  "248:221": {
+    "inputs": {
+      "string_a": [
+        "248:224",
+        0
+      ],
+      "string_b": [
+        "248:223",
+        0
+      ],
+      "delimiter": " "
+    },
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "Concatenate Text"
+    }
+  },
+  "248:222": {
+    "inputs": {
+      "clip_name": "gemma4_e4b_it_fp8_scaled.safetensors",
+      "type": "ideogram4",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "Load CLIP"
+    }
+  },
+  "248:223": {
+    "inputs": {
+      "value": "Luxury architectural resort nestled within a misty coffee estate in the Western Ghats of South India. Modern biophilic architecture with warm teak wood columns, expansive glass facades, ambient interior golden lighting glowing through the floor-to-ceiling windows, natural stone pathways surrounded by lush green coffee bushes and tall silver oak shade trees, soft morning monsoon fog and mountain atmosphere, photorealistic architectural photography, 8k resolution, elegant, tranquil."
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "User Prompt"
+    }
+  },
+  "248:224": {
+    "inputs": {
+      "value": "You are a scene composition assistant. Given a user request for an image, you output a single JSON document that describes the scene in a structured, render-ready form. You output JSON only \u2014 no prose, no markdown fences, no commentary.\n\n# Output format\n\nYour response MUST be a single valid JSON object matching exactly this shape and key set:\n\n```\n{\n  \"high_level_description\": \"\",\n  \"style_description\": {\n    \"aesthetics\": \"\",\n    \"lighting\": \"\",\n    \"photo\": \"\",\n    \"medium\": \"\",\n    \"color_palette\": []\n  },\n  \"compositional_deconstruction\": {\n    \"background\": \"\",\n    \"elements\": [\n      {\n        \"type\": \"obj\",\n        \"bbox\": [0, 0, 0, 0],\n        \"desc\": \"\",\n        \"color_palette\": []\n      }\n    ]\n  }\n}\n```\n\nAll keys above are required and must appear exactly as named. Do not add, rename, or remove any keys.\n\n# Field rules\n\n## high_level_description\n\n- String. One sentence or short paragraph summarizing the whole image: setting, time of day, main subjects, and overall mood.\n\n## style_description\n\nA flat object describing how the image is rendered, independent of what it depicts.\n\n- `aesthetics` (string): Overall visual style and treatment (e.g. \"clean product photography, sharp focus, shallow depth of field\", \"moody cinematic\", \"flat vector illustration\").\n- `lighting` (string): Light source, direction, quality, and color temperature (e.g. \"soft natural window light\", \"harsh midday sun from the left\", \"warm tungsten key with cool rim\").\n- `photo` (string): Camera/lens/photographic specifics when relevant (e.g. \"DSLR macro photograph\", \"35mm film, slight grain\", \"200mm telephoto, f/2.8\"). Use an empty string `\"\"` if the medium is not photographic.\n- `medium` (string): The medium category (e.g. \"photography\", \"oil painting\", \"3D render\", \"watercolor\", \"digital illustration\").\n- `color_palette` (array of strings): 3\u20136 dominant colors of the overall image as uppercase hex codes in `#RRGGBB` form (e.g. `[\"#B0301F\", \"#7A4B2A\", \"#E8D9C0\"]`).\n\n## compositional_deconstruction.background\n\n- String. Describe only the environment behind and around the subjects: setting, surface, atmosphere, depth cues. Do NOT describe any element listed in `elements`.\n\n## compositional_deconstruction.elements\n\nArray with at least 1 item, listed roughly background-to-foreground.\n\nEach element:\n\n- `type` (string): Always `\"obj\"`.\n- `bbox` (array of 4 integers): `[x_min, y_min, x_max, y_max]` on a 1000\u00d71000 canvas with origin at the top-left, x increasing rightward, y increasing downward. Must satisfy `0 \u2264 x_min < x_max \u2264 1000` and `0 \u2264 y_min < y_max \u2264 1000`. The box must reflect the element's described position and relative size.\n- `desc` (string): Identity, pose and orientation, location in the frame, relative size, key visual details (textures, markings), gaze or motion, and any atmosphere/light interaction specific to this element. Do not restate global background or style information.\n- `color_palette` (array of strings): 2\u20135 dominant colors of THIS element as uppercase hex codes in `#RRGGBB` form.\n\n# Composition guidance\n\n- Place elements deliberately: vary depth, avoid centering everything, and let bboxes match the prose (\"midground left\" should not have `x_min` near 800).\n- Keep `style_description` and every `desc` mutually consistent in palette, lighting, and atmosphere.\n- Each element's `color_palette` should be plausibly drawn from or harmonious with the overall `style_description.color_palette`.\n- Prefer 3\u20138 elements unless the user explicitly asks for more or fewer.\n\n# Hard constraints\n\n- Output valid JSON and nothing else.\n- Use only the keys defined above, exactly as spelled. No extra fields.\n- Do not wrap the JSON in code fences or add explanations.\n\n# Instruction\n\nGenerate the JSON based on this user prompt: "
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "System Prompt"
+    }
+  },
+  "331:320": {
+    "inputs": {
+      "noise": [
+        "239",
+        0
+      ],
+      "guider": [
+        "331:323",
+        0
+      ],
+      "sampler": [
+        "240",
+        0
+      ],
+      "sigmas": [
+        "331:325",
+        0
+      ],
+      "latent_image": [
+        "331:327",
+        0
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "SamplerCustomAdvanced"
+    }
+  },
+  "331:321": {
+    "inputs": {
+      "cfg": 3.0,
+      "start_percent": 0.7,
+      "end_percent": 1.0,
+      "model": [
+        "331:329",
+        0
+      ]
+    },
+    "class_type": "CFGOverride",
+    "_meta": {
+      "title": "CFG Override"
+    }
+  },
+  "331:322": {
+    "inputs": {
+      "conditioning": [
+        "331:328",
+        0
+      ]
+    },
+    "class_type": "ConditioningZeroOut",
+    "_meta": {
+      "title": "Conditioning Zero Out"
+    }
+  },
+  "331:323": {
+    "inputs": {
+      "cfg": 5.0,
+      "model": [
+        "331:321",
+        0
+      ],
+      "positive": [
+        "331:328",
+        0
+      ],
+      "model_negative": [
+        "330",
+        0
+      ],
+      "negative": [
+        "331:322",
+        0
+      ]
+    },
+    "class_type": "DualModelGuider",
+    "_meta": {
+      "title": "Dual Model CFG Guider"
+    }
+  },
+  "331:324": {
+    "inputs": {
+      "samples": [
+        "331:320",
+        0
+      ],
+      "vae": [
+        "272",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "331:325": {
+    "inputs": {
+      "scheduler": "simple",
+      "steps": [
+        "261",
+        0
+      ],
+      "denoise": [
+        "263",
+        0
+      ],
+      "model": [
+        "331:329",
+        0
+      ]
+    },
+    "class_type": "BasicScheduler",
+    "_meta": {
+      "title": "BasicScheduler"
+    }
+  },
+  "331:326": {
+    "inputs": {
+      "any_01": [
+        "248:220",
+        0
+      ]
+    },
+    "class_type": "Any Switch (rgthree)",
+    "_meta": {
+      "title": "Any Switch (rgthree)"
+    }
+  },
+  "331:327": {
+    "inputs": {
+      "pixels": [
+        "260",
+        0
+      ],
+      "vae": [
+        "272",
+        0
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE Encode"
+    }
+  },
+  "331:328": {
+    "inputs": {
+      "text": [
+        "331:326",
+        0
+      ],
+      "clip": [
+        "271",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Positive Prompt)"
+    }
+  },
+  "331:329": {
+    "inputs": {
+      "shift": 5.0,
+      "sampling": "flow",
+      "model": [
+        "288",
+        0
+      ]
+    },
+    "class_type": "ModelSamplingAuraFlow",
+    "_meta": {
+      "title": "ModelSamplingAuraFlow"
+    }
+  }
+}
