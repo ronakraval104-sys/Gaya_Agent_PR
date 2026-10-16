@@ -64,6 +64,9 @@ class Listener:
 
     def set_wake_enabled(self, enabled):
         self.wake_word_enabled = bool(enabled)
+        if not self.wake_word_enabled:
+            self.active_window_until = 0.0
+            self.on_state("idle")
 
     # ---------------------------------------------------------------- model
     def _load(self):

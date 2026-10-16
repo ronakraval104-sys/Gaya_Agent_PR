@@ -205,6 +205,20 @@ class VoiceEngine(QObject):
         elif kind == "voice_off":
             self.say("Voice off.")
             self.off()
+        elif kind == "wake_off":
+            self.set_wake_enabled(False)
+            self.say("Wake word muted, Ros. Hold right control to talk.")
+            if hasattr(self.sprite, "_save"):
+                self.sprite._save()
+            if hasattr(self.sprite, "panel") and hasattr(self.sprite.panel, "_sync"):
+                self.sprite.panel._sync()
+        elif kind == "wake_on":
+            self.set_wake_enabled(True)
+            self.say("Wake word active, Ros.")
+            if hasattr(self.sprite, "_save"):
+                self.sprite._save()
+            if hasattr(self.sprite, "panel") and hasattr(self.sprite.panel, "_sync"):
+                self.sprite.panel._sync()
         elif kind == "come":
             sp.fly_to_cursor()
         elif kind == "hide":

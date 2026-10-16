@@ -1282,7 +1282,7 @@ class Sprite(QWidget):
         m.addAction("Voice: on (say 'Hey Gaya' or hold Right Ctrl)" if v_on else "Voice: off", self.toggle_voice)
         if v_on:
             w_on = bool(getattr(self.voice, "wake_word_enabled", False))
-            m.addAction("Wake word: 'Hey Gaya' (ON)" if w_on else "Wake word: 'Hey Gaya' (OFF)", self.toggle_wake)
+            m.addAction("Mute Wake Word ('Hey Gaya')" if w_on else "Unmute Wake Word ('Hey Gaya')", self.toggle_wake)
             m.addAction("Unmute Mini Gaya" if self.voice.speaker.muted else "Mute Mini Gaya",
                         lambda: self.voice.mute(not self.voice.speaker.muted))
         m.addAction("Hide Mini Gaya" if not self.user_hidden else "Show Mini Gaya", self.toggle)
@@ -1324,8 +1324,11 @@ class Sprite(QWidget):
         if self.voice:
             new_val = not getattr(self.voice, "wake_word_enabled", True)
             self.voice.set_wake_enabled(new_val)
-            self.toast("info", "Wake Word 'Hey Gaya': %s" % ("Enabled" if new_val else "Disabled"), "")
+            self.toast("info", "Wake Word 'Hey Gaya': %s" % ("Active" if new_val else "Muted"),
+                       "Hands-free active" if new_val else "Hold Right Ctrl to talk")
             self._save()
+            if hasattr(self, "panel") and hasattr(self.panel, "_sync"):
+                self.panel._sync()
 
     def speak(self, text, interrupt=False):
         if self.voice and self.voice.enabled:

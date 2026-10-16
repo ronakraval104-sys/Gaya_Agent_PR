@@ -164,12 +164,15 @@ class Deck(QWidget):
         self.gear = QPushButton("⚙", objectName="icon")
         self.gear.setToolTip("Settings")
         self.gear.clicked.connect(self._toggle_settings)
+        self.mic = QPushButton("🎙️", objectName="icon")
+        self.mic.setToolTip("Wake Word 'Hey Gaya': click to mute/unmute")
+        self.mic.clicked.connect(lambda: (self.sprite.toggle_wake(), self._sync()))
         self.snd = QPushButton("🔊", objectName="icon")
         self.snd.setToolTip("Sound on/off")
         self.snd.clicked.connect(self._toggle_sound)
         close = QPushButton("✕", objectName="icon")
         close.clicked.connect(self.hide)
-        for w in (self.gear, self.snd, close):
+        for w in (self.gear, self.mic, self.snd, close):
             w.setCursor(Qt.PointingHandCursor)
             bar.addWidget(w)
         root.addLayout(bar)
@@ -397,8 +400,18 @@ class Deck(QWidget):
         self.s_roam.setChecked(bool(self.sprite.roam))
         self.s_body.setChecked(bool(getattr(self.sprite, "body_on", False)))
         v = getattr(self.sprite, "voice", None)
-        self.s_voice.setChecked(bool(v and v.enabled))
-        self.s_wake.setChecked(bool(v and getattr(v, "wake_word_enabled", False)))
+        v_on = bool(v and v.enabled)
+        w_on = bool(v and getattr(v, "wake_word_enabled", False))
+        self.s_voice.setChecked(v_on)
+        self.s_wake.setChecked(w_on)
+        if w_on:
+            self.s_wake.setText("🎙️ Wake: 'Hey Gaya' (ON)")
+            self.mic.setText("🎙️")
+            self.mic.setToolTip("Wake Word Active ('Hey Gaya') - click to mute")
+        else:
+            self.s_wake.setText("🔇 Wake: 'Hey Gaya' (MUTED)")
+            self.mic.setText("🔇")
+            self.mic.setToolTip("Wake Word Muted - click to unmute ('Hey Gaya')")
         self.s_start.setChecked(os.path.exists(STARTUP))
 
     def _toggle_sound(self):
