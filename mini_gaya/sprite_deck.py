@@ -36,9 +36,9 @@ QWidget#tile { background: rgba(255,255,255,9); border: 1px solid rgba(255,255,2
 QLabel { color: #e9ecf1; font-family: 'Space Grotesk'; font-size: 9pt; background: transparent; }
 QLabel#title { font-family: 'Space Grotesk'; font-weight: 600; font-size: 12pt; }
 QLabel#muted { color: #8c9098; font-size: 8.5pt; }
-QPushButton { color: #e9ecf1; background: rgba(255,255,255,12); border: 1px solid rgba(255,255,255,22);
-              border-radius: 10px; padding: 5px 11px; font-family: 'Space Grotesk'; font-weight: 600; font-size: 9pt; }
-QPushButton:hover { background: rgba(255,255,255,30); }
+QPushButton { color: #e9ecf1; background: rgba(255,255,255,14); border: 1px solid rgba(255,255,255,26);
+              border-radius: 10px; padding: 6px 10px; font-family: 'Space Grotesk', 'Segoe UI', sans-serif; font-weight: 600; font-size: 9.5pt; text-align: center; }
+QPushButton:hover { background: rgba(255,255,255,34); border-color: rgba(255,255,255,45); }
 QPushButton#tab { border: none; background: transparent; border-radius: 12px; padding: 5px 10px;
                   font-size: 10pt; color: #9aa0aa; }
 QPushButton#tab:hover { background: rgba(255,255,255,14); color: #e9ecf1; }
@@ -239,15 +239,22 @@ class Deck(QWidget):
             w.setTextFormat(Qt.RichText)
             info.addWidget(w)
         acts = QHBoxLayout()
-        self.b_jump = QPushButton("Jump in")
-        self.b_jump.setToolTip("Jump to the session that's waiting for you")
-        self.b_jump.clicked.connect(self._jump_waiting)
-        council = QPushButton("Council")
-        council.setToolTip("Open Council of Gaya (localhost:4200)")
-        council.clicked.connect(self._council)
-        talk = QPushButton("Talk to Gaya")
-        talk.setToolTip("Send a message into any session, or start a new one")
+        acts.setSpacing(8)
+        talk = QPushButton("💬 Talk to\nGaya")
+        talk.setToolTip("Talk to Gaya: send a message or prompt into your active session")
+        talk.setMinimumHeight(46)
         talk.clicked.connect(lambda: self.sprite.open_chat())
+
+        self.b_jump = QPushButton("⚡ Jump In\n(Session)")
+        self.b_jump.setToolTip("Jump to the active Antigravity session or IDE window")
+        self.b_jump.setMinimumHeight(46)
+        self.b_jump.clicked.connect(self._jump_waiting)
+
+        council = QPushButton("🏛️ Council\nDashboard")
+        council.setToolTip("Open Council of Gaya command center (http://localhost:4200)")
+        council.setMinimumHeight(46)
+        council.clicked.connect(self._council)
+
         for b in (talk, self.b_jump, council):
             b.setCursor(Qt.PointingHandCursor)
             acts.addWidget(b)
@@ -305,7 +312,7 @@ class Deck(QWidget):
         self.h_wait.setText('<span style="color:#ffb020">%d waiting</span>  ·  '
                             '<span style="color:#57c7ff">%d working</span>  ·  %d sessions'
                             % (len(waiting), len(working), len(s.sessions)))
-        self.b_jump.setEnabled(bool(waiting))
+        self.b_jump.setEnabled(True)
         latest, verdicts = self._agent_info()
         for key, pill in self.pills.items():
             if key in latest:
@@ -415,9 +422,21 @@ class Deck(QWidget):
         QTimer.singleShot(3600_000, lambda: (setattr(self.sprite, "user_hidden", False), self.sprite._visibility()))
 
     def _jump_waiting(self):
-        w = [r for r in self.sprite.sessions if r["status"] == "waiting"]
+        w = [r for r in self.sprite.sessions if r.get("status") in ("waiting", "hold")]
         if w:
             self.jump(w[0])
+            return
+        working = [r for r in self.sprite.sessions if r.get("status") == "working" or r.get("live")]
+        if working:
+            self.jump(working[0])
+            return
+        if self.sprite.sessions:
+            self.jump(self.sprite.sessions[0])
+            return
+        ok = focus_session({"entry": "antigravity", "cwd": "d:\\Ai_Tools\\antigravity_ai"})
+        self.sprite.toast("info" if ok else "hold",
+                          "Jumped to Antigravity IDE" if ok else "No active editor found",
+                          "Active workspace" if ok else "Launch Antigravity or open an editor")
 
     def _jump_sid(self, sid):
         focus_session({"sid": sid})

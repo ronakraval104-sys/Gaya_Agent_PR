@@ -82,21 +82,90 @@ def focus_session(r):
 
 def _focus_window(r):
     folder = (r.get("cwd") or "").lower()
+    base_folder = os.path.basename(folder) if folder else ""
+    title_hint = (r.get("title") or "").lower()
     wins = _windows()
-    vs = [(h, t) for h, t in wins if t.endswith("Visual Studio Code") or "antigravity" in t.lower()]
+
+    # Filter out Mini Gaya and Council dashboard windows
+    candidates = [
+        (h, t) for h, t in wins
+        if not t.startswith("Mini Gaya")
+        and "council of gaya" not in t.lower()
+        and "task manager" not in t.lower()
+    ]
+
     pick = None
-    if r.get("entry", "").startswith("antigravity") or r.get("entry", "").startswith("claude-vscode") or vs:
-        pick = next((h for h, t in vs if folder and folder in t.lower()), None) or (vs[0][0] if vs else None)
+
+    # 1. Match Antigravity or VS Code window by workspace base folder or title
+    for h, t in candidates:
+        tl = t.lower()
+        if "antigravity" in tl or tl.endswith("visual studio code") or "- code" in tl:
+            if base_folder and base_folder in tl:
+                pick = h
+                break
+            if title_hint and title_hint in tl:
+                pick = h
+                break
+
+    # 2. Match any Antigravity or VS Code window
     if pick is None:
-        pick = next((h for h, t in wins if ("antigravity" in t.lower() or "claude" in t.lower()) and "gaya" not in t.lower() and "jarvis" not in t.lower()), None)
+        for h, t in candidates:
+            tl = t.lower()
+            if "antigravity" in tl or tl.endswith("visual studio code"):
+                pick = h
+                break
+
+    # 3. Match active session window title hints (e.g. "gaya setup", "test_game")
+    if pick is None:
+        for h, t in candidates:
+            tl = t.lower()
+            if any(k in tl for k in ("gaya setup", "antigravity_ai", "test_game")):
+                pick = h
+                break
+
+    # 4. Fallback: first candidate with any IDE/editor signature
+    if pick is None:
+        for h, t in candidates:
+            tl = t.lower()
+            if any(k in tl for k in ("code", "studio", "terminal", "editor", "gaya")):
+                pick = h
+                break
+
     if pick is None:
         return False
+
     u = ctypes.windll.user32
     if u.IsIconic(pick):
         u.ShowWindow(pick, 9)                     # SW_RESTORE
-    u.keybd_event(0x12, 0, 0, 0)                  # tap Alt so Windows lets us take the foreground
-    u.keybd_event(0x12, 0, 2, 0)
-    u.SetForegroundWindow(pick)
+    else:
+        u.ShowWindow(pick, 5)                     # SW_SHOW
+
+    # Bypass Windows foreground lock via AttachThreadInput
+    try:
+        cur_tid = ctypes.windll.kernel32.GetCurrentThreadId()
+        fore_hwnd = u.GetForegroundWindow()
+        fore_tid = u.GetWindowThreadProcessId(fore_hwnd, None) if fore_hwnd else 0
+        target_tid = u.GetWindowThreadProcessId(pick, None)
+
+        if cur_tid != target_tid:
+            u.AttachThreadInput(cur_tid, target_tid, True)
+        if fore_tid and fore_tid != target_tid:
+            u.AttachThreadInput(fore_tid, target_tid, True)
+
+        u.BringWindowToTop(pick)
+        u.keybd_event(0x12, 0, 0, 0)              # Alt tap
+        u.keybd_event(0x12, 0, 2, 0)
+        u.SetForegroundWindow(pick)
+
+        if cur_tid != target_tid:
+            u.AttachThreadInput(cur_tid, target_tid, False)
+        if fore_tid and fore_tid != target_tid:
+            u.AttachThreadInput(fore_tid, target_tid, False)
+
+        u.SetActiveWindow(pick)
+    except Exception:
+        u.SetForegroundWindow(pick)
+
     return True
 
 

@@ -67,6 +67,10 @@ export async function GET() {
       tokens: agy.tokens,
       lastActiveAgoSec: agy.lastActiveAgoSec,
       source: "antigravity",
+      modelName: agy.modelName || "Gemini 2.5 Pro (Thinking)",
+      harness: agy.harness || "Google Antigravity",
+      activeSeat: agy.activeSeat || "bob",
+      isProcessing: agy.state === "thinking" || agy.state === "spawning" || agy.state === "hold" || agy.lastActiveAgoSec < 20,
       ecc: {
         instinctsCount,
         contextPressure,
@@ -91,6 +95,10 @@ export async function GET() {
       sessionId: agy.sessionId,
       stepIndex: agy.stepIndex,
       source: "legacy",
+      modelName: "Gemini 2.5 Pro (Thinking)",
+      harness: "Google Antigravity",
+      activeSeat: "bob",
+      isProcessing: state === "thinking" || state === "spawning" || state === "hold",
       ecc: {
         instinctsCount,
         contextPressure,

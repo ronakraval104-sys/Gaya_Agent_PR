@@ -61,7 +61,8 @@ def foreground_title():
 
 
 def vscode_in_front():
-    return foreground_title().endswith("Visual Studio Code")
+    t = foreground_title().lower()
+    return any(k in t for k in ("visual studio code", "antigravity", "code", "claude", "cursor"))
 
 
 def set_clipboard_text(text):

@@ -142,20 +142,11 @@ def read_antigravity_sessions(window_s=3 * 3600):
                 mt = now
                 idle_s = 0
                 
-            if is_live:
-                status = "working" if "RUNNING" in status_str else "idle"
-            elif idle_s < window_s:
-                status = "idle"
-            else:
-                status = "closed"
-                
-            prompt = preview or ""
-            tool = ""
-            
             tpath = os.path.join(brain_dir, cid, ".system_generated", "logs", "transcript.jsonl")
             if os.path.exists(tpath):
                 try:
-                    for line in tail_lines(tpath, n=6):
+                    lines = tail_lines(tpath, nbytes=40_000)
+                    for line in lines[-10:]:
                         d = json.loads(line)
                         if d.get("type") == "USER_INPUT" and d.get("content"):
                             prompt = str(d["content"])
@@ -163,8 +154,18 @@ def read_antigravity_sessions(window_s=3 * 3600):
                             tc = d["tool_calls"]
                             if tc and isinstance(tc, list):
                                 tool = tc[0].get("name", "")
+                                if tool == "ask_question":
+                                    status = "waiting"
                 except Exception:
                     pass
+
+            if is_live:
+                if status != "waiting":
+                    status = "working" if "RUNNING" in status_str else "waiting"
+            elif idle_s < window_s:
+                status = "idle"
+            else:
+                status = "closed"
                     
             rows.append({
                 "id": cid[:8],
