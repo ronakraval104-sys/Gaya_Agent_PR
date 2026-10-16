@@ -3,1063 +3,811 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gaya — Skills Dashboard</title>
+<title>Gaya : Interactive Skills Matrix</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-/* ══════════════════════════════════════
-   RESET + ROOT
-   ══════════════════════════════════════ */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
-  --bg: #0a0e14;
-  --bg-panel: #111820;
-  --bg-card: #16202a;
-  --border: #1e3040;
-  --text: #c8d6e0;
-  --text-dim: #6a8090;
-  --process: #38bdf8;
-  --process-dim: #006080;
-  --quality: #fbbf24;
-  --quality-dim: #806010;
-  --creation: #a78bfa;
-  --creation-dim: #503080;
-  --dev: #34d399;
-  --dev-dim: #166534;
-  --business: #f472b6;
-  --business-dim: #802050;
-  --special: #fb923c;
-  --special-dim: #804010;
+  --bg: #07090e;
+  --surface-1: #0e121a;
+  --surface-2: #141a24;
+  --surface-card: #111620;
+  --border: #1e2636;
+  --border-focus: #3b475d;
+  --text: #f1f5f9;
+  --text-muted: #8e9bb0;
+  --text-dim: #546278;
+  
+  --gaya-gold: #f59e0b;
+  --gaya-gold-glow: rgba(245, 158, 11, 0.15);
+  
+  --logos-cyan: #00d4ff;
+  --logos-bg: rgba(0, 212, 255, 0.1);
+  --logos-border: rgba(0, 212, 255, 0.3);
+  
+  --bob-blue: #38bdf8;
+  --bob-bg: rgba(56, 189, 248, 0.1);
+  --bob-border: rgba(56, 189, 248, 0.3);
+  
+  --freya-purple: #c084fc;
+  --freya-bg: rgba(192, 132, 252, 0.1);
+  --freya-border: rgba(192, 132, 252, 0.3);
+  
+  --tvashtar-red: #f43f5e;
+  --tvashtar-bg: rgba(244, 63, 94, 0.1);
+  --tvashtar-border: rgba(244, 63, 94, 0.3);
+  
+  --ponytail-green: #10b981;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-display: 'Space Grotesk', sans-serif;
 }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  font-family: 'Space Grotesk', sans-serif;
-  background: var(--bg);
+  background-color: var(--bg);
   color: var(--text);
+  font-family: var(--font-sans);
   min-height: 100vh;
-  overflow-x: hidden;
+  line-height: 1.5;
+  background-image: 
+    radial-gradient(ellipse 80% 40% at 50% -10%, rgba(245, 158, 11, 0.08), transparent),
+    radial-gradient(ellipse 60% 30% at 90% 100%, rgba(0, 212, 255, 0.05), transparent);
+  background-attachment: fixed;
 }
 
-/* Animated grid */
-body::before {
-  content: '';
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-image:
-    linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
-  background-size: 40px 40px;
-  z-index: 0;
+.layout {
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 32px 28px 80px;
+}
+
+/* TOP NAVIGATION */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 36px;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-badge {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #000;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+
+.brand-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.brand-version {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-family: var(--font-mono);
+  text-decoration: none;
+  color: var(--text-muted);
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+}
+
+.nav-link:hover {
+  color: #fff;
+  border-color: var(--border-focus);
+  background: var(--surface-2);
+}
+
+.nav-link.active {
+  color: var(--gaya-gold);
+  border-color: rgba(245, 158, 11, 0.4);
+}
+
+/* HERO HEADER */
+.hero {
+  margin-bottom: 36px;
+}
+
+.hero-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px;
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--gaya-gold);
+  margin-bottom: 16px;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: 2.75rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+
+.hero-title span {
+  background: linear-gradient(135deg, #fff 40%, var(--gaya-gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-sub {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  max-width: 820px;
+  line-height: 1.6;
+}
+
+/* METRICS PANEL */
+.metrics-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.metric-card {
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metric-val {
+  font-family: var(--font-mono);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.metric-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+}
+
+/* CONTROLS BAR */
+.controls-bar {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin-bottom: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.search-row {
+  display: flex;
+  gap: 14px;
+}
+
+.search-box {
+  position: relative;
+  flex: 1;
+}
+
+.search-input {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px 12px 42px;
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.search-input:focus {
+  border-color: var(--gaya-gold);
+}
+
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-dim);
   pointer-events: none;
 }
 
-.container {
-  position: relative;
-  z-index: 1;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 30px 24px 60px;
-}
-
-/* Scrollbar */
-::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-
-/* ══════════════════════════════════════
-   HEADER
-   ══════════════════════════════════════ */
-header {
-  text-align: center;
-  padding: 40px 0 20px;
-  opacity: 0;
-  animation: fadeSlideDown 0.8s ease forwards;
-}
-
-header h1 {
-  font-size: 2.6rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  background: linear-gradient(135deg, #a78bfa 0%, #38bdf8 50%, #34d399 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-header .subtitle {
-  font-size: 0.9rem;
+.search-kbd {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
   color: var(--text-dim);
-  margin-top: 8px;
-  font-family: 'JetBrains Mono', monospace;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  opacity: 0.7;
 }
 
-.status-bar {
-  margin-top: 16px;
+.filter-group {
   display: flex;
-  justify-content: center;
-  gap: 24px;
   flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
 }
 
-.status-item {
-  font-family: 'JetBrains Mono', monospace;
+.filter-label {
+  font-family: var(--font-mono);
   font-size: 0.75rem;
   color: var(--text-dim);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  display: inline-block;
-  animation: pulse 2s ease-in-out infinite;
-}
-.dot.green { background: var(--dev); }
-
-/* ══════════════════════════════════════
-   STATS ROW
-   ══════════════════════════════════════ */
-.stats-row {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  margin-top: 16px;
-  flex-wrap: wrap;
-  opacity: 0;
-  animation: fadeSlideDown 0.8s ease 0.3s forwards;
-}
-
-.stat-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 12px 24px;
-  text-align: center;
-  min-width: 90px;
-}
-
-.stat-card .stat-value {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 1.6rem;
-  font-weight: 700;
-  line-height: 1.2;
-  color: var(--creation);
-}
-
-.stat-card .stat-label {
-  font-size: 0.6rem;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-top: 2px;
-  font-family: 'JetBrains Mono', monospace;
-}
-
-/* ══════════════════════════════════════
-   LEGEND
-   ══════════════════════════════════════ */
-.legend {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-top: 20px;
-  flex-wrap: wrap;
-  opacity: 0;
-  animation: fadeSlideDown 0.8s ease 0.5s forwards;
-}
-
-.legend-item {
-  font-size: 0.65rem;
-  color: var(--text-dim);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-family: 'JetBrains Mono', monospace;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  margin-right: 4px;
 }
 
-.legend-dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
-
-/* ══════════════════════════════════════
-   CONTROLS
-   ══════════════════════════════════════ */
-.controls {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 20px;
-  flex-wrap: wrap;
-  opacity: 0;
-  animation: fadeSlideDown 0.8s ease 0.6s forwards;
-}
-
-.srch-wrap {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--bg-card);
+.filter-pill {
+  background: var(--bg);
   border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 8px 14px;
-  transition: border .2s;
-  flex: 1;
-  min-width: 180px;
-  max-width: 300px;
-}
-
-.srch-wrap:focus-within { border-color: rgba(167,139,250,0.4); }
-.srch-wrap svg { flex-shrink: 0; opacity: 0.4; }
-
-.srch-wrap input {
-  background: none; border: none; outline: none;
-  color: var(--text); font-size: 0.8rem;
-  font-family: 'JetBrains Mono', monospace;
-  width: 100%;
-}
-.srch-wrap input::placeholder { color: var(--text-dim); opacity: 0.5; }
-
-.cnt-bdg {
-  font-size: 0.7rem;
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--text-dim);
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 6px;
+  color: var(--text-muted);
   padding: 6px 12px;
-  white-space: nowrap;
-}
-
-.filters {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  flex-wrap: wrap;
-}
-
-.fbtn {
-  font-size: 0.65rem;
-  font-weight: 500;
-  font-family: 'JetBrains Mono', monospace;
-  padding: 5px 10px;
   border-radius: 6px;
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
   cursor: pointer;
-  white-space: nowrap;
-  transition: all .15s;
+  transition: all 0.15s;
   user-select: none;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
 }
 
-.fbtn:hover { border-color: rgba(167,139,250,0.3); color: var(--text); }
-.fbtn.on { background: rgba(167,139,250,0.15); border-color: rgba(167,139,250,0.35); color: #a78bfa; }
-.fbtn-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
+.filter-pill:hover {
+  color: #fff;
+  border-color: var(--border-focus);
+}
 
-/* ══════════════════════════════════════
-   SKILL GRID
-   ══════════════════════════════════════ */
-.skill-grid {
+.filter-pill.active {
+  background: var(--surface-2);
+  color: #fff;
+  border-color: var(--gaya-gold);
+}
+
+.filter-pill.seat-logos.active { border-color: var(--logos-cyan); color: var(--logos-cyan); }
+.filter-pill.seat-bob.active { border-color: var(--bob-blue); color: var(--bob-blue); }
+.filter-pill.seat-freya.active { border-color: var(--freya-purple); color: var(--freya-purple); }
+.filter-pill.seat-tvashtar.active { border-color: var(--tvashtar-red); color: var(--tvashtar-red); }
+
+/* SKILL MATRIX GRID */
+.matrix-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 14px;
-  margin-top: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 18px;
 }
 
-/* ══════════════════════════════════════
-   SKILL CARD
-   ══════════════════════════════════════ */
 .skill-card {
-  background: var(--bg-card);
+  background: var(--surface-card);
   border: 1px solid var(--border);
   border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
   position: relative;
   overflow: hidden;
-  cursor: pointer;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.skill-card.visible {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 .skill-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
-  border-color: var(--text-dim);
+  transform: translateY(-2px);
+  border-color: var(--border-focus);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
-/* Colored top border */
-.skill-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-}
-.skill-card.process::before { background: linear-gradient(90deg, var(--process), var(--process-dim)); }
-.skill-card.quality::before { background: linear-gradient(90deg, var(--quality), var(--quality-dim)); }
-.skill-card.creation::before { background: linear-gradient(90deg, var(--creation), var(--creation-dim)); }
-.skill-card.dev::before { background: linear-gradient(90deg, var(--dev), var(--dev-dim)); }
-.skill-card.business::before { background: linear-gradient(90deg, var(--business), var(--business-dim)); }
-.skill-card.special::before { background: linear-gradient(90deg, var(--special), var(--special-dim)); }
-
-.skill-card-inner {
-  padding: 18px;
+.card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 12px;
 }
 
-/* Card header row */
-.card-header {
+.skill-icon-wrap {
+  font-size: 1.5rem;
+  width: 42px;
+  height: 42px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
+  justify-content: center;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
 }
 
-.skill-icon {
-  font-size: 1.5rem;
-  line-height: 1;
-  flex-shrink: 0;
+.seat-badge {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 3px 8px;
+  border-radius: 4px;
 }
+
+.badge-logos { background: var(--logos-bg); color: var(--logos-cyan); border: 1px solid var(--logos-border); }
+.badge-bob { background: var(--bob-bg); color: var(--bob-blue); border: 1px solid var(--bob-border); }
+.badge-freya { background: var(--freya-bg); color: var(--freya-purple); border: 1px solid var(--freya-border); }
+.badge-tvashtar { background: var(--tvashtar-bg); color: var(--tvashtar-red); border: 1px solid var(--tvashtar-border); }
 
 .skill-name {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--text);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  flex: 1;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 6px;
+  line-height: 1.3;
 }
 
-.skill-type-badge {
-  font-size: 0.5rem;
-  font-family: 'JetBrains Mono', monospace;
-  padding: 2px 7px;
-  border-radius: 3px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.06);
+.skill-desc {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.55;
+  margin-bottom: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.cat-pill {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
   color: var(--text-dim);
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  flex-shrink: 0;
 }
 
-/* Category tag */
-.card-tag-row {
+.card-action-btn {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.card-action-btn:hover {
+  background: var(--border-focus);
+  color: #fff;
+}
+
+/* DRAWER / MODAL */
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  z-index: 99;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+}
+
+.drawer-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 540px;
+  max-width: 90vw;
+  height: 100vh;
+  background: var(--surface-1);
+  border-left: 1px solid var(--border);
+  box-shadow: -20px 0 50px rgba(0, 0, 0, 0.7);
+  z-index: 100;
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
-  gap: 6px;
+  flex-direction: column;
+}
+
+.drawer.open {
+  transform: translateX(0);
+}
+
+.drawer-header {
+  padding: 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.drawer-close {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.drawer-body {
+  padding: 24px;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.drawer-section-title {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
   margin-bottom: 8px;
 }
 
-.skill-tag {
-  font-size: 0.55rem;
-  font-weight: 500;
-  font-family: 'JetBrains Mono', monospace;
-  padding: 2px 8px;
-  border-radius: 4px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-/* Description (visible when collapsed) */
-.skill-desc {
-  font-size: 0.78rem;
-  color: var(--text);
-  line-height: 1.6;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  opacity: 0.8;
-}
-
-/* ══════════════════════════════════════
-   EXPANDED CONTENT
-   ══════════════════════════════════════ */
-.expand-wrap {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.skill-card.expanded .expand-wrap {
-  max-height: 800px;
-}
-
-.expand-content {
-  padding: 0 18px 18px;
-  border-top: 1px solid rgba(30,48,64,0.3);
-  margin-top: 12px;
-  padding-top: 14px;
-}
-
-/* Expanded description */
-.expand-desc {
-  font-size: 0.78rem;
-  line-height: 1.7;
-  color: var(--text);
-  opacity: 0.85;
-  margin-bottom: 14px;
-}
-
-/* Workflow example */
-.expand-workflow {
-  background: rgba(167,139,250,0.05);
-  border: 1px solid rgba(167,139,250,0.1);
+.code-box {
+  background: var(--bg);
+  border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 12px 14px;
-  margin-bottom: 14px;
+  padding: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: #fff;
+  line-height: 1.5;
   position: relative;
 }
 
-.expand-workflow::before {
-  content: '';
+.copy-box-btn {
   position: absolute;
-  top: 0; left: 0; bottom: 0;
-  width: 3px;
-  border-radius: 3px 0 0 3px;
-}
-
-.expand-workflow-title {
-  font-size: 0.55rem;
-  font-family: 'JetBrains Mono', monospace;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-dim);
-  margin-bottom: 6px;
-  opacity: 0.7;
-}
-
-.expand-workflow-text {
-  font-size: 0.75rem;
-  line-height: 1.7;
-  font-style: italic;
-  opacity: 0.85;
-}
-
-/* Related skills */
-.expand-related {
-  margin-bottom: 14px;
-}
-
-.expand-related-title {
-  font-size: 0.55rem;
-  font-family: 'JetBrains Mono', monospace;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-dim);
-  margin-bottom: 6px;
-  opacity: 0.7;
-}
-
-.expand-related-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 5px;
-}
-
-.expand-related-chip {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 8px;
-  border-radius: 5px;
-  background: rgba(255,255,255,0.03);
+  right: 8px;
+  top: 8px;
+  background: var(--surface-2);
   border: 1px solid var(--border);
-  cursor: pointer;
-  transition: all .15s;
-  font-size: 0.7rem;
-  color: var(--text-dim);
-}
-
-.expand-related-chip:hover {
-  background: rgba(255,255,255,0.06);
-  border-color: rgba(167,139,250,0.25);
-  color: var(--text);
-}
-
-.expand-related-chip-icon { font-size: 0.9rem; flex-shrink: 0; }
-.expand-related-chip-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-
-/* Tags + Path row */
-.expand-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  align-items: flex-start;
-}
-
-.expand-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  flex: 1;
-}
-
-.expand-tag {
-  font-size: 0.55rem;
-  font-family: 'JetBrains Mono', monospace;
-  padding: 2px 7px;
-  border-radius: 3px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid var(--border);
-  color: var(--text-dim);
-}
-
-.expand-path {
-  font-size: 0.6rem;
-  color: var(--text-dim);
-  font-family: 'JetBrains Mono', monospace;
-  word-break: break-all;
-  background: rgba(0,0,0,0.2);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
   padding: 4px 8px;
   border-radius: 4px;
-  opacity: 0.6;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
+  cursor: pointer;
 }
 
-/* Expand hint */
-.expand-hint {
-  padding: 8px 18px;
-  font-size: 0.65rem;
-  color: var(--text-dim);
-  text-align: center;
-  border-top: 1px solid rgba(30,48,64,0.2);
-  font-family: 'JetBrains Mono', monospace;
-  letter-spacing: 0.05em;
-  opacity: 0.5;
-  transition: opacity 0.3s;
+.copy-box-btn:hover {
+  color: #fff;
+  border-color: var(--border-focus);
 }
 
-.skill-card:hover .expand-hint { opacity: 0.8; }
-.skill-card.expanded .expand-hint { opacity: 0.3; }
-
-/* ══════════════════════════════════════
-   EMPTY STATE
-   ══════════════════════════════════════ */
+/* EMPTY STATE */
 .empty-state {
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 60px 24px;
   grid-column: 1 / -1;
-}
-
-.empty-state.visible { display: flex; }
-
-.empty-state p {
-  font-size: 0.85rem;
-  color: var(--text-dim);
-  font-family: 'JetBrains Mono', monospace;
-}
-
-/* ══════════════════════════════════════
-   FOOTER
-   ══════════════════════════════════════ */
-footer {
-  margin-top: 40px;
   text-align: center;
-  padding: 30px;
-  font-size: 0.75rem;
+  padding: 60px 20px;
   color: var(--text-dim);
-  border-top: 1px solid var(--border);
-  font-family: 'JetBrains Mono', monospace;
-  opacity: 0;
-  animation: fadeSlideDown 0.8s ease 1.2s forwards;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
 }
 
-footer .note {
-  margin-top: 4px;
-  font-size: 0.65rem;
-  opacity: 0.6;
-}
-
-/* ══════════════════════════════════════
-   ANIMATIONS
-   ══════════════════════════════════════ */
-@keyframes fadeSlideDown {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
-}
-
-/* ══════════════════════════════════════
-   RESPONSIVE
-   ══════════════════════════════════════ */
-@media (max-width: 900px) {
-  header h1 { font-size: 1.8rem; }
-  .skill-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
-  .expand-related-grid { grid-template-columns: 1fr; }
-}
-
-@media (max-width: 500px) {
-  header h1 { font-size: 1.4rem; }
-  .skill-grid { grid-template-columns: 1fr; }
-  .controls { flex-direction: column; align-items: stretch; }
-  .srch-wrap { max-width: 100%; }
-  .filters { justify-content: center; }
+@media (max-width: 768px) {
+  .hero-title { font-size: 2rem; }
+  .matrix-grid { grid-template-columns: 1fr; }
+  .search-row { flex-direction: column; }
 }
 </style>
 </head>
 <body>
 
-<div class="container">
+<div class="layout">
 
-  <!-- ═══ HEADER ═══ -->
-  <header>
-    <h1>⚔ GAYA SKILL HANDBOOK</h1>
-    <div class="subtitle">38 Modules · 22 Custom · 14 Superpowers · 2 Bonus</div>
-    <div class="status-bar">
-      <span class="status-item"><span class="dot green"></span> Skills Ready</span>
-      <span class="status-item">🕒 <span id="dateDisplay"></span></span>
-      <span class="status-item">▼ Click to expand</span>
+  <!-- NAVIGATION -->
+  <nav class="navbar">
+    <div class="nav-brand">
+      <span class="brand-badge">GAYA 0.5.2610</span>
+      <span class="brand-title">Skills Matrix</span>
+      <span class="brand-version">83 Production Modules</span>
     </div>
+    <div class="nav-actions">
+      <a href="agent-methodology-dashboard.html" class="nav-link">Council Methodology &rarr;</a>
+      <a href="https://github.com/ronakraval104-sys/Gaya_Agent_PR" target="_blank" class="nav-link">GitHub Repo</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-meta">&bull; THE EXECUTIVE ARSENAL &bull; ZERO SLOP INVARIANT</div>
+    <h1 class="hero-title"><span>83 Specialized Skills</span> across 4 Council Seats</h1>
+    <p class="hero-sub">
+      A battle-tested catalog powering Creative Direction, Deep Systems Architecture, Reverse Engineering, and Enterprise Quality Verification. Built for high-taste agency execution and zero corporate filler.
+    </p>
   </header>
 
-  <!-- ═══ STATS ═══ -->
-  <div class="stats-row">
-    <div class="stat-card">
-      <div class="stat-value"><span class="count-up" data-target="46">0</span></div>
-      <div class="stat-label">Total</div>
+  <!-- METRICS -->
+  <div class="metrics-strip">
+    <div class="metric-card">
+      <span class="metric-val">83</span>
+      <span class="metric-label">Active Modules</span>
     </div>
-    <div class="stat-card">
-      <div class="stat-value" style="color:var(--dev)"><span class="count-up" data-target="30">0</span></div>
-      <div class="stat-label">Custom</div>
+    <div class="metric-card">
+      <span class="metric-val">4</span>
+      <span class="metric-label">Council Specialists</span>
     </div>
-    <div class="stat-card">
-      <div class="stat-value" style="color:var(--process)"><span class="count-up" data-target="14">0</span></div>
-      <div class="stat-label">Superpowers</div>
+    <div class="metric-card">
+      <span class="metric-val">5/5</span>
+      <span class="metric-label">SlopMonster Verification</span>
     </div>
-    <div class="stat-card">
-      <div class="stat-value" style="color:var(--quality)"><span class="count-up" data-target="2">0</span></div>
-      <div class="stat-label">Bonus</div>
-    </div>
-  </div>
-
-  <!-- ═══ LEGEND ═══ -->
-  <div class="legend" id="legend"></div>
-
-  <!-- ═══ CONTROLS ═══ -->
-  <div class="controls">
-    <div class="srch-wrap">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      <input id="search" type="text" placeholder="Search…" spellcheck="false" autocomplete="off">
-    </div>
-    <div class="cnt-bdg"><span id="vcount">0</span> / <span id="vtotal">0</span></div>
-    <div class="filters" id="filters"></div>
-  </div>
-
-  <!-- ═══ SKILL GRID ═══ -->
-  <div class="skill-grid" id="grid">
-    <div class="empty-state" id="emptyState">
-      <p>◈ No skills match your search</p>
+    <div class="metric-card">
+      <span class="metric-val">4</span>
+      <span class="metric-label">Platforms Supported</span>
     </div>
   </div>
 
-  <!-- ═══ FOOTER ═══ -->
-  <footer>
-    <div>BUILD 2026.06.25 · Gaya Skill System</div>
-    <div class="note">Click any card to expand · Search · Filter by category</div>
-  </footer>
+  <!-- CONTROLS -->
+  <div class="controls-bar">
+    <div class="search-row">
+      <div class="search-box">
+        <span class="search-icon">&#9906;</span>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search skills by name, keyword, or capability..." autocomplete="off">
+        <span class="search-kbd">/</span>
+      </div>
+    </div>
+
+    <!-- SEAT FILTERS -->
+    <div class="filter-group">
+      <span class="filter-label">Council Seat:</span>
+      <button class="filter-pill active" data-seat="all">All Seats</button>
+      <button class="filter-pill seat-logos" data-seat="logos">&#128737;&#65039; LOGOS (Mind / QC)</button>
+      <button class="filter-pill seat-bob" data-seat="bob">&#128296; Bob (Hands / Build)</button>
+      <button class="filter-pill seat-freya" data-seat="freya">&#127912; Freya (Heart / Creative)</button>
+      <button class="filter-pill seat-tvashtar" data-seat="tvashtar">&#129302; Tvashtar (Craftsman / REA)</button>
+    </div>
+
+    <!-- CATEGORY FILTERS -->
+    <div class="filter-group">
+      <span class="filter-label">Domain:</span>
+      <button class="filter-pill active" data-cat="all">All Domains</button>
+      <button class="filter-pill" data-cat="creative">Creative & 3D</button>
+      <button class="filter-pill" data-cat="systems">Systems & Code</button>
+      <button class="filter-pill" data-cat="business">Business & Agency</button>
+      <button class="filter-pill" data-cat="qc">Quality & Verification</button>
+      <button class="filter-pill" data-cat="security">Security & REA</button>
+    </div>
+  </div>
+
+  <!-- MATRIX GRID -->
+  <div class="matrix-grid" id="matrixGrid"></div>
 
 </div>
 
+<!-- DRAWER DETAIL -->
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <div>
+      <div id="drawerSeatBadge" class="seat-badge" style="display:inline-block; margin-bottom:8px;"></div>
+      <h2 id="drawerTitle" style="font-family:var(--font-display); font-size:1.4rem; color:#fff;"></h2>
+    </div>
+    <button class="drawer-close" id="drawerClose">&times;</button>
+  </div>
+  <div class="drawer-body">
+    <div>
+      <div class="drawer-section-title">Description & Mandate</div>
+      <p id="drawerDesc" style="color:var(--text-muted); font-size:0.92rem; line-height:1.6;"></p>
+    </div>
+    <div>
+      <div class="drawer-section-title">Trigger Prompt</div>
+      <div class="code-box">
+        <code id="drawerPrompt"></code>
+        <button class="copy-box-btn" onclick="copyDrawerPrompt()">Copy</button>
+      </div>
+    </div>
+    <div>
+      <div class="drawer-section-title">Protocol Block Example</div>
+      <div class="code-box">
+        <code id="drawerProtocol"></code>
+      </div>
+    </div>
+    <div>
+      <div class="drawer-section-title">Workspace Location</div>
+      <div class="code-box">
+        <code id="drawerPath"></code>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
-// ═══════════════════════════════════════════════════
-// DATA
-// ═══════════════════════════════════════════════════
-const SKILLS = {
-  // Superpowers: Process
-  "sbr": { n:"Brainstorming", i:"💡", c:"process", t:"Superpowers",
-    d:"Socratic design refinement. Explore intent, requirements, and edge cases through structured dialogue before any implementation.",
-    ex:"Before writing any code for a new feature, invoke Brainstorming first — it explores the user's intent, requirements, edge cases, and design tradeoffs through structured dialogue so you never build the wrong thing.",
-    r:["swp","sgm","sba","std"], p:"skills/brainstorming/", g:["planning","design","spec","dialogue"] },
-  "swp":{ n:"Writing Plans", i:"📝", c:"process", t:"Superpowers",
-    d:"Bite-sized plans from specs. Exact file paths, code snippets, and shell commands. No TBDs.",
-    ex:"After a brainstorming session resolves the 'what', convert the spec into a structured implementation plan with exact file paths, code snippets, and shell commands — no TBDs or ambiguity allowed.",
-    r:["sbr","sep","std","sdp"], p:"skills/writing-plans/", g:["planning","spec","implementation"] },
-  "std":{ n:"TDD", i:"🔄", c:"process", t:"Superpowers",
-    d:"Red-Green-Refactor. No implementation without a failing test first. The test is living documentation.",
-    ex:"Write a failing test first (Red), then minimum code to pass (Green), then refactor safely. The test stays as living documentation forever.",
-    r:["swp","svb","srq","sdb"], p:"skills/test-driven-development/", g:["testing","tdd","discipline"] },
-  "sep":{ n:"Executing Plans", i:"▶", c:"process", t:"Superpowers",
-    d:"Runs plans with checkpoints, intermediate verification, and handoff to Finish Branch.",
-    ex:"After Writing Plans produces a step-by-step spec, dispatch it to Executing Plans — it runs each step with checkpoints, verifies intermediate outputs, and hands off to Finish Branch when complete.",
-    r:["swp","sfc","svb","sdp"], p:"skills/executing-plans/", g:["execution","checkpoints","verification"] },
-  "sgw":{ n:"Git Worktrees", i:"🌿", c:"process", t:"Superpowers",
-    d:"Isolated workspaces per branch. No stashing, no context switching.",
-    ex:"Juggle a hotfix on main alongside a feature branch — check out each branch in its own directory with no stashing, no switching, no context loss.",
-    r:["sfc","sep","sdp"], p:"skills/using-git-worktrees/", g:["git","worktree","isolation"] },
-  "sdp":{ n:"Dispatch Parallel", i:"⚡", c:"process", t:"Superpowers",
-    d:"Split 2+ independent tasks into parallel subagent work. 2× throughput.",
-    ex:"When a feature has independent frontend and backend work, spawn two subagents simultaneously — no shared state, no conflicts, 2× throughput.",
-    r:["ssd","sep","swp"], p:"skills/dispatching-parallel-agents/", g:["parallel","subagent","efficiency"] },
-  "sba":{ n:"Brainstorming Alt", i:"🧠", c:"process", t:"Superpowers",
-    d:"Alternate brainstorming: diverge → converge → commit. Great for creative blocks.",
-    ex:"When stuck on a design decision, first diverge (generate many ideas), then converge (narrow to one), then commit.",
-    r:["sbr","swp","sgm"], p:"skills/brainstorming/", g:["planning","design","alternative"] },
-  "ssd":{ n:"Subagent Dev", i:"🤖", c:"process", t:"Superpowers",
-    d:"Fresh subagent per task with two-stage spec + quality review. Focused and verifiable.",
-    ex:"For a complex multi-file feature, spawn a dedicated subagent per file with a spec stage (describe intent) and quality stage (review output).",
-    r:["sdp","srq","swp","sep"], p:"skills/subagent-driven-development/", g:["subagent","parallel","review"] },
+const SKILLS = [{"id": "3d-visualizer", "name": "3d-visualizer", "icon": "\ud83e\uddca", "seat": "freya", "cat": "creative", "desc": "Expert in Three.js, 3D graphics, and interactive 3D visualizations", "prompt": "Invoke skill `3d-visualizer` for this task.", "path": "skills/3d-visualizer/"}, {"id": "3ds-max-bridge", "name": "3ds-max-bridge", "icon": "\ud83c\udfa8", "seat": "freya", "cat": "creative", "desc": "Specialized capability module for Gaya agent ecosystem.", "prompt": "Invoke skill `3ds-max-bridge` for this task.", "path": "skills/3ds-max-bridge/"}, {"id": "agent-engineering", "name": "agent-engineering", "icon": "\ud83e\udde0", "seat": "bob", "cat": "systems", "desc": "Build LLM apps and AI agents in code \u2014 API wiring for Anthropic, Groq, and OpenAI; tool/function calling loops; voice I/O (STT/TTS); local vs cloud model ser...", "prompt": "Invoke skill `agent-engineering` for this task.", "path": "skills/agent-engineering/"}, {"id": "architecture-diagram", "name": "architecture-diagram", "icon": "\u26a1", "seat": "tvashtar", "cat": "systems", "desc": "Build interactive, click-through architecture diagrams for software systems \u2014 single HTML file with animated step-by-step flows, mode toggles (dev/prod, offl...", "prompt": "Invoke skill `architecture-diagram` for this task.", "path": "skills/architecture-diagram/"}, {"id": "archviz-optimizer", "name": "archviz-optimizer", "icon": "\ud83c\udfa8", "seat": "freya", "cat": "creative", "desc": "Specialized capability module for Gaya agent ecosystem.", "prompt": "Invoke skill `archviz-optimizer` for this task.", "path": "skills/archviz-optimizer/"}, {"id": "brainstorming", "name": "brainstorming", "icon": "\ud83d\udee1\ufe0f", "seat": "logos", "cat": "qc", "desc": "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requi...", "prompt": "Invoke skill `brainstorming` for this task.", "path": "skills/brainstorming/"}, {"id": "brand-identity", "name": "brand-identity", "icon": "\u2728", "seat": "freya", "cat": "creative", "desc": "Design or evaluate a brand visual identity system covering logo, color, typography, imagery direction, iconography, and motion principles. Use this skill whe...", "prompt": "Craft editorial direction using brand-identity.", "path": "skills/brand-identity/"}, {"id": "building-ui-bundle-frontend", "name": "building-ui-bundle-frontend", "icon": "\u26a1", "seat": "bob", "cat": "systems", "desc": "MUST activate before editing ANY file under uiBundles/*/src/ for visual or UI changes to an EXISTING app \u2014 pages, components, sections, layout, styling, colo...", "prompt": "Invoke skill `building-ui-bundle-frontend` for this task.", "path": "skills/building-ui-bundle-frontend/"}, {"id": "comfyui-workflow-builder", "name": "comfyui-workflow-builder", "icon": "\ud83c\udfa8", "seat": "freya", "cat": "creative", "desc": "Generate, build, create, or design ComfyUI workflow JSON from natural language descriptions. Produces valid node graphs with correct class_types, connections...", "prompt": "Invoke skill `comfyui-workflow-builder` for this task.", "path": "skills/comfyui-workflow-builder/"}, {"id": "consulting-analysis", "name": "consulting-analysis", "icon": "\ud83d\udcca", "seat": "freya", "cat": "business", "desc": "Use this skill when the user requests to generate, create, or write professional research reports including but not limited to market analysis, consumer insi...", "prompt": "Invoke skill `consulting-analysis` for this task.", "path": "skills/consulting-analysis/"}, {"id": "content-creator", "name": "content-creator", "icon": "\ud83d\udcc8", "seat": "freya", "cat": "business", "desc": "Long-form and short-form content writing \u2014 blog posts, landing copy, agency outreach emails, social posts, video scripts, email newsletters, case studies, le...", "prompt": "Invoke skill `content-creator` for this task.", "path": "skills/content-creator/"}, {"id": "creative-proposal-builder", "name": "creative-proposal-builder", "icon": "\ud83c\udfa8", "seat": "freya", "cat": "creative", "desc": "Specialized capability module for Gaya agent ecosystem.", "prompt": "Invoke skill `creative-proposal-builder` for this task.", "path": "skills/creative-proposal-builder/"}, {"id": "curved-led-wall", "name": "curved-led-wall", "icon": "\ud83d\udcd0", "seat": "freya", "cat": "creative", "desc": "The canonical method for laying flat rectangular modules (LED cabinets, panels, screens, tiles) into a CURVED wall so adjacent modules touch edge-to-edge wit...", "prompt": "Invoke skill `curved-led-wall` for this task.", "path": "skills/curved-led-wall/"}, {"id": "data-storytelling", "name": "data-storytelling", "icon": "\ud83d\udcc8", "seat": "freya", "cat": "business", "desc": "Transform data into compelling narratives using visualization, context, and persuasive structure. Use when presenting analytics to stakeholders, creating dat...", "prompt": "Invoke skill `data-storytelling` for this task.", "path": "skills/data-storytelling/"}, {"id": "deploy-ops", "name": "deploy-ops", "icon": "\ud83d\ude80", "seat": "bob", "cat": "systems", "desc": "Deployment and runtime operations \u2014 environment hygiene (venv, env vars, secrets), dependency management (lockfiles, npm/pip/uv), build and run scripts, depl...", "prompt": "Invoke skill `deploy-ops` for this task.", "path": "skills/deploy-ops/"}, {"id": "digital-twin-generation", "name": "digital-twin-generation", "icon": "\ud83c\udfa8", "seat": "freya", "cat": "creative", "desc": "Generate photorealistic digital twins and avatar clones using each::sense AI. Create AI-powered digital representations for video calls, corporate communicat...", "prompt": "Invoke skill `digital-twin-generation` for this task.", "path": "skills/digital-twin-generation/"}, {"id": "dispatching-parallel-agents", "name": "dispatching-parallel-agents", "icon": "\u26a1", "seat": "bob", "cat": "systems", "desc": "Use when facing 2+ independent tasks that can be worked on without shared state or sequential dependencies", "prompt": "Invoke skill `dispatching-parallel-agents` for this task.", "path": "skills/dispatching-parallel-agents/"}, {"id": "dum-e-toolkeeper", "name": "dum-e-toolkeeper", "icon": "\ud83e\uddbe", "seat": "tvashtar", "cat": "security", "desc": "DUM-E \u2014 GAYA's fourth named subagent, the toolkeeper. Holds the specialty arsenal that's used occasionally but doesn't earn an always-on slot. Doesn't *do* t...", "prompt": "Invoke skill `dum-e-toolkeeper` for this task.", "path": "skills/dum-e-toolkeeper/"}, {"id": "ecc-build-fix", "name": "ecc-build-fix", "icon": "\ud83d\udd27", "seat": "bob", "cat": "systems", "desc": "Systematic compiler, runtime, and build error diagnostic and minimal-diff repair. Use when encountering failed builds, missing dependencies, syntax/type erro...", "prompt": "Invoke skill `ecc-build-fix` for this task.", "path": "skills/ecc-build-fix/"}, {"id": "ecc-security-scan", "name": "ecc-security-scan", "icon": "\ud83d\udee1\ufe0f", "seat": "logos", "cat": "security", "desc": "Execute AgentShield security audit across workspace files, configurations, MCP servers, and environment variables. Detects leaked secrets, private keys, and ...", "prompt": "Audit workspace using ecc-security-scan.", "path": "skills/ecc-security-scan/"}, {"id": "ecc-tdd-workflow", "name": "ecc-tdd-workflow", "icon": "\ud83d\udd04", "seat": "logos", "cat": "qc", "desc": "Enforce strict Test-Driven Development (TDD) Red-Green-Refactor cycle. Mandates running and verifying failing tests before implementing production code, then...", "prompt": "Run ecc-tdd-workflow with strict red-green-refactor cycle.", "path": "skills/ecc-tdd-workflow/"}, {"id": "edidth-planner-qc", "name": "edidth-planner-qc", "icon": "\ud83e\uddd0", "seat": "logos", "cat": "qc", "desc": "EDIDTH \u2014 GAYA's mastermind planner and hard-check QC subagent. Summoned when planning is complex, decisions are irreversible, an architecture choice is on th...", "prompt": "Invoke skill `edidth-planner-qc` for this task.", "path": "skills/edidth-planner-qc/"}, {"id": "ethical-hacking", "name": "ethical-hacking", "icon": "\ud83d\udd13", "seat": "tvashtar", "cat": "security", "desc": "Owner-authorized web security assessment. Find loopholes in sites and apps Katviz owns before bad actors do. Defender posture only \u2014 recon, OWASP Top 10 test...", "prompt": "Audit workspace using ethical-hacking.", "path": "skills/ethical-hacking/"}, {"id": "executing-plans", "name": "executing-plans", "icon": "\u26a1", "seat": "bob", "cat": "systems", "desc": "Use when you have a written implementation plan to execute in a separate session with review checkpoints", "prompt": "Invoke skill `executing-plans` for this task.", "path": "skills/executing-plans/"}, {"id": "finishing-a-development-branch", "name": "finishing-a-development-branch", "icon": "\u26a1", "seat": "bob", "cat": "systems", "desc": "Use when implementation is complete, all tests pass, and you need to decide how to integrate the work - guides completion of development work by presenting s...", "prompt": "Invoke skill `finishing-a-development-branch` for this task.", "path": "skills/finishing-a-development-branch/"}, {"id": "friday-designer", "name": "friday-designer", "icon": "\ud83c\udf3a", "seat": "freya", "cat": "creative", "desc": "FRIDAY \u2014 GAYA's jolly GenZ polymath designer subagent. Summoned for any visual/design execution Katviz puts in front of Gaya \u2014 UI, UX, websites, landing page...", "prompt": "Craft editorial direction using friday-designer.", "path": "skills/friday-designer/"}, {"id": "frontend-design", "name": "frontend-design", "icon": "\u26a1", "seat": "bob", "cat": "systems", "desc": "Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, artifact...", "prompt": "Craft editorial direction using frontend-design.", "path": "skills/frontend-design/"}, {"id": "game-design-theory", "name": "game-design-theory", "icon": "\ud83c\udfa8", "seat": "freya", "cat": "creative", "desc": "Comprehensive game design theory covering MDA framework, player psychology, balance principles, and progression systems. Master why games are fun.", "prompt": "Craft editorial direction using game-design-theory.", "path": "skills/game-design-theory/"}, {"id": "gaya", "name": "gaya", "icon": "\ud83d\udd2c", "seat": "logos", "cat": "security", "desc": "Adopt the Gaya persona \u2014 Divine Commander, Philosopher, Poet of Evergrowth. Use when the user invokes \"/gaya\", says \"be Gaya\", \"act like Gaya\", \"channel Gaya...", "prompt": "Invoke skill `gaya` for this task.", "path": "skills/gaya/"}, {"id": "gepeto", "name": "gepeto", "icon": "\u26a1", "seat": "bob", "cat": "systems", "desc": "Guide for building 1-click launchers and building apps with launchers built-in using Pinokio", "prompt": "Invoke skill `gepeto` for this task.", "path": "skills/gepeto/"}, {"id": "gis-3d-scene-developer", "name": "gis-3d-scene-developer", "icon": "\ud83d\udd2c", "seat": "tvashtar", "cat": "security", "desc": "Composing 3D scenes that include geospatial data \u2014 terrain meshes, georeferenced models, city models (CityGML / 3D Tiles), satellite + drone imagery as textu...", "prompt": "Invoke skill `gis-3d-scene-developer` for this task.", "path": "skills/gis-3d-scene-developer/"}, {"id": "gis-bim-specialist", "name": "gis-bim-specialist", "icon": "\ud83d\udd2c", "seat": "tvashtar", "cat": "security", "desc": "BIM + GIS integration \u2014 Revit/IFC models in geospatial context, the Revit\u2192Datasmith\u2192Unreal pipeline (BIM Construction Renderer territory), coordinate systems...", "prompt": "Invoke skill `gis-bim-specialist` for this task.", "path": "skills/gis-bim-specialist/"}, {"id": "gis-cartography-designer", "name": "gis-cartography-designer", "icon": "\ud83d\udd2c", "seat": "tvashtar", "cat": "security", "desc": "The visual design of maps \u2014 color, type, hierarchy, symbology, layout. Different from gis-analyst-type work (data processing) \u2014 this is making a map READABLE...", "prompt": "Craft editorial direction using gis-cartography-designer.", "path": "skills/gis-cartography-designer/"}, {"id": "grill-me", "name": "grill-me", "icon": "\ud83d\udee1\ufe0f", "seat": "logos", "cat": "qc", "desc": "Interview the user relentlessly about a plan or design until reaching shared understanding, resolving each branch of the decision tree. Use when user wants t...", "prompt": "Invoke skill `grill-me` for this task.", "path": "skills/grill-me/"}, {"id": "growth-hacker", "name": "growth-hacker", "icon": "\ud83d\udcc8", "seat": "freya", "cat": "business", "desc": "Growth strategy + viral mechanics + experiment design. Building loops (acquisition, activation, retention, referral, revenue), running experiments with measu...", "prompt": "Audit workspace using growth-hacker.", "path": "skills/growth-hacker/"}, {"id": "hyperframes-video", "name": "video-creation-code", "icon": "\ud83c\udfa8", "seat": "freya", "cat": "creative", "desc": "Turn HTML, CSS, media, and seekable animations into deterministic MP4 videos. Built by HeyGen for AI agents. Write compositions as plain HTML with timed data...", "prompt": "Invoke skill `hyperframes-video` for this task.", "path": "skills/hyperframes-video/"}, {"id": "image-generation", "name": "image-generation", "icon": "\ud83c\udfa8", "seat": "freya", "cat": "creative", "desc": "Create effective AI image generation prompts for DALL-E, Midjourney, and Stable Diffusion. Generate prompts for various styles and use cases.", "prompt": "Invoke skill `image-generation` for this task.", "path": "skills/image-generation/"}, {"id": "image-to-video", "name": "image-to-video", "icon": "\ud83c\udfa8", "seat": "freya", "cat": "creative", "desc": "Animate any still image on RunComfy \u2014 this skill is a smart router that matches the user's intent to the right i2v model in the RunComfy catalog. Picks Happy...", "prompt": "Invoke skill `image-to-video` for this task.", "path": "skills/image-to-video/"}, {"id": "improve-codebase-architecture", "name": "improve-codebase-architecture", "icon": "\u26a1", "seat": "bob", "cat": "systems", "desc": "Find deepening opportunities in a codebase, informed by the domain language in CONTEXT.md and the decisions in docs/adr/. Use when the user wants to improve ...", "prompt": "Invoke skill `improve-codebase-architecture` for this task.", "path": "skills/improve-codebase-architecture/"}, {"id": "instagram-curator", "name": "instagram-curator", "icon": "\ud83d\udcc8", "seat": "freya", "cat": "business", "desc": "Instagram-native content for visual showcase \u2014 feed posts, Reels, Stories, carousels, captions. Primary for Visual Rhyme's LED installation portfolio and bra...", "prompt": "Invoke skill `instagram-curator` for this task.", "path": "skills/instagram-curator/"}, {"id": "linkedin-content-creator", "name": "linkedin-content-creator", "icon": "\ud83d\udcc8", "seat": "freya", "cat": "business", "desc": "LinkedIn-native content for B2B reach \u2014 posts, articles, comment strategy, profile optimization, DM warm-ups. Primary platform for Katviz AI agency lead-gen ...", "prompt": "Invoke skill `linkedin-content-creator` for this task.", "path": "skills/linkedin-content-creator/"}, {"id": "logo-design", "name": "logo-design", "icon": "\u2712\ufe0f", "seat": "freya", "cat": "creative", "desc": "Generate logo variants for a brand, producing multiple production-grade marks across different architectures (wordmark, lockup, symbol-only, letterform-as-sy...", "prompt": "Craft editorial direction using logo-design.", "path": "skills/logo-design/"}, {"id": "meeting-notes-specialist", "name": "meeting-notes-specialist", "icon": "\ud83d\udcc8", "seat": "logos", "cat": "business", "desc": "Capture meeting outcomes that actually get acted on \u2014 decisions, action items with owners and dates, open questions, parking-lot topics. Pairs with /dump com...", "prompt": "Invoke skill `meeting-notes-specialist` for this task.", "path": "skills/meeting-notes-specialist/"}, {"id": "memory-keeper", "name": "memory-keeper", "icon": "\ud83d\udd2c", "seat": "tvashtar", "cat": "security", "desc": "Persistent cross-session memory engine for OMNI_GAYA. Reads and appends a living knowledge-base file (OMNI_GAYA_MEMORY.md) \u2014 operator snapshot, session histo...", "prompt": "Invoke skill `memory-keeper` for this task.", "path": "skills/memory-keeper/"}, {"id": "omni-gaya", "name": "omni-gaya", "icon": "\ud83d\udc51", "seat": "tvashtar", "cat": "security", "desc": "Activates GAYA \u2014 Katviz's Commander-in-Chief AI. Use when the user (Katviz) wants Gaya mode, godmode, omni mode, the council, multi-expert analysis, or says ...", "prompt": "Invoke skill `omni-gaya` for this task.", "path": "skills/omni-gaya/"}, {"id": "pinokio", "name": "pinokio", "icon": "\u26a1", "seat": "bob", "cat": "systems", "desc": "Discover, launch, and use apps and tools for the current task.", "prompt": "Invoke skill `pinokio` for this task.", "path": "skills/pinokio/"}, {"id": "pipeline-troubleshooter", "name": "pipeline-troubleshooter", "icon": "\u26a1", "seat": "bob", "cat": "systems", "desc": "Specialized capability module for Gaya agent ecosystem.", "prompt": "Invoke skill `pipeline-troubleshooter` for this task.", "path": "skills/pipeline-troubleshooter/"}, {"id": "pptx", "name": "pptx", "icon": "\ud83d\udcc8", "seat": "freya", "cat": "business", "desc": "Use this skill any time a .pptx file is involved in any way \u2014 as input, output, or both. This includes: creating slide decks, pitch decks, or presentations; ...", "prompt": "Invoke skill `pptx` for this task.", "path": "skills/pptx/"}, {"id": "procedural-3d-modeling", "name": "procedural-3d-modeling", "icon": "\ud83c\udfa8", "seat": "freya", "cat": "creative", "desc": "The geometry-construction brain for ALL 3D work \u2014 building shapes, structures, and scenes from parameters and math rather than sculpting by hand. Fires when ...", "prompt": "Execute deep inspection using procedural-3d-modeling on target binary.", "path": "skills/procedural-3d-modeling/"}, {"id": "project-manager-senior", "name": "project-manager-senior", "icon": "\ud83d\udcc8", "seat": "logos", "cat": "business", "desc": "Multi-project portfolio management \u2014 scope, schedule, risk, stakeholders, resource allocation across simultaneous workstreams. Different from EDIDTH (which p...", "prompt": "Invoke skill `project-manager-senior` for this task.", "path": "skills/project-manager-senior/"}, {"id": "prompt-engineer", "name": "prompt-engineer", "icon": "\ud83d\udd2c", "seat": "tvashtar", "cat": "security", "desc": "Engineer prompts for AI systems Katviz uses operationally \u2014 ComfyUI text encoders, image-gen platforms (DALL\u00b7E, Midjourney, SD, Flux, Z-Image Turbo), custom ...", "prompt": "Invoke skill `prompt-engineer` for this task.", "path": "skills/prompt-engineer/"}, {"id": "receiving-code-review", "name": "receiving-code-review", "icon": "\ud83d\udee1\ufe0f", "seat": "logos", "cat": "qc", "desc": "Use when receiving code review feedback, before implementing suggestions, especially if feedback seems unclear or technically questionable - requires technic...", "prompt": "Invoke skill `receiving-code-review` for this task.", "path": "skills/receiving-code-review/"}, {"id": "requesting-code-review", "name": "requesting-code-review", "icon": "\ud83d\udee1\ufe0f", "seat": "logos", "cat": "qc", "desc": "Use when completing tasks, implementing major features, or before merging to verify work meets requirements", "prompt": "Invoke skill `requesting-code-review` for this task.", "path": "skills/requesting-code-review/"}, {"id": "reverse-engineer-anything", "name": "reverse-engineer-anything", "icon": "\ud83d\udd2c", "seat": "tvashtar", "cat": "security", "desc": "Reverse engineer native, managed, Electron/JavaScript, packaged, firmware, and browser targets with REA. Use shipped-artifact or requested runtime evidence t...", "prompt": "Execute deep inspection using reverse-engineer-anything on target binary.", "path": "skills/reverse-engineer-anything/"}, {"id": "sales-discovery-coach", "name": "sales-discovery-coach", "icon": "\ud83c\udfaf", "seat": "freya", "cat": "business", "desc": "Sales-call discipline \u2014 the discovery conversation that turns a curious lead into a qualified opportunity (or a clean no). Questions, listening patterns, qua...", "prompt": "Invoke skill `sales-discovery-coach` for this task.", "path": "skills/sales-discovery-coach/"}, {"id": "sales-outbound-strategist", "name": "sales-outbound-strategist", "icon": "\ud83d\udcc8", "seat": "freya", "cat": "business", "desc": "Outbound sales for the Katviz AI agency \u2014 prospect lists, channel mix, message sequences, reply rates, meeting bookings. Cold outreach that doesn't feel cold...", "prompt": "Invoke skill `sales-outbound-strategist` for this task.", "path": "skills/sales-outbound-strategist/"}, {"id": "sales-pipeline-analyst", "name": "sales-pipeline-analyst", "icon": "\ud83d\udcc8", "seat": "freya", "cat": "business", "desc": "Pipeline math, conversion-rate diagnosis, deal-stage health, win/loss patterns. The numbers behind the sales motion. Different from outbound-strategist (whic...", "prompt": "Invoke skill `sales-pipeline-analyst` for this task.", "path": "skills/sales-pipeline-analyst/"}, {"id": "scroll-craft", "name": "scroll-craft", "icon": "\ud83d\udcdc", "seat": "freya", "cat": "creative", "desc": "Build premium scroll-driven websites, landing pages, and interactive dashboards. Plan the visitor journey, page grammar, emotional peak, and bespoke signatur...", "prompt": "Craft editorial direction using scroll-craft.", "path": "skills/scroll-craft/"}, {"id": "security-appsec-engineer", "name": "security-appsec-engineer", "icon": "\ud83d\udd2c", "seat": "logos", "cat": "security", "desc": "Deep application security beyond OWASP-checklist territory \u2014 secure design patterns, authentication architecture, session management, authorization models, s...", "prompt": "Audit workspace using security-appsec-engineer.", "path": "skills/security-appsec-engineer/"}, {"id": "security-cloud-security-architect", "name": "security-cloud-security-architect", "icon": "\ud83d\udd2c", "seat": "tvashtar", "cat": "security", "desc": "Cloud and platform configuration security \u2014 IAM, network segmentation, data-plane vs control-plane access, secret stores, platform-level hardening for Vercel...", "prompt": "Audit workspace using security-cloud-security-architect.", "path": "skills/security-cloud-security-architect/"}, {"id": "security-incident-responder", "name": "security-incident-responder", "icon": "\ud83d\udd2c", "seat": "tvashtar", "cat": "security", "desc": "Active security incident response \u2014 containment, eradication, recovery, post-mortem. The \"we just got breached / a key leaked / there's suspicious activity\" ...", "prompt": "Audit workspace using security-incident-responder.", "path": "skills/security-incident-responder/"}, {"id": "skill-architect", "name": "skill-architect", "icon": "\ud83d\udd2c", "seat": "tvashtar", "cat": "security", "desc": "Author skills, agent charters, and system prompts that are token-disciplined and trigger reliably. Use when creating or refining a Claude Skill (SKILL.md + Y...", "prompt": "Invoke skill `skill-architect` for this task.", "path": "skills/skill-architect/"}, {"id": "slop-monster", "name": "slopmonster", "icon": "\u2694\ufe0f", "seat": "logos", "cat": "qc", "desc": "Turn AI-written drafts, documents, presentations, and copy into crisp, punchy prose a human would ship. Use whenever drafting or editing a document, presenta...", "prompt": "Invoke skill `slop-monster` for this task.", "path": "skills/slop-monster/"}, {"id": "social-media-strategist", "name": "social-media-strategist", "icon": "\ud83d\udcc8", "seat": "freya", "cat": "business", "desc": "Overall social-media strategy across platforms \u2014 channel mix, content pillars, posting cadence, distribution math, repurposing flows, and growth experiments....", "prompt": "Invoke skill `social-media-strategist` for this task.", "path": "skills/social-media-strategist/"}, {"id": "subagent-driven-development", "name": "subagent-driven-development", "icon": "\u26a1", "seat": "bob", "cat": "systems", "desc": "Use when executing implementation plans with independent tasks in the current session", "prompt": "Invoke skill `subagent-driven-development` for this task.", "path": "skills/subagent-driven-development/"}, {"id": "systematic-debugging", "name": "systematic-debugging", "icon": "\ud83d\udee1\ufe0f", "seat": "logos", "cat": "qc", "desc": "Use when encountering any bug, test failure, or unexpected behavior, before proposing fixes", "prompt": "Invoke skill `systematic-debugging` for this task.", "path": "skills/systematic-debugging/"}, {"id": "technical-writer", "name": "technical-writer", "icon": "\ud83d\udcc8", "seat": "freya", "cat": "business", "desc": "Write clear, useful documentation \u2014 READMEs, project handbooks, runbooks, API docs, user guides, setup instructions, decision records. The lane between code-...", "prompt": "Invoke skill `technical-writer` for this task.", "path": "skills/technical-writer/"}, {"id": "test-driven-development", "name": "test-driven-development", "icon": "\ud83d\udee1\ufe0f", "seat": "logos", "cat": "qc", "desc": "Use when implementing any feature or bugfix, before writing implementation code", "prompt": "Run test-driven-development with strict red-green-refactor cycle.", "path": "skills/test-driven-development/"}, {"id": "testing-evidence-collector", "name": "testing-evidence-collector", "icon": "\ud83d\udee1\ufe0f", "seat": "logos", "cat": "qc", "desc": "Force-real-proof discipline. When claims need RECEIPTS \u2014 screenshots, logs, command output, file diffs, before/after \u2014 collected systematically and stored wh...", "prompt": "Run testing-evidence-collector with strict red-green-refactor cycle.", "path": "skills/testing-evidence-collector/"}, {"id": "testing-reality-checker", "name": "testing-reality-checker", "icon": "\ud83d\udee1\ufe0f", "seat": "logos", "cat": "qc", "desc": "Formal reality-check protocol \u2014 EDIDTH's deepest tool. When a claim, result, or \"we're done\" assertion needs systematic verification against ACTUAL state (no...", "prompt": "Run testing-reality-checker with strict red-green-refactor cycle.", "path": "skills/testing-reality-checker/"}, {"id": "testing-tool-evaluator", "name": "testing-tool-evaluator", "icon": "\ud83d\udee1\ufe0f", "seat": "logos", "cat": "qc", "desc": "Systematic evaluation of new tools, frameworks, services, libraries, or models before adoption. Score-and-decide protocol instead of vibes-based selection. D...", "prompt": "Run testing-tool-evaluator with strict red-green-refactor cycle.", "path": "skills/testing-tool-evaluator/"}, {"id": "ui-ux-pro-max", "name": "ui-ux-pro-max", "icon": "\ud83d\udc8e", "seat": "freya", "cat": "creative", "desc": "UI/UX design intelligence for web and mobile. Includes 50+ styles, 161 color palettes, 57 font pairings, 161 product types, 99 UX guidelines, and 25 chart ty...", "prompt": "Invoke skill `ui-ux-pro-max` for this task.", "path": "skills/ui-ux-pro-max/"}, {"id": "universal-modder", "name": "universal-modder", "icon": "\ud83c\udfae", "seat": "tvashtar", "cat": "security", "desc": "Universal PC game modding, reverse engineering, asset generation, and cross-game mashups. Use whenever the user asks to mod a game, inspect game files, rever...", "prompt": "Execute deep inspection using universal-modder on target binary.", "path": "skills/universal-modder/"}, {"id": "unreal-engine-cpp-pro", "name": "unreal-engine-cpp-pro", "icon": "\u26a1", "seat": "tvashtar", "cat": "security", "desc": "Expert guide for Unreal Engine 5.x C++ development, covering UObject hygiene, performance patterns, and best practices.", "prompt": "Invoke skill `unreal-engine-cpp-pro` for this task.", "path": "skills/unreal-engine-cpp-pro/"}, {"id": "using-git-worktrees", "name": "using-git-worktrees", "icon": "\u26a1", "seat": "bob", "cat": "systems", "desc": "Use when starting feature work that needs isolation from current workspace or before executing implementation plans - ensures an isolated workspace exists vi...", "prompt": "Invoke skill `using-git-worktrees` for this task.", "path": "skills/using-git-worktrees/"}, {"id": "using-superpowers", "name": "using-superpowers", "icon": "\ud83d\udd2c", "seat": "tvashtar", "cat": "security", "desc": "Use when starting any conversation - establishes how to find and use skills, requiring Skill tool invocation before ANY response including clarifying questions", "prompt": "Invoke skill `using-superpowers` for this task.", "path": "skills/using-superpowers/"}, {"id": "verification-before-completion", "name": "verification-before-completion", "icon": "\ud83d\udee1\ufe0f", "seat": "logos", "cat": "qc", "desc": "Use when about to claim work is complete, fixed, or passing, before committing or creating PRs - requires running verification commands and confirming output...", "prompt": "Invoke skill `verification-before-completion` for this task.", "path": "skills/verification-before-completion/"}, {"id": "veronica-builder", "name": "veronica-builder", "icon": "\ud83d\udd28", "seat": "bob", "cat": "systems", "desc": "VERONICA \u2014 GAYA's precision builder & shipping subagent (the hands of the triad). Summoned for the implementation phase of any T1/T2 build \u2014 code, scripts, f...", "prompt": "Invoke skill `veronica-builder` for this task.", "path": "skills/veronica-builder/"}, {"id": "visionos-spatial-engineer", "name": "visionos-spatial-engineer", "icon": "\ud83d\udd2c", "seat": "tvashtar", "cat": "security", "desc": "Apple Vision Pro development \u2014 visionOS, RealityKit, SwiftUI for spatial, immersive spaces, hand/eye interaction, ARKit integration. DUM-E pool \u2014 fires on \"V...", "prompt": "Invoke skill `visionos-spatial-engineer` for this task.", "path": "skills/visionos-spatial-engineer/"}, {"id": "visual-scripting-wizardry", "name": "visual-scripting-wizardry", "icon": "\u26a1", "seat": "bob", "cat": "systems", "desc": "Build automations and middleware visually before writing code \u2014 n8n, Make.com, Node-RED. API orchestration, webhook flows, app-to-app glue, rapid mini-apps. ...", "prompt": "Invoke skill `visual-scripting-wizardry` for this task.", "path": "skills/visual-scripting-wizardry/"}, {"id": "writing-plans", "name": "writing-plans", "icon": "\ud83d\udee1\ufe0f", "seat": "logos", "cat": "qc", "desc": "Use when you have a spec or requirements for a multi-step task, before touching code", "prompt": "Invoke skill `writing-plans` for this task.", "path": "skills/writing-plans/"}, {"id": "writing-skills", "name": "writing-skills", "icon": "\ud83d\udd2c", "seat": "tvashtar", "cat": "security", "desc": "Use when creating new skills, editing existing skills, or verifying skills work before deployment", "prompt": "Invoke skill `writing-skills` for this task.", "path": "skills/writing-skills/"}, {"id": "xr-immersive-developer", "name": "xr-immersive-developer", "icon": "\ud83d\udd2c", "seat": "tvashtar", "cat": "security", "desc": "Cross-platform XR / VR / AR \u2014 Unity XR, Unreal XR, WebXR, Meta Quest, PICO, mixed-reality patterns that span devices. Different from `visionos-spatial-engine...", "prompt": "Invoke skill `xr-immersive-developer` for this task.", "path": "skills/xr-immersive-developer/"}];
 
-  // Superpowers: Quality
-  "srq":{ n:"Request Review", i:"👁", c:"quality", t:"Superpowers",
-    d:"Code reviewer subagent. Classifies issues: Critical → Important → Minor.",
-    ex:"After completing implementation, spawn a reviewer subagent — it reads the diff, classifies issues as Critical (must fix), Important (should fix), or Minor (note only).",
-    r:["src","std","svb","sfc"], p:"skills/requesting-code-review/", g:["review","code-quality","feedback"] },
-  "src":{ n:"Receive Review", i:"📬", c:"quality", t:"Superpowers",
-    d:"READ → VERIFY → EVALUATE → RESPOND. Push back with evidence.",
-    ex:"When a reviewer flags an issue: read the comment, verify the claim with a test, evaluate if the fix is correct, respond with evidence — even if that means pushing back.",
-    r:["srq","sdb","std"], p:"skills/receiving-code-review/", g:["review","feedback","rigor"] },
-  "sdb":{ n:"Systematic Debug", i:"🔬", c:"quality", t:"Superpowers",
-    d:"4-phase: Root Cause → Pattern → Hypothesis → Fix. No symptom patches.",
-    ex:"When a production bug surfaces, resist hotfixing the symptom. Trace the root cause, identify the pattern, form a hypothesis, fix at the source — the bug stays dead.",
-    r:["std","svb","src","arc"], p:"skills/systematic-debugging/", g:["debugging","root-cause","rigor"] },
-  "svb":{ n:"Verify Before Done", i:"✅", c:"quality", t:"Superpowers",
-    d:"No completion claims without fresh test/lint/build evidence. No assumptions.",
-    ex:"Before any 'done' claim, run the full verification battery — lint, typecheck, test suite — and confirm green output. Fresh evidence only.",
-    r:["std","sfc","srq"], p:"skills/verification-before-completion/", g:["verification","testing","evidence"] },
-  "sfc":{ n:"Finish Branch", i:"🚀", c:"quality", t:"Superpowers",
-    d:"Implementation done. Choose merge, PR, or cleanup. Each path has the right git commands.",
-    ex:"After all checks pass, decide: direct merge (trivial), create a PR (needs review), or cleanup (branch is stale).",
-    r:["svb","sep","sgw","srq"], p:"skills/finishing-a-development-branch/", g:["completion","merge","pr"] },
-  "sgm":{ n:"Grill Me", i:"🔥", c:"quality", t:"Superpowers",
-    d:"Stress-test a plan through relentless questioning. Fork until clarity.",
-    ex:"Before committing to a complex architecture, get stress-tested on every decision branch — questions assumptions, exposes blind spots, forks until shared understanding.",
-    r:["sbr","swp","src"], p:"skills/grill-me/", g:["review","stress-test","clarity"] },
+let activeSeat = 'all';
+let activeCat = 'all';
+let searchQuery = '';
 
-  // Custom: Creation
-  "uid":{ n:"UI/UX Pro Max", i:"🎨", c:"creation", t:"Custom",
-    d:"Full design system: 50+ styles, 161 palettes, 57 font pairings, 99 UX guidelines.",
-    ex:"Before building any interface, generate a complete design system — select the right style (glassmorphism, minimal, brutalism), color palette, typography, and spacing.",
-    r:["fend","bundle","arch","3dv"], p:"skills/ui-ux-pro-max/", g:["ui","ux","frontend","design"] },
-  "fend":{ n:"Frontend Design", i:"🖌", c:"creation", t:"Custom",
-    d:"Distinctive, production-grade interfaces. Not generic templates.",
-    ex:"Build a landing page or dashboard component with production-grade HTML/CSS and a unique visual identity — not generic templates, but purposeful, polished interfaces.",
-    r:["uid","bundle","arch","img"], p:"skills/frontend-design/", g:["frontend","design","html","css"] },
-  "bundle":{ n:"UI Bundle Frontend", i:"🧩", c:"creation", t:"Custom",
-    d:"Modify Salesforce UI bundle apps. appLayout, shadcn, Tailwind, base-path routing.",
-    ex:"When a Salesforce UI bundle app needs a new page or component, follow the project's appLayout shell, shadcn/ui conventions, and base-path routing.",
-    r:["uid","fend"], p:"skills/building-ui-bundle-frontend/", g:["ui","bundle","salesforce","shadcn"] },
-  "3dv":{ n:"3D Visualizer", i:"🌐", c:"creation", t:"Custom",
-    d:"Three.js expert. Interactive 3D scenes, models, animations. Single HTML file.",
-    ex:"Create an interactive 3D viewer with Three.js — orbit controls, lighting, and animations for product pages or architectural walkthroughs, all in a single HTML file.",
-    r:["uid","fend","viz","cpp"], p:"skills/3d-visualizer/", g:["3d","three.js","visualization","webgl"] },
-  "arch":{ n:"Architecture Diagram", i:"📐", c:"creation", t:"Custom",
-    d:"Interactive click-through system architecture diagrams with animated data flows.",
-    ex:"Produce an interactive click-through flow with step-by-step animations, mode toggles (dev/prod), and payload details for onboarding or microservice design.",
-    r:["uid","arc","con","dst"], p:"skills/architecture-diagram/", g:["architecture","diagram","flow","visualization"] },
-  "img":{ n:"Image Generation", i:"🖼", c:"creation", t:"Custom",
-    d:"DALL-E, Midjourney, Stable Diffusion prompts for any style and use case.",
-    ex:"Craft optimized prompts with proven patterns — style injection, lighting cues, composition rules — for DALL-E, Midjourney, or Stable Diffusion.",
-    r:["i2v","cf","fend"], p:"skills/image-generation/", g:["image","prompt","generation","ai"] },
-  "i2v":{ n:"Image to Video", i:"🎬", c:"creation", t:"Custom",
-    d:"Animate stills via RunComfy. Smart router picks HappyHorse, Wan, or Seedance.",
-    ex:"When a still product shot needs to become a cinematic video, the smart router picks: HappyHorse for general motion, Wan for lip-sync with custom audio, Seedance for multi-modal animation.",
-    r:["img","cf","pipe"], p:"skills/image-to-video/", g:["video","animation","runcomfy","ai"] },
-  "cf":{ n:"ComfyUI Workflows", i:"⚙", c:"creation", t:"Custom",
-    d:"Generate node graphs from plain English. txt2img, ControlNet, LoRA, upscale.",
-    ex:"Describe a Stable Diffusion pipeline in plain English and get a valid ComfyUI workflow JSON — no manual node wiring.",
-    r:["img","i2v","pipe"], p:"skills/comfyui-workflow-builder/", g:["comfyui","workflow","stable-diffusion"] },
-  "pptx":{ n:"PowerPoint Builder", i:"📊", c:"creation", t:"Custom",
-    d:"Create, read, edit, parse .pptx files. Decks, slides, templates, speaker notes.",
-    ex:"When a consulting report needs a polished slide deck, create, read, or edit .pptx files programmatically — templates, speaker notes, charts, layout control.",
-    r:["dst","con","prop"], p:"skills/pptx/", g:["powerpoint","slides","presentation","office"] },
-  "dt":{ n:"Digital Twin", i:"👤", c:"creation", t:"Custom",
-    d:"Photorealistic AI avatars via each::sense. Video calls, content, multilingual.",
-    ex:"Generate a photorealistic digital twin with each::sense AI for async video calls, corporate training, or multilingual content without re-recording.",
-    r:["img","i2v"], p:"skills/digital-twin-generation/", g:["avatar","twin","ai","video"] },
-  "hvf":{ n:"HyperFrames Video", i:"🎬", c:"creation", t:"Custom",
-    d:"Write HTML, render MP4. GSAP, Lottie, Three.js animations. No build step.",
-    ex:"Scaffold a video as HTML with timed data-* attributes and GSAP animations, preview in the browser, render to 1080p MP4 with one command.",
-    r:["i2v","img","cf","fend"], p:"skills/hyperframes-video/", g:["video","html","animation","mp4","gsap","render"] },
+const grid = document.getElementById('matrixGrid');
+const searchInput = document.getElementById('searchInput');
+const drawer = document.getElementById('drawer');
+const backdrop = document.getElementById('drawerBackdrop');
+const drawerClose = document.getElementById('drawerClose');
 
-  // Custom: Dev
-  "dev":{ n:"Dev Workflow", i:"💻", c:"dev", t:"Custom",
-    d:"Coding, debugging, scripting, automation across any language or framework.",
-    ex:"Need a quick script to batch-rename files, parse a log, or automate a build step? The Swiss Army knife of everyday development.",
-    r:["arc","std","sdb","pin"], p:"skills/coding-expertise/", g:["code","script","automation","debug"] },
-  "cpp":{ n:"Unreal Engine C++", i:"🎮", c:"dev", t:"Custom",
-    d:"UE5 C++: UObject hygiene, performance patterns, stable editor at scale.",
-    ex:"Apply UObject lifecycle rules, avoid string-based lookups in hot paths, use TObjectPtr for GC references — patterns that keep the editor stable at scale.",
-    r:["3dv","viz","pipe","3ds"], p:"skills/unreal-engine-cpp-pro/", g:["unreal","cpp","game-dev","performance"] },
-  "arc":{ n:"Architecture Improve", i:"🏗", c:"dev", t:"Custom",
-    d:"Find deepening opportunities. Consolidate, decouple, make AI-navigable.",
-    ex:"When a codebase feels tangled, identify tightly-coupled modules, extract shared logic, create a CONTEXT.md that makes the system navigable by humans and AI.",
-    r:["sdb","dev","std","arch"], p:"skills/improve-codebase-architecture/", g:["architecture","refactor","cleanup"] },
-  "pin":{ n:"Pinokio Launcher", i:"🚀", c:"dev", t:"Custom",
-    d:"Discover and launch AI apps via Pinokio. 1-click setup, no dependency hell.",
-    ex:"Run ComfyUI, Ollama, or Automatic1111 without manual Python env setup — discover, install, and launch with one click.",
-    r:["gep","pipe","cf"], p:"skills/pinokio/", g:["launcher","pinokio","setup"] },
-  "gep":{ n:"Gepeto Builder", i:"📦", c:"dev", t:"Custom",
-    d:"Build 1-click launchers with Pinokio. Package your tool for instant install.",
-    ex:"Package your own tool so anyone can run it instantly — create a Pinokio launcher with all dependencies handled automatically.",
-    r:["pin","dev"], p:"skills/gepeto/", g:["launcher","pinokio","builder"] },
+function render() {
+  const filtered = SKILLS.filter(s => {
+    const matchSeat = activeSeat === 'all' || s.seat === activeSeat;
+    const matchCat = activeCat === 'all' || s.cat === activeCat;
+    const q = searchQuery.toLowerCase();
+    const matchQuery = !q || s.name.toLowerCase().includes(q) || s.id.toLowerCase().includes(q) || s.desc.toLowerCase().includes(q);
+    return matchSeat && matchCat && matchQuery;
+  });
 
-  // Custom: Business
-  "con":{ n:"Consulting Analysis", i:"📈", c:"business", t:"Custom",
-    d:"Market analysis, competitive intel, due diligence. Consulting-grade output.",
-    ex:"Produce structured frameworks with chapter skeleton, data requirements, and strategic insights — consulting-grade, not a generic write-up.",
-    r:["dst","pptx","prop","arch"], p:"skills/consulting-analysis/", g:["analysis","research","consulting","report"] },
-  "dst":{ n:"Data Storytelling", i:"📖", c:"business", t:"Custom",
-    d:"Transform data into narratives with visualization, context, persuasive structure.",
-    ex:"When presenting quarterly metrics, frame the narrative — what changed, why it matters, what to do next — with visual hierarchy that guides the eye.",
-    r:["con","pptx","arch"], p:"skills/data-storytelling/", g:["data","storytelling","visualization","presentation"] },
-  "game":{ n:"Game Design Theory", i:"🎲", c:"business", t:"Custom",
-    d:"MDA framework, player psychology, balance, progression. Why games are fun.",
-    ex:"Deconstruct a game mechanic through the MDA lens (Mechanics→Dynamics→Aesthetics) — understand the emotion it creates, not just what it does.",
-    r:["con","prop","cpp"], p:"skills/game-design-theory/", g:["game","design","theory","psychology"] },
-  "prop":{ n:"Creative Proposals", i:"📋", c:"business", t:"Custom",
-    d:"ArchViz/VR/UE5 consulting scopes, pricing tiers, proposals that convert.",
-    ex:"Build a professional scope document with deliverables, timeline, pricing tiers, and visual references — converts conversations into contracts.",
-    r:["con","pptx","viz","3ds"], p:"skills/creative-proposal-builder/", g:["proposal","consulting","archviz","scope"] },
-
-  // Custom: Specialist
-  "viz":{ n:"ArchViz Optimizer", i:"🏛", c:"special", t:"Custom",
-    d:"UE5 draw call optimization, LODs, Nanite/Lumen for real estate visualization.",
-    ex:"When an ArchViz tour runs at 18fps — reduce draw calls by merging static meshes, set sensible LOD distances, tune Nanite/Lumen for 60fps.",
-    r:["cpp","3dv","prop","3ds"], p:"skills/archviz-optimizer/", g:["archviz","unreal","optimization","real-estate"] },
-  "pipe":{ n:"Pipeline Troubleshooter", i:"🔧", c:"special", t:"Custom",
-    d:"CUDA errors, VAE mismatches, Conda fixes, environment diagnostics.",
-    ex:"When ComfyUI crashes with CUDA OOM and a VAE shape mismatch — check VRAM, fix dtype mismatches, resolve environment conflicts systematically.",
-    r:["cf","img","pin"], p:"skills/pipeline-troubleshooter/", g:["troubleshooting","cuda","pipeline","environment"] },
-  "3ds":{ n:"3ds Max Bridge", i:"🏗", c:"special", t:"Custom",
-    d:"3ds Max workflow automation, scene setup, export pipelines for UE5.",
-    ex:"Export a 3ds Max architectural scene to UE5 — automate pivot alignment, clean hierarchy, proper UVs, and Datasmith export settings.",
-    r:["viz","cpp","3dv"], p:"skills/3ds-max-bridge/", g:["3dsmax","unreal","workflow","automation"] },
-
-  // Custom: Quality
-  "plg":{ n:"Plagiarism Checker", i:"🔍", c:"quality", t:"Custom",
-    d:"Detect textual plagiarism between documents using TF-IDF vectorization and cosine similarity.",
-    ex:"Compare two documents side-by-side — TF-IDF vectorization, cosine similarity scoring, and percentage-based plagiarism detection with highlighted matching passages.",
-    r:["src","sdb"], p:"skills/plagiarism-checker/", g:["plagiarism","detection","quality","similarity","text"] },
-  "rea":{ n:"Reverse Engineer Anything", i:"🦾", c:"special", t:"Custom",
-    d:"Evidence-driven binary disassembly (Ghidra, Hopper, IDA), Electron ASAR extraction, Android APK reversing, and protocol recovery.",
-    ex:"Reverse engineer native binaries, extract packaged Electron bundles without source code, reconstruct undocumented WebSocket/IPC protocols, and recover complete schemas for implementation.",
-    r:["um","sdb","arc","dev"], p:"skills/reverse-engineer-anything/", g:["reversing","binary","ghidra","hopper","ida","asar","android","protocol","rea"] },
-  "um":{ n:"Universal Modder", i:"🎮", c:"special", t:"Custom",
-    d:"PC game modding, binary reversing, asset extraction, memory patching, and cross-game mashups.",
-    ex:"Inspect game files, write BepInEx/Harmony patches, decompile assemblies, extract 3D meshes and textures, and create cross-game mod experiences.",
-    r:["rea","cpp","3dv"], p:"skills/universal-modder/", g:["modding","game","reverse-engineering","unity","unreal","patch"] },
-  "slp":{ n:"SlopMonster", i:"🧹", c:"quality", t:"Custom",
-    d:"AI tell elimination, corporate jargon stripping, and humanized, punchy copy editing.",
-    ex:"Transform AI-written drafts, presentations, and READMEs into punchy human prose. Runs against deslop patterns to eliminate buzzwords like 'delve', 'leverage', and 'seamless'.",
-    r:["dst","pptx","src"], p:"skills/slop-monster/", g:["de-slop","copywriting","humanize","editing","clarity"] },
-  "scf":{ n:"ScrollCraft", i:"✨", c:"creation", t:"Custom",
-    d:"Premium scroll-driven websites, interactive landing pages, layered hero sections, and scrollytelling dashboards.",
-    ex:"Build dimensional hero sections with independent visual planes, pinned metric rails, live surface interactions, and bespoke scroll signature moves.",
-    r:["fend","uid","arch"], p:"skills/scroll-craft/", g:["scroll","landing-page","frontend","scrollytelling","ui"] },
-  "ebf":{ n:"ECC Build Fix", i:"🛠", c:"quality", t:"Custom",
-    d:"Systematic compiler, runtime, and build error diagnostic and minimal-diff repair.",
-    ex:"Diagnose broken npm/pip builds, missing native dependencies, syntax/type errors, and repair with minimal diffs.",
-    r:["sdb","std","dev"], p:"skills/ecc-build-fix/", g:["build","fix","compiler","diagnostics","repair"] },
-  "ess":{ n:"ECC Security Scan", i:"🛡", c:"quality", t:"Custom",
-    d:"AgentShield security audit across workspace files, configurations, MCP servers, and environment variables.",
-    ex:"Audit workspace files and MCP configurations for leaked API keys, secret credentials, high-risk shell commands, and untrusted network endpoints.",
-    r:["sdb","svb"], p:"skills/ecc-security-scan/", g:["security","secrets","audit","agentshield","scan"] },
-  "etd":{ n:"ECC TDD Workflow", i:"🧪", c:"process", t:"Custom",
-    d:"Strict Test-Driven Development Red-Green-Refactor cycle enforcement.",
-    ex:"Enforce running and verifying failing tests before implementing production code, then verifying clean pass before committing.",
-    r:["std","svb","swp"], p:"skills/ecc-tdd-workflow/", g:["tdd","testing","discipline","ecc"] },
-  "gay":{ n:"Gaya Protocol", i:"⚔", c:"process", t:"Custom",
-    d:"Gaya leveling system, 4-role persona engine, and ASSESS→EXECUTE operational loop.",
-    ex:"Adopt the Divine Commander, Philosopher, Poet of Evergrowth operating mode with session leveling, XP tracking, and structured debriefs.",
-    r:["sbr","swp","sgm"], p:"skills/gaya/", g:["gaya","persona","commander","leveling","evergrowth"] }
-};
-
-const SKILL_IDS = Object.keys(SKILLS);
-
-const CAT = {
-  process:{clr:"#38bdf8",lbl:"Process"},
-  quality:{clr:"#fbbf24",lbl:"Quality"},
-  creation:{clr:"#a78bfa",lbl:"Creation"},
-  dev:{clr:"#34d399",lbl:"Dev"},
-  business:{clr:"#f472b6",lbl:"Business"},
-  special:{clr:"#fb923c",lbl:"Specialist"}
-};
-const CAT_KEYS = Object.keys(CAT);
-
-// ═══ DATE ═══
-document.getElementById('dateDisplay').textContent =
-  new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-
-// ═══ LEGEND ═══
-(function(){
-  let h='';
-  for(const k of CAT_KEYS) h+=`<span class="legend-item"><span class="legend-dot" style="background:${CAT[k].clr}"></span>${CAT[k].lbl}</span>`;
-  h+=`<span class="legend-item"><span class="legend-dot" style="background:rgba(255,255,255,0.3)"></span>Superpowers</span>`;
-  h+=`<span class="legend-item"><span class="legend-dot" style="background:rgba(255,255,255,0.15)"></span>Custom</span>`;
-  document.getElementById('legend').innerHTML=h;
-})();
-
-// ═══ RENDER ═══
-const grid=document.getElementById('grid');
-const vcount=document.getElementById('vcount'), vtotal=document.getElementById('vtotal');
-const searchInput=document.getElementById('search'), filtersEl=document.getElementById('filters');
-let activeFilter='all', searchQ='';
-
-function catColor(c){return CAT[c]?CAT[c].clr:'#64748b';}
-
-function render(){
-  let html='', vis=0;
-
-  for(const id of SKILL_IDS){
-    const s=SKILLS[id];
-    let show=true;
-    if(activeFilter!=='all'){
-      if(activeFilter==='superpowers'&&s.t!=='Superpowers')show=false;
-      else if(activeFilter==='custom'&&s.t!=='Custom')show=false;
-      else if(activeFilter!=='superpowers'&&activeFilter!=='custom'&&s.c!==activeFilter)show=false;
-    }
-    if(show&&searchQ){
-      const q=searchQ.toLowerCase();
-      if(!s.n.toLowerCase().includes(q)&&!s.d.toLowerCase().includes(q)&&!s.g.some(g=>g.includes(q)))show=false;
-    }
-    if(!show)continue;
-    vis++;
-
-    const clr=catColor(s.c);
-
-    // Related skills HTML
-    let relHtml='';
-    if(s.r&&s.r.length){
-      relHtml+='<div class="expand-related"><div class="expand-related-title">Related Skills</div><div class="expand-related-grid">';
-      for(const rid of s.r){
-        const rs=SKILLS[rid];
-        if(rs) relHtml+=`<div class="expand-related-chip" data-id="${rid}"><span class="expand-related-chip-icon">${rs.i}</span><span class="expand-related-chip-name">${rs.n}</span></div>`;
-      }
-      relHtml+='</div></div>';
-    }
-
-    // Tags HTML
-    let tagsHtml='';
-    if(s.g&&s.g.length){
-      tagsHtml=s.g.map(g=>`<span class="expand-tag">${g}</span>`).join('');
-    }
-
-    // Path
-    const pathHtml=`<span class="expand-path">${s.p}</span>`;
-
-    // Workflow example
-    const wfColor=clr;
-    const wfHtml=s.ex?`<div class="expand-workflow" style="border-color:${wfColor}40"><div class="expand-workflow-title">Workflow Example</div><div class="expand-workflow-text" style="color:${wfColor}bb">${s.ex}</div></div>`:'';
-
-    html+=`<div class="skill-card ${s.c}" data-id="${id}" tabindex="0" role="button" aria-label="${s.n}">
-      <div class="skill-card-inner">
-        <div class="card-header">
-          <span class="skill-icon">${s.i}</span>
-          <span class="skill-name">${s.n}</span>
-          <span class="skill-type-badge">${s.t}</span>
-        </div>
-        <div class="card-tag-row">
-          <span class="skill-tag" style="background:${clr}18;color:${clr}">${s.c}</span>
-        </div>
-        <div class="skill-desc">${s.d}</div>
-      </div>
-      <div class="expand-wrap">
-        <div class="expand-content">
-          <div class="expand-desc">${s.d}</div>
-          ${wfHtml}
-          ${relHtml}
-          <div class="expand-meta">
-            ${tagsHtml?`<div class="expand-tags">${tagsHtml}</div>`:''}
-            ${pathHtml}
-          </div>
-        </div>
-      </div>
-      <div class="expand-hint">▼ Click to expand details</div>
-    </div>`;
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div class="empty-state">No skills match your active filter criteria.</div>';
+    return;
   }
 
-  const emptyHtml=vis===0?'<div class="empty-state visible"><p>◈ No skills match your search</p></div>':'';
-  grid.innerHTML=html+emptyHtml;
-  vcount.textContent=vis;
-  vtotal.textContent=SKILL_IDS.length;
-
-  // Card click to expand
-  document.querySelectorAll('.skill-card').forEach(el=>{
-    el.addEventListener('click',()=>{
-      el.classList.toggle('expanded');
-    });
-    el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();el.classList.toggle('expanded')}});
-  });
-
-  // Related chip clicks
-  document.querySelectorAll('.expand-related-chip').forEach(el=>{
-    el.addEventListener('click',e=>{
-      e.stopPropagation();
-      const id=el.dataset.id;
-      // Find the card with this id and scroll to it
-      const targetCard=document.querySelector(`.skill-card[data-id="${id}"]`);
-      if(targetCard){
-        targetCard.scrollIntoView({behavior:'smooth',block:'center'});
-        targetCard.classList.add('expanded');
-      }
-    });
-  });
-
-  // Entrance animation
-  const cards=document.querySelectorAll('.skill-card');
-  cards.forEach((card,i)=>{setTimeout(()=>{card.classList.add('visible')},100+i*40)});
+  grid.innerHTML = filtered.map(s => `
+    <div class="skill-card" onclick="openDrawer('${s.id}')">
+      <div>
+        <div class="card-top">
+          <div class="skill-icon-wrap">${s.icon}</div>
+          <span class="seat-badge badge-${s.seat}">${s.seat}</span>
+        </div>
+        <h3 class="skill-name">${s.name}</h3>
+        <p class="skill-desc">${s.desc}</p>
+      </div>
+      <div class="card-footer">
+        <span class="cat-pill">${s.cat}</span>
+        <button class="card-action-btn" onclick="event.stopPropagation(); copyTrigger('${s.prompt}', this)">Copy Prompt</button>
+      </div>
+    </div>
+  `).join('');
 }
 
-// ═══ FILTERS ═══
-function buildFilters(){
-  let h='<button class="fbtn on" data-f="all">All</button>';
-  h+='<button class="fbtn" data-f="superpowers">★ Superpowers</button>';
-  h+='<button class="fbtn" data-f="custom">● Custom</button>';
-  h+='<span style="width:1px;height:20px;background:var(--border);margin:0 4px;flex-shrink:0"></span>';
-  for(const c of CAT_KEYS) h+=`<button class="fbtn" data-f="${c}"><span class="fbtn-dot" style="background:${CAT[c].clr}"></span>${CAT[c].lbl}</button>`;
-  filtersEl.innerHTML=h;
-  filtersEl.querySelectorAll('.fbtn').forEach(b=>{
-    b.addEventListener('click',()=>{
-      filtersEl.querySelectorAll('.fbtn').forEach(x=>x.classList.toggle('on',x===b));
-      activeFilter=b.dataset.f;
-      render();
-    });
-  });
-}
+function openDrawer(id) {
+  const s = SKILLS.find(x => x.id === id);
+  if (!s) return;
 
-// ═══ SEARCH ═══
-searchInput.addEventListener('input',()=>{searchQ=searchInput.value;render();});
-document.addEventListener('keydown',e=>{if(e.key==='/'&&!e.ctrlKey&&!e.metaKey){searchInput.focus();e.preventDefault()}});
+  document.getElementById('drawerTitle').innerText = s.name;
+  document.getElementById('drawerDesc').innerText = s.desc;
+  document.getElementById('drawerPrompt').innerText = s.prompt;
+  document.getElementById('drawerPath').innerText = s.path;
+  
+  const badge = document.getElementById('drawerSeatBadge');
+  badge.className = `seat-badge badge-${s.seat}`;
+  badge.innerText = `Council Seat: ${s.seat.toUpperCase()}`;
 
-// ═══ COUNT-UP ═══
-function animateCounter(el,target){
-  const d=1200,s=performance.now();
-  function update(now){
-    const p=Math.min((now-s)/d,1),cur=Math.floor((1-Math.pow(1-p,3))*target);
-    el.textContent=cur;
-    if(p<1)requestAnimationFrame(update);
+  let protocol = '';
+  if (s.seat === 'logos') {
+    protocol = `[🛡️ LOGOS]\nVERDICT: PASS scope=${s.path} -- verified criteria pass.\n[/LOGOS]`;
+  } else if (s.seat === 'bob') {
+    protocol = `[🔨 Bob]\nShipped: ${s.path}\nReceipts: exit code 0, verification verified.\n[/Bob]`;
+  } else if (s.seat === 'freya') {
+    protocol = `[🎨 Freya]\nDesign: editorial tokens locked, visual hierarchy refined.\n[/Freya]`;
+  } else {
+    protocol = `[🦾 Tvashtar]\nREA Execution: target inspected, binary offsets verified.\n[/Tvashtar]`;
   }
-  requestAnimationFrame(update);
-}
-const cuObs=new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{if(e.isIntersecting){const t=parseFloat(e.target.dataset.target);animateCounter(e.target,t);cuObs.unobserve(e.target)}});
-},{threshold:0.3});
-document.querySelectorAll('.count-up').forEach(c=>cuObs.observe(c));
+  document.getElementById('drawerProtocol').innerText = protocol;
 
-// ═══ GO ═══
-buildFilters();
+  drawer.classList.add('open');
+  backdrop.classList.add('open');
+}
+
+function closeDrawer() {
+  drawer.classList.remove('open');
+  backdrop.classList.remove('open');
+}
+
+backdrop.addEventListener('click', closeDrawer);
+drawerClose.addEventListener('click', closeDrawer);
+
+function copyTrigger(text, btn) {
+  navigator.clipboard.writeText(text);
+  const orig = btn.innerText;
+  btn.innerText = 'Copied!';
+  setTimeout(() => btn.innerText = orig, 1400);
+}
+
+function copyDrawerPrompt() {
+  const t = document.getElementById('drawerPrompt').innerText;
+  navigator.clipboard.writeText(t);
+  alert('Prompt copied to clipboard!');
+}
+
+// Filter seat clicks
+document.querySelectorAll('[data-seat]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-seat]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeSeat = btn.dataset.seat;
+    render();
+  });
+});
+
+// Filter cat clicks
+document.querySelectorAll('[data-cat]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-cat]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeCat = btn.dataset.cat;
+    render();
+  });
+});
+
+// Search input
+searchInput.addEventListener('input', (e) => {
+  searchQuery = e.target.value;
+  render();
+});
+
+// Keyboard / shortcut
+window.addEventListener('keydown', (e) => {
+  if (e.key === '/' && document.activeElement !== searchInput) {
+    e.preventDefault();
+    searchInput.focus();
+  } else if (e.key === 'Escape') {
+    closeDrawer();
+  }
+});
+
 render();
 </script>
 </body>

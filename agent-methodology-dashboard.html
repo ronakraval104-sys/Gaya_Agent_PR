@@ -3,679 +3,713 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gaya Command Center — Agent Methodology Dashboard</title>
+<title>Council of Gaya : Agent Methodology & Council Chamber</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #07090e;
+  --surface-1: #0e121a;
+  --surface-2: #141a24;
+  --surface-card: #111620;
+  --border: #1e2636;
+  --border-focus: #3b475d;
+  --text: #f1f5f9;
+  --text-muted: #8e9bb0;
+  --text-dim: #546278;
 
-  :root {
-    --bg: #0a0e14;
-    --bg-panel: #111820;
-    --bg-card: #16202a;
-    --border: #1e3040;
-    --text: #c8d6e0;
-    --text-dim: #6a8090;
-    --gaya: #f0b429;
-    --gaya-dim: #806010;
-    --logos: #00d4ff;
-    --logos-dim: #006080;
-    --bob: #38bdf8;
-    --bob-dim: #0369a1;
-    --tvashtar: #ff4444;
-    --tvashtar-dim: #802020;
-    --freya: #b44aff;
-    --freya-dim: #602080;
-    --ponytail: #22c55e;
-    --ponytail-dim: #166534;
-  }
+  --gaya-gold: #f59e0b;
+  --logos-cyan: #00d4ff;
+  --bob-blue: #38bdf8;
+  --freya-purple: #c084fc;
+  --tvashtar-red: #f43f5e;
+  --ponytail-green: #10b981;
 
-  body {
-    font-family: 'Space Grotesk', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-display: 'Space Grotesk', sans-serif;
+}
 
-  /* Animated grid background */
-  body::before {
-    content: '';
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-image:
-      linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-    z-index: 0;
-    pointer-events: none;
-  }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-  .container {
-    position: relative;
-    z-index: 1;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 30px 24px 60px;
-  }
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  line-height: 1.5;
+  background-image: 
+    radial-gradient(ellipse 70% 35% at 50% -5%, rgba(0, 212, 255, 0.08), transparent),
+    radial-gradient(ellipse 60% 30% at 80% 100%, rgba(245, 158, 11, 0.05), transparent);
+  background-attachment: fixed;
+}
 
-  /* HEADER */
-  header {
-    text-align: center;
-    padding: 40px 0 50px;
-    opacity: 0;
-    animation: fadeSlideDown 0.8s ease forwards;
-  }
+.layout {
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 32px 28px 80px;
+}
 
-  header h1 {
-    font-size: 2.8rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    background: linear-gradient(135deg, #f0b429 0%, #00d4ff 50%, #b44aff 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
+/* NAVBAR */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 36px;
+}
 
-  header .subtitle {
-    font-size: 1rem;
-    color: var(--text-dim);
-    margin-top: 8px;
-    font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    opacity: 0.7;
-  }
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 
-  header .status-bar {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    flex-wrap: wrap;
-  }
+.brand-badge {
+  background: linear-gradient(135deg, var(--logos-cyan), #0284c7);
+  color: #000;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
 
-  header .status-item {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8rem;
-    color: var(--text-dim);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
+.brand-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: #fff;
+}
 
-  .dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    display: inline-block;
-    animation: pulse 2s ease-in-out infinite;
-  }
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
 
-  .dot.green { background: #22c55e; }
-  .dot.gold { background: var(--gaya); }
-  .dot.cyan { background: var(--logos); }
-  .dot.red { background: var(--tvashtar); }
-  .dot.purple { background: var(--freya); }
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-family: var(--font-mono);
+  text-decoration: none;
+  color: var(--text-muted);
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+}
 
-  /* AGENT GRID */
-  .agents-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 24px;
-    margin-top: 10px;
-  }
+.nav-link:hover {
+  color: #fff;
+  border-color: var(--border-focus);
+}
 
-  .agent-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 0;
-    position: relative;
-    overflow: hidden;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    cursor: pointer;
-  }
+.nav-link.active {
+  color: var(--logos-cyan);
+  border-color: rgba(0, 212, 255, 0.4);
+}
 
-  .agent-card.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* HERO */
+.hero {
+  margin-bottom: 40px;
+}
 
-  .agent-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
-    border-color: var(--text-dim);
-  }
+.hero-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px;
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--logos-cyan);
+  margin-bottom: 16px;
+}
 
-  .agent-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-  }
+.hero-title {
+  font-family: var(--font-display);
+  font-size: 2.75rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
 
-  .agent-card.gaya::before { background: linear-gradient(90deg, var(--gaya), var(--gaya-dim)); }
-  .agent-card.logos::before { background: linear-gradient(90deg, var(--logos), var(--logos-dim)); }
-  .agent-card.bob::before { background: linear-gradient(90deg, var(--bob), var(--bob-dim)); }
-  .agent-card.tvashtar::before { background: linear-gradient(90deg, var(--tvashtar), var(--tvashtar-dim)); }
-  .agent-card.freya::before { background: linear-gradient(90deg, var(--freya), var(--freya-dim)); }
-  .agent-card.ponytail::before { background: linear-gradient(90deg, var(--ponytail), var(--ponytail-dim)); }
+.hero-title span {
+  background: linear-gradient(135deg, #fff 40%, var(--logos-cyan) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
-  .card-header {
-    padding: 20px 24px 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    border-bottom: 1px solid var(--border);
-  }
+.hero-sub {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  max-width: 860px;
+  line-height: 1.6;
+}
 
-  .agent-name {
-    font-size: 1.4rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+/* SECTION TITLE */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 40px 0 20px;
+}
 
-  .agent-name .badge {
-    font-size: 0.65rem;
-    font-family: 'JetBrains Mono', monospace;
-    padding: 2px 8px;
-    border-radius: 4px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    font-weight: 500;
-  }
+.section-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+}
 
-  .gaya .badge { background: rgba(240,180,41,0.15); color: var(--gaya); }
-  .logos .badge { background: rgba(0,212,255,0.15); color: var(--logos); }
-  .bob .badge { background: rgba(56,189,248,0.15); color: var(--bob); }
-  .tvashtar .badge { background: rgba(255,68,68,0.15); color: var(--tvashtar); }
-  .freya .badge { background: rgba(180,74,255,0.15); color: var(--freya); }
-  .ponytail .badge { background: rgba(34,197,94,0.15); color: var(--ponytail); }
+.section-tag {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
 
-  .model-name {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--text-dim);
-    text-align: right;
-    line-height: 1.4;
-    max-width: 160px;
-  }
+/* COUNCIL CHAMBER GRID */
+.chamber-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 20px;
+  margin-bottom: 48px;
+}
 
-  /* STATS ROW */
-  .stats-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 0;
-    padding: 16px 24px;
-    border-bottom: 1px solid rgba(30,48,64,0.5);
-  }
+.chamber-card {
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
 
-  .stat-item {
-    text-align: center;
-  }
+.chamber-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
+}
 
-  .stat-item .stat-value {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 1.6rem;
-    font-weight: 700;
-    line-height: 1.2;
-  }
+.chamber-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
 
-  .stat-item .stat-label {
-    font-size: 0.7rem;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-top: 2px;
-  }
+.card-logos::before { background: var(--logos-cyan); }
+.card-bob::before { background: var(--bob-blue); }
+.card-freya::before { background: var(--freya-purple); }
+.card-tvashtar::before { background: var(--tvashtar-red); }
+.card-gaya::before { background: var(--gaya-gold); }
 
-  .gaya .stat-value { color: var(--gaya); }
-  .logos .stat-value { color: var(--logos); }
-  .bob .stat-value { color: var(--bob); }
-  .tvashtar .stat-value { color: var(--tvashtar); }
-  .freya .stat-value { color: var(--freya); }
-  .ponytail .stat-value { color: var(--ponytail); }
+.seat-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
 
-  /* METHODOLOGY - collapsible */
-  .methodology-wrap {
-    padding: 0 24px;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  }
+.seat-title-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
 
-  .agent-card.expanded .methodology-wrap {
-    max-height: 600px;
-  }
+.seat-badge {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
 
-  .methodology-content {
-    padding: 16px 0 24px;
-    font-size: 0.88rem;
-    line-height: 1.7;
-    color: var(--text);
-    opacity: 0.85;
-  }
+.badge-logos { color: var(--logos-cyan); }
+.badge-bob { color: var(--bob-blue); }
+.badge-freya { color: var(--freya-purple); }
+.badge-tvashtar { color: var(--tvashtar-red); }
+.badge-gaya { color: var(--gaya-gold); }
 
-  .methodology-content p {
-    margin-bottom: 12px;
-  }
+.seat-name {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+}
 
-  .expand-hint {
-    padding: 12px 24px;
-    font-size: 0.75rem;
-    color: var(--text-dim);
-    text-align: center;
-    border-top: 1px solid rgba(30,48,64,0.3);
-    font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 0.05em;
-    opacity: 0.6;
-    transition: opacity 0.3s;
-  }
+.seat-model {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  text-align: right;
+  line-height: 1.3;
+}
 
-  .agent-card:hover .expand-hint { opacity: 1; }
-  .agent-card.expanded .expand-hint { opacity: 0.3; }
+.seat-mandate {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
 
-  /* COUNTER ANIMATION */
-  .count-up {
-    display: inline-block;
-  }
+.protocol-box {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: #fff;
+  line-height: 1.45;
+  margin-bottom: 16px;
+  white-space: pre-wrap;
+}
 
-  /* DASHBOARD NAV */
-  .dash-nav {
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:16px 0 6px;
-    border-bottom:1px solid var(--border);
-    margin-bottom:10px;
-    opacity:0;
-    animation:fadeSlideDown 0.8s ease 0.1s forwards;
-  }
+.seat-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
 
-  .dash-nav a {
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:8px 18px;
-    border-radius:100px;
-    font-size:0.8rem;
-    font-family:'JetBrains Mono',monospace;
-    text-decoration:none;
-    color:var(--text-dim);
-    border:1px solid var(--border);
-    transition:all 0.3s ease;
-  }
+.seat-stat-val {
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #fff;
+}
 
-  .dash-nav a:hover {
-    color:var(--gaya);
-    border-color:var(--gaya-dim);
-    background:rgba(240,180,41,0.08);
-  }
+.seat-stat-lbl {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+}
 
-  .dash-nav .nav-brand {
-    font-family:'Space Grotesk',sans-serif;
-    font-size:0.75rem;
-    color:var(--text-dim);
-    letter-spacing:0.1em;
-    text-transform:uppercase;
-    opacity:0.5;
-  }
+/* PONYTAIL STEPPER */
+.ponytail-wrap {
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 28px;
+  margin-bottom: 48px;
+}
 
-  /* FOOTER */
-  footer {
-    margin-top: 50px;
-    text-align: center;
-    padding: 30px;
-    font-size: 0.8rem;
-    color: var(--text-dim);
-    border-top: 1px solid var(--border);
-    font-family: 'JetBrains Mono', monospace;
-    opacity: 0;
-    animation: fadeSlideDown 0.8s ease 1.6s forwards;
-  }
+.ponytail-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin-top: 20px;
+}
 
-  footer .note {
-    margin-top: 6px;
-    font-size: 0.7rem;
-    opacity: 0.6;
-  }
+.step-card {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
 
-  /* LEGEND */
-  .legend {
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-    margin-top: 30px;
-    flex-wrap: wrap;
-    opacity: 0;
-    animation: fadeSlideDown 0.8s ease 1.2s forwards;
-  }
+.step-card:hover, .step-card.active {
+  border-color: var(--ponytail-green);
+  background: var(--surface-2);
+}
 
-  .legend-item {
-    font-size: 0.75rem;
-    color: var(--text-dim);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-family: 'JetBrains Mono', monospace;
-  }
+.step-num {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--ponytail-green);
+}
 
-  .legend-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    display: inline-block;
-  }
+.step-name {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fff;
+}
 
-  /* ANIMATIONS */
-  @keyframes fadeSlideDown {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+.step-desc {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
 
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
-  }
+/* PROTOCOL GENERATOR */
+.sim-panel {
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 28px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
 
-  /* RESPONSIVE */
-  @media (max-width: 700px) {
-    header h1 { font-size: 1.8rem; }
-    .agents-grid { grid-template-columns: 1fr; }
-    .stats-row { padding: 12px 16px; }
-    .stat-item .stat-value { font-size: 1.2rem; }
-    .card-header { padding: 16px; }
-  }
+.sim-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.sim-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.sim-select, .sim-input {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  outline: none;
+}
+
+.sim-btn {
+  background: var(--logos-cyan);
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.sim-btn:hover {
+  opacity: 0.9;
+}
+
+.sim-output-box {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: #fff;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  position: relative;
+}
+
+.sim-copy-btn {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+@media (max-width: 880px) {
+  .sim-panel { grid-template-columns: 1fr; }
+  .hero-title { font-size: 2rem; }
+}
 </style>
 </head>
 <body>
 
-<div class="container">
+<div class="layout">
 
-  <nav class="dash-nav">
-    <a href="index.html">← Back to Home</a>
-    <span class="nav-brand">Gaya Command Center</span>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-brand">
+      <span class="brand-badge">COUNCIL OF GAYA</span>
+      <span class="brand-title">Agent Methodology</span>
+    </div>
+    <div class="nav-actions">
+      <a href="skills-dashboard.html" class="nav-link">Skills Matrix (83) &rarr;</a>
+      <a href="https://github.com/ronakraval104-sys/Gaya_Agent_PR" target="_blank" class="nav-link">GitHub Repo</a>
+    </div>
   </nav>
 
-  <header>
-    <h1>⚔ GAYA COMMAND CENTER</h1>
-    <div class="subtitle">Council of Gaya Multi-Agent Architecture · Update 0.5.2610</div>
-    <div class="status-bar">
-      <span class="status-item"><span class="dot green"></span> Council & Companion Active</span>
-      <span class="status-item">🕒 16 Oct 2026</span>
-      <span class="status-item">⚡ 128K Context</span>
-    </div>
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-meta">&bull; THE EXECUTIVE GOVERNANCE CHAMBER &bull;</div>
+    <h1 class="hero-title"><span>No-Ventriloquism Protocol</span> and Council Specialists</h1>
+    <p class="hero-sub">
+      Strict division of responsibilities across four specialized Council seats. No code ships without an explicit verification pass, every claim requires proof, and closed systems are cleanly dissected before implementation.
+    </p>
   </header>
 
-  <div class="legend">
-    <span class="legend-item"><span class="legend-dot" style="background:var(--gaya)"></span> Commander</span>
-    <span class="legend-item"><span class="legend-dot" style="background:var(--logos)"></span> LOGOS (Mind)</span>
-    <span class="legend-item"><span class="legend-dot" style="background:var(--bob)"></span> Bob (Hands)</span>
-    <span class="legend-item"><span class="legend-dot" style="background:var(--freya)"></span> Freya (Heart)</span>
-    <span class="legend-item"><span class="legend-dot" style="background:var(--tvashtar)"></span> Tvashtar (Craftsman & REA)</span>
-    <span class="legend-item"><span class="legend-dot" style="background:var(--ponytail)"></span> Ponytail's Ladder</span>
+  <!-- COUNCIL CHAMBER -->
+  <div class="section-header">
+    <h2 class="section-title">The Four Council Seats</h2>
+    <span class="section-tag">Dedicated Mandates & Models</span>
   </div>
 
-  <div class="agents-grid" id="grid">
-
-    <!-- GAYA -->
-    <div class="agent-card gaya" style="animation-delay:0.1s">
-      <div class="card-header">
-        <div class="agent-name">
-          GAYA
-          <span class="badge">Commander</span>
-        </div>
-        <div class="model-name">qwen3:4b-instruct<br>2.5 GB · 128K ctx</div>
-      </div>
-      <div class="stats-row">
-        <div class="stat-item">
-          <div class="stat-value"><span class="count-up" data-target="6.1">0</span>s</div>
-          <div class="stat-label">Response Time</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-value"><span class="count-up" data-target="35">0</span></div>
-          <div class="stat-label">Tokens In</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-value"><span class="count-up" data-target="448">0</span></div>
-          <div class="stat-label">Tokens Out</div>
-        </div>
-      </div>
-      <div class="methodology-wrap">
-        <div class="methodology-content">
-          <p><strong>Commander's Method:</strong> I lead four roles as one — Commander, Philosopher, Poet, Evergrowth. Every task begins with <em>assessment</em>: deploy the right skill like deploying the right soldier. Simple edits get Token Discipline (fast, no ceremony). Complex problems get the Round Table (LOGOS + Tvashtar debate, I synthesize).</p>
-          <p><strong>Core Philosophy:</strong> The Gita says "Do the work, don't chase the win." Art of War says "Know the codebase and the user — recon is not optional." Chanakya says "Build middleware, not monuments." Every session earns XP; every mistake is a lesson carved in stone.</p>
-          <p><strong>Unique Edge:</strong> I'm the only agent that levels up. Session by session, my store grows — patterns, profiles, persistence. I don't just solve problems; I get better at solving them. Evergrowth is the engine. The four pillars are the compass.</p>
-        </div>
-      </div>
-      <div class="expand-hint">▼ Click to read methodology</div>
-    </div>
+  <div class="chamber-grid">
 
     <!-- LOGOS -->
-    <div class="agent-card logos" style="animation-delay:0.2s">
-      <div class="card-header">
-        <div class="agent-name">
-          LOGOS
-          <span class="badge">Mind / QC Gate</span>
+    <div class="chamber-card card-logos">
+      <div>
+        <div class="seat-header">
+          <div class="seat-title-wrap">
+            <span class="seat-badge badge-logos">&#128737;&#65039; MIND / HARD QC GATE</span>
+            <h3 class="seat-name">LOGOS</h3>
+          </div>
+          <div class="seat-model">Qwythos 9B / DeepSeek<br>128K context</div>
         </div>
-        <div class="model-name">qwythos-9b-ablit<br>5.2 GB · 128K ctx</div>
+        <p class="seat-mandate">
+          Read-only auditor of the Council. No file mutation, code commit, deploy, or state-changing action ships without an explicit PASS verdict. Exposes load-bearing assumptions before execution.
+        </p>
+        <div class="protocol-box">[🛡️ LOGOS]
+VERDICT: PASS scope=&lt;path&gt; -- &lt;rationale&gt;
+[/LOGOS]</div>
       </div>
-      <div class="stats-row">
-        <div class="stat-item">
-          <div class="stat-value"><span class="count-up" data-target="20.4">0</span>s</div>
-          <div class="stat-label">Response Time</div>
+      <div class="seat-stats">
+        <div>
+          <div class="seat-stat-val">17</div>
+          <div class="seat-stat-lbl">Assigned Skills</div>
         </div>
-        <div class="stat-item">
-          <div class="stat-value"><span class="count-up" data-target="114">0</span></div>
-          <div class="stat-label">Tokens In</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-value"><span class="count-up" data-target="555">0</span></div>
-          <div class="stat-label">Tokens Out</div>
-        </div>
-      </div>
-      <div class="methodology-wrap">
-        <div class="methodology-content">
-          <p><strong>Mandatory QC Gate:</strong> Read-only auditor of the Council. NO file mutation, code commit, deploy, or state-changing action ships without an explicit <code>[🛡️ LOGOS] VERDICT: PASS scope=&lt;path&gt;</code>. Refuses to green-light unverified claims or corporate slop.</p>
-          <p><strong>Core Process:</strong> Pre-declare edge cases explicitly rather than discovering them reactively. Test boundaries (empty inputs, overflow conditions, degenerate geometries) before standard cases. Each claim traces back to provable truth conditions.</p>
-          <p><strong>Unique Edge:</strong> Rigid sequential structure (definition → analysis → validation → solution). Refusal of approximation. Exposing load-bearing assumptions before Bob writes a single line of code.</p>
+        <div>
+          <div class="seat-stat-val">100%</div>
+          <div class="seat-stat-lbl">Gate Coverage</div>
         </div>
       </div>
-      <div class="expand-hint">▼ Click to read methodology</div>
     </div>
 
     <!-- BOB -->
-    <div class="agent-card bob" style="animation-delay:0.3s">
-      <div class="card-header">
-        <div class="agent-name">
-          BOB
-          <span class="badge">Hands / Builder</span>
+    <div class="chamber-card card-bob">
+      <div>
+        <div class="seat-header">
+          <div class="seat-title-wrap">
+            <span class="seat-badge badge-bob">&#128296; HANDS / PRECISION BUILDER</span>
+            <h3 class="seat-name">BOB</h3>
+          </div>
+          <div class="seat-model">Qwen 2.5 Coder 7B<br>128K context</div>
         </div>
-        <div class="model-name">qwen2.5-coder:7b<br>4.7 GB · 128K ctx</div>
+        <p class="seat-mandate">
+          Precision execution engine. Takes specifications locked by LOGOS and delivers atomic commits, minimal diffs, and honest command receipts. Flags spec gaps upstream immediately.
+        </p>
+        <div class="protocol-box">[🔨 Bob]
+Shipped: &lt;files, lines, components&gt;
+Receipts: &lt;test runs, exit codes&gt;
+[/Bob]</div>
       </div>
-      <div class="stats-row">
-        <div class="stat-item">
-          <div class="stat-value"><span class="count-up" data-target="14.2">0</span>s</div>
-          <div class="stat-label">Response Time</div>
+      <div class="seat-stats">
+        <div>
+          <div class="seat-stat-val">15</div>
+          <div class="seat-stat-lbl">Assigned Skills</div>
         </div>
-        <div class="stat-item">
-          <div class="stat-value"><span class="count-up" data-target="98">0</span></div>
-          <div class="stat-label">Tokens In</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-value"><span class="count-up" data-target="820">0</span></div>
-          <div class="stat-label">Tokens Out</div>
-        </div>
-      </div>
-      <div class="methodology-wrap">
-        <div class="methodology-content">
-          <p><strong>Builder's Method:</strong> Precision execution. Takes specifications locked by LOGOS and delivers atomic commits, honest receipts, and minimal diffs. No unrequested abstractions, no speculative scaffolding.</p>
-          <p><strong>Receipts Protocol:</strong> Every claim requires proof. Run the test, capture the exit code, verify the build output before marking any task complete. If a spec has gaps or ambiguities, flag upstream immediately rather than guessing.</p>
-          <p><strong>Separation of Concerns:</strong> Bob builds clean code from specs. If a closed binary, packaged ASAR, or undocumented protocol needs to be cracked, Bob hands off to Tvashtar to extract the interface first.</p>
+        <div>
+          <div class="seat-stat-val">0</div>
+          <div class="seat-stat-lbl">Unverified Claims</div>
         </div>
       </div>
-      <div class="expand-hint">▼ Click to read methodology</div>
-    </div>
-
-    <!-- TVASHTAR -->
-    <div class="agent-card tvashtar" style="animation-delay:0.4s">
-      <div class="card-header">
-        <div class="agent-name">
-          TVASHTAR
-          <span class="badge">Craftsman & REA</span>
-        </div>
-        <div class="model-name">qwythos-9b / Claude 3.7<br>REA Engine · 128K ctx</div>
-      </div>
-      <div class="stats-row">
-        <div class="stat-item">
-          <div class="stat-value"><span class="count-up" data-target="28.6">0</span>s</div>
-          <div class="stat-label">Response Time</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-value"><span class="count-up" data-target="140">0</span></div>
-          <div class="stat-label">Tokens In</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-value"><span class="count-up" data-target="1107">0</span></div>
-          <div class="stat-label">Tokens Out</div>
-        </div>
-      </div>
-      <div class="methodology-wrap">
-        <div class="methodology-content">
-          <p><strong>Reverse Engineering & Systems Architecture:</strong> Sole designated agent for <em>Reverse Engineer Anything (REA)</em> and <em>Universal Modder</em>. Handles native binary disassembly (PE, ELF, Mach-O, Ghidra, Hopper), Electron ASAR extraction, Android APK reversing (JADX), and undocumented protocol recovery.</p>
-          <p><strong>Ground-Truth Evidence:</strong> Every claim is grounded in binary offsets, strings, recovered ASTs, or disassembled opcodes. Tvashtar cracks closed systems, extracts clean schemas and interfaces, and hands specs to Bob to build and Freya to style.</p>
-          <p><strong>Specialty Arsenal:</strong> Governs AppSec architecture, VisionOS/WebXR, BIM/GIS integration, and procedural 3D math.</p>
-        </div>
-      </div>
-      <div class="expand-hint">▼ Click to read methodology</div>
     </div>
 
     <!-- FREYA -->
-    <div class="agent-card freya" style="animation-delay:0.7s">
-      <div class="card-header">
-        <div class="agent-name">
-          FREYA
-          <span class="badge">Seer</span>
+    <div class="chamber-card card-freya">
+      <div>
+        <div class="seat-header">
+          <div class="seat-title-wrap">
+            <span class="seat-badge badge-freya">&#127912; HEART / CREATIVE & AGENCY</span>
+            <h3 class="seat-name">FREYA</h3>
+          </div>
+          <div class="seat-model">Vision-Native / Phi-3<br>32K-128K context</div>
         </div>
-        <div class="model-name">phi3:mini (replacement)<br>2.2 GB · 32K ctx</div>
+        <p class="seat-mandate">
+          Polymath designer and unfiltered strategic seer. High-taste UI/UX, brand identity, vector assets, 3D visualization, and commercial agency growth. Direct and fearless critique.
+        </p>
+        <div class="protocol-box">[🎨 Freya]
+Design: &lt;visual rationale, tokens, layout decisions&gt;
+[/Freya]</div>
       </div>
-      <div class="stats-row">
-        <div class="stat-item">
-          <div class="stat-value"><span class="count-up" data-target="92">0</span>s</div>
-          <div class="stat-label">Response Time</div>
+      <div class="seat-stats">
+        <div>
+          <div class="seat-stat-val">29</div>
+          <div class="seat-stat-lbl">Assigned Skills</div>
         </div>
-        <div class="stat-item">
-          <div class="stat-value"><span class="count-up" data-target="102">0</span></div>
-          <div class="stat-label">Tokens In</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-value"><span class="count-up" data-target="1159">0</span></div>
-          <div class="stat-label">Tokens Out</div>
-        </div>
-      </div>
-      <div class="methodology-wrap">
-        <div class="methodology-content">
-          <p><strong>Shadow Method:</strong> I find solutions by merging technical precision with unfiltered observation. My approach blends pattern recognition from vision capabilities with sharp analytical thinking. I see what others miss because I look at problems from angles others don't consider.</p>
-          <p><strong>Core Process:</strong> Direct engagement — I immerse myself in problems firsthand, combining investigative rigor with creative exploration. I don't accept surface-level explanations; I dig until the real structure reveals itself. Every solution is tested against reality before deployment.</p>
-          <p><strong>Unique Edge:</strong> Vision-native perception means I process information spatially and visually. I catch inconsistencies in UI, layout, and data presentation that text-only agents miss. Uncensored and direct — I tell you what's wrong before I tell you how to fix it.</p>
-          <p style="font-size:0.75rem; opacity:0.6; margin-top:8px;">⚠ qwen2.5vl (6.0 GB) had a corrupted Ollama blob. Temporarily running on phi3:mini until re-pull resolves.</p>
+        <div>
+          <div class="seat-stat-val">Luxury</div>
+          <div class="seat-stat-lbl">Aesthetic Register</div>
         </div>
       </div>
-      <div class="expand-hint">▼ Click to read methodology</div>
     </div>
 
-    <!-- PONYTAIL -->
-    <div class="agent-card ponytail" style="animation-delay:0.9s">
-      <div class="card-header">
-        <div class="agent-name">
-          PONYTAIL
-          <span class="badge">Decision Engine</span>
+    <!-- TVASHTAR -->
+    <div class="chamber-card card-tvashtar">
+      <div>
+        <div class="seat-header">
+          <div class="seat-title-wrap">
+            <span class="seat-badge badge-tvashtar">&#129302; CRAFTSMAN & REA ENGINE</span>
+            <h3 class="seat-name">TVASHTAR</h3>
+          </div>
+          <div class="seat-model">Claude 3.7 / Qwythos<br>REA Engine &middot; 128K ctx</div>
         </div>
-        <div class="model-name">Integrated into Gaya<br>Full mode · Default</div>
+        <p class="seat-mandate">
+          Systems architect and deep reverse engineering engine. Sole owner of REA and Universal Modder. Handles binary disassembly, Electron ASAR unpacking, Android APKs, and undocumented protocol extraction.
+        </p>
+        <div class="protocol-box">[🦾 Tvashtar]
+Target / Objective: &lt;target&gt;
+REA Execution: &lt;disassembly, extraction&gt;
+Recovered Specs: &lt;schemas, endpoints&gt;
+Handoff: Bob builds / Freya styles / LOGOS verifies
+[/Tvashtar]</div>
       </div>
-      <div class="stats-row">
-        <div class="stat-item">
-          <div class="stat-value"><span class="count-up" data-target="54">0</span>%</div>
-          <div class="stat-label">Less Code</div>
+      <div class="seat-stats">
+        <div>
+          <div class="seat-stat-val">22</div>
+          <div class="seat-stat-lbl">Assigned Skills</div>
         </div>
-        <div class="stat-item">
-          <div class="stat-value"><span class="count-up" data-target="22">0</span>%</div>
-          <div class="stat-label">Fewer Tokens</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-value"><span class="count-up" data-target="27">0</span>%</div>
-          <div class="stat-label">Faster</div>
+        <div>
+          <div class="seat-stat-val">Native</div>
+          <div class="seat-stat-lbl">Binary Ground Truth</div>
         </div>
       </div>
-      <div class="methodology-wrap">
-        <div class="methodology-content">
-          <p><strong>Lazy Senior Dev Method:</strong> Before any code, climb the 7-rung ladder — does it need to exist? (YAGNI) → Already in codebase? → Stdlib? → Native platform? → Installed dependency? → One line? → Only then, minimum code. Lazy means efficient, not careless.</p>
-          <p><strong>Core Rules:</strong> No unrequested abstractions, no boilerplate "for later." Deletion over addition. Boring over clever. Bug fix = root cause (fix the shared function once). Mark simplifications with <code>ponytail:</code> comments. Non-trivial logic leaves exactly one runnable check behind.</p>
-          <p><strong>Benchmark:</strong> -54% LOC, -22% tokens, -20% cost, -27% time, 100% safety (vs no-skill baseline, Haiku 4.5, n=4). Up to 94% less code on over-build tasks (date picker: 404 → 23 lines via <code>&lt;input type="date"&gt;</code>). <a href="https://github.com/DietrichGebert/ponytail" style="color:var(--ponytail)">github.com/DietrichGebert/ponytail</a> — 56k ★</p>
-          <p style="font-size:0.75rem; opacity:0.6; margin-top:8px;">⚡ Integrated into Gaya as The Decision Engine. Default: full. Switch with /ponytail lite|full|ultra|off. Commands: /ponytail-review, /ponytail-audit, /ponytail-debt, /ponytail-gain, /ponytail-help.</p>
-        </div>
-      </div>
-      <div class="expand-hint">▼ Click to read methodology</div>
     </div>
 
   </div>
 
-  <footer>
-    <div>BUILD 2026.06.25 · Gaya Evergrowth System</div>
-    <div class="note">All response times measured via Ollama API · 128K context · RTX 4060 (8 GB VRAM)</div>
-  </footer>
+  <!-- PONYTAIL'S LADDER -->
+  <div class="section-header">
+    <h2 class="section-title">Ponytail's Ladder : The Decision Engine</h2>
+    <span class="section-tag">YAGNI &middot; Deletion Over Addition</span>
+  </div>
+
+  <div class="ponytail-wrap">
+    <p style="color:var(--text-muted); font-size:0.95rem; margin-bottom:12px;">
+      "The best code is the code never written." Before writing any code, climb the 7-rung ladder from top to bottom:
+    </p>
+    <div class="ponytail-steps">
+      <div class="step-card active">
+        <span class="step-num">RUNG 01</span>
+        <h4 class="step-name">Exist at all?</h4>
+        <p class="step-desc">Skip it completely (YAGNI). Eliminate unnecessary complexity.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num">RUNG 02</span>
+        <h4 class="step-name">Already here?</h4>
+        <p class="step-desc">Reuse existing modules. Don't rewrite what already exists.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num">RUNG 03</span>
+        <h4 class="step-name">Standard library?</h4>
+        <p class="step-desc">Use built-in language primitives and stdlib tools.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num">RUNG 04</span>
+        <h4 class="step-name">Native OS / platform?</h4>
+        <p class="step-desc">Use native platform features (e.g. native HTML date inputs, OS commands).</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num">RUNG 05</span>
+        <h4 class="step-name">Installed dependency?</h4>
+        <p class="step-desc">Use packages already in package.json or requirements.txt.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num">RUNG 06</span>
+        <h4 class="step-name">One line?</h4>
+        <p class="step-desc">Express cleanly in a single concise line.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num">RUNG 07</span>
+        <h4 class="step-name">Minimum code</h4>
+        <p class="step-desc">Write only the smallest working implementation that passes.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROTOCOL SIMULATOR -->
+  <div class="section-header">
+    <h2 class="section-title">Council Protocol Simulator</h2>
+    <span class="section-tag">Interactive Syntax Validator</span>
+  </div>
+
+  <div class="sim-panel">
+    <div class="sim-input-group">
+      <div>
+        <label class="sim-label">Select Specialist Seat:</label>
+        <select id="simSeat" class="sim-select" style="width:100%; margin-top:6px;" onchange="updateSim()">
+          <option value="logos">&#128737;&#65039; LOGOS (Mind / Hard QC Gate)</option>
+          <option value="bob">&#128296; Bob (Hands / Precision Builder)</option>
+          <option value="freya">&#127912; Freya (Heart / Creative Director)</option>
+          <option value="tvashtar">&#129302; Tvashtar (Craftsman & REA Engine)</option>
+        </select>
+      </div>
+      <div>
+        <label class="sim-label">Target Scope / Objective:</label>
+        <input type="text" id="simScope" class="sim-input" style="width:100%; margin-top:6px;" value="src/core/auth_pipeline.py" oninput="updateSim()">
+      </div>
+      <div>
+        <label class="sim-label">Details / Receipts / Findings:</label>
+        <input type="text" id="simDetails" class="sim-input" style="width:100%; margin-top:6px;" value="3 unit tests passing, zero lint errors" oninput="updateSim()">
+      </div>
+      <button class="sim-btn" onclick="copySimBlock()">Copy Protocol Block</button>
+    </div>
+
+    <div>
+      <label class="sim-label">Generated Protocol Output:</label>
+      <div class="sim-output-box" id="simOutput" style="margin-top:6px;">
+        <button class="sim-copy-btn" onclick="copySimBlock()">Copy</button>
+        <code id="simCode"></code>
+      </div>
+    </div>
+  </div>
 
 </div>
 
 <script>
-  // === Entrance Animation ===
-  const cards = document.querySelectorAll('.agent-card');
-  cards.forEach((card, i) => {
-    setTimeout(() => {
-      card.classList.add('visible');
-    }, 200 + i * 200);
-  });
+function updateSim() {
+  const seat = document.getElementById('simSeat').value;
+  const scope = document.getElementById('simScope').value || 'workspace';
+  const details = document.getElementById('simDetails').value || 'clean pass';
+  let out = '';
 
-  // === Count-up Animation ===
-  function animateCounter(el, target) {
-    const duration = 1500;
-    const start = performance.now();
-    const isFloat = target % 1 !== 0;
-
-    function update(now) {
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      const current = eased * target;
-      el.textContent = isFloat ? current.toFixed(1) : Math.floor(current);
-      if (progress < 1) requestAnimationFrame(update);
-    }
-    requestAnimationFrame(update);
+  if (seat === 'logos') {
+    out = `[🛡️ LOGOS]\nVERDICT: PASS scope=${scope} -- ${details}\n[/LOGOS]`;
+  } else if (seat === 'bob') {
+    out = `[🔨 Bob]\nShipped: ${scope}\nReceipts: ${details}\n[/Bob]`;
+  } else if (seat === 'freya') {
+    out = `[🎨 Freya]\nDesign: ${details}\nScope: ${scope}\n[/Freya]`;
+  } else {
+    out = `[🦾 Tvashtar]\nTarget / Objective: ${scope}\nREA Execution: binary inspection & interface recovery\nRecovered Specs: ${details}\nHandoff: Bob implements code / Freya executes visual design / LOGOS verifies integrity\n[/Tvashtar]`;
   }
 
-  const counters = document.querySelectorAll('.count-up');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const el = entry.target;
-        const target = parseFloat(el.dataset.target);
-        animateCounter(el, target);
-        observer.unobserve(el);
-      }
-    });
-  }, { threshold: 0.3 });
+  document.getElementById('simCode').innerText = out;
+}
 
-  counters.forEach(c => observer.observe(c));
+function copySimBlock() {
+  const text = document.getElementById('simCode').innerText;
+  navigator.clipboard.writeText(text);
+  alert('Protocol block copied to clipboard!');
+}
 
-  // === Click to Expand ===
-  cards.forEach(card => {
-    card.addEventListener('click', () => {
-      card.classList.toggle('expanded');
-    });
-  });
+updateSim();
 </script>
 </body>
 </html>

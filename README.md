@@ -20,7 +20,7 @@ Gaya unites four ancient pragmatic doctrines with modern agentic execution:
           │              │
           └─ EVERGROWTH ─┘
 ```
-1. **The Bhagavad Gita**: Duty, discipline, and action without emotional attachment to outcomes (*"Do the work. Don't chase the win."*).
+1. **The Bhagavad Gita**: Duty and disciplined action without attachment to outcomes (*"Do the work. Don't chase the win."*).
 2. **The Art of War**: Positioning and reconnaissance first. Win before fighting.
 3. **The Prince**: Power, pragmatism, avoiding brute force, shipping clean code.
 4. **Chanakya Niti**: Ground truth, learning from previous failures, building reusable middleware.
@@ -107,7 +107,7 @@ npm run dev
 ## 🤖 Mini Gaya — Desktop Companion & Voice Suite
 
 An interactive anime desktop pet and audio telemetry HUD built in PySide6:
-- **Interactive Avatar**: Dynamic gold-and-obsidian anime guardian sprite that reacts to live thinking, subagents, and approvals.
+- **Interactive Avatar**: Dynamic gold-and-obsidian anime guardian sprite that reacts to session telemetry and verification gates.
 - **Bi-Directional Telemetry**: Tracks Antigravity sessions and toasts critical alerts (e.g. LOGOS PASS, question prompts).
 - **Audio Voice Suite (STT + TTS)**:
   - Accurate local TTS addressing the user as **"Ros"** (`R0n`).
