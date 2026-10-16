@@ -49,6 +49,20 @@ JDIR = GDIR if os.path.exists(GDIR) else os.path.join(os.path.expanduser("~"), "
 KEYFILE = os.path.join(JDIR, "secrets", "sprite.key")
 PREFS = os.path.join(JDIR, "sprite.json")
 SOUNDS = os.path.join(HERE, "sounds")
+
+def get_user_salutation():
+    try:
+        prof_path = os.path.join(GDIR, "user_profile.json")
+        if os.path.exists(prof_path):
+            with open(prof_path, "r", encoding="utf-8") as f:
+                d = json.load(f)
+                prefix = d.get("prefix", "R0n")
+                if prefix.lower() in ("r0n", "ron"):
+                    return "Ros"
+                return prefix
+    except Exception:
+        pass
+    return "Ros"
 PORT = 8767
 SPRITE = 64                    # logical px of the core
 BODY_H = 132                   # logical px tall, full-body mode
@@ -525,6 +539,7 @@ class Sprite(QWidget):
         if p.get("voice", True):
             self._start_voice()
         self.ring = RadialMenu(self)
+        self.sal = get_user_salutation()
         self._active_log_file = gaya_state.get_active_log_path()
         try:
             self.log_pos = os.path.getsize(self._active_log_file) if (self._active_log_file and os.path.exists(self._active_log_file)) else 0
@@ -633,7 +648,8 @@ class Sprite(QWidget):
             self.sound.play("request")
             logging.info("request %s: card shown (%s) at %s%s", rid[:8], p.get("tool_name"), card.pos(),
                          (" ALLOW LOCKED: " + card.lock_reason) if card.lock_reason else "")
-            self.speak("Ros, %s wants to run %s. %s" % (
+            self.speak("%s, %s wants to run %s. %s" % (
+                self.sal,
                 self.session_title(sid) or "an Antigravity session", p.get("tool_name", "a tool"),
                 "Allow, or deny?" if not card.lock_reason else "It's locked - answer it in Antigravity."),
                 interrupt=True)
@@ -658,7 +674,7 @@ class Sprite(QWidget):
             msg = " ".join(str(p.get("last_assistant_message", "")).split())[:110]
             self.toast("waiting", "%s - done, waiting for you" % (self.session_title(sid) or "Antigravity session"), msg)
             first = re.split(r"(?<=[.!?])\s", " ".join(str(p.get("last_assistant_message", "")).split()))[0][:140]
-            self.speak("%s is done, Ros. %s" % (self.session_title(sid) or "Antigravity session", first))
+            self.speak("%s is done, %s. %s" % (self.session_title(sid) or "Antigravity session", self.sal, first))
         elif event == "StopFailure":
             self.sound.play("error")
             self.toast("broken", "An Antigravity session hit an error", str(p.get("error", ""))[:100])
@@ -986,7 +1002,7 @@ class Sprite(QWidget):
                     elif v.startswith("FAIL"):
                         self.sound.play("error")
                         self.toast("broken", "🛡️ LOGOS: FAIL", "fixes needed - report saved to the KB")
-                        self.speak("LOGOS held it. Fixes needed, Ros.")
+                        self.speak("LOGOS held it. Fixes needed, %s." % self.sal)
                     else:
                         self.toast("info", "%s reported back" % str(e.get("agent", "agent")).upper(), "saved to the KB")
 
@@ -994,11 +1010,11 @@ class Sprite(QWidget):
             self.sound.play("done")
             self.anim["hop"] = 1.0
             self.toast("approved", "🛡️ LOGOS signed off - PASS", "Gate verified")
-            self.speak("LOGOS passed it, Ros.")
+            self.speak("LOGOS passed it, %s." % self.sal)
         if waiting_event:
             self.sound.play("alert")
             self.toast("hold", "Antigravity is waiting", waiting_event)
-            self.speak("Antigravity needs your input, Ros.")
+            self.speak("Antigravity needs your input, %s." % self.sal)
         elif subagent_event:
             self.toast("spawning", "Subagents dispatched", subagent_event)
 
@@ -1245,7 +1261,7 @@ class Sprite(QWidget):
             self.clicks = []
             self.anim["dizzy"] = 1.0
             self.sound.play("dizzy")
-            self.toast("info", "Easy, Ros.", "Mini Gaya is awake.")
+            self.toast("info", "Easy, %s." % self.sal, "Mini Gaya is awake.")
             return
         if self.panel.isVisible():
             self.panel.hide()
@@ -1270,7 +1286,7 @@ class Sprite(QWidget):
         m.addAction("Hide Mini Gaya" if not self.user_hidden else "Show Mini Gaya", self.toggle)
         m.addAction("Unmute sounds" if self.sound.muted else "Mute sounds", self._mute)
         m.addAction("Test notification", lambda: (self.sound.play("done"), self.toast(
-            "approved", "Mini Gaya online", "notifications working, Ros")))
+            "approved", "Mini Gaya online", "notifications working, %s" % self.sal)))
         m.addAction("Bring me to the corner", self._home)
         m.addAction("Stop roaming" if self.roam else "Roam around", self._toggle_roam)
         m.addSeparator()
@@ -1299,7 +1315,7 @@ class Sprite(QWidget):
             self.voice.off()
         else:
             self.voice.on()
-            self.voice.say("Voice on, Ros.")
+            self.voice.say("Voice on, %s." % self.sal)
         self._save()
 
     def speak(self, text, interrupt=False):
@@ -1329,7 +1345,7 @@ class Sprite(QWidget):
             return
         b = Bubble(self, "#8fd3ff", 430)
         hour = time.localtime().tm_hour
-        greet = "Good morning, Ros" if hour < 12 else "Good afternoon, Ros" if hour < 17 else "Evening, Ros"
+        greet = "Good morning, %s" % self.sal if hour < 12 else "Good afternoon, %s" % self.sal if hour < 17 else "Evening, %s" % self.sal
         b.label(greet, "title")
         b.label("Here's %s - tick things off as you go." % ("yesterday" if data["label"] == "yesterday"
                                                              else "your day so far"), "muted")
@@ -1477,7 +1493,7 @@ def main():
         QTimer.singleShot(2500, s.show_daily_brief)      # once a day: done + to-do checklist
     else:
         s.toast("approved", "Mini Gaya online", "click me for the Deck · throw me around")
-    QTimer.singleShot(1200, lambda: s.speak("Mini Gaya is online, Ros."))
+    QTimer.singleShot(1200, lambda: s.speak("Mini Gaya is online, %s." % s.sal))
     return app.exec()
 
 

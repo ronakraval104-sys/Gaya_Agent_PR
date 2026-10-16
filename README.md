@@ -79,11 +79,22 @@ Gaya runs natively across four major agent ecosystems:
 | **Claude Code** | `CLAUDE.md` | Built-in / Shared | [Claude Code Guide](docs/MULTI_CLIENT_SETUP.md#3-claude-code) |
 | **OpenAI Codex / Copilot** | `CODEX.md` | Built-in / Shared | [Codex Guide](docs/MULTI_CLIENT_SETUP.md#4-openai-codex--github-copilot-cli) |
 
-### Universal Installer:
-```powershell
-# Run the universal installer
+### Universal Installation and Sharing:
+Clone the repository directly:
+```bash
+git clone https://github.com/ronakraval104-sys/Gaya_Agent_PR.git
+cd Gaya_Agent_PR
+
+# Windows setup
 .\scripts\install.ps1
+
+# Linux or macOS setup
+chmod +x ./scripts/install.sh
+./scripts/install.sh
 ```
+- **Fresh Install**: Prompts for your name and preferred prefix to personalize all agent instructions and voice synthesis.
+- **Upgrade**: Automatically detects and fetches your existing name and prefix from previous installations.
+- **Sharing**: Distribute Gaya directly via the Git repository link.
 
 ---
 

@@ -1,4 +1,9 @@
-# One-Click Installer for Google Antigravity (AGY)
+﻿# One-Click Installer for Google Antigravity (AGY)
+param(
+    [string]$UserName = "",
+    [string]$UserPrefix = ""
+)
+
 Write-Host "==========================================================" -ForegroundColor Cyan
 Write-Host "  Installing Council of Gaya for Google Antigravity (AGY)" -ForegroundColor Yellow
 Write-Host "==========================================================" -ForegroundColor Cyan
@@ -13,12 +18,20 @@ $repoRoot = Split-Path -Parent $PSScriptRoot
 New-Item -ItemType Directory -Path $rulesDir -Force | Out-Null
 New-Item -ItemType Directory -Path $skillsDir -Force | Out-Null
 
-# 1. Install AGENTS.md
+# 1. Install AGENTS.md with personalized user identity
 Write-Host "Installing AGENTS.md Council Persona..." -ForegroundColor Green
-Copy-Item (Join-Path $repoRoot "config\AGENTS.md") (Join-Path $rulesDir "AGENTS.md") -Force
+$agentsPath = Join-Path $repoRoot "config\AGENTS.md"
+$agentsContent = Get-Content $agentsPath -Raw -Encoding UTF8
+
+if ($UserPrefix) {
+    $alt = if ($UserName -and $UserName -ne $UserPrefix) { " (or $UserName)" } else { "" }
+    $titleExclusion = if ($UserPrefix -eq "Commander") { "" } else { " Never use generic titles like `"sir`" or `"commander`"." }
+    $agentsContent = $agentsContent -replace '(?m)^- Address the user as \*\*.*', "- Address the user as **$UserPrefix**$alt.$titleExclusion"
+}
+Set-Content -Path (Join-Path $rulesDir "AGENTS.md") -Value $agentsContent -Encoding UTF8
 
 # 2. Install Skills
-Write-Host "Installing Skills to ~/.gemini/config/skills/..." -ForegroundColor Green
+Write-Host "Installing 83 Skills to ~/.gemini/config/skills/..." -ForegroundColor Green
 Copy-Item (Join-Path $repoRoot "skills\*") $skillsDir -Recurse -Force
 
 # 3. Configure MCP

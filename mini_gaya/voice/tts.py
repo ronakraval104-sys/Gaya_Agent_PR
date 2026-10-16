@@ -16,9 +16,18 @@ import threading
 import time
 
 HOME = os.path.expanduser("~")
-VOICE_DIR = os.path.join(HOME, ".jarvis", "voice")
+VOICE_DIR = os.path.join(HOME, ".gaya", "voice")
 CONFIG_PATH = os.path.join(VOICE_DIR, "voice_config.json")
 DEFAULT_VOICE = "Microsoft Heera - English (India)"
+
+def get_user_profile():
+    prof_path = os.path.join(HOME, ".gaya", "user_profile.json")
+    if os.path.exists(prof_path):
+        try:
+            return json.load(open(prof_path, "r", encoding="utf-8"))
+        except Exception:
+            pass
+    return {"name": "Ronak", "prefix": "R0n"}
 
 WARM = [
     "Voice is online, Ros. Hold right control and talk.",
@@ -83,11 +92,14 @@ def get_available_voices():
 def clean_for_speech(text):
     if not text:
         return ""
+    prof = get_user_profile()
+    prefix = prof.get("prefix", "R0n")
+    pronounce = "Ros" if prefix.lower() in ("r0n", "ron") else prefix
     # "R0n" is typed with a zero, but phonetically pronounced "Ros"
-    text = re.sub(r'\br\s*[-_]?\s*0\s*[-_]?\s*n\b', 'Ros', text, flags=re.I)
-    text = re.sub(r'\br\s+zero\s+n\b', 'Ros', text, flags=re.I)
-    text = re.sub(r'\br0n\b', 'Ros', text, flags=re.I)
-    text = re.sub(r'\bR0n\b', 'Ros', text)
+    text = re.sub(r'\br\s*[-_]?\s*0\s*[-_]?\s*n\b', pronounce, text, flags=re.I)
+    text = re.sub(r'\br\s+zero\s+n\b', pronounce, text, flags=re.I)
+    text = re.sub(r'\br0n\b', pronounce, text, flags=re.I)
+    text = re.sub(r'\bR0n\b', pronounce, text)
     # Fix any legacy "cloud sessions" / "clowd sessions" / "claude sessions"
     text = re.sub(r'\b(clowd|cloud|claude)\s+sessions?\b', 'Antigravity sessions', text, flags=re.I)
     text = re.sub(r'\b(clowd|cloud|claude)\s+code\b', 'Antigravity', text, flags=re.I)

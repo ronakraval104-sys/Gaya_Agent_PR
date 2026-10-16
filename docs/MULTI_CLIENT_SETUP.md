@@ -1,6 +1,6 @@
 # 🌐 Multi-Platform Setup Guide — Gaya Update 0.5.2610
 
-Gaya runs natively across all major agentic AI environments with unified council protocols, skills, and persona rules.
+Gaya runs natively across all major agentic AI environments with unified Council protocols and specialized skills.
 
 ---
 
@@ -58,3 +58,14 @@ Codex will follow the 7-step Ponytail ladder, the LOGOS read-only gate, and the 
 ## 5. Cursor & VS Code
 
 Copy `AGENTS.md` to `.cursorrules` in your project root or configure VS Code MCP settings with `config/mcp_config.json`.
+
+---
+
+## 6. User Identity Setup & Repository Sharing
+
+Gaya personalizes how all agents and voice telemetry address you:
+- **Fresh Installation**: Running `.\scripts\install.ps1` (or `./scripts/install.sh`) prompts for your name and preferred address prefix (e.g. `Ronak` and `R0n`). It writes `~/.gaya/user_profile.json` and updates your active rules.
+- **Upgrades**: The installer automatically detects and fetches your existing name and prefix from previous installations.
+- **Direct Repository Sharing**: Distribute Gaya directly using the Git repository:
+  `https://github.com/ronakraval104-sys/Gaya_Agent_PR`
+
