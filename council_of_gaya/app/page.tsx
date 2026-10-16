@@ -1,6 +1,5 @@
 import { OperatorConsoleShell } from "@/components/OperatorConsoleShell";
 import { PersonaMorph } from "@/components/PersonaMorph";
-import { RadialGraph } from "@/components/RadialGraph";
 import { RecordDetail } from "@/components/RecordDetail";
 import { SeatBrief } from "@/components/SeatBrief";
 import { SessionChronicle } from "@/components/SessionChronicle";
@@ -19,13 +18,6 @@ export default function Home() {
         <Topbar />
         <div className="flex-1 pb-16">
           <OperatorConsoleShell />
-
-          {/* Council + knowledge graph — the reactor now houses the live network */}
-          <div className="px-6 max-w-[1600px] mx-auto">
-            <div className="flex items-center justify-center py-4">
-              <RadialGraph size={700} />
-            </div>
-          </div>
 
           {/* Threads Board — daily-driver "what's on my plate" surface */}
           <ThreadsBoard />

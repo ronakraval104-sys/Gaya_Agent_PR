@@ -29,7 +29,7 @@ export async function POST(req: Request) {
     if (action === "set_voice") {
       const voiceName = body.voiceName || "Microsoft Heera - English (India)";
       const home = process.env.USERPROFILE || process.env.HOME || "";
-      const voiceConfigPath = path.join(home, ".jarvis", "voice", "voice_config.json");
+      const voiceConfigPath = path.join(home, ".gaya", "voice", "voice_config.json");
       fs.mkdirSync(path.dirname(voiceConfigPath), { recursive: true });
       fs.writeFileSync(
         voiceConfigPath,

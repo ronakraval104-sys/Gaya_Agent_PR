@@ -31,13 +31,9 @@ export function Topbar() {
 
       {/* right — persona pill + palette hint */}
       <div className="flex items-center gap-3">
-        <div className="hidden md:flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.14em]">
-          <span className="text-os-dim">context ::</span>
-          <span className="text-os-text">{p.codename}</span>
-        </div>
-
         <div className="flex items-center gap-2 px-3 py-1 border border-os-border bg-os-surface2/60 shadow-[0_0_12px_rgba(212,175,55,0.15)] font-mono text-[10px] uppercase tracking-[0.16em]">
-          <span className="w-1.5 h-1.5 rounded-full bg-os-accent shadow-[0_0_6px_var(--accent)]" />
+          <span className="w-1.5 h-1.5 rounded-full bg-os-accent shadow-[0_0_6px_var(--accent)] animate-pulse" />
+          <span className="text-os-dim">context ::</span>
           <span className="text-os-accent font-bold">GAYA CORE</span>
           <span className="text-os-dim">·</span>
           <span className="text-os-muted">BODHI VANGUARD</span>

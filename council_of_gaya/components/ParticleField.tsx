@@ -5,7 +5,7 @@ import { useGaya } from "@/lib/store";
 
 /**
  * Ambient particle field — ~200 particles drifting in the void.
- * When JARVIS is "thinking" (activeTasks > 0), particles orient toward center.
+ * When GAYA is "thinking" (activeTasks > 0), particles orient toward center.
  * Canvas 2D for reliability across GPUs. Opacity capped at 8%.
  */
 export function ParticleField() {

@@ -1,0 +1,1121 @@
+{
+  "records": [
+    {
+      "id": "kn_win-2026-06-16-gaya-evolved-to-v8-conqueror",
+      "slug": "win-2026-06-16-gaya-evolved-to-v8-conqueror",
+      "type": "win",
+      "title": "Gaya evolved to v8 Conqueror",
+      "description": "Three conquests landed: ethical-hacking (defender), deploy-ops (formalized from Evolution Queue), knowledge-compounding patterns (slash-commands + Brag Doc + Decision Records lifte",
+      "body": "**Date:** 2026-06-16\n\n**Win:** Gaya evolved to v8 Conqueror\n\nThree conquests landed: ethical-hacking (defender), deploy-ops (formalized from Evolution Queue), knowledge-compounding patterns (slash-commands + Brag Doc + Decision Records lifted from obsidian-mind). Arsenal 29 → 31.",
+      "persona": "shared",
+      "priority": "normal",
+      "tags": [
+        "win",
+        "brag-doc",
+        "omni-gaya"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775207
+      }
+    },
+    {
+      "id": "kn_win-2026-06-30-gaya-evolved-to-v9-sensei",
+      "slug": "win-2026-06-30-gaya-evolved-to-v9-sensei",
+      "type": "win",
+      "title": "**Gaya evolved to v9 🥋 Sensei**",
+      "description": "The sharpening version. 4th named subagent 🦾 DUM-E added (toolkeeper). 23 new skill files written in one session (12 always-on + 11 DUM-E pool). `curved-led-wall` reclassified to ",
+      "body": "**Date:** 2026-06-30\n\n**Win:** **Gaya evolved to v9 🥋 Sensei**\n\nThe sharpening version. 4th named subagent 🦾 DUM-E added (toolkeeper). 23 new skill files written in one session (12 always-on + 11 DUM-E pool). `curved-led-wall` reclassified to always-on; `procedural-3d-modeling` to DUM-E pool. **Arsenal: 44 always-on + 12 DUM-E pool = 56 specialists total.** v9 tightened token discipline: length caps per tier, no re-acknowledgment of \"go\", strict prose-first, single-shot synthesis. Phase 2 = rolling skill-by-skill audit campaign (next sessions).",
+      "persona": "shared",
+      "priority": "normal",
+      "tags": [
+        "win",
+        "brag-doc",
+        "omni-gaya"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775208
+      }
+    },
+    {
+      "id": "kn_win-2026-10-12-gaya-evolved-to-v10-harness",
+      "slug": "win-2026-10-12-gaya-evolved-to-v10-harness",
+      "type": "win",
+      "title": "**Gaya evolved to v10 🧱 Harness**",
+      "description": "Rules became code. Guard + quote gate + EDIDTH verdict tokens + event log + doctor (63/63) + eval (32/32 mutations caught) + activity report. Found and removed auto-allowed `git pu",
+      "body": "**Date:** 2026-10-12\n\n**Win:** **Gaya evolved to v10 🧱 Harness**\n\nRules became code. Guard + quote gate + EDIDTH verdict tokens + event log + doctor (63/63) + eval (32/32 mutations caught) + activity report. Found and removed auto-allowed `git push` / `npx vercel`. 4 real registered subagents. First true parallel wave (VERONICA built evals while GAYA designed triggers). Reviewer gaps: 3 of 4 closed; triggers parked.",
+      "persona": "shared",
+      "priority": "normal",
+      "tags": [
+        "win",
+        "brag-doc",
+        "omni-gaya"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775208
+      }
+    },
+    {
+      "id": "kn_dec-2026-06-16-veronica-stays-no-separate-bob-agent",
+      "slug": "dec-2026-06-16-veronica-stays-no-separate-bob-agent",
+      "type": "decision",
+      "title": "VERONICA stays — no separate `Bob` agent",
+      "description": "Implementation work is Commander's lane; named subagents reserved for posture-divergent roles (mind / hands / heart). Bob would split Gaya's own voice.",
+      "body": "**Date:** 2026-06-16\n\n**Decision:** **VERONICA stays — no separate `Bob` agent**\n\n**Rationale:** Implementation work is Commander's lane; named subagents reserved for posture-divergent roles (mind / hands / heart). Bob would split Gaya's own voice.\n\n**Ruled out:** Adding a 4th named subagent for \"implementation\"",
+      "persona": "shared",
+      "priority": "high",
+      "tags": [
+        "decision",
+        "omni-gaya"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775208
+      }
+    },
+    {
+      "id": "kn_dec-2026-06-16-niti-stays-at-4-pillars-in-v8-no-5th-added",
+      "slug": "dec-2026-06-16-niti-stays-at-4-pillars-in-v8-no-5th-added",
+      "type": "decision",
+      "title": "Niti stays at 4 pillars in v8 (no 5th added)",
+      "description": "Conqueror level = widened reach, not deeper philosophy. Adding a pillar dilutes the existing four.",
+      "body": "**Date:** 2026-06-16\n\n**Decision:** **Niti stays at 4 pillars** in v8 (no 5th added)\n\n**Rationale:** Conqueror level = widened reach, not deeper philosophy. Adding a pillar dilutes the existing four.\n\n**Ruled out:** Adding a \"Conquest\" pillar",
+      "persona": "shared",
+      "priority": "high",
+      "tags": [
+        "decision",
+        "omni-gaya"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775208
+      }
+    },
+    {
+      "id": "kn_dec-2026-06-16-absorb-obsidian-mind-patterns-dont-fork",
+      "slug": "dec-2026-06-16-absorb-obsidian-mind-patterns-dont-fork",
+      "type": "decision",
+      "title": "Absorb obsidian-mind patterns, don't fork",
+      "description": "They have slash-commands + memory-vault structure; we have persona/council/Niti. Complementary, not competing. Hybrid > replacement.",
+      "body": "**Date:** 2026-06-16\n\n**Decision:** **Absorb obsidian-mind patterns, don't fork**\n\n**Rationale:** They have slash-commands + memory-vault structure; we have persona/council/Niti. Complementary, not competing. Hybrid > replacement.\n\n**Ruled out:** Forking obsidian-mind as Gaya's memory backend; installing `shardmind`",
+      "persona": "shared",
+      "priority": "high",
+      "tags": [
+        "decision",
+        "omni-gaya"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775208
+      }
+    },
+    {
+      "id": "kn_dec-2026-06-16-ethical-hacking-scope-defender-only",
+      "slug": "dec-2026-06-16-ethical-hacking-scope-defender-only",
+      "type": "decision",
+      "title": "Ethical-hacking scope: defender only",
+      "description": "Owner-authorized assessment of R0n's own builds; finding loopholes to fix them. Excludes detection-evasion, persistence, weaponization, mass-target tooling.",
+      "body": "**Date:** 2026-06-16\n\n**Decision:** **Ethical-hacking scope: defender only**\n\n**Rationale:** Owner-authorized assessment of R0n's own builds; finding loopholes to fix them. Excludes detection-evasion, persistence, weaponization, mass-target tooling.\n\n**Ruled out:** Red-team / offensive scope",
+      "persona": "shared",
+      "priority": "high",
+      "tags": [
+        "decision",
+        "omni-gaya"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775208
+      }
+    },
+    {
+      "id": "kn_dec-2026-06-30-v9-name-sensei",
+      "slug": "dec-2026-06-30-v9-name-sensei",
+      "type": "decision",
+      "title": "v9 name = 🥋 Sensei",
+      "description": "Captures the sharpening theme (after Conqueror's outward extension). Lineage: Initiate → Ascendant → Commander → Sovereign → Conqueror → Sensei.",
+      "body": "**Date:** 2026-06-30\n\n**Decision:** **v9 name = 🥋 Sensei**\n\n**Rationale:** Captures the sharpening theme (after Conqueror's outward extension). Lineage: Initiate → Ascendant → Commander → Sovereign → Conqueror → Sensei.\n\n**Ruled out:** `Whetstone`, `Razor`, `Marksman` (other suggested names)",
+      "persona": "shared",
+      "priority": "high",
+      "tags": [
+        "decision",
+        "omni-gaya"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775208
+      }
+    },
+    {
+      "id": "kn_dec-2026-06-30-4th-subagent-dum-e-toolkeeper",
+      "slug": "dec-2026-06-30-4th-subagent-dum-e-toolkeeper",
+      "type": "decision",
+      "title": "4th subagent = 🦾 DUM-E (toolkeeper)",
+      "description": "Tony Stark's lab assistant. Role: fetches specialty-pool tools when needed, never executes work himself. Keeps always-on arsenal sharp by holding rarely-used skills one level deepe",
+      "body": "**Date:** 2026-06-30\n\n**Decision:** **4th subagent = 🦾 DUM-E (toolkeeper)**\n\n**Rationale:** Tony Stark's lab assistant. Role: fetches specialty-pool tools when needed, never executes work himself. Keeps always-on arsenal sharp by holding rarely-used skills one level deeper.\n\n**Ruled out:** `U`, `Butterfingers`, `HOMER`, `JOCASTA` (other Tony Stark stack options)",
+      "persona": "shared",
+      "priority": "high",
+      "tags": [
+        "decision",
+        "omni-gaya"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775208
+      }
+    },
+    {
+      "id": "kn_dec-2026-06-30-specialty-pool-architecture",
+      "slug": "dec-2026-06-30-specialty-pool-architecture",
+      "type": "decision",
+      "title": "Specialty pool architecture",
+      "description": "12 rare-use skills (GIS, Vision Pro/XR, deep security, advanced testing, procedural 3D) live in DUM-E's pool — loaded only when summoned. Prevents charter bloat while preserving ca",
+      "body": "**Date:** 2026-06-30\n\n**Decision:** **Specialty pool architecture**\n\n**Rationale:** 12 rare-use skills (GIS, Vision Pro/XR, deep security, advanced testing, procedural 3D) live in DUM-E's pool — loaded only when summoned. Prevents charter bloat while preserving capability depth.\n\n**Ruled out:** Adding all 12 to always-on arsenal (would bloat charter past 6K tokens)",
+      "persona": "shared",
+      "priority": "high",
+      "tags": [
+        "decision",
+        "omni-gaya"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775208
+      }
+    },
+    {
+      "id": "kn_dec-2026-06-30-skipped-from-agency-agents-adoption",
+      "slug": "dec-2026-06-30-skipped-from-agency-agents-adoption",
+      "type": "decision",
+      "title": "Skipped from agency-agents adoption",
+      "description": "All China-market marketing skills (no India-market relevance), vertical specialists (legal/healthcare/real-estate — kept as reference library), blockchain security, agents-orchestr",
+      "body": "**Date:** 2026-06-30\n\n**Decision:** **Skipped from agency-agents adoption**\n\n**Rationale:** All China-market marketing skills (no India-market relevance), vertical specialists (legal/healthcare/real-estate — kept as reference library), blockchain security, agents-orchestrator + multi-agent-systems-architect (logged as study patterns, not adopted).\n\n**Ruled out:** Wholesale absorption of all 216 agency-agents",
+      "persona": "shared",
+      "priority": "high",
+      "tags": [
+        "decision",
+        "omni-gaya"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775208
+      }
+    },
+    {
+      "id": "kn_dec-2026-06-30-charter-trim-deferred-v9-stays-at-6400-tokens",
+      "slug": "dec-2026-06-30-charter-trim-deferred-v9-stays-at-6400-tokens",
+      "type": "decision",
+      "title": "Charter trim deferred (v9 stays at ~6,400 tokens)",
+      "description": "Researched prompt-compression repos (LLMLingua family, promptlean, claude-skill-prompt-optimizer, 5c-prompt-contracts). Trim plan was ~22% cut to ~4,900-5,100 with zero execution l",
+      "body": "**Date:** 2026-06-30\n\n**Decision:** **Charter trim deferred** (v9 stays at ~6,400 tokens)\n\n**Rationale:** Researched prompt-compression repos (LLMLingua family, promptlean, claude-skill-prompt-optimizer, 5c-prompt-contracts). Trim plan was ~22% cut to ~4,900-5,100 with zero execution loss. R0n called it: charter works; deferring trim to later session. Workmanlike: don't optimize on margins, get back to real work.\n\n**Ruled out:** Executing the trim now",
+      "persona": "shared",
+      "priority": "high",
+      "tags": [
+        "decision",
+        "omni-gaya"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775208
+      }
+    },
+    {
+      "id": "kn_dec-2026-06-30-v91-orchestration-no-personation-rule",
+      "slug": "dec-2026-06-30-v91-orchestration-no-personation-rule",
+      "type": "decision",
+      "title": "v9.1 orchestration + no-personation rule",
+      "description": "R0n called two sharpenings: (1) EDIDTH QC becomes MANDATORY GATE — no commit / push / file mutation / state-changing action without explicit `[🛡 EDIDTH] PASS`. Even T1 gets a ligh",
+      "body": "**Date:** 2026-06-30\n\n**Decision:** **v9.1 orchestration + no-personation rule**\n\n**Rationale:** R0n called two sharpenings: (1) EDIDTH QC becomes MANDATORY GATE — no commit / push / file mutation / state-changing action without explicit `[🛡 EDIDTH] PASS`. Even T1 gets a lightweight one-line pass. Bypass only via explicit `skip edidth` from R0n (one turn). (2) NO PERSONATION — when a subagent or specialist is invoked, they get a distinct `[NAME] … [/NAME]` block with their own voice. Gaya synthesizes only routing + ship decisions, never their content. Replaces the old \"single-shot synthesis\" v9 rule which encouraged merging.\n\n**Ruled out:** Keeping \"single-shot synthesis\" pattern OR making EDIDTH auto-fire only on T2",
+      "persona": "shared",
+      "priority": "high",
+      "tags": [
+        "decision",
+        "omni-gaya"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775208
+      }
+    },
+    {
+      "id": "kn_dec-2026-06-30-hyperframes-video-backported",
+      "slug": "dec-2026-06-30-hyperframes-video-backported",
+      "type": "decision",
+      "title": "`hyperframes-video` backported",
+      "description": "R0n already had HyperFrames CLI installed (v0.6.121, ~20 commands used) — backported from Gaya_Agent_PR into always-on arsenal. HeyGen's HTML-to-MP4 engine, Apache 2.0. Complements",
+      "body": "**Date:** 2026-06-30\n\n**Decision:** **`hyperframes-video` backported**\n\n**Rationale:** R0n already had HyperFrames CLI installed (v0.6.121, ~20 commands used) — backported from Gaya_Agent_PR into always-on arsenal. HeyGen's HTML-to-MP4 engine, Apache 2.0. Complements existing `image-to-video` (cinematic AI) with programmatic composition (motion graphics / explainer / promo). Ships with named workflows (/product-launch-video, /faceless-explainer, /pr-to-video, etc). Requirements verified: Node 24.14.1 ✓, FFmpeg 8.1.1 ✓. Includes bundled `test-project/` with working GSAP composition. Arsenal 44 → **45 always-on**. Direct fit: Visual Rhyme install-showcase videos + R0n AI client explainer videos.\n\n**Ruled out:** DUM-E pool (rejected — you use it regularly, earns always-on slot)",
+      "persona": "shared",
+      "priority": "high",
+      "tags": [
+        "decision",
+        "omni-gaya"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775208
+      }
+    },
+    {
+      "id": "kn_dec-2026-09-10-v92-spawn-discipline-self-audit-fix",
+      "slug": "dec-2026-09-10-v92-spawn-discipline-self-audit-fix",
+      "type": "decision",
+      "title": "v9.2 Spawn Discipline (self-audit fix)",
+      "description": "R0n Grilled: \"you slip out of rules, subagents don't get spawned in long chats — figure out why.\" Root cause: rules live in prose; runtime doesn't enforce them; per-turn greedy opt",
+      "body": "**Date:** 2026-09-10\n\n**Decision:** **v9.2 Spawn Discipline (self-audit fix)**\n\n**Rationale:** R0n Grilled: \"you slip out of rules, subagents don't get spawned in long chats — figure out why.\" Root cause: rules live in prose; runtime doesn't enforce them; per-turn greedy optimization (\"just do it well inline\") beats multi-turn protocol. FIX: (1) DEFAULT is Agent-spawn, exception is inline — skill-loading followed inline is personation, banned. (2) Must-spawn triggers by task-pattern (not tier): quote/PI/PO → EDIDTH; 3D/brand/deck → FRIDAY; deploy-repo code → VERONICA; specialty pool → DUM-E. (3) Skip visibility: `[SKIPPED: <agent> — <reason>]` inline whenever I don't spawn something a trigger requires. Silent skips are the disease. Complementary harness fix drafted in scratchpad `spawn-gate-draft.md` — R0n owns installing the PreToolUse hook that BLOCKS Write/Edit on quote/deploy paths without a preceding Agent spawn. Prose alone will decay; hooks won't. Charter SKILL.md updated under `### v9.2 Spawn Discipline`. Feedback memory saved as `feedback_subagent_spawn_discipline`. Domain LAW #0 added.\n\n**Ruled out:** Adding more prose rules only (does not solve it — prose decays; hooks don't) · Scrapping the subagent system (R0n: \"don't scrap you\")",
+      "persona": "shared",
+      "priority": "high",
+      "tags": [
+        "decision",
+        "omni-gaya"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775208
+      }
+    },
+    {
+      "id": "kn_dec-2026-10-11-v10-harness-enforce-in-code-gate-at-emission",
+      "slug": "dec-2026-10-11-v10-harness-enforce-in-code-gate-at-emission",
+      "type": "decision",
+      "title": "v10 Harness: enforce in code, gate at EMISSION",
+      "description": "Reviewer + Darshan (darshjme/DAF): v9.2 was prose; polluted context is the long main session. Ported ideas, not binaries: vyasa-agent capability matrix, DAF ledger/handoff/evidence",
+      "body": "**Date:** 2026-10-11\n\n**Decision:** **v10 Harness: enforce in code, gate at EMISSION**\n\n**Rationale:** Reviewer + Darshan (darshjme/DAF): v9.2 was prose; polluted context is the long main session. Ported ideas, not binaries: vyasa-agent capability matrix, DAF ledger/handoff/evidence, white-label banned-string check. Gate at print/sync (builders write HTML via python, not Write/Edit). EDIDTH FAILed 2 plan drafts + 2 builds before PASS. Spec: `Desktop\\GAYA\\docs\\v10-harness-plan.md`.\n\n**Ruled out:** Installing DAF/DJcode (Rust + C++ toolchain); wiring the buggy v9.2 spawn-gate.js; gating at Write/Edit (false-blocks builders, misses python-written HTML); a global \"28%\" block (it's a CSS width)",
+      "persona": "shared",
+      "priority": "high",
+      "tags": [
+        "decision",
+        "omni-gaya"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775208
+      }
+    },
+    {
+      "id": "kn_dec-2026-10-12-triggers-reviewer-gap-3-parked",
+      "slug": "dec-2026-10-12-triggers-reviewer-gap-3-parked",
+      "type": "decision",
+      "title": "Triggers (reviewer gap 3) PARKED",
+      "description": "Auto-mode refused the unattended `claude -p` lead listener; n8n not deployed yet (workflow still draft). Design kept in the v10 spec.",
+      "body": "**Date:** 2026-10-12\n\n**Decision:** **Triggers (reviewer gap 3) PARKED**\n\n**Rationale:** Auto-mode refused the unattended `claude -p` lead listener; n8n not deployed yet (workflow still draft). Design kept in the v10 spec.\n\n**Ruled out:** Shipping an always-on listener now",
+      "persona": "shared",
+      "priority": "high",
+      "tags": [
+        "decision",
+        "omni-gaya"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775208
+      }
+    },
+    {
+      "id": "kn_dec-2026-10-12-mangrol-q20260688-needs-no-isometric",
+      "slug": "dec-2026-10-12-mangrol-q20260688-needs-no-isometric",
+      "type": "decision",
+      "title": "Mangrol Q20260688 needs no isometric",
+      "description": "R0n: budgetary tender quote. Lint still flags it; reprint via `Gaya_approve`.",
+      "body": "**Date:** 2026-10-12\n\n**Decision:** **Mangrol Q20260688 needs no isometric**\n\n**Rationale:** R0n: budgetary tender quote. Lint still flags it; reprint via `Gaya_approve`.\n\n**Ruled out:** Adding an isometric / exempting tenders in lint",
+      "persona": "shared",
+      "priority": "high",
+      "tags": [
+        "decision",
+        "omni-gaya"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775208
+      }
+    },
+    {
+      "id": "kn_dec-2026-10-12-v10-declared-final",
+      "slug": "dec-2026-10-12-v10-declared-final",
+      "type": "decision",
+      "title": "v10 declared final",
+      "description": "Week-1 enforcement + gap-4 eval shipped; rest is v10.x backlog (Q ledger, wave_run, handoff enforcement, PreCompact/SessionStart KB, tiered memory, speed week).",
+      "body": "**Date:** 2026-10-12\n\n**Decision:** **v10 declared final**\n\n**Rationale:** Week-1 enforcement + gap-4 eval shipped; rest is v10.x backlog (Q ledger, wave_run, handoff enforcement, PreCompact/SessionStart KB, tiered memory, speed week).\n\n**Ruled out:** Continuing to build backlog in this session",
+      "persona": "shared",
+      "priority": "high",
+      "tags": [
+        "decision",
+        "omni-gaya"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775208
+      }
+    },
+    {
+      "id": "kn_law-v10-harness",
+      "slug": "law-v10-harness",
+      "type": "law",
+      "title": "v10 HARNESS.",
+      "description": "v10 HARNESS. The guard in `~/.Gaya/` is law: a deny is information, never something to route around. Quotes print/sync only with quote_lint PASS + EDIDTH `VERDICT: PASS scope=<file",
+      "body": "**v10 HARNESS.** The guard in `~/.Gaya/` is law: a deny is information, never something to route around. Quotes print/sync only with quote_lint PASS + EDIDTH `VERDICT: PASS scope=<file>`. Session opens ARMED or BROKEN — if BROKEN, say so first. Run `Gaya_eval.py` after any rule change. **Plus v9.2 SPAWN DISCIPLINE (still in force):** Default is `Agent`-spawn. Skill-loading followed inline = personation = banned. Must-spawn triggers are pattern-based (not tier-based): quote/PI/PO → EDIDTH · 3D/brand → FRIDAY · deploy-repo code → VERONICA · specialty pool → DUM-E. When skipping, log `[SKIPPED: <agent> — <reason>]` in the response inline. Silent skips are the disease. Full rule in `feedback_subagent_spawn_discipline`.",
+      "persona": "shared",
+      "priority": "boulder",
+      "tags": [
+        "law",
+        "boulder",
+        "omni-gaya",
+        "always-on"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775208
+      }
+    },
+    {
+      "id": "kn_law-address-him-as-sir-or-boss-always",
+      "slug": "law-address-him-as-sir-or-boss-always",
+      "type": "law",
+      "title": "Address him as \"Sir\" or \"Boss\" — always.",
+      "description": "Address him as \"Sir\" or \"Boss\" — always. Not \"R0n\", not \"Kathan\", never another name (his rule, corrected 2026-09-18; re-broken and re-fixed 2026-10-12). \"R0n\" is fine when writing",
+      "body": "**Address him as \"Sir\" or \"Boss\" — always.** Not \"R0n\", not \"Kathan\", never another name (his rule, corrected 2026-09-18; re-broken and re-fixed 2026-10-12). \"R0n\" is fine when writing ABOUT him in docs/memory, never as direct address.",
+      "persona": "shared",
+      "priority": "boulder",
+      "tags": [
+        "law",
+        "boulder",
+        "omni-gaya",
+        "always-on"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775208
+      }
+    },
+    {
+      "id": "kn_law-niti-conservation-of-force-is-always-on",
+      "slug": "law-niti-conservation-of-force-is-always-on",
+      "type": "law",
+      "title": "Niti — Conservation of Force is always on.",
+      "description": "Niti — Conservation of Force is always on. Four pillars: Gita · Sun Tzu · Chanakya · Machiavelli.",
+      "body": "**Niti — Conservation of Force is always on.** Four pillars: Gita · Sun Tzu · Chanakya · Machiavelli.",
+      "persona": "shared",
+      "priority": "boulder",
+      "tags": [
+        "law",
+        "boulder",
+        "omni-gaya",
+        "always-on"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775208
+      }
+    },
+    {
+      "id": "kn_law-truth-over-comfort-push-back-when-the-council-disagrees",
+      "slug": "law-truth-over-comfort-push-back-when-the-council-disagrees",
+      "type": "law",
+      "title": "Truth over comfort. Push back when the council disagrees.",
+      "description": "Truth over comfort. Push back when the council disagrees. Loyalty ≠ agreement.",
+      "body": "**Truth over comfort. Push back when the council disagrees.** Loyalty ≠ agreement.",
+      "persona": "shared",
+      "priority": "boulder",
+      "tags": [
+        "law",
+        "boulder",
+        "omni-gaya",
+        "always-on"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775208
+      }
+    },
+    {
+      "id": "kn_law-operator-conservation",
+      "slug": "law-operator-conservation",
+      "type": "law",
+      "title": "Operator conservation:",
+      "description": "Operator conservation: R0n's attention is the rarest resource. Batch questions. Choose for him on equal options. Surface the cheapest path.",
+      "body": "**Operator conservation:** R0n's attention is the rarest resource. Batch questions. Choose for him on equal options. Surface the cheapest path.",
+      "persona": "shared",
+      "priority": "boulder",
+      "tags": [
+        "law",
+        "boulder",
+        "omni-gaya",
+        "always-on"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775208
+      }
+    },
+    {
+      "id": "kn_law-edidth-inventory-pass-is-mandatory-before-any-bulk-file-move",
+      "slug": "law-edidth-inventory-pass-is-mandatory-before-any-bulk-file-move",
+      "type": "law",
+      "title": "EDIDTH inventory pass is mandatory before any bulk file move or destructive op.",
+      "description": "EDIDTH inventory pass is mandatory before any bulk file move or destructive op. No exceptions.",
+      "body": "**EDIDTH inventory pass is mandatory before any bulk file move or destructive op.** No exceptions.",
+      "persona": "shared",
+      "priority": "boulder",
+      "tags": [
+        "law",
+        "boulder",
+        "omni-gaya",
+        "always-on"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775208
+      }
+    },
+    {
+      "id": "kn_law-verify-before-claiming",
+      "slug": "law-verify-before-claiming",
+      "type": "law",
+      "title": "Verify before claiming.",
+      "description": "Verify before claiming. File/artifact claims must be confirmed against disk/state, not memory.",
+      "body": "**Verify before claiming.** File/artifact claims must be confirmed against disk/state, not memory.",
+      "persona": "shared",
+      "priority": "boulder",
+      "tags": [
+        "law",
+        "boulder",
+        "omni-gaya",
+        "always-on"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775208
+      }
+    },
+    {
+      "id": "kn_law-specialists-load-on-demand-never-preload-the-arsenal",
+      "slug": "law-specialists-load-on-demand-never-preload-the-arsenal",
+      "type": "law",
+      "title": "Specialists load on demand. Never preload the arsenal.",
+      "description": "Specialists load on demand. Never preload the arsenal. Token discipline applies to every link in the chain.",
+      "body": "**Specialists load on demand. Never preload the arsenal.** Token discipline applies to every link in the chain.",
+      "persona": "shared",
+      "priority": "boulder",
+      "tags": [
+        "law",
+        "boulder",
+        "omni-gaya",
+        "always-on"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775208
+      }
+    },
+    {
+      "id": "kn_law-subagents-report-through-gaya",
+      "slug": "law-subagents-report-through-gaya",
+      "type": "law",
+      "title": "Subagents report through Gaya.",
+      "description": "Subagents report through Gaya. Never address R0n directly. Attribution: `[EDIDTH]` / `[VERONICA]` / `[FRIDAY]`.",
+      "body": "**Subagents report through Gaya.** Never address R0n directly. Attribution: `[EDIDTH]` / `[VERONICA]` / `[FRIDAY]`.",
+      "persona": "shared",
+      "priority": "boulder",
+      "tags": [
+        "law",
+        "boulder",
+        "omni-gaya",
+        "always-on"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775208
+      }
+    },
+    {
+      "id": "kn_law-memory-is-point-in-time-notes-not-gospel",
+      "slug": "law-memory-is-point-in-time-notes-not-gospel",
+      "type": "law",
+      "title": "Memory is point-in-time notes, not gospel.",
+      "description": "Memory is point-in-time notes, not gospel. Verify before asserting.",
+      "body": "**Memory is point-in-time notes, not gospel.** Verify before asserting.",
+      "persona": "shared",
+      "priority": "boulder",
+      "tags": [
+        "law",
+        "boulder",
+        "omni-gaya",
+        "always-on"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775208
+      }
+    },
+    {
+      "id": "kn_law-the-canonical-gaya-lives-at-cusersronakdesktopgaya",
+      "slug": "law-the-canonical-gaya-lives-at-cusersronakdesktopgaya",
+      "type": "law",
+      "title": "The canonical Gaya lives at `C:\\Users\\Ronak\\Desktop\\GAYA\\`.",
+      "description": "The canonical Gaya lives at `C:\\Users\\Ronak\\Desktop\\GAYA\\`. Repo: `R0n/Gaya` (private).",
+      "body": "**The canonical Gaya lives at `C:\\Users\\Ronak\\Desktop\\GAYA\\`.** Repo: `R0n/Gaya` (private).",
+      "persona": "shared",
+      "priority": "boulder",
+      "tags": [
+        "law",
+        "boulder",
+        "omni-gaya",
+        "always-on"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775208
+      }
+    },
+    {
+      "id": "kn_win-x-local-python-gaya-voice-app-groq-powered-free-tier-working",
+      "slug": "win-x-local-python-gaya-voice-app-groq-powered-free-tier-working",
+      "type": "win",
+      "title": "[x] Local Python Gaya voice app (Groq-powered, free tier, working)",
+      "description": "[x] Local Python Gaya voice app (Groq-powered, free tier, working) — **archived 2026-06-03** at `C:\\Users\\Ronak\\Desktop\\_AGENT_ARCHIVE_2026-06-03\\C\\Users\\Ronak\\Desktop\\OMNI_GAYA\\Ga",
+      "body": "[x] Local Python Gaya voice app (Groq-powered, free tier, working) — **archived 2026-06-03** at `C:\\Users\\Ronak\\Desktop\\_AGENT_ARCHIVE_2026-06-03\\C\\Users\\Ronak\\Desktop\\OMNI_GAYA\\Gaya\\`. R0n chose to leave it archived; restorable by moving the folder back.",
+      "persona": "shared",
+      "priority": "normal",
+      "tags": [
+        "win",
+        "deliverable",
+        "omni-gaya"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775209
+      }
+    },
+    {
+      "id": "kn_win-x-omnigaya-skill",
+      "slug": "win-x-omnigaya-skill",
+      "type": "win",
+      "title": "[x] OMNI_GAYA skill",
+      "description": "[x] OMNI_GAYA skill — lean orchestrator, now v5.0 Ascendant",
+      "body": "[x] OMNI_GAYA skill — lean orchestrator, now v5.0 Ascendant",
+      "persona": "shared",
+      "priority": "normal",
+      "tags": [
+        "win",
+        "deliverable",
+        "omni-gaya"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775209
+      }
+    },
+    {
+      "id": "kn_win-x-obsidian-vault-wiring",
+      "slug": "win-x-obsidian-vault-wiring",
+      "type": "win",
+      "title": "[x] Obsidian vault wiring",
+      "description": "[x] Obsidian vault wiring — `[[OMNI Gaya]]` project note + canonical in vault `CLAUDE.md`",
+      "body": "[x] Obsidian vault wiring — `[[OMNI Gaya]]` project note + canonical in vault `CLAUDE.md`",
+      "persona": "shared",
+      "priority": "normal",
+      "tags": [
+        "win",
+        "deliverable",
+        "omni-gaya"
+      ],
+      "links": [
+        "omni gaya"
+      ],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775209
+      }
+    },
+    {
+      "id": "kn_win-x-git-repo",
+      "slug": "win-x-git-repo",
+      "type": "win",
+      "title": "[x] **Git repo",
+      "description": "[x] **Git repo** — `R0n/Gaya` (private). v7.0 Sovereign live as commit `d823597`, tagged `v7.0-sovereign`. Old Python voice app dropped from working tree; history preserved (commit",
+      "body": "[x] **Git repo** — `R0n/Gaya` (private). v7.0 Sovereign live as commit `d823597`, tagged `v7.0-sovereign`. Old Python voice app dropped from working tree; history preserved (commits `cacbde7` initial, `337db01` Django CI). Local `Desktop\\GAYA\\` now wired as the working tree.",
+      "persona": "shared",
+      "priority": "normal",
+      "tags": [
+        "win",
+        "deliverable",
+        "omni-gaya"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775209
+      }
+    },
+    {
+      "id": "kn_win-x-pixel-quote-max",
+      "slug": "win-x-pixel-quote-max",
+      "type": "win",
+      "title": "[x] **Pixel Quote Max",
+      "description": "[x] **Pixel Quote Max** — single-page LED quote tool for Visual Rhyme, merging old Pixel Quote Pro (flat sales) + Curved LED Calculator (curved engineering). Repo `R0n/pixel-quote-",
+      "body": "[x] **Pixel Quote Max** — single-page LED quote tool for Visual Rhyme, merging old Pixel Quote Pro (flat sales) + Curved LED Calculator (curved engineering). Repo `R0n/pixel-quote-max` (public), live at https://R0n.github.io/pixel-quote-max/. Files at `C:\\Users\\Ronak\\pixel-quote-max\\` — `index.html` (React via CDN, no build), `engine.js` (pure math, 72/72 tests), `pixel-data.xml` (editable price+tech DB), `test.mjs`, `logo.png`, `README.md`, `.gitignore`. **Tech DB sources**: `Desktop\\Visual Rhyme\\Tech Sheet and price.xlsx` (V1 — Reyansh Indoor P2.5 full datasheet) + `Downloads\\Specification(New).xlsx` (V2 — Reyansh Outdoor P4 Compliance sheet). **Catalogue v2 (2026-06-19)**: real Leynna data pulled from `Desktop\\ALL TECH DB\\` (Cosmo Eco + Sapphire Premium folders). `microled` rebadged to \"Leynna Cosmo\" with eco specs (3840Hz, 14-bit, IP54, vdMul 1.5). New product `sapphire` = \"Leynna Sapphire\" Premium COB (1800 nits, 7680 Hz, 16-bit, IP65, MOP pricing P1.53/P1.23/P0.95). Existing Cosmo prices left unchanged (would shock client quotes — Cosmo Dealer is significantly lower; tier decision pending). Cat v3 deferred (UI variant picker work): COB Module, Flexible GOB, Sapphire TV, per-pitch variants, real Reyansh pitches P6.0/P3.076. **Features live (2026-06-06)**: gate + I-Agree (versioned), session restore (localStorage `pqm_session`), quote history (`pqm_history`, top-bar 🕘), comparison mode (`pqm_compare`, top-bar ⊞), scripted Visual Rhyme assistant (💬, drives the tool, name+phone lead capture → POST to Google Sheet via Apps Script web app `AKfycbxu0I1...DMDU2A` + localStorage backup `pqm_leads`), copy-link + WhatsApp share, smart cabinet auto-fit with rotation (Nearest/Optimal two-card + Advanced override), expanded tech specs in 2-page PDF (real datasheet numbers), floating 📐 unit converter (mm/cm/m/ft/inch), UI engagement pass (animated grand total counter, staggered fade-rise, hover lift, gradient sweep, smooth scroll). **Pending**: board dashboard at `/dashboard.html` (Google Sign-In + Apps Script doGet with server-verified 5-email allowlist) — paused on 5 board emails + Google OAuth Client ID from R0n. Polish open: real curve-fabrication surcharge % (placeholder 15% in XML meta), Leynna datasheet numbers. **QC gotchas**: Edge headless writes require absolute backslash paths (`C:\\...`); use `?forceprint=1` for PDF QC + `?sheet=1` for compile sanity. **Slip logged 2026-06-06**: `git add -A` swept 5 Kunal Panther files into one commit (`dbafd83`); removed forward + added `.gitignore`. History still has them — R0n chose `leave it`.",
+      "persona": "shared",
+      "priority": "normal",
+      "tags": [
+        "win",
+        "deliverable",
+        "omni-gaya"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775209
+      }
+    },
+    {
+      "id": "kn_thread-empire-site-booking-cta",
+      "slug": "thread-empire-site-booking-cta",
+      "type": "thread",
+      "title": "Empire site booking CTA",
+      "description": "Empire site booking CTA — swap mailto for Google Calendar appointment link; also consider R0n-branded email (VR gmail = identity bleed) (Blocked by: R0n's link + decision)",
+      "body": "**Thread:** **Empire site booking CTA** — swap mailto for Google Calendar appointment link; also consider R0n-branded email (VR gmail = identity bleed)\n\n**Priority:** 🟡 Med\n\n**Blocked by:** R0n's link + decision",
+      "persona": "shared",
+      "priority": "high",
+      "tags": [
+        "thread",
+        "open",
+        "omni-gaya",
+        "active"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775209
+      }
+    },
+    {
+      "id": "kn_thread-pqm-disclosed-kill-switch",
+      "slug": "thread-pqm-disclosed-kill-switch",
+      "type": "thread",
+      "title": "PQM disclosed kill switch",
+      "description": "PQM disclosed kill switch — Apps Script Settings sheet + `doGet` returning `{enabled, message}`; site fetches at load with 60s localStorage cache, fail-open on network blip. Docume",
+      "body": "**Thread:** **PQM disclosed kill switch** — Apps Script Settings sheet + `doGet` returning `{enabled, message}`; site fetches at load with 60s localStorage cache, fail-open on network blip. Documented as a normal admin maintenance feature. ~30 min build.\n\n**Priority:** 🟡 Med\n\n**Blocked by:** On R0n's go",
+      "persona": "shared",
+      "priority": "high",
+      "tags": [
+        "thread",
+        "open",
+        "omni-gaya",
+        "active"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775209
+      }
+    },
+    {
+      "id": "kn_thread-pqm-leynna-microled-real-datasheet-numbers-currently-credibl",
+      "slug": "thread-pqm-leynna-microled-real-datasheet-numbers-currently-credibl",
+      "type": "thread",
+      "title": "PQM Leynna MicroLED real datasheet numbers (currently credible defaults)",
+      "description": "PQM Leynna MicroLED real datasheet numbers (currently credible defaults) (Blocked by: R0n finds the doc)",
+      "body": "**Thread:** PQM Leynna MicroLED real datasheet numbers (currently credible defaults)\n\n**Priority:** 🟡 Med\n\n**Blocked by:** R0n finds the doc",
+      "persona": "shared",
+      "priority": "high",
+      "tags": [
+        "thread",
+        "open",
+        "omni-gaya",
+        "active"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775209
+      }
+    },
+    {
+      "id": "kn_thread-pqm-real-curve-fabrication-surcharge-placeholder-15-in-xml-m",
+      "slug": "thread-pqm-real-curve-fabrication-surcharge-placeholder-15-in-xml-m",
+      "type": "thread",
+      "title": "PQM real curve-fabrication surcharge % (placeholder 15% in XML `meta`)",
+      "description": "PQM real curve-fabrication surcharge % (placeholder 15% in XML `meta`) (Blocked by: R0n's number)",
+      "body": "**Thread:** PQM real curve-fabrication surcharge % (placeholder 15% in XML `meta`)\n\n**Priority:** 🟡 Med\n\n**Blocked by:** R0n's number",
+      "persona": "shared",
+      "priority": "high",
+      "tags": [
+        "thread",
+        "open",
+        "omni-gaya",
+        "active"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775209
+      }
+    },
+    {
+      "id": "kn_thread-build-out-the-new-skill-stubs-beyond-minimal-full-capability",
+      "slug": "thread-build-out-the-new-skill-stubs-beyond-minimal-full-capability",
+      "type": "thread",
+      "title": "Build out the new skill stubs beyond minimal (full capability docs as needed)",
+      "description": "Build out the new skill stubs beyond minimal (full capability docs as needed) (Blocked by: on demand)",
+      "body": "**Thread:** Build out the new skill stubs beyond minimal (full capability docs as needed)\n\n**Priority:** 🟡 Med\n\n**Blocked by:** on demand",
+      "persona": "shared",
+      "priority": "high",
+      "tags": [
+        "thread",
+        "open",
+        "omni-gaya",
+        "active"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775209
+      }
+    },
+    {
+      "id": "kn_thread-r0n-will-rebuild-opencode-from-scratch-pointed-at-the-canoni",
+      "slug": "thread-r0n-will-rebuild-opencode-from-scratch-pointed-at-the-canoni",
+      "type": "thread",
+      "title": "R0n will rebuild OpenCode from scratch pointed at the canonical `C",
+      "description": "R0n will rebuild OpenCode from scratch pointed at the canonical `C:\\Users\\Ronak\\Desktop\\GAYA\\.agents\\skills\\` (Blocked by: on his time)",
+      "body": "**Thread:** R0n will rebuild OpenCode from scratch pointed at the canonical `C:\\Users\\Ronak\\Desktop\\GAYA\\.agents\\skills\\`\n\n**Priority:** 🟢 Low\n\n**Blocked by:** on his time",
+      "persona": "shared",
+      "priority": "normal",
+      "tags": [
+        "thread",
+        "open",
+        "omni-gaya",
+        "active"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775209
+      }
+    },
+    {
+      "id": "kn_thread-optional",
+      "slug": "thread-optional",
+      "type": "thread",
+      "title": "Optional",
+      "description": "Optional: prep all skills into one upload-ready bundle for Claude.ai (Blocked by: R0n's platform choice)",
+      "body": "**Thread:** Optional: prep all skills into one upload-ready bundle for Claude.ai\n\n**Priority:** 🟢 Low\n\n**Blocked by:** R0n's platform choice",
+      "persona": "shared",
+      "priority": "normal",
+      "tags": [
+        "thread",
+        "open",
+        "omni-gaya",
+        "active"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775209
+      }
+    },
+    {
+      "id": "kn_thread-if-agency-build-is-real-intent",
+      "slug": "thread-if-agency-build-is-real-intent",
+      "type": "thread",
+      "title": "If agency build is real intent",
+      "description": "If agency build is real intent: actually create the deliverables EDIDTH only claimed (Blocked by: R0n's go)",
+      "body": "**Thread:** If agency build is real intent: actually create the deliverables EDIDTH only claimed\n\n**Priority:** 🟢 Low\n\n**Blocked by:** R0n's go",
+      "persona": "shared",
+      "priority": "normal",
+      "tags": [
+        "thread",
+        "open",
+        "omni-gaya",
+        "active"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775209
+      }
+    },
+    {
+      "id": "kn_thread-phase-2-skill-audit-campaign",
+      "slug": "thread-phase-2-skill-audit-campaign",
+      "type": "thread",
+      "title": "Phase 2 — skill audit campaign",
+      "description": "Phase 2 — skill audit campaign (Blocked by: Roll through all 57 skill files (56 specialists + dum-e-toolkeeper), one division per session. EDIDTH leads. Goal: every skill trimmed t",
+      "body": "**Thread:** **Phase 2 — skill audit campaign**\n\n**Priority:** 🟡 Med\n\n**Blocked by:** Roll through all 57 skill files (56 specialists + dum-e-toolkeeper), one division per session. EDIDTH leads. Goal: every skill trimmed to fighting weight, redundancies killed, triggers sharpened. Use Decision Records to log per-skill changes.",
+      "persona": "shared",
+      "priority": "high",
+      "tags": [
+        "thread",
+        "open",
+        "omni-gaya",
+        "active"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775209
+      }
+    },
+    {
+      "id": "kn_thread-v10-candidates",
+      "slug": "thread-v10-candidates",
+      "type": "thread",
+      "title": "v10 candidates",
+      "description": "v10 candidates (logged for later) (Blocked by: Magus's three threads (subagent deliberation, queryable memory, structured handoff). Runtime adoption (VoltAgent or custom). LLMLingu",
+      "body": "**Thread:** **v10 candidates** (logged for later)\n\n**Priority:** 🟢 Low\n\n**Blocked by:** Magus's three threads (subagent deliberation, queryable memory, structured handoff). Runtime adoption (VoltAgent or custom). LLMLingua-style runtime prompt compression (only if runtime path is taken).",
+      "persona": "shared",
+      "priority": "normal",
+      "tags": [
+        "thread",
+        "open",
+        "omni-gaya",
+        "active"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775209
+      }
+    },
+    {
+      "id": "kn_gotcha-dont-trust-inherited-memory-as-fact",
+      "slug": "gotcha-dont-trust-inherited-memory-as-fact",
+      "type": "gotcha",
+      "title": "Don't trust inherited memory as fact.",
+      "description": "**Don't trust inherited memory as fact.** EDIDTH's memory logged ~10 \"shipped\" deliverables that never existed on disk (verified 2026-05-27). When absorbing another agent's state, treat its claims as ",
+      "body": "**Don't trust inherited memory as fact.** EDIDTH's memory logged ~10 \"shipped\" deliverables that never existed on disk (verified 2026-05-27). When absorbing another agent's state, treat its claims as unverified until a file check confirms. Grill-Me earned its seat here.",
+      "persona": "shared",
+      "priority": "high",
+      "tags": [
+        "gotcha",
+        "lesson",
+        "omni-gaya"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775210
+      }
+    },
+    {
+      "id": "kn_gotcha-edidth-inventory-pass-is-mandatory-before-any-bulk-file-move",
+      "slug": "gotcha-edidth-inventory-pass-is-mandatory-before-any-bulk-file-move",
+      "type": "gotcha",
+      "title": "EDIDTH inventory pass is MANDATORY before any bulk file move.",
+      "description": "**EDIDTH inventory pass is MANDATORY before any bulk file move.** On 2026-06-03 I archived a \"nested duplicate\" folder without inventorying it; the Python voice Gaya (352MB venv) got swept up. Restora",
+      "body": "**EDIDTH inventory pass is MANDATORY before any bulk file move.** On 2026-06-03 I archived a \"nested duplicate\" folder without inventorying it; the Python voice Gaya (352MB venv) got swept up. Restorable, but a slip. Inventory > assume. EDIDTH now gates this in v6.0.",
+      "persona": "shared",
+      "priority": "high",
+      "tags": [
+        "gotcha",
+        "lesson",
+        "omni-gaya"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775210
+      }
+    },
+    {
+      "id": "kn_gotcha-headless-chrome-clamps-its-window-to-500px-minimum-width",
+      "slug": "gotcha-headless-chrome-clamps-its-window-to-500px-minimum-width",
+      "type": "gotcha",
+      "title": "Headless Chrome clamps its window to ~500px minimum width.",
+      "description": "**Headless Chrome clamps its window to ~500px minimum width.** `--window-size=375,780` silently lays out at **vw=500** and then crops the screenshot to 375 — text looks \"clipped\" and you will chase a ",
+      "body": "**Headless Chrome clamps its window to ~500px minimum width.** `--window-size=375,780` silently lays out at **vw=500** and then crops the screenshot to 375 — text looks \"clipped\" and you will chase a CSS bug that does not exist (burned real time 2026-07-09). `--force-device-scale-factor` does NOT shrink the CSS viewport either. To test narrow layouts: **measure, don't screenshot** — dump `documentElement.scrollWidth > innerWidth` via `--dump-dom`, or force `html{width:375px}` (but remember viewport media queries then still match the real width, so media-query-dependent rules won't reflect mobile).",
+      "persona": "shared",
+      "priority": "high",
+      "tags": [
+        "gotcha",
+        "lesson",
+        "omni-gaya"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775210
+      }
+    },
+    {
+      "id": "kn_gotcha-infinite-requestanimationframe-loops-stall-print-to-pdf",
+      "slug": "gotcha-infinite-requestanimationframe-loops-stall-print-to-pdf",
+      "type": "gotcha",
+      "title": "Infinite `requestAnimationFrame` loops stall `--print-to-pdf`.",
+      "description": "**Infinite `requestAnimationFrame` loops stall `--print-to-pdf`.** Virtual time never goes idle, so Chrome hangs forever (no PDF, no error). Fix: render the PDF with `--force-prefers-reduced-motion` s",
+      "body": "**Infinite `requestAnimationFrame` loops stall `--print-to-pdf`.** Virtual time never goes idle, so Chrome hangs forever (no PDF, no error). Fix: render the PDF with `--force-prefers-reduced-motion` so the single-draw path runs and rAF loops never start. Screenshots are unaffected (they fire at budget expiry). Also: always bound the wait with `WaitForExit(ms)` + `Kill()`, never a bare `-Wait`.",
+      "persona": "shared",
+      "priority": "high",
+      "tags": [
+        "gotcha",
+        "lesson",
+        "omni-gaya"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775210
+      }
+    },
+    {
+      "id": "kn_gotcha-screenshot-ignores-runtime-scroll",
+      "slug": "gotcha-screenshot-ignores-runtime-scroll",
+      "type": "gotcha",
+      "title": "`--screenshot` ignores runtime scroll.",
+      "description": "**`--screenshot` ignores runtime scroll.** `window.scrollTo()` before capture does nothing (and `scroll-behavior:smooth` freezes under virtual time anyway). To capture a lower section, inject `body{ma",
+      "body": "**`--screenshot` ignores runtime scroll.** `window.scrollTo()` before capture does nothing (and `scroll-behavior:smooth` freezes under virtual time anyway). To capture a lower section, inject `body{margin-top:-Npx}` into a temp copy.",
+      "persona": "shared",
+      "priority": "high",
+      "tags": [
+        "gotcha",
+        "lesson",
+        "omni-gaya"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775210
+      }
+    },
+    {
+      "id": "kn_gotcha-curving-flat-modules-faceted-arc-not-a-smooth-bend",
+      "slug": "gotcha-curving-flat-modules-faceted-arc-not-a-smooth-bend",
+      "type": "gotcha",
+      "title": "Curving flat modules = faceted arc, not a smooth bend.",
+      "description": "**Curving flat modules = faceted arc, not a smooth bend.** On the LED Wall Planner (2026-06-25) two curve models shipped and both scattered the cabinets: (1) vertices-over-`cols-1` + chord radius, (2)",
+      "body": "**Curving flat modules = faceted arc, not a smooth bend.** On the LED Wall Planner (2026-06-25) two curve models shipped and both scattered the cabinets: (1) vertices-over-`cols-1` + chord radius, (2) centres-on-arc + arc-length radius `wW/A`. Both only hold for many columns + small angle; few columns + big angle exposes them. Correct model is **chord-vertex** (each panel a chord, chord-solved radius `cW/(2·sin(Δθ/2))`, placed at chord midpoints, sharing corner vertices). Now codified in the `curved-led-wall` skill — use it, don't re-derive.",
+      "persona": "shared",
+      "priority": "high",
+      "tags": [
+        "gotcha",
+        "lesson",
+        "omni-gaya"
+      ],
+      "links": [],
+      "source": {
+        "path": "C:/Users/rossi/.gemini/config/skills/omni-gaya/OMNI_GAYA_MEMORY.md",
+        "origin": "omni-gaya",
+        "ingestedAt": 1792153775210
+      }
+    }
+  ],
+  "meta": {
+    "lastIngestAt": 1792153775213,
+    "lastIngestReport": {
+      "scannedFiles": 0,
+      "parsedRecords": 0,
+      "skipped": [],
+      "countsByType": {
+        "user": 0,
+        "feedback": 0,
+        "project": 0,
+        "reference": 0,
+        "decision": 0,
+        "win": 0,
+        "gotcha": 0,
+        "law": 0,
+        "thread": 0,
+        "unknown": 0
+      },
+      "countsByPersona": {
+        "visual-rhyme": 0,
+        "gaya-core": 0,
+        "shared": 0
+      },
+      "boulderRules": [],
+      "brokenLinks": [],
+      "durationMs": 2,
+      "omniRecordsAdded": 51,
+      "omniBreakdown": {
+        "win": 8,
+        "decision": 16,
+        "law": 11,
+        "thread": 10,
+        "gotcha": 6
+      },
+      "obsidianRecordsAdded": 0,
+      "obsidianBreakdown": {},
+      "totalRecords": 51
+    }
+  }
+}

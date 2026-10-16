@@ -138,6 +138,3 @@ export function GayaSprite({
     </div>
   );
 }
-
-// Backward compatibility alias for any component still importing JarvisSprite
-export const JarvisSprite = GayaSprite;

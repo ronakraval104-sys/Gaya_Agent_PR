@@ -5,6 +5,7 @@ import { useGaya } from "@/lib/store";
 import { COUNCIL } from "@/lib/council";
 import { Dot } from "./terminal";
 import { computeAura, auraDotState, auraLabel } from "@/lib/aura";
+import { ArcReactor } from "./ArcReactor";
 
 interface NavItem {
   label: string;
@@ -50,7 +51,7 @@ export function Sidebar() {
 
   return (
     <aside
-      className="hidden lg:flex flex-col w-[220px] shrink-0 border-r border-os-border bg-os-bg sticky top-0"
+      className="hidden lg:flex flex-col w-[240px] shrink-0 border-r border-os-border bg-os-bg sticky top-0"
       style={{ height: "calc(100vh - 32px)" }}
       aria-label="Primary navigation"
     >
@@ -100,7 +101,7 @@ export function Sidebar() {
           />
           <NavRow
             label="Domain Laws"
-            onClick={() => openRecord("law-katviz-is-sir-or-katviz-always")}
+            onClick={() => openRecord("law-v10-harness")}
             status="warn"
           />
           <NavRow
@@ -126,6 +127,15 @@ export function Sidebar() {
           />
           <NavRow label="Persona" hint="GAYA" />
         </NavGroup>
+      </div>
+
+      {/* Compact Council Graph & Reactor dial inside the left side panel */}
+      <div className="shrink-0 p-3 flex flex-col items-center justify-center border-t border-os-border bg-os-surface/40">
+        <div className="w-full flex items-center justify-between pb-1.5 px-1 font-mono text-[9px] uppercase tracking-[0.2em] text-os-dim">
+          <span>Council Core</span>
+          <span className="text-os-accent font-bold">ONLINE</span>
+        </div>
+        <ArcReactor size={200} />
       </div>
 
       {/* bottom status — aura tracker, ALWAYS visible (shrink-0 pinned) */}

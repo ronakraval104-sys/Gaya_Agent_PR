@@ -1,13 +1,16 @@
-# Stark Council — operator dashboard
+# Council of Gaya — Operator Dashboard
 
-Next.js 14 app at `http://localhost:4200`. JARVIS's face on a screen: the knowledge base (every memory
-record, ingested and classified), connectors (GitHub, sites, Metricool, pricing), the council seats,
-session chronicle, and mini J's live state in the top bar (`/api/jarvis-state`).
+Next.js 14 operator console at `http://localhost:4200`. Gaya's Command Core on a screen: the living knowledge base (threads, decisions, gotchas, domain laws, wins), real-time connectors (Antigravity harness, Mini Gaya desktop sprite, GPU telemetry, Skills armory, MCP servers, ComfyUI), council specialists (Logos, Bob, Freya, Tvashtar, Archivist, Sage, Oracle), session chronicle, and live state in the top bar (`/api/gaya-state`).
 
-```
+## Setup & Running
+
+```bash
 npm install
-npm run ingest     # memory records -> data/knowledge.json (gitignored - contains identities)
-npm run dev
+npm run ingest     # ingests OMNI_GAYA_MEMORY.md -> data/knowledge.json
+npm run dev        # starts on port 4200
 ```
 
-Branches of record: `feature/monolith-signal` (current look), `feature/stark-council` (earlier).
+Alternatively, launch the automated detached runner:
+```bash
+python launch_dashboard.py
+```

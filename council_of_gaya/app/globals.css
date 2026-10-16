@@ -81,8 +81,8 @@
   --persona-scope-label: "VR // MICROTRONIX";
 }
 
-[data-persona="katviz-ai"] {
-  --persona-scope-label: "KV // PRISM NOIR";
+[data-persona="gaya-vanguard"] {
+  --persona-scope-label: "GV // PRISM NOIR";
 }
 
 * {
@@ -207,7 +207,7 @@ body {
 /* --- Kill any leftover watermark from v1 layout --- */
 .gaya-watermark { display: none !important; }
 
-/* ---- JARVIS Command Core sprite (components/JarvisSprite.tsx) ---- */
+/* ---- GAYA Command Core sprite (components/GayaSprite.tsx) ---- */
 .gaya-core { animation: gaya-float 4.5s ease-in-out infinite; }
 .gaya-core .gaya-glow, .gaya-core .gaya-bloom { transition: background-color .4s ease; }
 .gaya-bloom { filter: blur(2px); }

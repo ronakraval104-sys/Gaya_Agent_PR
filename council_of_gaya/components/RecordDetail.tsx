@@ -31,7 +31,7 @@ const PRIORITY_BADGE: Record<string, { icon: string; label: string; color: strin
 
 const ORIGIN_LABEL: Record<string, string> = {
   "memory-dir": "auto-memory",
-  "omni-jarvis": "omni-jarvis charter",
+  "omni-gaya": "omni-gaya charter",
   obsidian: "obsidian vault",
   manual: "slash console",
   "index-line": "memory index"

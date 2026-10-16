@@ -6,14 +6,13 @@ import path from "path";
 import { getAntigravityStatus } from "@/lib/connectors/antigravity";
 
 // Live Gaya/Antigravity state for Council of Gaya topbar sprite + dashboard.
-// Priority: Live Antigravity session > Legacy .gaya / .jarvis events log fallback
+// Priority: Live Antigravity session > .gaya events log fallback
 // States: broken > hold > approved > spawning > thinking > idle > asleep
 
 export const dynamic = "force-dynamic";
 
 const GAYA_DIR = path.join(os.homedir(), ".gaya");
-const JARVIS_DIR = path.join(os.homedir(), ".jarvis");
-const G = fsSync.existsSync(GAYA_DIR) ? GAYA_DIR : JARVIS_DIR;
+const G = GAYA_DIR;
 
 type Ev = { ts?: string; ev?: string; agent?: string; tool?: string; decision?: string; reason?: string; verdict?: string };
 

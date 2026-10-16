@@ -3,23 +3,20 @@
 import { motion, useAnimation } from "framer-motion";
 import { useEffect, useMemo } from "react";
 import { useGaya } from "@/lib/store";
-import { KnowledgeGraph } from "./KnowledgeGraph";
+import { GayaReactorCore } from "./GayaReactorCore";
 
 interface Props {
   size?: number;
 }
 
 /**
- * ArcReactor v3 — Monolith rework. The reactor is now a FRAME, and its
- * interior is the live knowledge graph. Katviz's brain becomes the reactor's
- * light source.
- *
+ * ArcReactor — Gaya Command Core & Vanguard Reticle.
  * Layers outside → in:
- *   1. Outer segmented telemetry ring (60 seg, orange per active task) — kept
- *   2. Persona counter-rotating dashed ring — kept
- *   3. Silver metallic housing + rivets — kept, restyled to Monolith greys
+ *   1. Outer segmented telemetry ring (60 seg, orange per active task)
+ *   2. Persona counter-rotating dashed ring
+ *   3. Metallic housing + 8 flush rivets
  *   4. Deep matte bezel well
- *   5. LIVE KNOWLEDGE GRAPH sitting in the well — replaces petals + core
+ *   5. ACTIVE GAYA AGENT CORE sitting in the well with live reactive halo
  */
 export function ArcReactor({ size = 240 }: Props) {
   const activeTasks = useGaya((s) => s.activeTasks);
@@ -189,9 +186,9 @@ export function ArcReactor({ size = 240 }: Props) {
         </text>
       </svg>
 
-      {/* ── 5. LIVE KNOWLEDGE GRAPH inside the bezel well ── */}
+      {/* ── 5. ACTIVE GAYA AGENT CORE inside the bezel well ── */}
       <div
-        className="absolute pointer-events-auto"
+        className="absolute pointer-events-auto rounded-full overflow-hidden flex items-center justify-center"
         style={{
           left: cx - graphSize / 2,
           top: cy - graphSize / 2,
@@ -199,7 +196,7 @@ export function ArcReactor({ size = 240 }: Props) {
           height: graphSize
         }}
       >
-        <KnowledgeGraph size={graphSize} padding={6} />
+        <GayaReactorCore size={graphSize} />
       </div>
     </div>
   );

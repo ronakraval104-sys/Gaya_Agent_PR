@@ -2,15 +2,12 @@ import { NextResponse } from "next/server";
 import { getPublicRepoStatus } from "@/lib/connectors/github";
 
 /**
- * KV-persona connector: Katviz Empire GH repo status.
- *
- * Repo is pinned server-side (no user input flows through) — Arnie 34.
- * Public API only, no secrets, no auth surface — Arnie 1/2/3/5/13.
- * Cache TTL in connector (45s) rides on top of Next revalidate.
+ * Gaya OS GitHub repository status connector.
+ * Public API only, cached with TTL.
  */
-const KATVIZ_EMPIRE_REPO = "katviZ/katviz-empire";
+const GAYA_AGENT_REPO = "ronakraval104-sys/Gaya_Agent_PR";
 
 export async function GET() {
-  const status = await getPublicRepoStatus(KATVIZ_EMPIRE_REPO);
+  const status = await getPublicRepoStatus(GAYA_AGENT_REPO);
   return NextResponse.json({ ok: true, repo: status });
 }
