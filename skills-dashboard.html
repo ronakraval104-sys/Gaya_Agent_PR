@@ -357,6 +357,38 @@ body {
   letter-spacing: 0.08em;
   padding: 3px 8px;
   border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.brand-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid var(--gaya-gold);
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
+}
+
+.pill-avatar {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid currentColor;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
+.badge-avatar {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: inline-block;
+  vertical-align: -2px;
+  margin-right: 5px;
 }
 
 .badge-logos { background: var(--logos-bg); color: var(--logos-cyan); border: 1px solid var(--logos-border); }
@@ -543,6 +575,7 @@ body {
   <!-- NAVIGATION -->
   <nav class="navbar">
     <div class="nav-brand">
+      <img src="council_of_gaya/public/gaya/avatar_base.png" onerror="this.onerror=null; this.src='agents/gaya.png'; if(!this.complete) this.src='https://raw.githubusercontent.com/ronakraval104-sys/Gaya_Agent_PR/master/council_of_gaya/public/gaya/avatar_base.png';" class="brand-avatar" alt="Gaya">
       <span class="brand-badge">GAYA 0.5.2610</span>
       <span class="brand-title">Skills Matrix</span>
       <span class="brand-version">98 Production Modules</span>
@@ -596,10 +629,22 @@ body {
     <div class="filter-group">
       <span class="filter-label">Council Seat:</span>
       <button class="filter-pill active" data-seat="all">All Seats (98)</button>
-      <button class="filter-pill seat-logos" data-seat="logos">&#128737;&#65039; LOGOS (Mind / QC: 20)</button>
-      <button class="filter-pill seat-bob" data-seat="bob">&#128296; Bob (Hands / Build: 20)</button>
-      <button class="filter-pill seat-freya" data-seat="freya">&#127912; Freya (Heart / Creative: 36)</button>
-      <button class="filter-pill seat-tvashtar" data-seat="tvashtar">&#129302; Tvashtar (Craftsman / REA: 22)</button>
+      <button class="filter-pill seat-logos" data-seat="logos">
+        <img src="council_of_gaya/public/agents/logos.png" onerror="this.onerror=null; this.src='agents/logos.png'; if(!this.complete) this.src='https://raw.githubusercontent.com/ronakraval104-sys/Gaya_Agent_PR/master/council_of_gaya/public/agents/logos.png';" class="pill-avatar" alt="Logos">
+        <span>LOGOS (Mind / QC: 20)</span>
+      </button>
+      <button class="filter-pill seat-bob" data-seat="bob">
+        <img src="council_of_gaya/public/agents/bob.png" onerror="this.onerror=null; this.src='agents/bob.png'; if(!this.complete) this.src='https://raw.githubusercontent.com/ronakraval104-sys/Gaya_Agent_PR/master/council_of_gaya/public/agents/bob.png';" class="pill-avatar" alt="Bob">
+        <span>Bob (Hands / Build: 20)</span>
+      </button>
+      <button class="filter-pill seat-freya" data-seat="freya">
+        <img src="council_of_gaya/public/agents/freya.png" onerror="this.onerror=null; this.src='agents/freya.png'; if(!this.complete) this.src='https://raw.githubusercontent.com/ronakraval104-sys/Gaya_Agent_PR/master/council_of_gaya/public/agents/freya.png';" class="pill-avatar" alt="Freya">
+        <span>Freya (Heart / Creative: 36)</span>
+      </button>
+      <button class="filter-pill seat-tvashtar" data-seat="tvashtar">
+        <img src="council_of_gaya/public/agents/tvashtar.png" onerror="this.onerror=null; this.src='agents/tvashtar.png'; if(!this.complete) this.src='https://raw.githubusercontent.com/ronakraval104-sys/Gaya_Agent_PR/master/council_of_gaya/public/agents/tvashtar.png';" class="pill-avatar" alt="Tvashtar">
+        <span>Tvashtar (Craftsman / REA: 22)</span>
+      </button>
     </div>
 
     <!-- CATEGORY FILTERS -->
@@ -688,7 +733,10 @@ function render() {
       <div>
         <div class="card-top">
           <div class="skill-icon-wrap">${s.icon}</div>
-          <span class="seat-badge badge-${s.seat}">${s.seat}</span>
+          <span class="seat-badge badge-${s.seat}">
+            <img src="council_of_gaya/public/agents/${s.seat}.png" onerror="this.onerror=null; this.src='agents/${s.seat}.png'; if(!this.complete) this.src='https://raw.githubusercontent.com/ronakraval104-sys/Gaya_Agent_PR/master/council_of_gaya/public/agents/${s.seat}.png';" class="badge-avatar" alt="${s.seat}">
+            ${s.seat.toUpperCase()}
+          </span>
         </div>
         <h3 class="skill-name">${s.name}</h3>
         <p class="skill-desc">${s.desc}</p>
@@ -712,7 +760,7 @@ function openDrawer(id) {
   
   const badge = document.getElementById('drawerSeatBadge');
   badge.className = `seat-badge badge-${s.seat}`;
-  badge.innerText = `Council Seat: ${s.seat.toUpperCase()}`;
+  badge.innerHTML = `<img src="council_of_gaya/public/agents/${s.seat}.png" onerror="this.onerror=null; this.src='agents/${s.seat}.png'; if(!this.complete) this.src='https://raw.githubusercontent.com/ronakraval104-sys/Gaya_Agent_PR/master/council_of_gaya/public/agents/${s.seat}.png';" class="badge-avatar" alt="${s.seat}"> Council Seat: ${s.seat.toUpperCase()}`;
 
   let protocol = '';
   if (s.seat === 'logos') {

@@ -2,11 +2,22 @@
 ### Gaya Update 0.5.2610 · The Multi-Agent Council Architecture
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Skills](https://img.shields.io/badge/Skills-98%20modules-a78bfa)](skills-dashboard.html)
-[![Council Seats](https://img.shields.io/badge/Council%20Seats-4%20Specialists-38bdf8)](agent-methodology-dashboard.html)
+[![Live Skills Matrix](https://img.shields.io/badge/Skills%20Matrix-Live%20Preview%20(98)-a78bfa?style=flat&logo=html5)](https://htmlpreview.github.io/?https://github.com/ronakraval104-sys/Gaya_Agent_PR/blob/master/skills-dashboard.html)
+[![Live Council Chamber](https://img.shields.io/badge/Council%20Chamber-Live%20Preview%20(4%20Seats)-38bdf8?style=flat&logo=html5)](https://htmlpreview.github.io/?https://github.com/ronakraval104-sys/Gaya_Agent_PR/blob/master/agent-methodology-dashboard.html)
 [![Multi--Client](https://img.shields.io/badge/Platforms-Antigravity%20%7C%20OpenCode%20%7C%20Claude%20Code%20%7C%20Codex-22c55e)](docs/MULTI_CLIENT_SETUP.md)
 
 > Named after **Bodh Gaya** — the seat of awakening. A battle-tested multi-agent operating system featuring the **Subagent Council**, **98 specialized skills**, the **Council of Gaya** Next.js dashboard, and the **Mini Gaya** reactive desktop companion.
+
+---
+
+## ⚡ Direct 1-Click Interactive Web Dashboards (Openable Directly in Git!)
+Instead of viewing raw code or text, click any link below to open the complete live interactive web application with searching, filtering, and animations directly in your browser:
+
+| Dashboard | 1-Click Live Web Launcher | What It Does |
+|---|---|---|
+| 🛡️ **Council Chamber & Agent Methodology** | [🚀 **Open Agent Chamber (Live Preview)**](https://htmlpreview.github.io/?https://github.com/ronakraval104-sys/Gaya_Agent_PR/blob/master/agent-methodology-dashboard.html) | Interactive seat dossiers with mythological god visages, protocol blocks & Ponytail Decision simulator |
+| 📊 **Interactive Skills Matrix** | [🚀 **Open Skills Matrix (Live Preview)**](https://htmlpreview.github.io/?https://github.com/ronakraval104-sys/Gaya_Agent_PR/blob/master/skills-dashboard.html) | Filter 98 production skills with deity avatar badges, search keywords & copy auto-assigned prompt triggers |
+| 🌐 **Executive Gateway Portal** | [🚀 **Open Executive Portal (Live Preview)**](https://htmlpreview.github.io/?https://github.com/ronakraval104-sys/Gaya_Agent_PR/blob/master/index.html) | Unified single-page hub with navigation between all chambers and localhost:4200 mission cockpit |
 
 ---
 
@@ -27,9 +38,9 @@ Gaya unites four ancient pragmatic doctrines with modern agentic execution:
 
 ---
 
-## 🛡️ The Subagent Council & No-Ventriloquism Protocol
+## 🛡️ The Subagent Council & Mythological Deities
 
-Gaya deploys specialized agents with distinct mandates. No agent oversteps its role:
+Gaya deploys specialized agents with distinct mandates. All specialists are represented by their true mythological archetypes generated via local ComfyUI:
 
 ```
                   ┌───────────────┐
@@ -37,20 +48,20 @@ Gaya deploys specialized agents with distinct mandates. No agent oversteps its r
                   └───────┬───────┘
           ┌───────────────┼───────────────┐
           ▼               ▼               ▼
-   [🛡️ LOGOS]         [🔨 BOB]        [🎨 FREYA]
-    Mind / QC        Hands / Build   Heart / Design
+    [🛡️ LOGOS]         [🔨 BOB]        [🎨 FREYA]
+     Mind / QC        Hands / Build   Heart / Design
           ▲               │               │
           │               ▼               │
           └─────── [🦾 TVASHTAR] ────────┘
                    Craftsman / REA
 ```
 
-| Agent | Council Seat | Designated Mandate | Protocol Block |
-|---|---|---|---|
-| **🛡️ LOGOS** | **Mind** | Mastermind Planner & Hard-Check QC Gate. **Read-only auditor**. No code or mutation ships without an explicit PASS verdict. | `[🛡️ LOGOS] Skill: <skill> \| VERDICT: PASS scope=<path>` |
-| **🔨 Bob** | **Hands** | Precision Builder & Execution Engine. Delivers atomic commits, minimal diffs, and honest command receipts. | `[🔨 Bob] Skill: <skill> \| Shipped: ... Receipts: ...` |
-| **🎨 Freya** | **Heart** | Polymath Designer & Seer of the Unfiltered. High-taste UI/UX, brand identity, vector assets, 3D mockups, and uncensored research. | `[🎨 Freya] Skill: <skill> \| Design: ...` |
-| **🦾 Tvashtar** | **Craftsman** | Systems Architect, Deep Reverse Engineering Engine & Toolkeeper. Sole owner of **REA** (`reverse-engineer-anything`) and **Universal Modder**. Binary disassembly, ASAR extraction, protocol recovery. | `[🦾 Tvashtar] Skill: <skill> \| REA Execution: ... Specs: ...` |
+| Visage | Agent | Council Seat & Archetype | Designated Mandate | Protocol Block |
+|:---:|---|---|---|---|
+| <img src="council_of_gaya/public/agents/logos.png" width="60" height="60" style="border-radius:50%; border:2px solid #38bdf8;"> | **🛡️ LOGOS** | **Mind**<br>_Celestial Sage Professor_ | Mastermind Planner & Hard-Check QC Gate. **Read-only auditor**. No code or mutation ships without an explicit PASS verdict. | `[🛡️ LOGOS] Skill: <skill> \| VERDICT: PASS scope=<path>` |
+| <img src="council_of_gaya/public/agents/bob.png" width="60" height="60" style="border-radius:50%; border:2px solid #f59e0b;"> | **🔨 Bob** | **Hands**<br>_Master Builder God_ | Precision Builder & Execution Engine. Delivers atomic commits, minimal diffs, and honest command receipts. | `[🔨 Bob] Skill: <skill> \| Shipped: ... Receipts: ...` |
+| <img src="council_of_gaya/public/agents/freya.png" width="60" height="60" style="border-radius:50%; border:2px solid #10b981;"> | **🎨 Freya** | **Heart**<br>_Goddess of Hunt & Beauty_ | Polymath Designer & Seer of the Unfiltered. High-taste UI/UX, brand identity, vector assets, 3D mockups, and Emil Kowalski craft motion. | `[🎨 Freya] Skill: <skill> \| Design: ...` |
+| <img src="council_of_gaya/public/agents/tvashtar.png" width="60" height="60" style="border-radius:50%; border:2px solid #ec4899;"> | **🦾 Tvashtar** | **Craftsman**<br>_Vedic Divine Bronze Blacksmith_ | Systems Architect, Deep Reverse Engineering Engine & Toolkeeper. Sole owner of **REA** (`reverse-engineer-anything`) and **Universal Modder**. Binary disassembly, ASAR extraction, protocol recovery. | `[🦾 Tvashtar] Skill: <skill> \| REA Execution: ... Specs: ...` |
 
 ### Mandatory Auto-Assigned Skills Invariant
 Whenever any task is assigned, the executing Council agent MUST explicitly bind and declare its active skill. No agent operates without an assigned skill.

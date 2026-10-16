@@ -213,12 +213,80 @@ body {
   align-items: flex-start;
   justify-content: space-between;
   margin-bottom: 16px;
+  gap: 12px;
+}
+
+.seat-identity-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.seat-avatar-wrap {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--border);
+  background: #000;
+  flex-shrink: 0;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.6);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s;
+}
+
+.chamber-card:hover .seat-avatar-wrap {
+  transform: scale(1.1);
+}
+
+.avatar-logos {
+  border-color: var(--logos-cyan);
+  box-shadow: 0 0 16px rgba(0, 212, 255, 0.4);
+}
+
+.avatar-bob {
+  border-color: var(--bob-blue);
+  box-shadow: 0 0 16px rgba(245, 158, 11, 0.4);
+}
+
+.avatar-freya {
+  border-color: #10b981;
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.4);
+}
+
+.avatar-tvashtar {
+  border-color: #ec4899;
+  box-shadow: 0 0 16px rgba(236, 72, 153, 0.4);
+}
+
+.seat-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.brand-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid var(--gaya-gold);
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
+}
+
+.archetype-badge {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 2px;
 }
 
 .seat-title-wrap {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
 }
 
 .seat-badge {
@@ -427,6 +495,7 @@ body {
   <!-- NAVBAR -->
   <nav class="navbar">
     <div class="nav-brand">
+      <img src="council_of_gaya/public/gaya/avatar_base.png" onerror="this.onerror=null; this.src='agents/gaya.png'; if(!this.complete) this.src='https://raw.githubusercontent.com/ronakraval104-sys/Gaya_Agent_PR/master/council_of_gaya/public/gaya/avatar_base.png';" class="brand-avatar" alt="Gaya">
       <span class="brand-badge">COUNCIL OF GAYA</span>
       <span class="brand-title">Agent Methodology</span>
     </div>
@@ -457,9 +526,15 @@ body {
     <div class="chamber-card card-logos">
       <div>
         <div class="seat-header">
-          <div class="seat-title-wrap">
-            <span class="seat-badge badge-logos">&#128737;&#65039; MIND / HARD QC GATE</span>
-            <h3 class="seat-name">LOGOS</h3>
+          <div class="seat-identity-group">
+            <div class="seat-avatar-wrap avatar-logos">
+              <img src="council_of_gaya/public/agents/logos.png" onerror="this.onerror=null; this.src='agents/logos.png'; if(!this.complete) this.src='https://raw.githubusercontent.com/ronakraval104-sys/Gaya_Agent_PR/master/council_of_gaya/public/agents/logos.png';" alt="Logos" class="seat-avatar-img">
+            </div>
+            <div class="seat-title-wrap">
+              <span class="seat-badge badge-logos">&#128737;&#65039; MIND / HARD QC GATE</span>
+              <h3 class="seat-name">LOGOS</h3>
+              <span class="archetype-badge">Celestial Sage Professor</span>
+            </div>
           </div>
           <div class="seat-model">Qwythos 9B / DeepSeek<br>128K context</div>
         </div>
@@ -486,9 +561,15 @@ Skill: &lt;skill&gt; | VERDICT: PASS scope=&lt;path&gt; -- &lt;rationale&gt;
     <div class="chamber-card card-bob">
       <div>
         <div class="seat-header">
-          <div class="seat-title-wrap">
-            <span class="seat-badge badge-bob">&#128296; HANDS / PRECISION BUILDER</span>
-            <h3 class="seat-name">BOB</h3>
+          <div class="seat-identity-group">
+            <div class="seat-avatar-wrap avatar-bob">
+              <img src="council_of_gaya/public/agents/bob.png" onerror="this.onerror=null; this.src='agents/bob.png'; if(!this.complete) this.src='https://raw.githubusercontent.com/ronakraval104-sys/Gaya_Agent_PR/master/council_of_gaya/public/agents/bob.png';" alt="Bob" class="seat-avatar-img">
+            </div>
+            <div class="seat-title-wrap">
+              <span class="seat-badge badge-bob">&#128296; HANDS / PRECISION BUILDER</span>
+              <h3 class="seat-name">BOB</h3>
+              <span class="archetype-badge">Master Builder God</span>
+            </div>
           </div>
           <div class="seat-model">Qwen 2.5 Coder 7B<br>128K context</div>
         </div>
@@ -515,9 +596,15 @@ Skill: &lt;skill&gt; | Shipped: &lt;files&gt; | Receipts: &lt;exit codes&gt;
     <div class="chamber-card card-freya">
       <div>
         <div class="seat-header">
-          <div class="seat-title-wrap">
-            <span class="seat-badge badge-freya">&#127912; HEART / CREATIVE & AGENCY</span>
-            <h3 class="seat-name">FREYA</h3>
+          <div class="seat-identity-group">
+            <div class="seat-avatar-wrap avatar-freya">
+              <img src="council_of_gaya/public/agents/freya.png" onerror="this.onerror=null; this.src='agents/freya.png'; if(!this.complete) this.src='https://raw.githubusercontent.com/ronakraval104-sys/Gaya_Agent_PR/master/council_of_gaya/public/agents/freya.png';" alt="Freya" class="seat-avatar-img">
+            </div>
+            <div class="seat-title-wrap">
+              <span class="seat-badge badge-freya">&#127912; HEART / CREATIVE & AGENCY</span>
+              <h3 class="seat-name">FREYA</h3>
+              <span class="archetype-badge">Goddess of Hunt & Beauty</span>
+            </div>
           </div>
           <div class="seat-model">Vision-Native / Phi-3<br>32K-128K context</div>
         </div>
@@ -544,9 +631,15 @@ Skill: &lt;skill&gt; | Design: &lt;visual rationale, motion tokens&gt;
     <div class="chamber-card card-tvashtar">
       <div>
         <div class="seat-header">
-          <div class="seat-title-wrap">
-            <span class="seat-badge badge-tvashtar">&#129302; CRAFTSMAN & REA ENGINE</span>
-            <h3 class="seat-name">TVASHTAR</h3>
+          <div class="seat-identity-group">
+            <div class="seat-avatar-wrap avatar-tvashtar">
+              <img src="council_of_gaya/public/agents/tvashtar.png" onerror="this.onerror=null; this.src='agents/tvashtar.png'; if(!this.complete) this.src='https://raw.githubusercontent.com/ronakraval104-sys/Gaya_Agent_PR/master/council_of_gaya/public/agents/tvashtar.png';" alt="Tvashtar" class="seat-avatar-img">
+            </div>
+            <div class="seat-title-wrap">
+              <span class="seat-badge badge-tvashtar">&#129302; CRAFTSMAN & REA ENGINE</span>
+              <h3 class="seat-name">TVASHTAR</h3>
+              <span class="archetype-badge">Vedic Divine Blacksmith</span>
+            </div>
           </div>
           <div class="seat-model">Claude 3.7 / Qwythos<br>REA Engine &middot; 128K ctx</div>
         </div>
